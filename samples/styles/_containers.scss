@@ -1,0 +1,46 @@
+.notification-container-top-left {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  z-index: 8000;
+}
+
+.notification-container-top-right {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 8000;
+}
+
+.notification-container-bottom-left {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 8000;
+  margin-bottom: -20px;
+}
+
+.notification-container-bottom-right {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 8000;
+  margin-bottom: -20px;
+}
+
+.notification-container-mobile-top {
+  z-index: 8000;
+  position: fixed;
+  right: 20px;
+  left: 20px;
+  top: 20px;
+}
+
+.notification-container-mobile-bottom {
+  z-index: 8000;
+  position: fixed;
+  // margin-bottom: -20px;
+  bottom: 20px;
+  right: 20px;
+  left: 20px;
+}

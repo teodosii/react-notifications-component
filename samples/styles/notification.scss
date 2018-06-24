@@ -1,0 +1,114 @@
+@import "_containers.scss";
+@import "_types.scss";
+
+.notification-item {
+  position: relative;
+}
+
+.notification-close {
+  font-size: 18px;
+  position: absolute;
+  right: 15px;
+}
+
+.nc-center {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  z-index: 8000;
+  pointer-events: all;
+}
+
+.nc-box {
+  left: -50%;
+  position: relative;
+  transform: translateY(-50%);
+}
+
+.notification-container-mobile-top .notification-item,
+.notification-container-mobile-bottom .notification-item,
+.notification-container-mobile-top .notification-item-root,
+.notification-container-mobile-bottom .notification-item-root {
+  max-width: 100%;
+  width: 100%;
+}
+
+.notification-item {
+  display: flex;
+  position: relative;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.2);
+}
+
+.notification-container-top-right .notification-item-root,
+.notification-container-bottom-right .notification-item-root {
+  margin-left: auto;
+}
+
+.notification-container-top-left .notification-item-root,
+.notification-container-bottom-left .notification-item-root {
+  margin-right: auto;
+}
+
+.notification-container-mobile-top .notification-item-root,
+.notification-container-mobile-bottom .notification-item-root {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.notification-item-root { 
+  width: 275px;
+  max-width: 275px;
+  margin-bottom: 15px;
+}
+
+.notification-title {
+  font-weight: 700;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.notification-message {
+  font-size: 14px;
+  margin-bottom: 0;
+  word-wrap: break-word;
+}
+
+.invisible {
+  visibility: hidden;
+  max-width: 375px;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.notification-icon {
+  position: relative;
+  display: inline-block;
+  flex-basis: 20%;
+
+  .fa {
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    font-size: 36px;
+    position: absolute;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.notification-icon-content,
+.notification-content {
+  padding: 8px 15px;
+  display: inline-block;
+}
+
+.notification-icon-content {
+  flex-basis: 80%;
+}
+
+.notification-content {
+  flex-basis: 100%;
+}

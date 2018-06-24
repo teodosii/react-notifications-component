@@ -1,0 +1,53 @@
+.notification-success {
+  .notification-icon {
+    background-color: #26A65B;
+  }
+  .notification-title {
+    color: #26A65B;
+  }
+}
+
+.notification-default {
+  .notification-icon {
+    background-color: #3572b0;
+  }
+  .notification-title {
+    color: #3572b0;
+  }
+}
+
+.notification-danger {
+  .notification-icon {
+    background-color: #d9534f;
+  }
+  .notification-title {
+    color: #d9534f;
+  }
+}
+
+.notification-info {
+  .notification-icon {
+    background-color: #e260ca;
+  }
+  .notification-title {
+    color: #e260ca;
+  }
+}
+
+.notification-warning {
+  .notification-icon {
+    background-color: #f0ad4e;
+  }
+  .notification-title {
+    color: #f0ad4e;
+  }
+}
+
+.notification-awesome {
+  .notification-icon {
+    background-color: #685dc3;
+  }
+  .notification-title {
+    color: #685dc3;
+  }
+}
