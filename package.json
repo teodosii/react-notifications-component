@@ -1,25 +1,27 @@
 {
   "name": "react-notifications-component",
   "version": "1.0.0",
-  "homepage": "https://github.com/teodosii/react-notifications-component",
+  "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "Awesome notifications component for React.js",
   "main": "index.js",
   "scripts": {
     "prod": "webpack --config webpack.prod.js",
     "prod:samples": "webpack --config webpack.samples.prod.js",
-    "watch:library": "webpack -w --config webpack.dev.js",
+    "build:prod": "npm run prod && npm run prod:samples",
     "build:library": "webpack --config webpack.dev.js",
     "build:samples": "webpack --config webpack.samples.dev.js",
+    "watch:library": "webpack -w --config webpack.dev.js",
     "start": "webpack-dev-server --config ./webpack.samples.js",
     "test": "jest",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build:prod",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [
     "react",
+    "reactjs",
     "component",
-    "snackbar",
-    "notifications",
-    "alerts"
+    "notification",
+    "notifications"
   ],
   "author": "Rares Mardare",
   "license": "MIT",
@@ -59,8 +61,10 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^22.4.4",
     "jest-enzyme": "^6.0.1",
+    "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
     "object-assign": "^4.1.1",
+    "optimize-css-assets-webpack-plugin": "^4.0.2",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
