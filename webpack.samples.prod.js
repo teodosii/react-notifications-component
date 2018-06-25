@@ -1,28 +1,20 @@
-const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const webpack = require("webpack");
+const path = require("path");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
 
   entry: "./samples/js/index.js",
 
-  devtool: "cheap-module-source-map",
+  devtool: "source-map",
 
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "samples.js"
-  },
-
-  devServer: {
-    open: true,
-    contentBase: path.join(__dirname, "dist"),
-    compress: true
-    
-    // enable this based on your network
-    // host: "192.168.100.3",
-    // port: 8008
   },
 
   resolve: {
@@ -40,7 +32,7 @@ module.exports = {
     }, {
       test: /\.(css|scss)$/,
       use: [
-        { loader: "style-loader" },
+        { loader: MiniCssExtractPlugin.loader },
         { loader: "css-loader" },
         { loader: "sass-loader" }
       ],
@@ -54,15 +46,29 @@ module.exports = {
     }]
   },
 
+  optimization: {
+    minimizer: [
+      new UglifyJSPlugin({
+        sourceMap: true
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  },
+
   plugins: [
-    new CleanWebpackPlugin("dist/index.html", {
-      watch: true,
-      beforeEmit: true
-    }),
     new HtmlWebpackPlugin({
       inject: true,
       template: "./samples/html/index.html"
     }),
-    new webpack.NamedModulesPlugin()
+    new UglifyJSPlugin({
+      sourceMap: true
+    }),
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("production")
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    })
   ]
 };
