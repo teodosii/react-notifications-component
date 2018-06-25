@@ -166,7 +166,6 @@ class ReactNotificationComponent extends React.Component {
   render() {
     const { state, props } = this;
 
-    // configurable width for applying mobile-view containers
     const width = props.width === undefined ? 768 : props.width;
     const isMobileView = state.width <= width;
 

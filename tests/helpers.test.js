@@ -1,8 +1,5 @@
 import notificationObject from "./utils/notification.mock";
 import {
-  CONTAINER,
-  INSERTION,
-  NOTIFICATION_TYPE,
   isBottomContainer,
   isTopContainer,
   shouldNotificationHaveSliding,
@@ -11,17 +8,26 @@ import {
   getCubicBezierTransition,
   hasFullySwiped,
   getRootHeightStyle,
-  NOTIFICATION_STAGE,
   getNotificationsForEachContainer,
   cssWidth,
   htmlClassesForUserDefinedType,
   validateWidth,
   validateInsert,
-  validateDismissable
+  validateDismissable,
+  validateTimeoutDismissOption,
+  validateTransition,
+  validateTitle,
+  validateMessage,
+  validateType,
+  validateContainer
 } from "../src/helpers";
 
 import {
-  NOTIFICATION_BASE_CLASS
+  CONTAINER,
+  INSERTION,
+  NOTIFICATION_TYPE,
+  NOTIFICATION_BASE_CLASS,
+  NOTIFICATION_STAGE
 } from "../src/constants";
 
 describe("Helpers", () => {
@@ -85,7 +91,7 @@ describe("Helpers", () => {
     expect(getHtmlClassesForType({ type: type.INFO })).toEqual([baseClass, "notification-info"]);
 
     // define custom types
-    const userDefinedTypes = [{ name: "awesome" }];
+    const userDefinedTypes = [{ name: "awesome", htmlClasses: ["awesome"] }];
 
     // expect to return custom type
     expect(getHtmlClassesForType({ type: "awesome", userDefinedTypes })).toEqual([baseClass, "awesome"])
@@ -135,19 +141,19 @@ describe("Helpers", () => {
 
   it("returns CSS transition based on duration|property|type|delay arguments", () => {
     // no arguments supplied
-    expect(getCubicBezierTransition()).toBe("500ms all linear 0ms");
+    expect(getCubicBezierTransition()).toBe("500ms height linear 0ms");
 
     // only duration supplied
-    expect(getCubicBezierTransition(800)).toBe("800ms all linear 0ms");
+    expect(getCubicBezierTransition(800)).toBe("800ms height linear 0ms");
 
     // duration and easing
-    expect(getCubicBezierTransition(800, "ease-out")).toBe("800ms all ease-out 0ms");
+    expect(getCubicBezierTransition(800, "ease-out")).toBe("800ms height ease-out 0ms");
 
     // duration, easing, delay
-    expect(getCubicBezierTransition(800, "ease-out", 100)).toBe("800ms all ease-out 100ms");
+    expect(getCubicBezierTransition(800, "ease-out", 100)).toBe("800ms height ease-out 100ms");
 
     // duration, easing, delay, property
-    expect(getCubicBezierTransition(800, "ease-out", 200, "height")).toBe("800ms height ease-out 200ms");
+    expect(getCubicBezierTransition(800, "ease-out", 200, "all")).toBe("800ms all ease-out 200ms");
   });
 
   it("swipes completely", () => {
@@ -171,7 +177,7 @@ describe("Helpers", () => {
     expect(rootStyle.height).toBe("100px");
 
     // transition has been set
-    expect(rootStyle.transition).toBe("250ms all ease-out 100ms");
+    expect(rootStyle.transition).toBe("250ms height ease-out 100ms");
   });
 
   it("validates dismiss icon option", () => {

@@ -276,7 +276,7 @@ export function getIconHtmlContent(notification, onClickHandler) {
   );
 }
 
-function validateDismissIconOption(dismissIcon) {
+export function validateDismissIconOption(dismissIcon) {
   if (isNullOrUndefined(dismissIcon)) return;
 
   const { className, content } = dismissIcon;
@@ -296,7 +296,7 @@ function validateDismissIconOption(dismissIcon) {
   }
 }
 
-function validateAnimationIn(animationIn) {
+export function validateAnimationIn(animationIn) {
   if (isNullOrUndefined(animationIn)) {
     return [];
   } if (!isArray(animationIn)) {
@@ -307,7 +307,7 @@ function validateAnimationIn(animationIn) {
   return animationIn;
 }
 
-function validateAnimationOut(animationOut) {
+export function validateAnimationOut(animationOut) {
   if (isNullOrUndefined(animationOut)) {
     return [];
   } else if (!isArray(animationOut)) {
@@ -318,7 +318,7 @@ function validateAnimationOut(animationOut) {
   return animationOut;
 }
 
-function validateTimeoutDismissOption(dismiss) {
+export function validateTimeoutDismissOption(dismiss) {
   // skip if option is not defined
   if (isNullOrUndefined(dismiss)) return;
 
@@ -333,7 +333,7 @@ function validateTimeoutDismissOption(dismiss) {
   }
 }
 
-function validateTransition(transition, defaults) {
+export function validateTransition(transition, defaults) {
   const { duration, cubicBezier, delay } = defaults;
   const transitionOptions = transition || {};
 
@@ -362,7 +362,7 @@ function validateTransition(transition, defaults) {
   return transitionOptions;
 }
 
-function validateTitle(notification) {
+export function validateTitle(notification) {
   const { content, title } = notification;
 
   // option not required if content is defined
@@ -377,7 +377,7 @@ function validateTitle(notification) {
   }
 }
 
-function validateMessage(notification) {
+export function validateMessage(notification) {
   const { content, message } = notification;
 
   // option not required if content is defined
@@ -390,7 +390,7 @@ function validateMessage(notification) {
   }
 }
 
-function validateType(notification, userDefinedTypes) {
+export function validateType(notification, userDefinedTypes) {
   const { content, type } = notification;
 
   if (content) {
@@ -416,7 +416,7 @@ function validateType(notification, userDefinedTypes) {
   return type.toLowerCase();
 }
 
-function validateContainer(container) {
+export function validateContainer(container) {
   if (isNullOrUndefined(container)) {
     // container is required
     throw new Error(ERROR.CONTAINER_REQUIRED);
@@ -428,7 +428,7 @@ function validateContainer(container) {
   return container.toLowerCase();
 }
 
-function validateDismissable(dismissable) {
+export function validateDismissable(dismissable) {
   if (isNullOrUndefined(dismissable)) {
     return {
       // set dissmisable by click as default
@@ -457,7 +457,7 @@ function validateDismissable(dismissable) {
   return option;
 }
 
-function validateInsert(insert) {
+export function validateInsert(insert) {
   if (isNullOrUndefined(insert)) {
     // default to top if not defined
     return "top";
@@ -469,7 +469,7 @@ function validateInsert(insert) {
   return insert;
 }
 
-function validateWidth(width) {
+export function validateWidth(width) {
   if (!isNumber(width)) {
     // width must be a valid Number
     throw new Error(ERROR.WIDTH_NUMBER);
@@ -478,7 +478,7 @@ function validateWidth(width) {
   return width;
 }
 
-function validateUserDefinedTypes(notification, definedTypes) {
+export function validateUserDefinedTypes(notification, definedTypes) {
   const { content, type } = notification;
 
   // no need to validate type if content is defined
@@ -507,7 +507,6 @@ function validateUserDefinedTypes(notification, definedTypes) {
 function getRandomId() {
   return Math.random();
 }
-
 
 export function getNotificationOptions(options, userDefinedTypes) {
   const notification = options;
