@@ -75,7 +75,7 @@ describe("Helpers", () => {
   });
 
   it("returns proper CSS width", () => {
-    expect(cssWidth(undefined)).toMatch(undefined);
+    expect(cssWidth(undefined)).toBeUndefined();
     expect(cssWidth(100)).toMatch("100px");
   });
 
@@ -220,7 +220,7 @@ describe("Helpers", () => {
       duration: 300,
       cubicBezier: "ease-in",
       delay: 200
-    })).toEqual({
+    }, defaults)).toEqual({
       duration: 300,
       cubicBezier: "ease-in",
       delay: 200
@@ -230,18 +230,18 @@ describe("Helpers", () => {
     expect(validateTransition({}, defaults)).toEqual(defaults);
 
     // expect to throw for NaN duration
-    expect(() => validateTransition({ duration: "" })).toThrow();
+    expect(() => validateTransition({ duration: "" }, defaults)).toThrow();
 
     // expect to throw for `cubicBezier` is not String
-    expect(() => validateTransition({ cubicBezier: 0 })).toThrow();
+    expect(() => validateTransition({ cubicBezier: 0 }, defaults)).toThrow();
 
     // expect to throw for NaN delay
-    expect(() => validateTransition({ delay: "" })).toThrow();
+    expect(() => validateTransition({ delay: "" }, defaults)).toThrow();
   });
 
   it("validates title option", () => {
     // expect to skip for defined `content`
-    expect(validateTitle({ content: {} })).toBe(undefined);
+    expect(validateTitle({ content: {} })).toBeUndefined();
 
     // expect to throw for undefined
     expect(() => validateMessage({})).toThrow();
@@ -252,7 +252,7 @@ describe("Helpers", () => {
 
   it("validates message option", () => {
     // expect to skip for defined `content`
-    expect(validateMessage({ content: {} })).toBe(undefined);
+    expect(validateMessage({ content: {} })).toBeUndefined();
 
     // expect to throw for undefined
     expect(() => validateMessage({})).toThrow();
@@ -263,7 +263,7 @@ describe("Helpers", () => {
 
   it("validates type option", () => {
     // expect to return if content is set
-    expect(validateType({ content: {} })).toBe(undefined);
+    expect(validateType({ content: {} })).toBeUndefined();
 
     // expect to throw for undefined type
     expect(() => validateType()).toThrow();
@@ -271,7 +271,7 @@ describe("Helpers", () => {
     // expect to throw if type is not string
     expect(() => validateType({ type: {} })).toThrow();
 
-    expect(validateType({ type: "SUCCESS" })).toBe("success");
+    expect(validateType({ type: NOTIFICATION_TYPE.SUCCESS })).toBe("success");
   });
 
   it("validates container option", () => {
@@ -283,7 +283,7 @@ describe("Helpers", () => {
   })
 
   it("validates dismissable option", () => {
-    const defaults = { click: true, option: true };
+    const defaults = { click: true, touch: true };
     expect(validateDismissable()).toEqual(defaults);
 
     // expect empty object to match defaults
@@ -311,15 +311,13 @@ describe("Helpers", () => {
     expect(validateInsert("bottom")).toBe("bottom");
 
     // expect to throw for NaN values
-    expect(() => validateWidth(0)).toThrow();
+    expect(() => validateInsert({})).toThrow();
   });
 
   it("validates width option", () => {
-    expect(validateWidth(100)).toBe("100px");
-    expect(validateWidth()).toBe(undefined);
+    expect(validateWidth(100)).toBe(100);
 
     // expect to throw for NaN values
-    expect(() => validateWidth({ width: "" })).toThrow();
     expect(() => validateWidth({ width: {} })).toThrow();
   });
 });

@@ -91,7 +91,7 @@ export function getHtmlClassesForType(notification) {
   }
 
   // append base class to html classes
-  return foundType.htmlClasses.concat(NOTIFICATION_BASE_CLASS);
+  return [NOTIFICATION_BASE_CLASS].concat(foundType.htmlClasses);
 }
 
 export function getNotificationsForMobileView(notifications) {
@@ -340,10 +340,14 @@ export function validateTransition(transition, defaults) {
   if (isNullOrUndefined(transitionOptions.duration)) {
     // set default duration
     transitionOptions.duration = duration;
-  } else if (isNullOrUndefined(transitionOptions.cubicBezier)) {
+  }
+
+  if (isNullOrUndefined(transitionOptions.cubicBezier)) {
     // set default timing function
     transitionOptions.cubicBezier = cubicBezier;
-  } else if (isNullOrUndefined(transitionOptions.delay)) {
+  }
+
+  if (isNullOrUndefined(transitionOptions.delay)) {
     // set default delay
     transitionOptions.delay = delay;
   }
@@ -443,13 +447,17 @@ export function validateDismissable(dismissable) {
   if (isNullOrUndefined(option.click)) {
     // set dissmisable by click as default
     option.click = true;
-  } else if (isNullOrUndefined(option.touch)) {
+  }
+
+  if (isNullOrUndefined(option.touch)) {
     // set dismissable on swipe as default
     option.touch = true;
-  } else if (!isBoolean(option.click)) {
+  }
+
+  if (!isBoolean(option.click)) {
     // must be boolean
     throw new Error(ERROR.DISMISSABLE_CLICK_BOOL);
-  } if (!isBoolean(option.touch)) {
+  } else if (!isBoolean(option.touch)) {
     // must be boolean
     throw new Error(ERROR.DISMISSABLE_TOUCH_BOOL);
   }
@@ -493,10 +501,8 @@ export function validateUserDefinedTypes(notification, definedTypes) {
     isNullOrUndefined(definedTypes)
   ) return undefined;
 
-  // TODO: we should validate `definedTypes` to match format
   // search for custom type in array
-  const found = definedTypes.find(p => p.name === type);
-  if (!found) {
+  if (!definedTypes.find(p => p.name === type)) {
     // custom type not found, throw exception
     throw new Error(ERROR.TYPE_NOT_FOUND);
   }
