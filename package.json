@@ -11,7 +11,7 @@
     "build:library": "webpack --config webpack.dev.js",
     "build:samples": "webpack --config webpack.samples.dev.js",
     "watch:library": "webpack -w --config webpack.dev.js",
-    "start": "webpack-dev-server --config ./webpack.samples.js",
+    "start": "webpack-dev-server --config ./webpack.samples.dev.js",
     "test": "jest",
     "predeploy": "npm run build:prod",
     "deploy": "gh-pages -d dist"
