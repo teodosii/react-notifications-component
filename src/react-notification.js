@@ -302,7 +302,7 @@ export default class ReactNotification extends React.Component {
         onTouchStart={touchHasEnded ? null : this.onTouchStart}
         onTouchMove={touchHasEnded ? null : this.onTouchMove}
         onTouchEnd={touchHasEnded ? null : this.onTouchEnd}
-        onTouchCancel={touchHasEnded ? null : this.onTouchCancel}
+        onTouchCancel={touchHasEnded ? null : this.onTouchEnd}
         onClick={onNotificationClick}
         className="notification-item-root"
         onAnimationEnd={onAnimationEnd}
