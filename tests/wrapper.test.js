@@ -17,13 +17,22 @@ describe("Wrapper component", () => {
   let node;
 
   // arrow function helpers
-  let instance = () => component.instance();
-  let state = () => component.state();
+  const getObject = () => Object.assign({}, notificationObject);
+  const instance = () => component.instance();
+  const state = () => component.state();
+
+  // add notification helper
+  const addNotification = (notifObject) => instance().addNotification(notifObject);
 
   const triggerResize = (width) => {
+    // set initial width
     global.window.innerWidth = 100;
+
+    // create `resize` event
     const resizeEvent = document.createEvent("Event");
     resizeEvent.initEvent("resize", true, true);
+
+    // trigger resize
     window.dispatchEvent(resizeEvent);
   };
 
@@ -44,29 +53,27 @@ describe("Wrapper component", () => {
   });
 
   it("responds to `resize` event", () => {
-    const spy = jest.spyOn(
-      ReactNotificationComponent.prototype,
-      "handleResize"
-    );
+    const spy = jest.spyOn(ReactNotificationComponent.prototype, "handleResize");
 
-    // mount and add notifications
+    // mount component
     component = mount(<ReactNotificationComponent />);
-    instance().addNotification(notificationObject);
-    instance().addNotification(notificationObject);
-    instance().addNotification(notificationObject);
+
+    // add notifications
+    addNotification(getObject());
+    addNotification(getObject());
+    addNotification(getObject());
 
     // trigger window resize
     triggerResize(100);
 
     // expect width to be set accordingly
     expect(state().width).toBe(100);
+
     // expect `handleResize` to have been called
     expect(spy).toHaveBeenCalled();
 
-    state().notifications.forEach(notification =>
-      // expect each notification to have `resized` set
-      expect(notification.resized).toBe(true)
-    );
+    // expect each notification to have `resized` set
+    state().notifications.forEach(notification => expect(notification.resized).toBe(true));
   });
 
   it("removes notification manually", () => {
@@ -74,30 +81,36 @@ describe("Wrapper component", () => {
 
     // mount
     component = mount(<ReactNotificationComponent />);
-    let id = instance().addNotification(notificationObject);
+
+    // add notification and store id
+    let id = addNotification(getObject());
 
     // manually remove notification
     instance().removeNotification(id);
 
     notification = state().notifications.find(item => item.id === id);
-    expect(notification).not.toBeUndefined();
+
+    // expect REMOVAL stage
     expect(notification.stage).toBe(NOTIFICATION_STAGE.REMOVAL);
 
-    // tick 100ms for requestAnimationFrame
+    // tick
     clock.tick(100);
 
     notification = state().notifications.find(item => item.id === id);
-    expect(notification).not.toBeUndefined();
+
+    // expect SLIDING_ANIMATION_EXIT stage
     expect(notification.stage).toBe(NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT);
   });
 
   it("updates stage to SLIDING_ANIMATION_EXIT on toggle-timeout", () => {
     // mount
     component = mount(<ReactNotificationComponent />);
-    let id = component.instance().addNotification(notificationObject);
+
+    // add notification
+    let id = addNotification(getObject());
 
     // call `toggleTimeoutRemoval`
-    component.instance().toggleTimeoutRemoval({ id });
+    instance().toggleTimeoutRemoval({ id });
 
     // get notification from state
     let notifications = component.state("notifications");
@@ -106,6 +119,7 @@ describe("Wrapper component", () => {
     // expect item to be in state
     expect(item).not.toBeNull();
     expect(item).not.toBeUndefined();
+
     // expect stage to be set to SLIDING_ANIMATION_EXIT
     expect(item.stage).toBe(NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT);
   });
@@ -113,44 +127,55 @@ describe("Wrapper component", () => {
   it("updates stage to SLIDING_ANIMATION_EXIT on click", () => {
     // mount
     component = mount(<ReactNotificationComponent />);
+
     // add notification
-    let id = instance().addNotification(notificationObject);
-    // call method
-    instance().onNotificationClick({ id, dismissable: { click: true } });
+    let id = addNotification(getObject());
+    const dismissable = { click: true };
+
+    // trigger click
+    instance().onNotificationClick({ id, dismissable });
+
+    // tick
+    clock.tick(100);
 
     // find notification by id
     let item = state().notifications.find(elem => elem.id === id);
 
     // expect stage to be set
-    expect(item).not.toBeUndefined();
     expect(item.stage).toBe(NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT);
   });
 
   it("does not update stage to SLIDING_ANIMATION_EXIT on click", () => {
     // mount
     component = mount(<ReactNotificationComponent />);
+
     // add notification
-    let id = instance().addNotification(notificationObject);
-    // call method
-    instance().onNotificationClick({ id, dismissable: {} });
+    const id = addNotification(getObject());
+    const dismissable = {};
+
+    // trigger click
+    instance().onNotificationClick({ id, dismissable });
+
+    // tick
+    clock.tick(100);
 
     // find by id
     let item = state().notifications.find(elem => elem.id === id);
 
-    // expect stage NOT to be set
-    expect(item).not.toBeUndefined();
+    // expect stage to be set
     expect(item.stage).not.toBe(NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT);
   });
 
-  it("sets stage to TOUCH_SLIDING_ANIMATION_EXIT on toggling touch end", () => {
+  it("sets stage to TOUCH_SLIDING_ANIMATION_EXIT on touch end", () => {
     // mount
     component = mount(<ReactNotificationComponent />);
+
     // add notification
-    let id = instance().addNotification(notificationObject);
+    let id = addNotification(getObject());
 
     // toggle touch end
     instance().toggleTouchEnd({ id });
-    
+
     // find by id
     let item = state().notifications.find(elem => elem.id === id);
 
@@ -162,22 +187,24 @@ describe("Wrapper component", () => {
   it("toggles notification removal", () => {
     // mount
     component = mount(<ReactNotificationComponent />);
-    // add notification
-    let id = instance().addNotification(notificationObject);
-    instance().addNotification(notificationObject);
-    instance().addNotification(notificationObject);
+
+    // add notifications
+    let id = addNotification(getObject());
 
     // expect lengt to match number of added notifications
-    expect(state().notifications.length).toBe(3);
+    expect(state().notifications.length).toBe(1);
 
     // toggle removal
     instance().toggleRemoval({ id });
-    
+
+    // tick
+    clock.tick(100);
+
     // expect decrease
-    expect(state().notifications.length).toBe(2);
+    expect(component.state().notifications.length).toBe(0);
   });
 
-  it("returns rendered notifications", () => {
+  it("renders notification properly", () => {
     // mount
     component = mount(<ReactNotificationComponent />);
 
@@ -191,7 +218,6 @@ describe("Wrapper component", () => {
     expect(notif.props.notification).toBeDefined();
     expect(notif.props.isFirstNotification).toBeDefined();
     expect(notif.props.onClickHandler).toBeDefined();
-    // expect(notif.props.onTransitionEnd).toBeDefined();
     expect(notif.props.toggleRemoval).toBeDefined();
     expect(notif.props.toggleTimeoutRemoval).toBeDefined();
     expect(notif.props.toggleTouchEnd).toBeDefined();
@@ -264,6 +290,7 @@ describe("Wrapper component", () => {
 
     // mount component with isMobile prop
     component = mount(<ReactNotificationComponent isMobile={true} />);
+
     // manually update width to render mobile containers
     component.setState({ width: 512 });
 
@@ -283,6 +310,7 @@ describe("Wrapper component", () => {
 
     // mount component
     component = mount(<ReactNotificationComponent isMobile={true} />);
+
     // set state to render mobile view
     component.setState({ width: 1024 });
 

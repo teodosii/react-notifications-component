@@ -89,6 +89,7 @@ class ReactNotificationComponent extends React.Component {
     this.setState({
       notifications: this.state.notifications.map((item) => {
         const object = item;
+
         object.stage = object.id === id
           ? NOTIFICATION_STAGE.REMOVAL
           : object.stage;
@@ -125,6 +126,7 @@ class ReactNotificationComponent extends React.Component {
             object.stage = object.id === notification.id
               ? NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT
               : object.stage;
+
             return object;
           })
         });
@@ -136,6 +138,7 @@ class ReactNotificationComponent extends React.Component {
     this.setState({
       notifications: this.state.notifications.map((item) => {
         const object = item;
+
         object.stage = object.id === notification.id
           ? NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT
           : object.stage;
