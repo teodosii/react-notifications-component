@@ -19,7 +19,8 @@ import {
   validateTitle,
   validateMessage,
   validateType,
-  validateContainer
+  validateContainer,
+  validateUserDefinedTypes
 } from "../src/helpers";
 
 import {
@@ -197,7 +198,7 @@ describe("Helpers", () => {
   it("validates timeout dismiss option", () => {
     // expect normal behaviour
     expect(() => validateTimeoutDismissOption()).not.toThrow();
-    
+
     // expect to throw if duration is not set
     expect(() => validateTimeoutDismissOption({})).toThrow();
 
@@ -243,8 +244,8 @@ describe("Helpers", () => {
     // expect to skip for defined `content`
     expect(validateTitle({ content: {} })).toBeUndefined();
 
-    // expect to throw for undefined
-    expect(() => validateMessage({})).toThrow();
+    // expect not to throw for undefined
+    expect(() => validateMessage({})).not.toThrow();
 
     // expect to throw for non String values
     expect(() => validateMessage({ title: 0 })).toThrow();
@@ -300,6 +301,19 @@ describe("Helpers", () => {
 
     // expect to throw for non boolean values
     expect(() => validateDismissable({ touch: "true" })).toThrow();
+  });
+
+  it("validates user defined types", () => {
+    const definedTypes = [{ name: "awesome" }];
+
+    expect(validateUserDefinedTypes({ content: {} }, definedTypes)).toBeUndefined();
+    expect(validateUserDefinedTypes({ type: NOTIFICATION_TYPE.SUCCESS }, definedTypes)).toBeUndefined();
+
+    // should throw if type cannot be found
+    expect(() => validateUserDefinedTypes({ type: "xtra" }, definedTypes)).toThrow();
+
+    // expect not to throw
+    expect(() => validateUserDefinedTypes({ type: "awesome" }, definedTypes)).not.toThrow();
   });
 
   it("validates insert option", () => {
