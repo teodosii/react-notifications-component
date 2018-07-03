@@ -15,7 +15,6 @@ export default {
   DISMISS_POSITIVE: "Dismiss `duration` must be a positive Number",
 
   // title
-  TITLE_REQUIRED: "`title` is required.",
   TITLE_STRING: "`title` must be a String.",
 
   // message

@@ -369,13 +369,10 @@ export function validateTransition(transition, defaults) {
 export function validateTitle(notification) {
   const { content, title } = notification;
 
-  // option not required if content is defined
-  if (content) return;
+  // no need to validate if `title` is missing or `content` is present
+  if (content || title === null || title === undefined) return;
 
-  if (title === null || title === undefined) {
-    // title is required
-    throw new Error(ERROR.TITLE_REQUIRED);
-  } else if (!isString(title)) {
+  if (!isString(title)) {
     // title must be a String
     throw new Error(ERROR.TITLE_STRING);
   }
