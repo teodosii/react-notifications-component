@@ -7,7 +7,13 @@ export default function Header({ instance }) {
         <h1 className="header-title">React-Notifications</h1>
         <p className="header-desc">Notifications for React. Highly configurable and easy to use</p>
         <div className="header-buttons">
-          <button type="button" className="btn btn-primary no-corner">View on GitHub</button>
+          <a
+            target="_blank"
+            className="btn btn-primary no-corner"
+            href={"https://github.com/teodosii/react-notifications-component"}
+          >
+            View on Github
+          </a>
         </div>
       </div>
     </div>
