@@ -62,7 +62,6 @@ export function getTitle(type) {
 }
 
 export function getMessage(type) {
-  console.log(type);
   switch (type) {
     case "success":
       return successMessages[Math.floor(Math.random() * successMessages.length)];

@@ -4,8 +4,7 @@ import { install, usage } from "../helpers/code";
 import ContainerExample from "./examples/ContainerExample";
 import TypeExample from "./examples/TypeExample";
 import InsertExample from "./examples/InsertExample";
-import Options from "./Options";
-import { AnimationInExample, AnimationOutExample } from "./examples/AnimationExample";
+import AnimationWrapper from "./examples/AnimationExample";
 import CustomContentExample from "./examples/CustomContentExample";
 import UsageExample from "./examples/UsageExample";
 
@@ -47,9 +46,7 @@ const Examples = ({ addNotification }) => {
       <TypeExample addNotification={addNotification} />
       <CustomContentExample addNotification={addNotification} />
       <InsertExample addNotification={addNotification} />
-      <AnimationInExample addNotification={addNotification} />
-      <AnimationOutExample addNotification={addNotification} />
-      <Options />
+      <AnimationWrapper addNotification={addNotification} />
     </React.Fragment>
   );
 };
