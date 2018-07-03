@@ -68,6 +68,7 @@ class ReactNotificationComponent extends React.Component {
     });
   }
 
+  // part of API
   addNotification(object) {
     // call will throw exception if object does not match rules
     const notification = getNotificationOptions(
@@ -85,6 +86,7 @@ class ReactNotificationComponent extends React.Component {
     return notification.id;
   }
 
+  // part of API
   removeNotification(id) {
     this.setState({
       notifications: this.state.notifications.map((item) => {

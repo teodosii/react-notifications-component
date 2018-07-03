@@ -295,7 +295,21 @@ export default class ReactNotification extends React.Component {
       );
     }
 
-    const htmlCloseIconContent = getIconHtmlContent(notification, this.onClickHandler);
+    const icon =
+      <div
+        className="notification-close"
+        onClick={this.onClickHandler}>
+        <span>&times;</span>
+      </div>;
+
+    const htmlCloseIconContent = notification.dismissIcon ?
+      getIconHtmlContent(notification, this.onClickHandler) :
+      icon;
+
+    let notificationTitle;
+    if (notification.title) {
+      notificationTitle = <h4 className="notification-title">{notification.title}</h4>;
+    }
 
     return (
       <div
@@ -317,15 +331,7 @@ export default class ReactNotification extends React.Component {
         >
           <div className="notification-content">
             {htmlCloseIconContent}
-            <div
-              className="notification-close"
-              onClick={this.onClickHandler}
-            >
-              <span>&times;</span>
-            </div>
-            <h4 className="notification-title">
-              {this.props.notification.title}
-            </h4>
+            {notificationTitle}
             <p className="notification-message">
               {this.props.notification.message}
             </p>
