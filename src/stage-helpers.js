@@ -30,7 +30,8 @@ export function slidingExitTransition(notification) {
   return getCubicBezierTransition(
     notification.slidingExit.duration,
     notification.slidingExit.cubicBezier,
-    notification.slidingExit.delay
+    notification.slidingExit.delay,
+    "all"
   );
 }
 
