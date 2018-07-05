@@ -62,7 +62,7 @@ class App extends React.Component {
 To run application locally in development mode run the following NPM scripts
 
 ```
-npm run build library
+npm run build:library
 npm run start
 ```
 
