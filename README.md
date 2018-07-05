@@ -20,7 +20,7 @@ In order not to have positional conflicts with other DOM elements, you need to p
 
 Once you have a reference to `ReactNotificationsComponent`, call API method `addNotification` with options as the only argument. For further information on supported options, check documentation.
 
-```
+```jsx
 import React from "react";
 import ReactNotification from "react-notifications-component";
 
