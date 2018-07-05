@@ -1,8 +1,8 @@
 {
   "name": "react-notifications-component",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "homepage": "http://teodosii.github.io/react-notifications-component",
-  "description": "Awesome notifications component for React.js",
+  "description": "React component for creating notifications on the fly",
   "main": "index.js",
   "scripts": {
     "prod": "webpack --config webpack.prod.js",
