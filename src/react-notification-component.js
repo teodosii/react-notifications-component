@@ -7,10 +7,8 @@ import {
   getNotificationOptions
 } from "./helpers";
 
-import {
-  INSERTION,
-  NOTIFICATION_STAGE
-} from "./constants";
+import { INSERTION, NOTIFICATION_STAGE } from "./constants";
+import "./scss/notification.scss";
 
 class ReactNotificationComponent extends React.Component {
   constructor(props) {

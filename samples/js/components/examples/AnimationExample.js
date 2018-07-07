@@ -15,7 +15,6 @@ function AnimationInExample({ addNotification }) {
       animationIn: htmlClasses,
       container: getContainer(),
       message: getMessage(type),
-      title: getTitle(type),
       type
     }));
   };
@@ -48,7 +47,6 @@ function AnimationOutExample({ addNotification }) {
       animationOut: htmlClasses,
       container: getContainer(),
       message: getMessage(type),
-      title: getTitle(type),
       dismiss: null,
       type
     }));

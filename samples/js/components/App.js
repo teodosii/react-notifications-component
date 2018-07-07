@@ -1,5 +1,5 @@
 import React from "react";
-import ReactNotification from "react-notifications-component";
+import ReactNotification from "rc-notifications/react-notification-component";
 import Header from "./Header";
 import Content from "./Content";
 
