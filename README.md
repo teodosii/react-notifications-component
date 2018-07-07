@@ -59,11 +59,19 @@ class App extends React.Component {
 
 ## Development
 
-To run application locally in development mode run the following NPM scripts
+To run application locally in development mode run the following scripts
 
+```sh
+$ npm run build:library
+$ npm run start
 ```
-npm run build:library
-npm run start
+
+## Test
+
+Run all tests by running the following script
+
+```sh
+$ npm run test
 ```
 
 ### Features
