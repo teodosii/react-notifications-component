@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const webpack = require("webpack");
@@ -17,6 +19,17 @@ module.exports = {
     libraryTarget: "commonjs2"
   },
 
+  optimization: {
+    minimizer: [
+      new UglifyJSPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  },
+
   resolve: {
     extensions: [".js", ".jsx", ".json"]
   },
@@ -30,10 +43,21 @@ module.exports = {
       test: /\.(js|jsx)$/,
       use: ["eslint-loader"],
       include: /src/
+    }, {
+      test: /\.(css|scss)$/,
+      use: [
+        { loader: MiniCssExtractPlugin.loader },
+        { loader: "css-loader" },
+        { loader: "sass-loader" }
+      ],
+      include: /src/
     }]
   },
 
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "theme.css"
+    }),
     new CleanWebpackPlugin(["dist"]),
     new UglifyJSPlugin({
       sourceMap: true

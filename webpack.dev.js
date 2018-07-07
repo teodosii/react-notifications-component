@@ -27,6 +27,14 @@ module.exports = {
       test: /\.(js|jsx)$/,
       use: ["eslint-loader"],
       include: /src/
+    }, {
+      test: /\.(css|scss)$/,
+      use: [
+        { loader: "style-loader" },
+        { loader: "css-loader" },
+        { loader: "sass-loader" }
+      ],
+      include: /src/
     }]
   },
 

@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -19,24 +20,23 @@ module.exports = {
 
   resolve: {
     alias: {
-      "react-notifications-component": path.resolve(__dirname, "dist/react-notifications-component.js")
+      "rc-notifications": path.resolve(__dirname, "src"),
     },
-    extensions: [".js", ".jsx", ".json"]
+    extensions: [".js", ".jsx", ".css", ".scss"]
   },
 
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
       use: ["babel-loader"],
-      include: /samples/
+      exclude: /node_modules/
     }, {
       test: /\.(css|scss)$/,
       use: [
         { loader: MiniCssExtractPlugin.loader },
         { loader: "css-loader" },
         { loader: "sass-loader" }
-      ],
-      include: /samples/
+      ]
     }, {
       test: /\.(png|svg|jpg|gif)$/,
       use: ["file-loader"]
@@ -49,6 +49,8 @@ module.exports = {
   optimization: {
     minimizer: [
       new UglifyJSPlugin({
+        cache: true,
+        parallel: true,
         sourceMap: true
       }),
       new OptimizeCSSAssetsPlugin({})
@@ -56,6 +58,7 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       inject: true,
       template: "./samples/html/index.html"

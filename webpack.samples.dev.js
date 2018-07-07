@@ -12,39 +12,34 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "samples.js"
+    filename: "bundle.js"
   },
 
   devServer: {
     open: true,
     contentBase: path.join(__dirname, "dist"),
     compress: true
-    
-    // enable this based on your network
-    // host: "192.168.100.3",
-    // port: 8008
   },
 
   resolve: {
     alias: {
-      "react-notifications-component": path.resolve(__dirname, "dist/react-notifications-component.js")
+      "rc-notifications": path.resolve(__dirname, "src"),
     },
-    extensions: [".js", ".jsx", ".json"]
+    extensions: [".js", ".jsx", ".css", ".scss"]
   },
 
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
       use: ["babel-loader"],
-      include: /samples/
+      exclude: /node_modules/
     }, {
       test: /\.(css|scss)$/,
       use: [
         { loader: "style-loader" },
         { loader: "css-loader" },
         { loader: "sass-loader" }
-      ],
-      include: /samples/
+      ]
     }, {
       test: /\.(png|svg|jpg|gif)$/,
       use: ["file-loader"]
