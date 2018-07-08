@@ -51,10 +51,7 @@ export default class ReactNotification extends React.Component {
   }
 
   setDismissTimeout(duration) {
-    const {
-      notification,
-      toggleTimeoutRemoval
-    } = this.props;
+    const { notification, toggleTimeoutRemoval } = this.props;
 
     const timeoutDismissHandler = () => {
       this.setState({

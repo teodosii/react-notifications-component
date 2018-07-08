@@ -40,10 +40,11 @@ export function getChildStyleForTouchTransitionExit(notification, currentX, star
   const touchSwipe = exports.touchSwipeTransition(notification);
   const touchFade = exports.touchFadeTransition(notification);
 
-  // set `opacity` and `left` to pull out notification from screen
   return {
     opacity: 0,
     position: "relative",
+    
+    // set to slide to left or right when swiping based on X position
     left: `${currentX - startX >= 0 ? horizontalLimit : -horizontalLimit}px`,
     transition: `${touchSwipe}, ${touchFade}`
   };
@@ -75,7 +76,7 @@ export function handleSlidingAnimationExit(notification) {
   const animatedElementClasses = getHtmlClassesForType(notification);
 
   if (animationOut) {
-    // add animation classes defined by user if any
+    // add CSS classes if any defined
     animationOut.forEach(item => animatedElementClasses.push(item));
   }
 

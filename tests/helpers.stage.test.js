@@ -5,15 +5,13 @@ import * as Helpers from "../src/helpers";
 describe("Stage helpers", () => {
   const expectedMaxLeft = 2048;
 
-  it("returns CSS style for the exit transition on touch end", () => {
+  it("properly slides notification to left or right based on X swipe position", () => {
     global.window.innerWidth = expectedMaxLeft / 2;
 
     // mock swipe transition
-    StageHelpers.touchSwipeTransition = 
-      jest.fn().mockImplementation(() => "400ms left ease-out 0ms");
+    StageHelpers.touchSwipeTransition = jest.fn().mockImplementation(() => "400ms left ease-out 0ms");
     // mock fade transition
-    StageHelpers.touchFadeTransition = 
-      jest.fn().mockImplementation(() => "200ms opacity ease-out 0ms");
+    StageHelpers.touchFadeTransition = jest.fn().mockImplementation(() => "200ms opacity ease-out 0ms");
 
     expect(StageHelpers.getChildStyleForTouchTransitionExit(notificationObject, 100, 25)).toEqual({
       opacity: 0,
@@ -39,7 +37,6 @@ describe("Stage helpers", () => {
     const res = StageHelpers.handleSlidingAnimationExit(notification);
 
     expect(res.animatedElementClasses).toEqual(["react-test", "jest-test"]);
-    expect(res.rootElementStyle).not.toBeUndefined();
   });
 
   it("does not add animation classes if `animationOut` is not defined on sliding-animation-exit", () => {
@@ -47,13 +44,12 @@ describe("Stage helpers", () => {
     jest.spyOn(Helpers, "getHtmlClassesForType").mockImplementation(() => ["react-test"]);
 
     // test case where animationOut is not defined on notification
-    const notification = Object.assign({}, notificationObject, { animationOut: null });
+    const notification = Object.assign({}, notificationObject, { animationOut: [] });
     // remove `animationOut` property
     delete notification.animationOut;
     // call method again
     const res = StageHelpers.handleSlidingAnimationExit(notification);
 
     expect(res.animatedElementClasses).toEqual(["react-test"]);
-    expect(res.rootElementStyle).not.toBeUndefined();
   });
 });

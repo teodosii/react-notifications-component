@@ -17,12 +17,10 @@ describe("Wrapper component", () => {
   let node;
 
   // arrow function helpers
-  const getObject = () => Object.assign({}, notificationObject);
-  const instance = () => component.instance();
   const state = () => component.state();
-
-  // add notification helper
-  const addNotification = (notifObject) => instance().addNotification(notifObject);
+  const instance = () => component.instance();
+  const getMock = () => Object.assign({}, notificationObject);
+  const addNotification = (mock) => instance().addNotification(mock);
 
   const triggerResize = (width) => {
     // set initial width
@@ -59,9 +57,9 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notifications
-    addNotification(getObject());
-    addNotification(getObject());
-    addNotification(getObject());
+    addNotification(getMock());
+    addNotification(getMock());
+    addNotification(getMock());
 
     // trigger window resize
     triggerResize(100);
@@ -83,7 +81,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification and store id
-    let id = addNotification(getObject());
+    let id = addNotification(getMock());
 
     // manually remove notification
     instance().removeNotification(id);
@@ -107,7 +105,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification
-    let id = addNotification(getObject());
+    let id = addNotification(getMock());
 
     // call `toggleTimeoutRemoval`
     instance().toggleTimeoutRemoval({ id });
@@ -129,7 +127,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification
-    let id = addNotification(getObject());
+    let id = addNotification(getMock());
     const dismissable = { click: true };
 
     // trigger click
@@ -150,7 +148,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification
-    const id = addNotification(getObject());
+    const id = addNotification(getMock());
     const dismissable = {};
 
     // trigger click
@@ -171,7 +169,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification
-    let id = addNotification(getObject());
+    let id = addNotification(getMock());
 
     // toggle touch end
     instance().toggleTouchEnd({ id });
@@ -189,7 +187,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notifications
-    let id = addNotification(getObject());
+    let id = addNotification(getMock());
 
     // expect lengt to match number of added notifications
     expect(state().notifications.length).toBe(1);

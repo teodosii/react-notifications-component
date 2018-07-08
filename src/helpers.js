@@ -585,17 +585,17 @@ export function getNotificationOptions(options, userDefinedTypes) {
   notification.touchSlidingBack = validateTransition(touchSlidingBack, swipeBackDefaults);
 
   // let it empty object if undefined
-  notification.touchSlidingExit = notification.touchSlidingExit || {};
+  notification.touchSlidingExit = touchSlidingExit || {};
 
   // set defaults for swipe transition when swipe is complete
   notification.touchSlidingExit.swipe = validateTransition(
-    touchSlidingExit.swipe || {},
+    notification.touchSlidingExit.swipe || {},
     swipeExitDefaults
   );
 
   // set defaults for fade transition when swipe is complete
   notification.touchSlidingExit.fade = validateTransition(
-    touchSlidingExit.fade || {},
+    notification.touchSlidingExit.fade || {},
     swipeCompleteDefaults
   );
 
