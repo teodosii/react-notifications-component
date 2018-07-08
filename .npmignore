@@ -1,0 +1,12 @@
+coverage/
+node_modules/
+samples/
+src/
+tests/
+.babelrc
+.gitignore
+.eslintrc.js
+.editorconfig
+jest.config.js
+webpack.*.js
+*.log
