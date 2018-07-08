@@ -7,6 +7,12 @@ export default class CustomContentExample extends React.Component {
   constructor(props) {
     super(props);
     this.add = this.add.bind(this);
+    this.cachedImage = null;
+  }
+
+  componentDidMount() {
+    this.cachedImage = new Image();
+    this.cachedImage.src = reactImage;
   }
 
   add() {
@@ -18,7 +24,7 @@ export default class CustomContentExample extends React.Component {
       content: (
         <div className="custom-image-content">
           <img
-            src={reactImage}
+            src={this.cachedImage.src}
             alt=""
           />
         </div>
