@@ -1,6 +1,22 @@
 # react-notifications-component
 
-React component for creating notifications on the fly. Very configurable and easy to use API.
+Highly configurable and easy to use React component to render notifications.
+
+### Features
+
+- Touch support
+- Responsive notifications
+- Custom notification types
+- Custom notification content (images, icons etc)
+- Dismiss after number of seconds
+- Dismissable by swiping
+- Dismissable by clicking
+- Dismissable by custom X icon
+- Custom animations on show
+- Custom animations on exit
+- Custom transitions on sliding
+- Custom transitions on swiping
+- Top/bottom notification insertion
 
 ## Demo
 
@@ -8,17 +24,17 @@ https://teodosii.github.io/react-notifications-component/
 
 ## Install
 
-`react-notifications-component` is available on NPM and can be installed directly by running:
-
-```sh
-$ npm install react-notifications-component
+```
+npm install react-notifications-component
 ```
 
 ## Usage
 
-In order not to have positional conflicts with other DOM elements, you need to place `ReactNotificationsComponent` component at the root level of the application to work properly. Otherwise notifications may not show properly.
+You must place `ReactNotificationsComponent` component at the root level of the application in order to work properly, otherwise it might conflict with other DOM elements due to the positioning.
 
-Once you have a reference to `ReactNotificationsComponent`, call API method `addNotification` with options as the only argument. For further information on supported options, check documentation.
+Use ref arrow syntax when declaring `ReactNotificationsComponent` in order to have access to internal method `addNotification`. All API methods provided must be called like this.
+
+For further information on supported options, check documentation.
 
 ```jsx
 import React from "react";
@@ -59,31 +75,13 @@ class App extends React.Component {
 
 ## Development
 
-To run application locally in development mode run the following scripts
-
-```sh
-$ npm run build:library
-$ npm run start
+```
+npm run build:library
+npm run start
 ```
 
 ## Test
 
-Run all tests by running the following script
-
-```sh
-$ npm run test
 ```
-
-### Features
-
-- Highly configurable
-- Touch support on mobile devices
-- Responsive notifications
-- Predefined containers for both mobile and desktop
-- Predefined notification types
-- Custom content
-- Custom notification type
-- Timeout option for dismissal
-- Custom animations
-- Custom transitions
-- Both top and bottom insertion in container
+npm run test
+```
