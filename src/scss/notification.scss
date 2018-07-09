@@ -59,7 +59,6 @@
 
 .notification-item-root { 
   width: 275px;
-  max-width: 275px;
   margin-bottom: 15px;
 }
 
@@ -86,31 +85,7 @@
   visibility: visible;
 }
 
-.notification-icon {
-  position: relative;
-  display: inline-block;
-  flex-basis: 20%;
-
-  .fa {
-    top: 50%;
-    left: 50%;
-    color: #fff;
-    font-size: 36px;
-    position: absolute;
-    transform: translate(-50%, -50%);
-  }
-}
-
-.notification-icon-content,
 .notification-content {
   padding: 8px 15px;
   display: inline-block;
-}
-
-.notification-icon-content {
-  flex-basis: 80%;
-}
-
-.notification-content {
-  flex-basis: 100%;
 }
