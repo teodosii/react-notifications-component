@@ -1,13 +1,13 @@
 {
   "name": "react-notifications-component",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
-  "main": "index.js",
+  "main": "dist/react-notifications-component.js",
   "scripts": {
     "prod": "webpack --config webpack.prod.js",
     "prod:samples": "webpack --config webpack.samples.prod.js",
-    "build:prod": "npm run prod && npm run prod:samples",
+    "build:prod": "npm run prod:samples",
     "build:library": "webpack --config webpack.dev.js",
     "build:samples": "webpack --config webpack.samples.dev.js",
     "watch:library": "webpack -w --config webpack.dev.js",
@@ -16,12 +16,22 @@
     "predeploy": "npm run build:prod",
     "deploy": "gh-pages -d dist"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/teodosii/react-notifications-component"
+  },
+  "bugs": {
+    "url": "https://github.com/teodosii/react-notifications-component/issues"
+  },
   "keywords": [
     "react",
     "reactjs",
     "component",
     "notification",
-    "notifications"
+    "notifications",
+    "snackbar",
+    "toast",
+    "toast notification"
   ],
   "author": "Rares Mardare",
   "license": "MIT",
