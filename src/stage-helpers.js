@@ -43,7 +43,7 @@ export function getChildStyleForTouchTransitionExit(notification, currentX, star
   return {
     opacity: 0,
     position: "relative",
-    
+
     // set to slide to left or right when swiping based on X position
     left: `${currentX - startX >= 0 ? horizontalLimit : -horizontalLimit}px`,
     transition: `${touchSwipe}, ${touchFade}`

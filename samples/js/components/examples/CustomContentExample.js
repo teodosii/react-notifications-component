@@ -6,7 +6,12 @@ import { getContainer } from "../../helpers/randomize";
 export default class CustomContentExample extends React.Component {
   constructor(props) {
     super(props);
+
+    // set method bindings
     this.add = this.add.bind(this);
+    this.addCustomIcon = this.addCustomIcon.bind(this);
+
+    // used to preload image
     this.cachedImage = null;
   }
 
@@ -15,11 +20,38 @@ export default class CustomContentExample extends React.Component {
     this.cachedImage.src = reactImage;
   }
 
-  add() {
-    const { addNotification } = this.props;
+  addCustomIcon(type, iconClassName) {
+    let message;
 
-    addNotification(Object.assign({}, notification, {
+    if (type === "success") {
+      message = "Your agenda has been successfully synced";
+    } else if (type === "warning") {
+      message = "Warning! All your data will be lost if you proceed";
+    } else if (type === "danger") {
+      message = "Error! You have no update rights";
+    }
+
+    this.props.addNotification(Object.assign({}, notification, {
       width: 275,
+      container: getContainer(),
+      content: (
+        <div className={`notification-custom-${type}`}>
+          <div className="notification-custom-icon">
+            <i className={iconClassName} />
+          </div>
+          <div className="notification-custom-content">
+            <p className="notification-message">
+              {message}
+            </p>
+          </div>
+        </div>
+      )
+    }));
+  }
+
+  add() {
+    this.props.addNotification(Object.assign({}, notification, {
+      width: 325,
       container: getContainer(),
       content: (
         <div className="custom-image-content">
@@ -41,9 +73,34 @@ export default class CustomContentExample extends React.Component {
             With <code className="white-code">react-notifications-component</code> notification's content can be customised to suit your needs.
           </div>
           <div>
-            <button className="btn btn-outline-secondary" onClick={this.add}>
+            <button
+              className="btn btn-outline-secondary"
+              onClick={this.add}
+            >
               Custom Image Content
             </button>
+            <div>
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => this.addCustomIcon("success", "fa fa-check-circle")}
+              >
+                Success with Icon
+              </button>
+              {" "}
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => this.addCustomIcon("danger", "fa fa-exclamation-circle")}
+              >
+                Danger with Icon
+              </button>
+              {" "}
+              <button
+                className="btn btn-outline-secondary"
+                onClick={() => this.addCustomIcon("warning", "fa fa-exclamation-triangle")}
+              >
+                Warning with Icon
+              </button>
+            </div>
           </div>
         </div>
       </div>

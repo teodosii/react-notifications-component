@@ -5,9 +5,9 @@ const containers = ["top-left", "top-right", "bottom-left", "bottom-right"];
 const types = ["success", "danger", "warning", "default", "info", "awesome"];
 
 const successMessages = [
-  "Update was successfully",
-  "Your meeting has been attended successfully",
-  "Document has been updated successfully"
+  "All your data has been successfully updated",
+  "Your meeting has been successfully attended",
+  "Document has been successfully updated"
 ];
 
 const errorMessages = [

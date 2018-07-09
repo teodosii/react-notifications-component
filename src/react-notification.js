@@ -295,7 +295,8 @@ export default class ReactNotification extends React.Component {
     const icon =
       <div
         className="notification-close"
-        onClick={this.onClickHandler}>
+        onClick={this.onClickHandler}
+      >
         <span>&times;</span>
       </div>;
 
