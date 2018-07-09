@@ -207,8 +207,12 @@ strong {
   }
 }
 
-.custom-image-content img {
-  width: 275px;
-  height: auto;
-  display: block;
+.custom-image-content {
+  width: 100%;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
 }
