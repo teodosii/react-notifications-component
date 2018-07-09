@@ -2,6 +2,10 @@
 
 Highly configurable and easy to use React component to render notifications.
 
+## Demo
+
+https://teodosii.github.io/react-notifications-component/
+
 ### Features
 
 - Touch support
@@ -17,10 +21,6 @@ Highly configurable and easy to use React component to render notifications.
 - Custom transitions on sliding
 - Custom transitions on swiping
 - Top/bottom notification insertion
-
-## Demo
-
-https://teodosii.github.io/react-notifications-component/
 
 ## Install
 
