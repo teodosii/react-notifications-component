@@ -88,10 +88,15 @@ npm run test
 
 ### API
 
-##### `addNotification(options)`
+#### `addNotification(options)`
 
-Render a new notification. Options will be valided internally and an error will be thrown if validation fails. Method returns a unique ID representing the rendered notification.
+Render a new notification. Method returns a unique ID representing the rendered notification. Options object is internally validated and an exception will be thrown if validation fails.
 
-##### `removeNotification(id)`
+#### `removeNotification(id)`
 
 Manually remove a notification by ID. Nothing will happen if notification does not exist.
+
+
+### Documentation
+
+- in progress
