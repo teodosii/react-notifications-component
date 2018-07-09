@@ -2,7 +2,7 @@
 
 Highly configurable and easy to use React component to render notifications.
 
-## Demo
+### Demo
 
 https://teodosii.github.io/react-notifications-component/
 
@@ -22,13 +22,13 @@ https://teodosii.github.io/react-notifications-component/
 - Custom transitions on swiping
 - Top/bottom notification insertion
 
-## Install
+### Install
 
 ```
 npm install react-notifications-component
 ```
 
-## Usage
+### Usage
 
 You must place `ReactNotificationsComponent` component at the root level of the application in order to work properly, otherwise it might conflict with other DOM elements due to the positioning.
 
@@ -73,14 +73,14 @@ class App extends React.Component {
 }
 ```
 
-## Development
+### Development
 
 ```
 npm run build:library
 npm run start
 ```
 
-## Test
+### Test
 
 ```
 npm run test
