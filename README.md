@@ -115,9 +115,9 @@ Manually remove a notification by ID. Nothing will happen if notification does n
 | dismissIcon      | `Object`          | Specify `className` (array of CSS classes) and `content` (valid `React` component) for custom X icon                                                     |
 | animationIn      | `Array`           | CSS classes used to animate notification on show                                                                                                         |
 | animationOut     | `Array`           | CSS classes used to animate notification on removal                                                                                                      |
-| slidingEnter     | `Object`          | Specify `duration` (ms), `cubicBezier` ( timing function) and `delay` (ms) for notification show transition                                              |
-| slidingExit      | `Object`          | Specify `duration` (ms), `cubicBezier` ( timing function) and `delay` (ms) for notification removal transition                                           |
-| touchSlidingBack | `Object`          | Specify `duration` (ms), `cubicBezier` ( timing function) and `delay` (ms) for reverting swipe transition                                                |
+| slidingEnter     | `Object`          | Specify `duration` (ms), `cubicBezier` (timing function) and `delay` (ms) for notification show transition                                              |
+| slidingExit      | `Object`          | Specify `duration` (ms), `cubicBezier` (timing function) and `delay` (ms) for notification removal transition                                           |
+| touchSlidingBack | `Object`          | Specify `duration` (ms), `cubicBezier` (timing function) and `delay` (ms) for reverting swipe transition                                                |
 | touchSlidingExit | `Object`          | Specify `duration` (ms), `cubicBezier` (timing function) and `delay` (ms) for `swipe` and `fade` transitions when touch is complete                      |
 | dismiss          | `Object`          | Specify `duration` (ms) after which time notification is automatically removed (`0` means `infinite`)                                                    |
 | width            | `Number`          | Overwrite notification's width defined by stylesheets                                                                                                    |
