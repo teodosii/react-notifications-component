@@ -2,7 +2,10 @@ module.exports = {
   "verbose": true,
   "snapshotSerializers": ["enzyme-to-json/serializer"],
   "setupTestFrameworkScriptFile": "<rootDir>/tests/utils/setup.js",
-  "collectCoverage": true,
+  "collectCoverage": false,
   "collectCoverageFrom": ["src/*.js"],
-  "coverageDirectory": "coverage"
+  "coverageDirectory": "coverage",
+  "moduleNameMapper": {
+    "\\.(css|scss)$": "<rootDir>/tests/utils/style.mock.js"
+  }
 };
