@@ -100,7 +100,7 @@ Render a new notification. Method returns a unique ID representing the rendered 
 Manually remove a notification by ID. Nothing will happen if notification does not exist.
 
 
-### Documentation
+### Options
 
 | Name             | Type              | Description                                                                                                                                              |
 |------------------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|

@@ -2,10 +2,7 @@ module.exports = {
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
+    "sourceType": "module"
   },
   "extends": [
     "eslint:recommended",
@@ -22,6 +19,7 @@ module.exports = {
   "rules": {
     "quotes": "off",
     "linebreak-style": "off",
+    "import/no-cycle": "off",
     "comma-dangle": "off",
     "react/prop-types": "off",
     "allowShortCircuit": true,
