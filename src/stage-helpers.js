@@ -1,7 +1,7 @@
+import { cssWidth } from "./utils";
 import {
   getHtmlClassesForType,
-  getCubicBezierTransition,
-  cssWidth
+  getCubicBezierTransition
 } from './helpers';
 
 export function touchSwipeTransition(notification) {

@@ -57,9 +57,9 @@ class ReactNotificationComponent extends React.Component {
     this.setState({
       notifications: this.state.notifications.map((item) => {
         const object = item;
-        object.stage = object.id === notification.id ?
-          NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT :
-          object.stage;
+        object.stage = object.id === notification.id
+          ? NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT
+          : object.stage;
 
         return object;
       })
@@ -75,10 +75,9 @@ class ReactNotificationComponent extends React.Component {
       this.state.userDefinedTypes
     );
 
-    const notifications =
-      notification.insert.toLowerCase() === INSERTION.TOP ?
-        [notification].concat(this.state.notifications) :
-        this.state.notifications.concat([notification]);
+    const notifications = notification.insert.toLowerCase() === INSERTION.TOP
+      ? [notification].concat(this.state.notifications)
+      : this.state.notifications.concat([notification]);
 
     this.setState({ notifications });
     return notification.id;
@@ -113,9 +112,8 @@ class ReactNotificationComponent extends React.Component {
   }
 
   onNotificationClick(notification) {
-    const hasDismissOption =
-      notification.dismissable.click ||
-      notification.dismissable.icon;
+    const hasDismissOption = notification.dismissable.click
+      || notification.dismissable.icon;
 
     if (hasDismissOption) {
       requestAnimationFrame(() => {

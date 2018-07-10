@@ -13,6 +13,7 @@ import {
 } from "./constants";
 
 import {
+  cssWidth,
   isNullOrUndefined,
   isString,
   isNumber,
@@ -24,29 +25,25 @@ import ERROR from "./errors";
 
 export function isBottomContainer(container) {
   return (
-    container === CONTAINER.BOTTOM_LEFT ||
-    container === CONTAINER.BOTTOM_RIGHT
+    container === CONTAINER.BOTTOM_LEFT
+    || container === CONTAINER.BOTTOM_RIGHT
   );
 }
 
 export function isTopContainer(container) {
   return (
-    container === CONTAINER.TOP_LEFT ||
-    container === CONTAINER.TOP_RIGHT
+    container === CONTAINER.TOP_LEFT
+    || container === CONTAINER.TOP_RIGHT
   );
 }
 
 export function shouldNotificationHaveSliding(notification) {
   return (
     // slide DOWN if container is top and insertion is at top
-    (notification.insert === INSERTION.TOP && isTopContainer(notification.container)) ||
+    (notification.insert === INSERTION.TOP && isTopContainer(notification.container))
     // slide UP if container is bottom and insertion is at bottom
-    (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container))
+    || (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container))
   );
-}
-
-export function cssWidth(width) {
-  return width ? `${width}px` : undefined;
 }
 
 function htmlClassesForExistingType(type) {
@@ -77,7 +74,9 @@ export function getHtmlClassesForType(notification) {
   if (notification.content) {
     // return only base class if type is not defined
     return [NOTIFICATION_BASE_CLASS];
-  } else if (isNullOrUndefined(userDefinedTypes)) {
+  }
+
+  if (isNullOrUndefined(userDefinedTypes)) {
     // existing type
     return htmlClassesForExistingType(type);
   }
@@ -206,9 +205,13 @@ export function handleStageTransition(notification, state) {
 
   if (notification.stage === NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT) {
     return handleTouchSlidingAnimationExit(notification, currentX, startX);
-  } else if (notification.stage === NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT) {
+  }
+
+  if (notification.stage === NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT) {
     return handleSlidingAnimationExit(notification);
-  } else if (notification.resized) {
+  }
+
+  if (notification.resized) {
     // window got resized, do not apply animations
     rootElementStyle = stateRootStyle;
     animatedElementClasses = getHtmlClassesForType(notification);
@@ -310,7 +313,9 @@ export function validateAnimationIn(animationIn) {
 export function validateAnimationOut(animationOut) {
   if (isNullOrUndefined(animationOut)) {
     return [];
-  } else if (!isArray(animationOut)) {
+  }
+
+  if (!isArray(animationOut)) {
     // must be an array
     throw new Error(ERROR.ANIMATION_OUT);
   }
@@ -406,19 +411,21 @@ export function validateType(notification, userDefinedTypes) {
   if (content) {
     // skip
     return undefined;
-  } else if (isNullOrUndefined(type)) {
+  }
+
+  if (isNullOrUndefined(type)) {
     // type is required
     throw new Error(ERROR.TYPE_REQUIRED);
   } else if (!isString(type)) {
     // type must be a String
     throw new Error(ERROR.TYPE_STRING);
   } else if (
-    isNullOrUndefined(userDefinedTypes) &&
-    type !== NOTIFICATION_TYPE.SUCCESS &&
-    type !== NOTIFICATION_TYPE.DANGER &&
-    type !== NOTIFICATION_TYPE.INFO &&
-    type !== NOTIFICATION_TYPE.DEFAULT &&
-    type !== NOTIFICATION_TYPE.WARNING
+    isNullOrUndefined(userDefinedTypes)
+    && type !== NOTIFICATION_TYPE.SUCCESS
+    && type !== NOTIFICATION_TYPE.DANGER
+    && type !== NOTIFICATION_TYPE.INFO
+    && type !== NOTIFICATION_TYPE.DEFAULT
+    && type !== NOTIFICATION_TYPE.WARNING
   ) {
     throw new Error(ERROR.TYPE_NOT_EXISTENT);
   }
@@ -475,7 +482,9 @@ export function validateInsert(insert) {
   if (isNullOrUndefined(insert)) {
     // default to top if not defined
     return "top";
-  } else if (!isString(insert)) {
+  }
+
+  if (!isString(insert)) {
     // must be a string value (top|bottom)
     throw new Error(ERROR.INSERT_STRING);
   }
@@ -499,12 +508,12 @@ export function validateUserDefinedTypes(notification, definedTypes) {
   if (content) return undefined;
 
   if (
-    type === NOTIFICATION_TYPE.SUCCESS ||
-    type === NOTIFICATION_TYPE.DANGER ||
-    type === NOTIFICATION_TYPE.INFO ||
-    type === NOTIFICATION_TYPE.DEFAULT ||
-    type === NOTIFICATION_TYPE.WARNING ||
-    isNullOrUndefined(definedTypes)
+    type === NOTIFICATION_TYPE.SUCCESS
+    || type === NOTIFICATION_TYPE.DANGER
+    || type === NOTIFICATION_TYPE.INFO
+    || type === NOTIFICATION_TYPE.DEFAULT
+    || type === NOTIFICATION_TYPE.WARNING
+    || isNullOrUndefined(definedTypes)
   ) return undefined;
 
   // search for custom type in array

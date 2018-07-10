@@ -1,3 +1,7 @@
+export function cssWidth(width) {
+  return width ? `${width}px` : undefined;
+}
+
 export function isNullOrUndefined(prop) {
   return prop === null || prop === undefined;
 }

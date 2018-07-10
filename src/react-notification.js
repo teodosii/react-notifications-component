@@ -1,5 +1,6 @@
 import React from "react";
 import { NOTIFICATION_STAGE } from "./constants";
+import { cssWidth } from "./utils";
 import {
   getHtmlClassesForType,
   handleStageTransition,
@@ -7,8 +8,7 @@ import {
   hasFullySwiped,
   getRootHeightStyle,
   getInitialSlidingState,
-  getIconHtmlContent,
-  cssWidth
+  getIconHtmlContent
 } from "./helpers";
 
 export default class ReactNotification extends React.Component {
@@ -153,9 +153,9 @@ export default class ReactNotification extends React.Component {
     };
 
     // if `resize` has been fired then no animation is going to happen
-    if (!notification.resized &&
-      notification.animationIn &&
-      notification.animationIn.length > 0) {
+    if (!notification.resized
+      && notification.animationIn
+      && notification.animationIn.length > 0) {
       notification.animationIn.forEach(item => animatedElementClasses.push(item));
     }
 
@@ -292,17 +292,15 @@ export default class ReactNotification extends React.Component {
       );
     }
 
-    const icon =
-      <div
-        className="notification-close"
-        onClick={this.onClickHandler}
-      >
-        <span>&times;</span>
-      </div>;
+    const icon = <div
+      className="notification-close"
+      onClick={this.onClickHandler}>
+      <span>&times;</span>
+    </div>;
 
-    const htmlCloseIconContent = notification.dismissIcon ?
-      getIconHtmlContent(notification, this.onClickHandler) :
-      icon;
+    const htmlCloseIconContent = notification.dismissIcon
+      ? getIconHtmlContent(notification, this.onClickHandler)
+      : icon;
 
     let notificationTitle;
     if (notification.title) {
