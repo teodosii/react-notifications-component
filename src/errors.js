@@ -16,6 +16,7 @@ export default {
 
   // title
   TITLE_STRING: "`title` must be a String.",
+  TITLE_REQUIRED: "`title` is required",
 
   // message
   MESSAGE_REQUIRED: "`message` is required",

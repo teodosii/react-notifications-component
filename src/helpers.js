@@ -369,10 +369,15 @@ export function validateTransition(transition, defaults) {
 export function validateTitle(notification) {
   const { content, title } = notification;
 
-  // no need to validate if `title` is missing or `content` is present
-  if (content || title === null || title === undefined) return;
+  if (content) {
+    // skip
+    return;
+  }
 
-  if (!isString(title)) {
+  if (title === null || title === undefined) {
+    // title is required
+    throw new Error(ERROR.TITLE_REQUIRED);
+  } else if (!isString(title)) {
     // title must be a String
     throw new Error(ERROR.TITLE_STRING);
   }
@@ -381,12 +386,16 @@ export function validateTitle(notification) {
 export function validateMessage(notification) {
   const { content, message } = notification;
 
-  // option not required if content is defined
-  if (content) return;
+  if (content) {
+    // skip
+    return;
+  }
 
   if (message === null || message === undefined) {
+    // message is required
     throw new Error(ERROR.MESSAGE_REQUIRED);
   } else if (!isString(message)) {
+    // message must be a String
     throw new Error(ERROR.MESSAGE_STRING);
   }
 }
@@ -395,7 +404,7 @@ export function validateType(notification, userDefinedTypes) {
   const { content, type } = notification;
 
   if (content) {
-    // option not required if content is defined
+    // skip
     return undefined;
   } else if (isNullOrUndefined(type)) {
     // type is required

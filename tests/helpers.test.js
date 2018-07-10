@@ -244,11 +244,11 @@ describe("Helpers", () => {
     // expect to skip for defined `content`
     expect(validateTitle({ content: {} })).toBeUndefined();
 
-    // expect not to throw for undefined
-    expect(() => validateMessage({})).not.toThrow();
+    // expect to throw for undefined message
+    expect(() => validateTitle({})).toThrow();
 
     // expect to throw for non String values
-    expect(() => validateMessage({ title: 0 })).toThrow();
+    expect(() => validateTitle({ title: 0 })).toThrow();
   });
 
   it("validates message option", () => {
