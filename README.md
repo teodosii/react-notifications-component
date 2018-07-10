@@ -12,8 +12,9 @@ https://teodosii.github.io/react-notifications-component/
 
 - Touch support
 - Responsive notifications
+- Predefined standard notification types (`default`, `success`, `info`, `danger`, `warning`)
 - Custom notification types
-- Custom notification content (images, icons etc)
+- Custom notification content (`images`, `icons` etc)
 - Dismiss after number of seconds
 - Dismissable by swiping
 - Dismissable by clicking
