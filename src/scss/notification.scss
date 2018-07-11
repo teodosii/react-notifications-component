@@ -1,6 +1,13 @@
 @import "./_containers.scss";
 @import "./_types.scss";
 
+.notification-item-root,
+.notification-title,
+.notification-message,
+.notification-item {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .notification-item {
   position: relative;
 }
@@ -71,17 +78,18 @@
 
 .notification-message {
   font-size: 14px;
+  line-height: 150%;
+  word-wrap: break-word;
   margin-bottom: 0;
   margin-top: 0;
-  word-wrap: break-word;
 }
 
-.invisible {
+.notification-invisible {
   visibility: hidden;
   max-width: 375px;
 }
 
-.visible {
+.notification-visible {
   visibility: visible;
 }
 
