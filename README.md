@@ -2,7 +2,7 @@
 
 # react-notifications-component
 
-High configurable and easy to use React Component to notify your users!
+Highly configurable and easy to use React Component to notify your users!
 
 ### Demo
 
