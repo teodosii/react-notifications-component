@@ -19,7 +19,6 @@ export default class ReactNotification extends React.Component {
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.onNotificationClick = this.onNotificationClick.bind(this);
     this.setDismissTimeout = this.setDismissTimeout.bind(this);
-    this.onAnimationEnd = this.onAnimationEnd.bind(this);
 
     // smart sliding end
     this.onSmartSlidingEnd = this.onSmartSlidingEnd.bind(this);
@@ -36,16 +35,19 @@ export default class ReactNotification extends React.Component {
 
     // component's state
     this.state = getInitialSlidingState(props);
-    this.timeoutId = null;
   }
 
   componentDidMount() {
+    // start sliding
     this.smartSliding();
+
+    // set notification to be dismissed by timeout
+    this.setRemovalTimeout(this.props.notification.dismiss);
   }
 
   componentWillUnmount() {
     if (this.timeoutId) {
-      // clear timeout if any
+      // timeout cleanup
       clearTimeout(this.timeoutId);
     }
   }
@@ -67,28 +69,27 @@ export default class ReactNotification extends React.Component {
 
   setRemovalTimeout(dismiss) {
     if (dismiss && dismiss.duration) {
+      // make sure option is defined and set
       this.setDismissTimeout(dismiss.duration);
     }
   }
 
-  onAnimationEnd() {
-    // set to be dismissed by timeout if `dismiss` option is set
-    this.setRemovalTimeout(this.props.notification.dismiss);
-  }
-
   onTransitionEnd() {
-    // sliding has finished, we need to add animation by using classes
+    // sliding has finished
+    // we need to add CSS classes to animate
+
     const { notification } = this.props;
+    const { animationIn } = notification;
 
     // get html classes for type
     const animatedElementClasses = getHtmlClassesForType(notification);
 
-    // this needs to be customized
-    animatedElementClasses.push("visible");
+    // make element visible now
+    animatedElementClasses.push("notification-visible");
 
-    // look if animationIn array option has been filled in
-    if (notification.animationIn && notification.animationIn.length > 0) {
-      notification.animationIn.forEach(item => animatedElementClasses.push(item));
+    if (animationIn && animationIn.length) {
+      // append animation classes
+      animationIn.forEach(item => animatedElementClasses.push(item));
     }
 
     this.setState({
@@ -119,10 +120,14 @@ export default class ReactNotification extends React.Component {
   }
 
   onSmartSlidingEnd() {
-    const { toggleRemoval, notification } = this.props;
+    const { notification } = this.props;
 
-    if (this.endOfSmartSliding) {
-      toggleRemoval(notification);
+    if (
+      !notification.animationOut
+      || !notification.animationOut.length
+      || this.endOfSmartSliding) {
+      // toggle notification removal
+      this.props.toggleRemoval(notification);
     }
 
     // both animationEnd and transitionEnd have finished
@@ -236,13 +241,12 @@ export default class ReactNotification extends React.Component {
     let { childElementStyle } = this.state;
     let { onAnimationEnd } = this;
     let onNotificationClick = null;
-    let onTransitionEnd = null;
     let touchHasEnded = false;
 
-    if (this.state.hasSliding) {
-      // set `onTransitionEnd` event if notification has sliding
-      ({ onTransitionEnd } = this);
-    }
+    // set onTransitionEnd event if notification has sliding
+    let onTransitionEnd = this.state.hasSliding
+      ? this.onTransitionEnd
+      : null;
 
     const stage = handleStageTransition(notification, this.state);
     const animatedElementClasses = (stage.animatedElementClasses || []).join(" ");
