@@ -2,7 +2,7 @@
 
 # react-notifications-component
 
-Highly configurable and easy to use React component to render notifications.
+High configurable and easy to use React Component to notify your users!
 
 ### Demo
 
@@ -106,7 +106,7 @@ Manually remove a notification by ID. Nothing will happen if notification does n
 |------------------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | title            | `String`          | Title of the notification. Field is ignored if `content` is set, otherwise it is required                                                                |
 | message          | `String`          | Message of the notification. Field is ignored if `content` is set, otherwise it is required                                                              |
-| Content          | `React.Component` | Custom notification content, must be a valid `React` component                                                                                           |
+| content          | `React.Component` | Custom notification content, must be a valid `React` component                                                                                           |
 | type             | `String`          | Type of the notification (`success`, `danger`, `default`, `info`, `warning` or `custom`). Field is ignored if `content` is set, otherwise it is required |
 | container        | `String`          | Container in which the notification will be displayed (`top-left`, `top-right`, `bottom-left`, `bottom-right`). Field is required                        |
 | insert           | `String`          | Insert notification at the `top` or at the `bottom` of the container. Defaults to `top`                                                                  |
