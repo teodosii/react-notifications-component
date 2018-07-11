@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![devDependencies Status](https://david-dm.org/teodosii/react-notifications-component/dev-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=dev) [![npm](https://img.shields.io/npm/dm/react-notifications-component.svg)](https://www.npmjs.com/package/react-notifications-component) [![GitHub license](https://img.shields.io/github/license/teodosii/react-notifications-component.svg)](https://github.com/teodosii/react-notifications-component/blob/master/LICENSE)
+[![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![devDependencies Status](https://david-dm.org/teodosii/react-notifications-component/dev-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=dev)
 
 # react-notifications-component
 
