@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  handleTouchSlidingAnimationExit,
-  handleSlidingAnimationExit
-} from "./stage-helpers";
-
+import ERROR from "./errors";
 import {
   NOTIFICATION_BASE_CLASS,
   CONTAINER,
@@ -20,8 +16,6 @@ import {
   isBoolean,
   isArray
 } from "./utils";
-
-import ERROR from "./errors";
 
 export function isBottomContainer(container) {
   return (
@@ -76,7 +70,7 @@ export function getHtmlClassesForType(notification) {
     return [NOTIFICATION_BASE_CLASS];
   }
 
-  if (isNullOrUndefined(userDefinedTypes)) {
+  if (!userDefinedTypes) {
     // existing type
     return htmlClassesForExistingType(type);
   }
@@ -166,13 +160,31 @@ export function getNotificationsForEachContainer(notifications) {
   };
 }
 
+export function getCubicBezierTransition(
+  duration = 500,
+  cubicBezier = "linear",
+  delay = 0,
+  property = "height"
+) {
+  return `${duration}ms ${property} ${cubicBezier} ${delay}ms`;
+}
+
+export function slidingExitTransition(notification) {
+  return getCubicBezierTransition(
+    notification.slidingExit.duration,
+    notification.slidingExit.cubicBezier,
+    notification.slidingExit.delay,
+    "all"
+  );
+}
+
 export function getInitialSlidingState({ notification, isFirstNotification }) {
   // no sliding needed for first notification in container
   const hasSliding = shouldNotificationHaveSliding(notification) && !isFirstNotification;
   const state = {};
 
   // set default classes for animated element
-  state.animatedElementClasses = getHtmlClassesForType(notification);
+  state.animatedElementClasses = exports.getHtmlClassesForType(notification);
   state.rootElementStyle = {
     height: "0",
     marginBottom: 0,
@@ -182,7 +194,7 @@ export function getInitialSlidingState({ notification, isFirstNotification }) {
 
   if (hasSliding) {
     // hide content by toggling visibility while sliding
-    state.animatedElementClasses.push("invisible");
+    state.animatedElementClasses.push("notification-invisible");
   } else if (notification.animationIn && notification.animationIn.length > 0) {
     // add user defined notification classes if sliding will not occur
     notification.animationIn.forEach(item => state.animatedElementClasses.push(item));
@@ -190,6 +202,63 @@ export function getInitialSlidingState({ notification, isFirstNotification }) {
 
   state.hasSliding = hasSliding;
   return state;
+}
+
+export function getChildStyleForTouchTransitionExit(notification, currentX, startX) {
+  const horizontalLimit = window.innerWidth * 2;
+  const touchSwipe = exports.touchSwipeTransition(notification);
+  const touchFade = exports.touchFadeTransition(notification);
+
+  return {
+    opacity: 0,
+    position: "relative",
+
+    // set to slide to left or right when swiping based on X position
+    left: `${currentX - startX >= 0 ? horizontalLimit : -horizontalLimit}px`,
+    transition: `${touchSwipe}, ${touchFade}`
+  };
+}
+
+export function handleTouchSlidingAnimationExit(notification, currentX, startX) {
+  // set current html classes
+  const animatedElementClasses = exports.getHtmlClassesForType(notification);
+  // set opacity and left to pull-out notification
+  const childElementStyle = getChildStyleForTouchTransitionExit(notification, currentX, startX);
+  // sliding out transition
+  const slidingTransition = exports.slidingExitTransition(notification);
+
+  return {
+    childElementStyle,
+    animatedElementClasses,
+    // slide to height 0
+    rootElementStyle: {
+      height: 0,
+      marginBottom: 0,
+      transition: slidingTransition,
+      width: cssWidth(notification.width)
+    },
+  };
+}
+
+export function handleSlidingAnimationExit(notification) {
+  const { animationOut } = notification;
+  const animatedElementClasses = exports.getHtmlClassesForType(notification);
+
+  if (animationOut) {
+    // add CSS classes if any defined
+    animationOut.forEach(item => animatedElementClasses.push(item));
+  }
+
+  return {
+    // slide element to height 0
+    rootElementStyle: {
+      height: 0,
+      marginBottom: 0,
+      transition: slidingExitTransition(notification),
+      width: cssWidth(notification.width)
+    },
+    animatedElementClasses
+  };
 }
 
 export function handleStageTransition(notification, state) {
@@ -214,7 +283,7 @@ export function handleStageTransition(notification, state) {
   if (notification.resized) {
     // window got resized, do not apply animations
     rootElementStyle = stateRootStyle;
-    animatedElementClasses = getHtmlClassesForType(notification);
+    animatedElementClasses = exports.getHtmlClassesForType(notification);
   } else {
     // use values from state
     rootElementStyle = stateRootStyle;
@@ -225,15 +294,6 @@ export function handleStageTransition(notification, state) {
     rootElementStyle,
     animatedElementClasses
   };
-}
-
-export function getCubicBezierTransition(
-  duration = 500,
-  cubicBezier = "linear",
-  delay = 0,
-  property = "height"
-) {
-  return `${duration}ms ${property} ${cubicBezier} ${delay}ms`;
 }
 
 export function hasFullySwiped(diffX) {
@@ -253,6 +313,28 @@ export function getRootHeightStyle(notification, scrollHeight) {
       notification.slidingExit.delay
     )
   };
+}
+
+export function touchSwipeTransition(notification) {
+  const { swipe } = notification.touchSlidingExit;
+
+  return getCubicBezierTransition(
+    swipe.duration,
+    swipe.cubicBezier,
+    swipe.delay,
+    "left"
+  );
+}
+
+export function touchFadeTransition(notification) {
+  const { fade } = notification.touchSlidingExit;
+
+  return getCubicBezierTransition(
+    fade.duration,
+    fade.cubicBezier,
+    fade.delay,
+    "opacity"
+  );
 }
 
 export function getIconHtmlContent(notification, onClickHandler) {
@@ -374,15 +456,12 @@ export function validateTransition(transition, defaults) {
 export function validateTitle(notification) {
   const { content, title } = notification;
 
-  if (content) {
+  if (content || isNullOrUndefined(title)) {
     // skip
     return;
   }
 
-  if (title === null || title === undefined) {
-    // title is required
-    throw new Error(ERROR.TITLE_REQUIRED);
-  } else if (!isString(title)) {
+  if (!isString(title)) {
     // title must be a String
     throw new Error(ERROR.TITLE_STRING);
   }
