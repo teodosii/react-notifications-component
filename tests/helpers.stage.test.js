@@ -1,5 +1,4 @@
 import notificationObject from "./utils/notification.mock";
-import * as StageHelpers from "../src/stage-helpers";
 import * as Helpers from "../src/helpers";
 
 describe("Stage helpers", () => {
@@ -9,18 +8,18 @@ describe("Stage helpers", () => {
     global.window.innerWidth = expectedMaxLeft / 2;
 
     // mock swipe transition
-    StageHelpers.touchSwipeTransition = jest.fn().mockImplementation(() => "400ms left ease-out 0ms");
+    Helpers.touchSwipeTransition = jest.fn().mockImplementation(() => "400ms left ease-out 0ms");
     // mock fade transition
-    StageHelpers.touchFadeTransition = jest.fn().mockImplementation(() => "200ms opacity ease-out 0ms");
+    Helpers.touchFadeTransition = jest.fn().mockImplementation(() => "200ms opacity ease-out 0ms");
 
-    expect(StageHelpers.getChildStyleForTouchTransitionExit(notificationObject, 100, 25)).toEqual({
+    expect(Helpers.getChildStyleForTouchTransitionExit(notificationObject, 100, 25)).toEqual({
       opacity: 0,
       position: "relative",
       left: `${expectedMaxLeft}px`,
       transition: "400ms left ease-out 0ms, 200ms opacity ease-out 0ms"
     });
 
-    expect(StageHelpers.getChildStyleForTouchTransitionExit(notificationObject, -100, 25)).toEqual({
+    expect(Helpers.getChildStyleForTouchTransitionExit(notificationObject, -100, 25)).toEqual({
       opacity: 0,
       position: "relative",
       left: `-${expectedMaxLeft}px`,
@@ -34,7 +33,7 @@ describe("Stage helpers", () => {
 
     // test case where animationOut is defined on notification
     const notification = Object.assign({}, notificationObject, { animationOut: ["jest-test"] });
-    const res = StageHelpers.handleSlidingAnimationExit(notification);
+    const res = Helpers.handleSlidingAnimationExit(notification);
 
     expect(res.animatedElementClasses).toEqual(["react-test", "jest-test"]);
   });
@@ -48,7 +47,7 @@ describe("Stage helpers", () => {
     // remove `animationOut` property
     delete notification.animationOut;
     // call method again
-    const res = StageHelpers.handleSlidingAnimationExit(notification);
+    const res = Helpers.handleSlidingAnimationExit(notification);
 
     expect(res.animatedElementClasses).toEqual(["react-test"]);
   });

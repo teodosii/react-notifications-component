@@ -1,4 +1,5 @@
 import notificationObject from "./utils/notification.mock";
+import { cssWidth } from "../src/utils";
 import {
   isBottomContainer,
   isTopContainer,
@@ -9,7 +10,6 @@ import {
   hasFullySwiped,
   getRootHeightStyle,
   getNotificationsForEachContainer,
-  cssWidth,
   htmlClassesForUserDefinedType,
   validateWidth,
   validateInsert,
@@ -244,8 +244,8 @@ describe("Helpers", () => {
     // expect to skip for defined `content`
     expect(validateTitle({ content: {} })).toBeUndefined();
 
-    // expect to throw for undefined message
-    expect(() => validateTitle({})).toThrow();
+    // expect not to throw for undefined message
+    expect(() => validateTitle({})).not.toThrow();
 
     // expect to throw for non String values
     expect(() => validateTitle({ title: 0 })).toThrow();

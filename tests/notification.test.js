@@ -31,37 +31,36 @@ describe("Notification component", () => {
   });
 
   it("sets timeout for duration > 0", () => {
-    let change = { dismiss: { duration: 2000 } };
-    let notification = Object.assign({}, notificationObject, change);
+    let dismiss = { dismiss: { duration: 2000 } };
+    let notification = Object.assign({}, notificationObject, dismiss);
 
     // mount
     component = mount(<ReactNotification notification={notification} />);
 
-    expect(instance().timeoutId).toBeNull();
-    instance().setRemovalTimeout(notification.dismiss);
-    expect(instance().timeoutId).not.toBeNull();
+    // expect `timeoutId` to have value
+    expect(instance().timeoutId).toBeDefined();
   });
 
   it("does not set timeout for duration = 0", () => {
     // merge object with dismiss
-    const notification = Object.assign({}, notificationObject, { dismiss: { duration: 0 }});
+    const dismiss = { dismiss: { duration: 0 } };
+    const notification = Object.assign({}, notificationObject, dismiss);
+    
     // mount
     component = mount(<ReactNotification notification={notification} />);
 
-    expect(instance().timeoutId).toBeNull();
-    instance().setRemovalTimeout(notification.dismiss);
-    expect(instance().timeoutId).toBeNull();
+    expect(instance().timeoutId).toBeUndefined();
   });
 
   it("does not set timeout for undefined `dismiss`", () => {
     // merge object with dismiss
-    const notification = Object.assign({}, notificationObject, { dimiss: undefined });
+    const dismiss = { dismiss: undefined };
+    const notification = Object.assign({}, notificationObject, dismiss);
+    
     // mount
     component = mount(<ReactNotification notification={notification} />);
 
-    expect(instance().timeoutId).toBeNull();
-    instance().setRemovalTimeout(notification.dismiss);
-    expect(instance().timeoutId).toBeNull();
+    expect(instance().timeoutId).toBeUndefined();
   });
 
   it("clicks notification and calls `onNotificationClick` prop", () => {
