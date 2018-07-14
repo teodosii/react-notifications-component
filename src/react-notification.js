@@ -53,9 +53,16 @@ export default class ReactNotification extends React.Component {
   }
 
   setDismissTimeout(duration) {
-    const { notification, toggleTimeoutRemoval } = this.props;
-
+    // timeout handler
     const timeoutDismissHandler = () => {
+      const {
+        notification,
+        toggleTimeoutRemoval
+      } = this.props;
+
+      // skip timeout removal if it's already in a removal process
+      if (notification.stage === NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT) return;
+
       this.setState({
         rootElementStyle: getRootHeightStyle(
           notification,
@@ -64,6 +71,7 @@ export default class ReactNotification extends React.Component {
       }, () => requestAnimationFrame(() => toggleTimeoutRemoval(notification)));
     };
 
+    // set timeout to automatically dismiss notification
     this.timeoutId = setTimeout(timeoutDismissHandler, duration);
   }
 
