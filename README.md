@@ -121,7 +121,7 @@ Manually remove a notification by ID. Nothing will happen if notification does n
     <td>Message of the notification. Option is ignored if <code>content</code> is set, otherwise it is <b>required</b></td>
   </tr>
   <tr>
-    <td>Content</td>
+    <td>content</td>
     <td><code>React.Component</code></td>
     <td>Custom notification content, must be a valid <code>React</code> component</td>
   </tr>
@@ -143,17 +143,17 @@ Manually remove a notification by ID. Nothing will happen if notification does n
   <tr>
     <td>userDefinedTypes</td>
     <td><code>Array</code></td>
-    <td>Define allowed types when rendering <code>custom</code> types. Specify <code>htmlClasses</code> and <code>name</code> as properties</td>
+    <td>Define allowed types when rendering <code>custom</code> types <ul><li>htmlClasses - <code>Array</code> - CSS classes to be applied to the notification element</li><li>name - <code>String</code> - name of the custom type</li></ul></td>
   </tr>
   <tr>
     <td>dismissable</td>
     <td><code>Object</code></td>
-    <td>Specify how a notification should be manually dismissed - <code>clicking</code> or <code>swiping</code></td>
+    <td>Specify how a notification should be manually dismissed <ul><li>click - <code>Boolean</code> - dismiss by clicking (option defaults to <b>true</b>)</li><li>touch - <code>Boolean</code> - dismiss by swiping on mobile devices (option defaults to <b>true</b>)</li></ul></td>
   </tr>
   <tr>
     <td>dismissIcon</td>
     <td><code>Object</code></td>
-    <td>Specify <code>className</code> (array of CSS classes) and <code>content</code> (valid <code>React</code> component) for custom X icon</td>
+    <td>Custom X icon <ul><li>className - <code>Array</code> - CSS classes to be applied to icon's parent</li><li>content - <code>React.Component</code> - must be a valid React component</li></ul></td>
   </tr>
   <tr>
     <td>animationIn</td>
@@ -168,27 +168,27 @@ Manually remove a notification by ID. Nothing will happen if notification does n
   <tr>
     <td>slidingEnter</td>
     <td><code>Object</code></td>
-    <td>Specify <code>duration</code>, <code>cubicBezier</code> and <code>delay</code> for notification show transition</td>
+    <td>Transition to be used when sliding to show a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>Number</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>slidingExit</td>
     <td><code>Object</code></td>
-    <td>Specify <code>duration</code>, <code>cubicBezier</code> and <code>delay</code> for notification removal transition</td>
+    <td>Transition to be used when sliding to hide a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>Number</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>touchSlidingBack</td>
     <td><code>Object</code></td>
-    <td>Specify <code>duration</code>, <code>cubicBezier</code> and <code>delay</code> for reverting swipe transition</td>
+    <td>Transition to be used when sliding back after an incomplete swipe <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>Number</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>touchSlidingExit</td>
     <td><code>Object</code></td>
-    <td>Specify <code>duration</code>, <code>cubicBezier</code> and <code>delay</code> for <code>swipe</code> and <code>fade</code> transitions when <code>touch</code> is complete</td>
+    <td>Transition to be used when sliding on swipe<ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>Number</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>dismiss</td>
     <td><code>Object</code></td>
-    <td>Specify <code>duration</code> after which time notification is automatically removed (<code>0</code> means <code>infinite</code>)</td>
+    <td>Automatically dismiss a notification after specified timeout <ul><li>duration - <code>Number</code> (ms - <code>0</code> means <code>Infinite</code>)</li></ul></td>
   </tr>
   <tr>
     <td>width</td>
