@@ -76,6 +76,8 @@ class App extends React.Component {
 }
 ```
 
+**Note:** It is important to import `react-notifications-component` CSS theme, which is located in `dist\theme.css`
+
 ### Development
 
 ```
@@ -121,3 +123,14 @@ Manually remove a notification by ID. Nothing will happen if notification does n
 | touchSlidingExit | `Object`          | Specify `duration` (ms), `cubicBezier` (timing function) and `delay` (ms) for `swipe` and `fade` transitions when touch is complete                      |
 | dismiss          | `Object`          | Specify `duration` (ms) after which time notification is automatically removed (`0` means `infinite`)                                                    |
 | width            | `Number`          | Overwrite notification's width defined by stylesheets                                                                                                    |
+
+### Roadmap
+
+- Improve tests for better coverage (up to `100%`)
+- Containers for other positions (`top-center`, `bottom-center`, `center` or even `custom`)
+- Move `react-notifications-component` theme to a separate `npm` package
+- Events support (`onShow`, `onRemoved`, `onClicked`, `onTimeoutDismissed` etc)
+- Show time left (`progress-bar` like)
+- `Modal` notification
+
+**Note**: Some of the above mentioned are only ideas for now and may not be implemented
