@@ -4,11 +4,11 @@
 
 Highly configurable and easy to use React Component to notify your users!
 
-### Demo
+## Demo
 
 https://teodosii.github.io/react-notifications-component/
 
-### Features
+## Features
 
 - Touch support
 - Responsive notifications
@@ -25,13 +25,13 @@ https://teodosii.github.io/react-notifications-component/
 - Custom transitions on swiping
 - Top/bottom notification insertion
 
-### Install
+## Install
 
 ```
 npm install react-notifications-component
 ```
 
-### Usage
+## Usage
 
 You must place `ReactNotificationsComponent` component at the root level of the application in order to work properly, otherwise it might conflict with other DOM elements due to the positioning.
 
@@ -78,53 +78,126 @@ class App extends React.Component {
 
 **Note:** It is important to import `react-notifications-component` CSS theme, which is located in `dist\theme.css`
 
-### Development
+## Development
 
 ```
 npm run build:library
 npm run start
 ```
 
-### Test
+## Test
 
 ```
 npm run test
 ```
 
-### API
+## API
 
-- #### `addNotification(options)`
+`addNotification(options)`
 
 Render a new notification. Method returns a unique ID representing the rendered notification. Supplied options are internally validated and an exception will be thrown if validation fails.
 
-- #### `removeNotification(id)`
+`removeNotification(id)`
 
 Manually remove a notification by ID. Nothing will happen if notification does not exist.
 
 
-### Options
+## Options
 
-| Name             | Type              | Description                                                                                                                                              |
-|------------------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| title            | `String`          | Title of the notification. Field is ignored if `content` is set                                                                |
-| message          | `String`          | Message of the notification. Field is ignored if `content` is set, otherwise it is **required**                                                              |
-| content          | `React.Component` | Custom notification content, must be a valid `React` component                                                                                           |
-| type             | `String`          | Type of the notification (`success`, `danger`, `default`, `info`, `warning` or `custom`). Field is ignored if `content` is set, otherwise it is **required** |
-| container        | `String`          | Container in which the notification will be displayed (`top-left`, `top-right`, `bottom-left`, `bottom-right`). Field is **required**                        |
-| insert           | `String`          | Insert notification at the `top` or at the `bottom` of the container. _Defaults_ to `top`                                                                  |
-| userDefinedTypes | `Array`           | Define allowed types when rendering `custom` types. Specify `htmlClasses` (`Array`) and `name` (`String`) as properties                                                                                |
-| dismissable      | `Object`          | Specify how a notification should be manually dismissed - `clicking` or `swiping`                                                                            |
-| dismissIcon      | `Object`          | Specify `className` (array of CSS classes) and `content` (valid `React` component) for custom X icon                                                     |
-| animationIn      | `Array`           | CSS classes used to animate notification on `show`                                                                                                         |
-| animationOut     | `Array`           | CSS classes used to animate notification on `removal`                                                                                                      |
-| slidingEnter     | `Object`          | Specify `duration`, `cubicBezier` and `delay` for notification show transition                                              |
-| slidingExit      | `Object`          | Specify `duration`, `cubicBezier` and `delay` for notification removal transition                                           |
-| touchSlidingBack | `Object`          | Specify `duration`, `cubicBezier` and `delay` for reverting swipe transition                                                |
-| touchSlidingExit | `Object`          | Specify `duration`, `cubicBezier` and `delay` for `swipe` and `fade` transitions when `touch` is complete                      |
-| dismiss          | `Object`          | Specify `duration` after which time notification is automatically removed (`0` means `infinite`)                                                    |
-| width            | `Number`          | Overwrite notification's `width` defined by stylesheets                                                                                                    |
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>title</td>
+    <td><code>String</code></td>
+    <td>Title of the notification. Option is ignored if <code>content</code> is set</td>
+  </tr>
+  <tr>
+    <td>message</td>
+    <td><code>String</code></td>
+    <td>Message of the notification. Option is ignored if <code>content</code> is set, otherwise it is <b>required</b></td>
+  </tr>
+  <tr>
+    <td>Content</td>
+    <td><code>React.Component</code></td>
+    <td>Custom notification content, must be a valid <code>React</code> component</td>
+  </tr>
+  <tr>
+    <td>type</td>
+    <td><code>String</code></td>
+    <td>Type of the notification (<code>success</code>, <code>danger</code>, <code>default</code>, <code>info</code>, <code>warning</code> or <code>custom</code>). Option is ignored if <code>content</code> is set, otherwise it is <b>required</b></td>
+  </tr>
+  <tr>
+    <td>container</td>
+    <td><code>String</code></td>
+    <td>Container in which the notification will be displayed (<code>top-left</code>, <code>top-right</code>, <code>bottom-left</code>, <code>bottom-right</code>). Option is <b>required<b></td>
+  </tr>
+  <tr>
+    <td>insert</td>
+    <td><code>String</code></td>
+    <td>Insert notification at the <code>top</code> or at the <code>bottom</code> of the container. Option defaults to <code>top</code></td>
+  </tr>
+  <tr>
+    <td>userDefinedTypes</td>
+    <td><code>Array</code></td>
+    <td>Define allowed types when rendering <code>custom</code> types. Specify <code>htmlClasses</code> and <code>name</code> as properties</td>
+  </tr>
+  <tr>
+    <td>dismissable</td>
+    <td><code>Object</code></td>
+    <td>Specify how a notification should be manually dismissed - <code>clicking</code> or <code>swiping</code></td>
+  </tr>
+  <tr>
+    <td>dismissIcon</td>
+    <td><code>Object</code></td>
+    <td>Specify <code>className</code> (array of CSS classes) and <code>content</code> (valid <code>React</code> component) for custom X icon</td>
+  </tr>
+  <tr>
+    <td>animationIn</td>
+    <td><code>Array</code></td>
+    <td>CSS classes used to animate notification on <code>show</code></td>
+  </tr>
+  <tr>
+    <td>animationOut</td>
+    <td><code>Array</code></td>
+    <td>CSS classes used to animate notification on <code>removal</code></td>
+  </tr>
+  <tr>
+    <td>slidingEnter</td>
+    <td><code>Object</code></td>
+    <td>Specify <code>duration</code>, <code>cubicBezier</code> and <code>delay</code> for notification show transition</td>
+  </tr>
+  <tr>
+    <td>slidingExit</td>
+    <td><code>Object</code></td>
+    <td>Specify <code>duration</code>, <code>cubicBezier</code> and <code>delay</code> for notification removal transition</td>
+  </tr>
+  <tr>
+    <td>touchSlidingBack</td>
+    <td><code>Object</code></td>
+    <td>Specify <code>duration</code>, <code>cubicBezier</code> and <code>delay</code> for reverting swipe transition</td>
+  </tr>
+  <tr>
+    <td>touchSlidingExit</td>
+    <td><code>Object</code></td>
+    <td>Specify <code>duration</code>, <code>cubicBezier</code> and <code>delay</code> for <code>swipe</code> and <code>fade</code> transitions when <code>touch</code> is complete</td>
+  </tr>
+  <tr>
+    <td>dismiss</td>
+    <td><code>Object</code></td>
+    <td>Specify <code>duration</code> after which time notification is automatically removed (<code>0</code> means <code>infinite</code>)</td>
+  </tr>
+  <tr>
+    <td>width</td>
+    <td><code>Number</code></td>
+    <td>Overwrite notification's <code>width</code> defined by stylesheets</td>
+  </tr>
+</table>
 
-### Roadmap
+## Roadmap
 
 - Improve tests for better coverage (up to `100%`)
 - Containers for other positions (`top-center`, `bottom-center`, `center` or even `custom`)
@@ -133,4 +206,4 @@ Manually remove a notification by ID. Nothing will happen if notification does n
 - Show time left (`progress-bar` like)
 - `Modal` notification
 
-**Note**: Some of the above mentioned are only ideas for now and may not be implemented
+**Note:** Some of the above mentioned are only ideas for now and may not be implemented
