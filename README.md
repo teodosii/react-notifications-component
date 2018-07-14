@@ -106,23 +106,23 @@ Manually remove a notification by ID. Nothing will happen if notification does n
 
 | Name             | Type              | Description                                                                                                                                              |
 |------------------|-------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| title            | `String`          | Title of the notification. Field is ignored if `content` is set, otherwise it is required                                                                |
-| message          | `String`          | Message of the notification. Field is ignored if `content` is set, otherwise it is required                                                              |
+| title            | `String`          | Title of the notification. Field is ignored if `content` is set                                                                |
+| message          | `String`          | Message of the notification. Field is ignored if `content` is set, otherwise it is **required**                                                              |
 | content          | `React.Component` | Custom notification content, must be a valid `React` component                                                                                           |
-| type             | `String`          | Type of the notification (`success`, `danger`, `default`, `info`, `warning` or `custom`). Field is ignored if `content` is set, otherwise it is required |
-| container        | `String`          | Container in which the notification will be displayed (`top-left`, `top-right`, `bottom-left`, `bottom-right`). Field is required                        |
-| insert           | `String`          | Insert notification at the `top` or at the `bottom` of the container. Defaults to `top`                                                                  |
-| userDefinedTypes | `Array`           | Specify custom types you need to render                                                                                                                  |
-| dismissable      | `Object`          | Specify how a notification should be manually dismissed - clicking or swiping                                                                            |
+| type             | `String`          | Type of the notification (`success`, `danger`, `default`, `info`, `warning` or `custom`). Field is ignored if `content` is set, otherwise it is **required** |
+| container        | `String`          | Container in which the notification will be displayed (`top-left`, `top-right`, `bottom-left`, `bottom-right`). Field is **required**                        |
+| insert           | `String`          | Insert notification at the `top` or at the `bottom` of the container. _Defaults_ to `top`                                                                  |
+| userDefinedTypes | `Array`           | Define allowed types when rendering `custom` types. Specify `htmlClasses` (`Array`) and `name` (`String`) as properties                                                                                |
+| dismissable      | `Object`          | Specify how a notification should be manually dismissed - `clicking` or `swiping`                                                                            |
 | dismissIcon      | `Object`          | Specify `className` (array of CSS classes) and `content` (valid `React` component) for custom X icon                                                     |
-| animationIn      | `Array`           | CSS classes used to animate notification on show                                                                                                         |
-| animationOut     | `Array`           | CSS classes used to animate notification on removal                                                                                                      |
-| slidingEnter     | `Object`          | Specify `duration` (ms), `cubicBezier` (timing function) and `delay` (ms) for notification show transition                                              |
-| slidingExit      | `Object`          | Specify `duration` (ms), `cubicBezier` (timing function) and `delay` (ms) for notification removal transition                                           |
-| touchSlidingBack | `Object`          | Specify `duration` (ms), `cubicBezier` (timing function) and `delay` (ms) for reverting swipe transition                                                |
-| touchSlidingExit | `Object`          | Specify `duration` (ms), `cubicBezier` (timing function) and `delay` (ms) for `swipe` and `fade` transitions when touch is complete                      |
-| dismiss          | `Object`          | Specify `duration` (ms) after which time notification is automatically removed (`0` means `infinite`)                                                    |
-| width            | `Number`          | Overwrite notification's width defined by stylesheets                                                                                                    |
+| animationIn      | `Array`           | CSS classes used to animate notification on `show`                                                                                                         |
+| animationOut     | `Array`           | CSS classes used to animate notification on `removal`                                                                                                      |
+| slidingEnter     | `Object`          | Specify `duration`, `cubicBezier` and `delay` for notification show transition                                              |
+| slidingExit      | `Object`          | Specify `duration`, `cubicBezier` and `delay` for notification removal transition                                           |
+| touchSlidingBack | `Object`          | Specify `duration`, `cubicBezier` and `delay` for reverting swipe transition                                                |
+| touchSlidingExit | `Object`          | Specify `duration`, `cubicBezier` and `delay` for `swipe` and `fade` transitions when `touch` is complete                      |
+| dismiss          | `Object`          | Specify `duration` after which time notification is automatically removed (`0` means `infinite`)                                                    |
+| width            | `Number`          | Overwrite notification's `width` defined by stylesheets                                                                                                    |
 
 ### Roadmap
 
