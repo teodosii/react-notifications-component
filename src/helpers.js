@@ -345,7 +345,7 @@ export function getIconHtmlContent(notification, onClickHandler) {
         className={notification.dismissIcon.className}
         onClick={onClickHandler}
       >
-        {notification.icon}
+        {notification.dismissIcon.content}
       </div>
     );
   }

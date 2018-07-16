@@ -15,7 +15,8 @@
 .notification-close {
   font-size: 18px;
   position: absolute;
-  right: 15px;
+  right: 10px;
+  top: 0;
 }
 
 .nc-center {
@@ -77,6 +78,7 @@
 }
 
 .notification-message {
+  max-width: calc(100% - 10px);
   font-size: 14px;
   line-height: 150%;
   word-wrap: break-word;
