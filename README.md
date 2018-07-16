@@ -1,14 +1,14 @@
 [![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![devDependencies Status](https://david-dm.org/teodosii/react-notifications-component/dev-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=dev)
 
-# react-notifications-component
+# :alien: react-notifications-component
 
 Highly configurable and easy to use React Component to notify your users!
 
-## Demo
+## :star: Demo
 
 https://teodosii.github.io/react-notifications-component/
 
-## Features
+## :boom: Features
 
 - Touch support
 - Responsive notifications
@@ -25,13 +25,13 @@ https://teodosii.github.io/react-notifications-component/
 - Custom transitions on swiping
 - Top/bottom notification insertion
 
-## Install
+## :eyes: Install
 
 ```
 npm install react-notifications-component
 ```
 
-## Usage
+## :hammer: Usage
 
 You must place `ReactNotificationsComponent` component at the root level of the application in order to work properly, otherwise it might conflict with other DOM elements due to the positioning.
 
@@ -78,20 +78,20 @@ class App extends React.Component {
 
 **Note:** It is important to import `react-notifications-component` CSS theme, which is located in `dist\theme.css`
 
-## Development
+## :metal: Development
 
 ```
 npm run build:library
 npm run start
 ```
 
-## Test
+## :wrench: Test
 
 ```
 npm run test
 ```
 
-## API
+## :fire: API
 
 `addNotification(options)`
 
@@ -101,8 +101,107 @@ Render a new notification. Method returns a unique ID representing the rendered 
 
 Manually remove a notification by ID. Nothing will happen if notification does not exist.
 
+## :sparkles: Examples
 
-## Options
+- ####  Custom notification type
+Following example shows usage of custom notification type defined as option
+
+```jsx
+import React from "react";
+import ReactNotification from "react-notifications-component";
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.addNotification = this.addNotification.bind(this);
+  }
+
+  addNotification() {
+    this.notificationDOMRef.addNotification({
+      // other properties have been omitted for brevity
+      type: "awesome",
+      title: "Custom",
+      message: "Notifications can be customized to suit your needs",
+      container: "top-right"
+    }));
+  }
+
+  render() {
+    return (
+      <div className="app-content">
+        <ReactNotification
+          types={[{
+            htmlClasses: ["notification-awesome"],
+            name: "awesome"
+          }]}
+          ref={input => this.notificationDOMRef = input}
+        />
+      </div>
+    );
+  }
+}
+```
+
+Custom types need to use custom CSS (not included in `react-notifications-component`)
+
+```scss
+.notification-awesome {
+  background-color: #685dc3;
+  border-left: 8px solid darken(#685dc3, 15%);
+}
+```
+
+- #### Custom content with FontAwesome's check mark
+This example shows usage of Font Awesome check mark to be included in your notification along with desired custom content
+
+```jsx
+this.reactNotificationRef.addNotification({
+  // other properties have been omitted for brevity
+  container: "top-right",
+  content: (
+    <div className="notification-custom-success">
+      <div className="notification-custom-icon">
+        <i className="fa fa-check" />
+      </div>
+      <div className="notification-custom-content">
+        <p className="notification-message">GitHub is awesome!</p>
+      </div>
+    </div>
+  )
+}));
+```
+
+You also need to update your CSS correspondingly to your custom markup
+
+```scss
+.notification-custom-icon {
+  flex-basis: 20%;
+  position: relative;
+  display: inline-block;
+  padding: 8px 8px 8px 12px;
+
+  .fa {
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    font-size: 28px;
+    position: relative;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.notification-custom-success {
+  width: 100%;
+  display: flex;
+  background-color: #28a745;
+
+  .notification-custom-icon {
+    border-left: 8px solid darken(#28a745, 15%);
+  }
+}
+```
+
+## :pencil: Options
 
 <table>
   <tr>
@@ -168,22 +267,22 @@ Manually remove a notification by ID. Nothing will happen if notification does n
   <tr>
     <td>slidingEnter</td>
     <td><code>Object</code></td>
-    <td>Transition to be used when sliding to show a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>Number</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
+    <td>Transition to be used when sliding to show a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>slidingExit</td>
     <td><code>Object</code></td>
-    <td>Transition to be used when sliding to hide a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>Number</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
+    <td>Transition to be used when sliding to hide a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>touchSlidingBack</td>
     <td><code>Object</code></td>
-    <td>Transition to be used when sliding back after an incomplete swipe <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>Number</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
+    <td>Transition to be used when sliding back after an incomplete swipe <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>touchSlidingExit</td>
     <td><code>Object</code></td>
-    <td>Transition to be used when sliding on swipe<ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>Number</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
+    <td>Transition to be used when sliding on swipe<ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>dismiss</td>
@@ -197,13 +296,17 @@ Manually remove a notification by ID. Nothing will happen if notification does n
   </tr>
 </table>
 
-## Roadmap
+## :sunglasses: Roadmap
 
+- Release `v1.0.0`
 - Improve tests for better coverage (up to `100%`)
-- Containers for other positions (`top-center`, `bottom-center`, `center` or even `custom`)
 - Move `react-notifications-component` theme to a separate `npm` package
+
+## :sunglasses: Future development
+
+- Containers for other positions (`top-center`, `bottom-center`, `center` or even `custom`)
 - Events support (`onShow`, `onRemoved`, `onClicked`, `onTimeoutDismissed` etc)
 - Show time left (`progress-bar` like)
 - `Modal` notification
 
-**Note:** Some of the above mentioned are only ideas for now and may not be implemented
+**Note:** Some of the above mentioned are only ideas for now. Feedback on wanted/existing features is appreciated
