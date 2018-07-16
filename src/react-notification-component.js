@@ -1,6 +1,9 @@
 import React from "react";
 import ReactNotification from "./react-notification";
-import { isArray } from "./utils";
+import {
+  isArray,
+  isNullOrUndefined
+} from "./utils";
 import { INSERTION, NOTIFICATION_STAGE } from "./constants";
 import {
   getNotificationsForEachContainer,
@@ -16,9 +19,23 @@ class ReactNotificationComponent extends React.Component {
     this.state = {
       // window width
       width: window.innerWidth,
+      // option for responsiveness (defaults to true)
+      isMobile: props.isMobile,
+      // responsiveness breakpoint (defaults to 768)
+      breakpoint: props.width,
       // notifications array data
       notifications: []
     };
+
+    if (isNullOrUndefined(props.width)) {
+      // set default breakpoint
+      this.state.breakpoint = 768;
+    }
+
+    if (isNullOrUndefined(props.isMobile)) {
+      // option defaults to true
+      this.state.isMobile = true;
+    }
 
     if (isArray(props.types)) {
       // check for custom types
@@ -164,12 +181,12 @@ class ReactNotificationComponent extends React.Component {
   }
 
   render() {
-    const { state, props } = this;
+    const {
+      state,
+      props
+    } = this;
 
-    const width = props.width === undefined ? 768 : props.width;
-    const isMobileView = state.width <= width;
-
-    if (props.isMobile && isMobileView) {
+    if (props.isMobile && state.width <= state.breakpoint) {
       const mobileNotifications = getNotificationsForMobileView(state.notifications);
       const top = this.renderReactNotifications(mobileNotifications.top);
       const bottom = this.renderReactNotifications(mobileNotifications.bottom);
