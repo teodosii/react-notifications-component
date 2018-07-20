@@ -1,5 +1,6 @@
 import React from "react";
 import ERROR from "./errors";
+
 import {
   NOTIFICATION_BASE_CLASS,
   CONTAINER,
@@ -9,12 +10,24 @@ import {
 } from "./constants";
 
 import {
+  validateDismissIconOption,
+  validateAnimationIn,
+  validateAnimationOut,
+  validateTimeoutDismissOption,
+  validateTransition,
+  validateTitle,
+  validateMessage,
+  validateType,
+  validateContainer,
+  validateDismissable,
+  validateInsert,
+  validateWidth,
+  validateUserDefinedTypes
+} from "./validators";
+
+import {
   cssWidth,
-  isNullOrUndefined,
-  isString,
-  isNumber,
-  isBoolean,
-  isArray
+  isNullOrUndefined
 } from "./utils";
 
 export function isBottomContainer(container) {
@@ -204,18 +217,20 @@ export function getInitialSlidingState({ notification, isFirstNotification }) {
   return state;
 }
 
-export function getChildStyleForTouchTransitionExit(notification, currentX, startX) {
-  const horizontalLimit = window.innerWidth * 2;
+export function getChildStyleForTouchTransitionExit(notification, startX, currentX) {
+  const width = window.innerWidth * 2;
   const touchSwipe = exports.touchSwipeTransition(notification);
   const touchFade = exports.touchFadeTransition(notification);
 
   return {
     opacity: 0,
     position: "relative",
+    transition: `${touchSwipe}, ${touchFade}`,
 
-    // set to slide to left or right when swiping based on X position
-    left: `${currentX - startX >= 0 ? horizontalLimit : -horizontalLimit}px`,
-    transition: `${touchSwipe}, ${touchFade}`
+    // for currentX > startX 
+    // we slide to the right limit
+    // otherwise we slide to the left limit
+    left: `${currentX - startX >= 0 ? width : -width}px`
   };
 }
 
@@ -223,7 +238,7 @@ export function handleTouchSlidingAnimationExit(notification, currentX, startX) 
   // set current html classes
   const animatedElementClasses = exports.getHtmlClassesForType(notification);
   // set opacity and left to pull-out notification
-  const childElementStyle = getChildStyleForTouchTransitionExit(notification, currentX, startX);
+  const childElementStyle = getChildStyleForTouchTransitionExit(notification, startX, currentX);
   // sliding out transition
   const slidingTransition = exports.slidingExitTransition(notification);
 
@@ -361,252 +376,10 @@ export function getIconHtmlContent(notification, onClickHandler) {
   );
 }
 
-export function validateDismissIconOption(dismissIcon) {
-  if (isNullOrUndefined(dismissIcon)) return;
-
-  const { className, content } = dismissIcon;
-
-  if (!className) {
-    // className is required
-    throw new Error(ERROR.DISMISS_ICON_CLASS);
-  } else if (!isString(className)) {
-    // must be an array value
-    throw new Error(ERROR.DISMISS_ICON_STRING);
-  } else if (!content) {
-    // content is required
-    throw new Error(ERROR.DISMISS_ICON_CONTENT);
-  } else if (!React.isValidElement(content)) {
-    // must be a valid react element
-    throw new Error(ERROR.DISMISS_ICON_INVALID);
-  }
-}
-
-export function validateAnimationIn(animationIn) {
-  if (isNullOrUndefined(animationIn)) {
-    return [];
-  } if (!isArray(animationIn)) {
-    // must be an array
-    throw new Error(ERROR.ANIMATION_IN);
-  }
-
-  return animationIn;
-}
-
-export function validateAnimationOut(animationOut) {
-  if (isNullOrUndefined(animationOut)) {
-    return [];
-  }
-
-  if (!isArray(animationOut)) {
-    // must be an array
-    throw new Error(ERROR.ANIMATION_OUT);
-  }
-
-  return animationOut;
-}
-
-export function validateTimeoutDismissOption(dismiss) {
-  // skip if option is not defined
-  if (isNullOrUndefined(dismiss)) return;
-
-  if (isNullOrUndefined(dismiss.duration)) {
-    throw new Error(ERROR.DISMISS_REQUIRED);
-  } else if (!isNumber(dismiss.duration)) {
-    // must be a number
-    throw new Error(ERROR.DISMISS_NUMBER);
-  } else if (dismiss.duration < 0) {
-    // duration must be positive
-    throw new Error(ERROR.DISMISS_POSITIVE);
-  }
-}
-
-export function validateTransition(transition, defaults) {
-  const { duration, cubicBezier, delay } = defaults;
-  const transitionOptions = transition || {};
-
-  if (isNullOrUndefined(transitionOptions.duration)) {
-    // set default duration
-    transitionOptions.duration = duration;
-  }
-
-  if (isNullOrUndefined(transitionOptions.cubicBezier)) {
-    // set default timing function
-    transitionOptions.cubicBezier = cubicBezier;
-  }
-
-  if (isNullOrUndefined(transitionOptions.delay)) {
-    // set default delay
-    transitionOptions.delay = delay;
-  }
-
-  if (!isNumber(transitionOptions.duration)) {
-    // throw if duration is NaN
-    throw new Error(ERROR.TRANSITION_DURATION_NUMBER);
-  } else if (!isString(transitionOptions.cubicBezier)) {
-    // throw if cubicBezier is not a String
-    throw new Error(ERROR.TRANSITION_CUBICBEZIER_NUMBER);
-  } else if (!isNumber(transitionOptions.delay)) {
-    // throw if duration is NaN
-    throw new Error(ERROR.TRANSITION_DELAY_NUMBER);
-  }
-
-  return transitionOptions;
-}
-
-export function validateTitle(notification) {
-  const { content, title } = notification;
-
-  if (content || isNullOrUndefined(title)) {
-    // skip
-    return;
-  }
-
-  if (!isString(title)) {
-    // title must be a String
-    throw new Error(ERROR.TITLE_STRING);
-  }
-}
-
-export function validateMessage(notification) {
-  const { content, message } = notification;
-
-  if (content) {
-    // skip
-    return;
-  }
-
-  if (message === null || message === undefined) {
-    // message is required
-    throw new Error(ERROR.MESSAGE_REQUIRED);
-  } else if (!isString(message)) {
-    // message must be a String
-    throw new Error(ERROR.MESSAGE_STRING);
-  }
-}
-
-export function validateType(notification, userDefinedTypes) {
-  const { content, type } = notification;
-
-  if (content) {
-    // skip
-    return undefined;
-  }
-
-  if (isNullOrUndefined(type)) {
-    // type is required
-    throw new Error(ERROR.TYPE_REQUIRED);
-  } else if (!isString(type)) {
-    // type must be a String
-    throw new Error(ERROR.TYPE_STRING);
-  } else if (
-    isNullOrUndefined(userDefinedTypes)
-    && type !== NOTIFICATION_TYPE.SUCCESS
-    && type !== NOTIFICATION_TYPE.DANGER
-    && type !== NOTIFICATION_TYPE.INFO
-    && type !== NOTIFICATION_TYPE.DEFAULT
-    && type !== NOTIFICATION_TYPE.WARNING
-  ) {
-    throw new Error(ERROR.TYPE_NOT_EXISTENT);
-  }
-
-  return type.toLowerCase();
-}
-
-export function validateContainer(container) {
-  if (isNullOrUndefined(container)) {
-    // container is required
-    throw new Error(ERROR.CONTAINER_REQUIRED);
-  } else if (!isString(container)) {
-    // container must be a String
-    throw new Error(ERROR.CONTAINER_STRING);
-  }
-
-  return container.toLowerCase();
-}
-
-export function validateDismissable(dismissable) {
-  if (isNullOrUndefined(dismissable)) {
-    return {
-      // set dissmisable by click as default
-      click: true,
-      // set dismissable on swipe as default
-      touch: true
-    };
-  }
-
-  const option = dismissable;
-
-  if (isNullOrUndefined(option.click)) {
-    // set dissmisable by click as default
-    option.click = true;
-  }
-
-  if (isNullOrUndefined(option.touch)) {
-    // set dismissable on swipe as default
-    option.touch = true;
-  }
-
-  if (!isBoolean(option.click)) {
-    // must be boolean
-    throw new Error(ERROR.DISMISSABLE_CLICK_BOOL);
-  } else if (!isBoolean(option.touch)) {
-    // must be boolean
-    throw new Error(ERROR.DISMISSABLE_TOUCH_BOOL);
-  }
-
-  return option;
-}
-
-export function validateInsert(insert) {
-  if (isNullOrUndefined(insert)) {
-    // default to top if not defined
-    return "top";
-  }
-
-  if (!isString(insert)) {
-    // must be a string value (top|bottom)
-    throw new Error(ERROR.INSERT_STRING);
-  }
-
-  return insert;
-}
-
-export function validateWidth(width) {
-  if (!isNumber(width)) {
-    // width must be a valid Number
-    throw new Error(ERROR.WIDTH_NUMBER);
-  }
-
-  return width;
-}
-
-export function validateUserDefinedTypes(notification, definedTypes) {
-  const { content, type } = notification;
-
-  // no need to validate type if content is defined
-  if (content) return undefined;
-
-  if (
-    type === NOTIFICATION_TYPE.SUCCESS
-    || type === NOTIFICATION_TYPE.DANGER
-    || type === NOTIFICATION_TYPE.INFO
-    || type === NOTIFICATION_TYPE.DEFAULT
-    || type === NOTIFICATION_TYPE.WARNING
-    || isNullOrUndefined(definedTypes)
-  ) return undefined;
-
-  // search for custom type in array
-  if (!definedTypes.find(p => p.name === type)) {
-    // custom type not found, throw exception
-    throw new Error(ERROR.TYPE_NOT_FOUND);
-  }
-
-  return definedTypes;
-}
-
 function getRandomId() {
-  return Math.random();
+  return Math.random().toString(36).substr(2, 9);
 }
+
 
 export function getNotificationOptions(options, userDefinedTypes) {
   const notification = options;

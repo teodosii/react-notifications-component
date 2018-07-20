@@ -4,12 +4,19 @@ import {
   isArray,
   isNullOrUndefined
 } from "./utils";
-import { INSERTION, NOTIFICATION_STAGE } from "./constants";
+
+import {
+  INSERTION,
+  NOTIFICATION_STAGE
+} from "./constants";
+
 import {
   getNotificationsForEachContainer,
   getNotificationsForMobileView,
   getNotificationOptions
 } from "./helpers";
+
+// react-notifications-component theme
 import "./scss/notification.scss";
 
 class ReactNotificationComponent extends React.Component {
