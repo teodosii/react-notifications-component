@@ -10,7 +10,10 @@ import {
   hasFullySwiped,
   getRootHeightStyle,
   getNotificationsForEachContainer,
-  htmlClassesForUserDefinedType,
+  htmlClassesForUserDefinedType
+} from "../src/helpers";
+
+import {
   validateWidth,
   validateInsert,
   validateDismissable,
@@ -21,7 +24,7 @@ import {
   validateType,
   validateContainer,
   validateUserDefinedTypes
-} from "../src/helpers";
+} from "../src/validators";
 
 import {
   CONTAINER,
@@ -31,23 +34,28 @@ import {
   NOTIFICATION_STAGE
 } from "../src/constants";
 
-describe("Helpers", () => {
-
-  it("is bottom container", () => {
+describe("test suite for helpers", () => {
+  it("container is bottom", () => {
     expect(isBottomContainer(CONTAINER.BOTTOM_LEFT)).toBe(true);
     expect(isBottomContainer(CONTAINER.BOTTOM_RIGHT)).toBe(true);
+  });
+
+  it("container is not bottom", () => {
     expect(isBottomContainer(CONTAINER.TOP_LEFT)).toBe(false);
     expect(isBottomContainer(CONTAINER.TOP_RIGHT)).toBe(false);
   });
 
-  it("is top container", () => {
+  it("container is top", () => {
     expect(isTopContainer(CONTAINER.TOP_LEFT)).toBe(true);
     expect(isTopContainer(CONTAINER.TOP_RIGHT)).toBe(true);
+  });
+
+  it("container is not top", () => {
     expect(isTopContainer(CONTAINER.BOTTOM_LEFT)).toBe(false);
     expect(isTopContainer(CONTAINER.BOTTOM_RIGHT)).toBe(false);
   });
 
-  it("slides", () => {
+  it("notification will slide", () => {
     // expect to have sliding for top/top
     expect(shouldNotificationHaveSliding({
       insert: INSERTION.TOP,
@@ -61,7 +69,7 @@ describe("Helpers", () => {
     })).toBe(true);
   });
 
-  it("does not slide", () => {
+  it("notification will not slide", () => {
     // no sliding for bottom/top combination
     expect(shouldNotificationHaveSliding({
       insert: INSERTION.BOTTOM,
@@ -75,12 +83,12 @@ describe("Helpers", () => {
     })).toBe(false);
   });
 
-  it("returns proper CSS width", () => {
+  it("width is calculated in pixels", () => {
     expect(cssWidth(undefined)).toBeUndefined();
     expect(cssWidth(100)).toMatch("100px");
   });
 
-  it("returns corresponding CSS classes for notification", () => {
+  it("corresponding CSS classes are returned for a standard type", () => {
     const type = NOTIFICATION_TYPE;
     const baseClass = NOTIFICATION_BASE_CLASS;
 
@@ -90,17 +98,22 @@ describe("Helpers", () => {
     expect(getHtmlClassesForType({ type: type.DANGER })).toEqual([baseClass, "notification-danger"]);
     expect(getHtmlClassesForType({ type: type.WARNING })).toEqual([baseClass, "notification-warning"]);
     expect(getHtmlClassesForType({ type: type.INFO })).toEqual([baseClass, "notification-info"]);
+  });
+
+  it("corresponding CSS classes are returned for a custom type", () => {
+    const baseClass = NOTIFICATION_BASE_CLASS;
 
     // define custom types
     const userDefinedTypes = [{ name: "awesome", htmlClasses: ["awesome"] }];
 
     // expect to return custom type
     expect(getHtmlClassesForType({ type: "awesome", userDefinedTypes })).toEqual([baseClass, "awesome"])
+    
     // expect to throw for case differences
     expect(() => getHtmlClassesForType({ type: "AWESOME", userDefinedTypes })).toThrow();
   });
 
-  it("returns notifications for mobile", () => {
+  it("notifications for mobile are returned", () => {
     let notifications = [
       { container: CONTAINER.TOP_LEFT },
       { container: CONTAINER.TOP_RIGHT },
@@ -122,7 +135,7 @@ describe("Helpers", () => {
     expect(() => getNotificationsForMobileView([{ container: "" }])).toThrow();
   });
 
-  it("returns notifications for desktop", () => {
+  it("notifications for desktop are returned", () => {
     let result = getNotificationsForEachContainer([
       { container: CONTAINER.TOP_LEFT },
       { container: CONTAINER.TOP_RIGHT },
@@ -140,7 +153,7 @@ describe("Helpers", () => {
     expect(() => getNotificationsForEachContainer([{ container: "" }])).toThrow();
   });
 
-  it("returns CSS transition based on duration|property|type|delay arguments", () => {
+  it("CSS transition is properly returned based on duration|property|type|delay", () => {
     // no arguments supplied
     expect(getCubicBezierTransition()).toBe("500ms height linear 0ms");
 
@@ -157,17 +170,17 @@ describe("Helpers", () => {
     expect(getCubicBezierTransition(800, "ease-out", 200, "all")).toBe("800ms all ease-out 200ms");
   });
 
-  it("swipes completely", () => {
+  it("notification swipes completely", () => {
     global.window.innerWidth = 100;
     expect(hasFullySwiped(40)).toBe(true);
   });
 
-  it("does not swipe completely", () => {
+  it("notification does not swipe completely", () => {
     global.window.innerWidth = 100;
     expect(hasFullySwiped(35)).toBe(false);
   });
 
-  it("returns root element's style", () => {
+  it("root element's style is properly set", () => {
     const slidingExit = { duration: 250, cubicBezier: "ease-out", delay: 100 };
     const notification = Object.assign({}, notificationObject, { slidingExit });
 
