@@ -1,8 +1,21 @@
+const path = require("path");
+
 module.exports = {
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      alias: {
+        map: [
+          ["src", path.resolve(__dirname, "src")],
+          ["samples", path.resolve(__dirname, "samples")]
+        ],
+        extensions: [".js", ".css", ".scss"]
+      }
+    }
   },
   "extends": [
     "eslint:recommended",
