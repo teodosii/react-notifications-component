@@ -21,8 +21,11 @@ module.exports = {
   resolve: {
     alias: {
       "rc-notifications": path.resolve(__dirname, "src"),
+      src: path.resolve(__dirname, "src"),
+      samples: path.resolve(__dirname, "samples"),
+      tests: path.resolve(__dirname, "tests")
     },
-    extensions: [".js", ".jsx", ".css", ".scss"]
+    extensions: [".js", ".css", ".scss"]
   },
 
   module: {

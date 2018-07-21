@@ -31,7 +31,12 @@ module.exports = {
   },
 
   resolve: {
-    extensions: [".js", ".jsx", ".json"]
+    extensions: [".js", ".scss"],
+    alias: {
+      src: path.resolve(__dirname, "src"),
+      samples: path.resolve(__dirname, "samples"),
+      tests: path.resolve(__dirname, "tests")
+    }
   },
 
   module: {
