@@ -103,7 +103,7 @@ Manually remove a notification by ID. Nothing will happen if notification does n
 
 ## :sparkles: Examples
 
-- ####  Custom notification type
+1. #### Custom notification type
 Following example shows usage of custom notification type defined as option
 
 ```jsx
@@ -151,7 +151,7 @@ Custom types need to use custom CSS (not included in `react-notifications-compon
 }
 ```
 
-- #### Custom content with FontAwesome's check mark
+2. #### Custom content with FontAwesome's check mark
 This example shows usage of Font Awesome check mark to be included in your notification along with desired custom content
 
 ```jsx
@@ -302,11 +302,11 @@ You also need to update your CSS correspondingly to your custom markup
 - Improve tests for better coverage (up to `100%`)
 - Move `react-notifications-component` theme to a separate `npm` package
 
-## :sunglasses: Future development
+## :rocket: Ideas
 
 - Containers for other positions (`top-center`, `bottom-center`, `center` or even `custom`)
 - Events support (`onShow`, `onRemoved`, `onClicked`, `onTimeoutDismissed` etc)
 - Show time left (`progress-bar` like)
 - `Modal` notification
 
-**Note:** Some of the above mentioned are only ideas for now. Feedback on wanted/existing features is appreciated
+**Note:** Feedback on wanted/existing features is **_appreciated_**
