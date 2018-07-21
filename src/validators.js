@@ -1,13 +1,15 @@
 import React from "react";
-import ERROR from "./errors";
-import { NOTIFICATION_TYPE } from "./constants";
+import {
+  ERROR,
+  NOTIFICATION_TYPE
+} from "src/constants";
 import {
   isNullOrUndefined,
   isString,
   isNumber,
   isBoolean,
   isArray
-} from "./utils";
+} from "src/utils";
 
 export function validateDismissIconOption(dismissIcon) {
   // skip validation for undefined option
@@ -92,17 +94,17 @@ export function validateTransition(transition, defaults) {
 
   const transitionOptions = transition || {};
 
-  if (!transitionOptions.duration) {
+  if (isNullOrUndefined(transitionOptions.duration)) {
     // set default duration
     transitionOptions.duration = duration;
   }
 
-  if (!transitionOptions.cubicBezier) {
+  if (isNullOrUndefined(transitionOptions.cubicBezier)) {
     // set default timing function
     transitionOptions.cubicBezier = cubicBezier;
   }
 
-  if (!transitionOptions.delay) {
+  if (isNullOrUndefined(transitionOptions.delay)) {
     // set default delay
     transitionOptions.delay = delay;
   }
@@ -132,7 +134,7 @@ export function validateTitle(notification) {
   } = notification;
 
   // title is not required
-  if (content || !title) return;
+  if (content || isNullOrUndefined(title)) return;
 
   if (!isString(title)) {
     // title must be a String if defined
@@ -217,12 +219,12 @@ export function validateDismissable(dismissable) {
     return { click: true, touch: true };
   }
 
-  if (!option.click) {
+  if (isNullOrUndefined(option.click)) {
     // set default value
     option.click = true;
   }
 
-  if (!option.touch) {
+  if (isNullOrUndefined(option.touch)) {
     // set default value
     option.touch = true;
   }
