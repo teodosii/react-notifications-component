@@ -267,22 +267,22 @@ You also need to update your CSS correspondingly to your custom markup
   <tr>
     <td>slidingEnter</td>
     <td><code>Object</code></td>
-    <td>Transition to be used when sliding to show a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
+    <td>Transition to be used when sliding to show a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code></li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>slidingExit</td>
     <td><code>Object</code></td>
-    <td>Transition to be used when sliding to hide a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
+    <td>Transition to be used when sliding to hide a notification <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code></li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>touchSlidingBack</td>
     <td><code>Object</code></td>
-    <td>Transition to be used when sliding back after an incomplete swipe <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
+    <td>Transition to be used when sliding back after an incomplete swipe <ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code></li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>touchSlidingExit</td>
     <td><code>Object</code></td>
-    <td>Transition to be used when sliding on swipe<ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code> (ms)</li><li>delay - <code>Number</code> (ms)</li></ul>
+    <td>Transition to be used when sliding on swipe<ul><li>duration - <code>Number</code> (ms)</li><li>cubicBezier - <code>String</code></li><li>delay - <code>Number</code> (ms)</li></ul>
   </tr>
   <tr>
     <td>dismiss</td>
