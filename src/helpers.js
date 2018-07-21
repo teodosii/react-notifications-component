@@ -1,13 +1,12 @@
 import React from "react";
-import ERROR from "./errors";
-
 import {
+  ERROR,
   NOTIFICATION_BASE_CLASS,
   CONTAINER,
   INSERTION,
   NOTIFICATION_TYPE,
   NOTIFICATION_STAGE
-} from "./constants";
+} from "src/constants";
 
 import {
   validateDismissIconOption,
@@ -23,12 +22,12 @@ import {
   validateInsert,
   validateWidth,
   validateUserDefinedTypes
-} from "./validators";
+} from "src/validators";
 
 import {
   cssWidth,
   isNullOrUndefined
-} from "./utils";
+} from "src/utils";
 
 export function isBottomContainer(container) {
   return (
@@ -227,7 +226,7 @@ export function getChildStyleForTouchTransitionExit(notification, startX, curren
     position: "relative",
     transition: `${touchSwipe}, ${touchFade}`,
 
-    // for currentX > startX 
+    // for currentX > startX
     // we slide to the right limit
     // otherwise we slide to the left limit
     left: `${currentX - startX >= 0 ? width : -width}px`

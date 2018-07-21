@@ -1,23 +1,23 @@
 import React from "react";
-import ReactNotification from "./react-notification";
+import ReactNotification from "src/react-notification";
 import {
   isArray,
   isNullOrUndefined
-} from "./utils";
+} from "src/utils";
 
 import {
   INSERTION,
   NOTIFICATION_STAGE
-} from "./constants";
+} from "src/constants";
 
 import {
   getNotificationsForEachContainer,
   getNotificationsForMobileView,
   getNotificationOptions
-} from "./helpers";
+} from "src/helpers";
 
 // react-notifications-component theme
-import "./scss/notification.scss";
+import "src/scss/notification.scss";
 
 class ReactNotificationComponent extends React.Component {
   constructor(props) {

@@ -6,6 +6,6 @@ module.exports = {
   "collectCoverageFrom": ["src/*.js"],
   "coverageDirectory": "coverage",
   "moduleNameMapper": {
-    "\\.(css|scss)$": "<rootDir>/tests/utils/style.mock.js"
+    "\\.(css|scss)$": "<rootDir>/tests/mocks/style.mock.js"
   }
 };

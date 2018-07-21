@@ -2,7 +2,7 @@ import React from "react";
 import Highlight from "react-highlight";
 import { usage } from "../../helpers/code";
 import notification from "../../helpers/notification";
-import notificationObject from "../../../../tests/utils/notification.mock";
+import notificationObject from "../../../../tests/mocks/notification.mock";
 
 export default function UsageExample({ addNotification }) {
   return (

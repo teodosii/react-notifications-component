@@ -1,6 +1,6 @@
 import React from "react";
-import { NOTIFICATION_STAGE } from "./constants";
-import { cssWidth } from "./utils";
+import { NOTIFICATION_STAGE } from "src/constants";
+import { cssWidth } from "src/utils";
 import {
   getHtmlClassesForType,
   handleStageTransition,
@@ -9,7 +9,7 @@ import {
   getRootHeightStyle,
   getInitialSlidingState,
   getIconHtmlContent
-} from "./helpers";
+} from "src/helpers";
 
 export default class ReactNotification extends React.Component {
   constructor(props) {
@@ -74,7 +74,7 @@ export default class ReactNotification extends React.Component {
   }
 
   setRemovalTimeout(dismiss) {
-    if (dismiss && dismiss.duration) {
+    if (dismiss && dismiss.duration > 0) {
       // make sure option is defined and set
       this.setDismissTimeout(dismiss.duration);
     }
