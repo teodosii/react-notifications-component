@@ -1,12 +1,11 @@
 import React from "react";
-import ReactNotificationComponent from "../src/react-notification-component";
+import ReactNotificationComponent from "src/react-notification-component";
 import Enzyme, { mount, shallow } from "enzyme";
 import React16Adapter from "enzyme-adapter-react-16";
 import toJson from "enzyme-to-json";
 import sinon from "sinon";
-import notificationObject from "./utils/notification.mock";
-import { createTouchObject } from "./utils/helpers";
-import { NOTIFICATION_STAGE } from "../src/constants";
+import notificationObject from "tests/mocks/notification.mock";
+import { NOTIFICATION_STAGE } from "src/constants";
 
 // use adapter for react-16 to work with enzyme
 Enzyme.configure({ adapter: new React16Adapter() });

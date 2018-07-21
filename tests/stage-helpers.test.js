@@ -1,5 +1,5 @@
-import notificationObject from "./utils/notification.mock";
-import * as Helpers from "../src/helpers";
+import notificationObject from "tests/mocks/notification.mock";
+import * as Helpers from "src/helpers";
 
 describe("test suite for stage-helpers", () => {
   const expectedMaxLeft = 2048;

@@ -1,5 +1,5 @@
-import notificationObject from "./utils/notification.mock";
-import { cssWidth } from "../src/utils";
+import notificationObject from "tests/mocks/notification.mock";
+import { cssWidth } from "src/utils";
 import {
   isBottomContainer,
   isTopContainer,
@@ -11,7 +11,7 @@ import {
   getRootHeightStyle,
   getNotificationsForEachContainer,
   htmlClassesForUserDefinedType
-} from "../src/helpers";
+} from "src/helpers";
 
 import {
   validateWidth,
@@ -24,7 +24,7 @@ import {
   validateType,
   validateContainer,
   validateUserDefinedTypes
-} from "../src/validators";
+} from "src/validators";
 
 import {
   CONTAINER,
@@ -32,7 +32,7 @@ import {
   NOTIFICATION_TYPE,
   NOTIFICATION_BASE_CLASS,
   NOTIFICATION_STAGE
-} from "../src/constants";
+} from "src/constants";
 
 describe("test suite for helpers", () => {
   it("container is bottom", () => {
@@ -83,12 +83,12 @@ describe("test suite for helpers", () => {
     })).toBe(false);
   });
 
-  it("width is calculated in pixels", () => {
+  it("width is set in pixels", () => {
     expect(cssWidth(undefined)).toBeUndefined();
     expect(cssWidth(100)).toMatch("100px");
   });
 
-  it("corresponding CSS classes are returned for a standard type", () => {
+  it("corresponding array of CSS classes is returned for an existing type", () => {
     const type = NOTIFICATION_TYPE;
     const baseClass = NOTIFICATION_BASE_CLASS;
 
@@ -100,7 +100,7 @@ describe("test suite for helpers", () => {
     expect(getHtmlClassesForType({ type: type.INFO })).toEqual([baseClass, "notification-info"]);
   });
 
-  it("corresponding CSS classes are returned for a custom type", () => {
+  it("corresponding array of CSS classes is returned for a custom type", () => {
     const baseClass = NOTIFICATION_BASE_CLASS;
 
     // define custom types
@@ -108,10 +108,12 @@ describe("test suite for helpers", () => {
 
     // expect to return custom type
     expect(getHtmlClassesForType({ type: "awesome", userDefinedTypes })).toEqual([baseClass, "awesome"])
-    
+  });
+
+  it("custom types are case-sensitive", () => {
     // expect to throw for case differences
     expect(() => getHtmlClassesForType({ type: "AWESOME", userDefinedTypes })).toThrow();
-  });
+  })
 
   it("notifications for mobile are returned", () => {
     let notifications = [
