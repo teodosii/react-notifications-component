@@ -1,9 +1,15 @@
 language: node_js
 node_js:
   - "node"
+branches:
+  only:
+    - master
 cache:
   directories:
   - node_modules
+install:
+  - npm install
 script:
-  - npm test
   - npm run build:prod
+  - npm test
+  - npm run coveralls

@@ -14,7 +14,8 @@
     "start": "webpack-dev-server --config ./webpack.samples.dev.js",
     "test": "jest",
     "predeploy": "npm run build:prod",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -52,6 +53,7 @@
     "babel-runtime": "^6.26.0",
     "bootstrap": "^4.1.1",
     "clean-webpack-plugin": "^0.1.19",
+    "coveralls": "^3.0.2",
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
