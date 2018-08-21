@@ -70,7 +70,7 @@ export default class CustomContentExample extends React.Component {
         <div className="col-lg-6 offset-lg-3 column col-md-10 offset-md-1 col-sm-12">
           <h6>Custom Content</h6>
           <div>
-            With <code className="white-code">react-notifications-component</code> notification's content can be customised to suit your needs.
+            With <code className="white-code">react-notifications-component</code> {"notification's"} content can be customised to suit your needs.
           </div>
           <div>
             <button
