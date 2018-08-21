@@ -16,8 +16,8 @@ export function validateDismissIconOption(dismissIcon) {
   if (isNullOrUndefined(dismissIcon)) return;
 
   const {
-    iconClassName,
-    iconContent
+    className: iconClassName,
+    content: iconContent
   } = dismissIcon;
 
   if (!iconClassName) {
@@ -251,7 +251,7 @@ export function validateInsert(insert) {
     throw new Error(ERROR.INSERT_STRING);
   }
 
-  return insert;
+  return insert.toLowerCase();
 }
 
 export function validateWidth(width) {

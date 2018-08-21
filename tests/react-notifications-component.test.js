@@ -1,44 +1,33 @@
 import React from "react";
 import ReactNotificationComponent from "src/react-notification-component";
-import Enzyme, { mount, shallow } from "enzyme";
+import Enzyme, { mount } from "enzyme";
 import React16Adapter from "enzyme-adapter-react-16";
-import toJson from "enzyme-to-json";
 import sinon from "sinon";
-import notificationObject from "tests/mocks/notification.mock";
+import notificationMock from "tests/mocks/notification.mock";
 import { NOTIFICATION_STAGE } from "src/constants";
 
-// use adapter for react-16 to work with enzyme
-Enzyme.configure({ adapter: new React16Adapter() });
+Enzyme.configure({
+  // use react-16 adapter
+  adapter: new React16Adapter()
+});
 
 describe("Wrapper component", () => {
   let component;
   let clock;
-  let node;
 
   // arrow function helpers
   const state = () => component.state();
   const instance = () => component.instance();
-  const getMock = () => Object.assign({}, notificationObject);
+
+  const getTypesMock = () => [{ name: "awesome", htmlClasses: ["awesome"] }];
+  const getNotificationMock = (edits = {}) => Object.assign({}, notificationMock, edits);
   const addNotification = (mock) => instance().addNotification(mock);
 
-  const triggerResize = (width) => {
-    // set initial width
-    global.window.innerWidth = 100;
-
-    // create `resize` event
-    const resizeEvent = document.createEvent("Event");
-    resizeEvent.initEvent("resize", true, true);
-
-    // trigger resize
-    window.dispatchEvent(resizeEvent);
-  };
-
   beforeEach(() => {
+    component = mount(<ReactNotificationComponent />);
+
     // set fake timer
     clock = sinon.useFakeTimers();
-
-    // mount component in DOM
-    component = mount(<ReactNotificationComponent />);
   });
 
   afterEach(() => {
@@ -49,27 +38,38 @@ describe("Wrapper component", () => {
     component.unmount();
   });
 
-  it("responds to `resize` event", () => {
-    const spy = jest.spyOn(ReactNotificationComponent.prototype, "handleResize");
+  it("component sets state to default values on initialization", () => {
+    component = mount(<ReactNotificationComponent />);
+    expect(state()).toMatchSnapshot();
+  });
 
+  it("component does not set state to default values on initialization", () => {
+    component = mount(<ReactNotificationComponent width={320} isMobile={false} />);
+    expect(state()).toMatchSnapshot();
+  });
+
+  it("component sets userDefinedTypes on initialization", () => {
+    component = mount(<ReactNotificationComponent types={getTypesMock()} />);
+    expect(state()).toMatchSnapshot();
+  });
+
+  it("handleResize updates width and notifications", () => {
     // mount component
     component = mount(<ReactNotificationComponent />);
 
     // add notifications
-    addNotification(getMock());
-    addNotification(getMock());
-    addNotification(getMock());
+    addNotification(getNotificationMock());
+    addNotification(getNotificationMock());
+    addNotification(getNotificationMock());
 
-    // trigger window resize
-    triggerResize(100);
+    // set window width to 100px
+    window.innerWidth = 100;
+    // manually call resize handler
+    instance().handleResize();
 
-    // expect width to be set accordingly
+    // expect width to be set to 100px
     expect(state().width).toBe(100);
-
-    // expect `handleResize` to have been called
-    expect(spy).toHaveBeenCalled();
-
-    // expect each notification to have `resized` set
+    // expect each notification to have resized flag set
     state().notifications.forEach(notification => expect(notification.resized).toBe(true));
   });
 
@@ -80,7 +80,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification and store id
-    let id = addNotification(getMock());
+    let id = addNotification(getNotificationMock());
 
     // manually remove notification
     instance().removeNotification(id);
@@ -104,7 +104,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification
-    let id = addNotification(getMock());
+    let id = addNotification(getNotificationMock());
 
     // call `toggleTimeoutRemoval`
     instance().toggleTimeoutRemoval({ id });
@@ -126,7 +126,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification
-    let id = addNotification(getMock());
+    let id = addNotification(getNotificationMock());
     const dismissable = { click: true };
 
     // trigger click
@@ -147,7 +147,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification
-    const id = addNotification(getMock());
+    const id = addNotification(getNotificationMock());
     const dismissable = {};
 
     // trigger click
@@ -168,7 +168,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notification
-    let id = addNotification(getMock());
+    let id = addNotification(getNotificationMock());
 
     // toggle touch end
     instance().toggleTouchEnd({ id });
@@ -186,7 +186,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notifications
-    let id = addNotification(getMock());
+    let id = addNotification(getNotificationMock());
 
     // expect lengt to match number of added notifications
     expect(state().notifications.length).toBe(1);
@@ -206,7 +206,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // render notifications based on array input
-    let res = instance().renderReactNotifications([notificationObject]);
+    let res = instance().renderReactNotifications([getNotificationMock()]);
 
     // one notification rendered
     expect(res.length).toBe(1);

@@ -2,7 +2,6 @@ import React from "react";
 import ReactNotification from "src/react-notification";
 import Enzyme, { mount } from "enzyme";
 import React16Adapter from "enzyme-adapter-react-16";
-import toJson from "enzyme-to-json";
 import sinon from "sinon";
 import notificationObject from "tests/mocks/notification.mock";
 

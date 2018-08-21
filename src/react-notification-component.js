@@ -49,7 +49,6 @@ class ReactNotificationComponent extends React.Component {
       this.state.userDefinedTypes = props.types;
     }
 
-    // bind methods to `this`
     this.addNotification = this.addNotification.bind(this);
     this.onNotificationClick = this.onNotificationClick.bind(this);
     this.toggleRemoval = this.toggleRemoval.bind(this);
@@ -62,6 +61,10 @@ class ReactNotificationComponent extends React.Component {
   componentDidMount() {
     // add listener for `resize` event
     window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   handleResize() {
@@ -91,6 +94,8 @@ class ReactNotificationComponent extends React.Component {
 
   // part of API
   addNotification(object) {
+    const { notifications: data } = this.state;
+
     // call will throw exception if object does not match rules
     const notification = getNotificationOptions(
       object,
@@ -98,11 +103,13 @@ class ReactNotificationComponent extends React.Component {
       this.state.userDefinedTypes
     );
 
-    const notifications = notification.insert.toLowerCase() === INSERTION.TOP
-      ? [notification].concat(this.state.notifications)
-      : this.state.notifications.concat([notification]);
+    this.setState({
+      notifications:
+        notification.insert === INSERTION.TOP
+          ? [notification].concat(data)
+          : data.concat([notification])
+    });
 
-    this.setState({ notifications });
     return notification.id;
   }
 
@@ -111,7 +118,6 @@ class ReactNotificationComponent extends React.Component {
     this.setState({
       notifications: this.state.notifications.map((item) => {
         const object = item;
-
         object.stage = object.id === id
           ? NOTIFICATION_STAGE.REMOVAL
           : object.stage;
@@ -123,10 +129,10 @@ class ReactNotificationComponent extends React.Component {
         this.setState({
           notifications: this.state.notifications.map((item) => {
             const object = item;
-
             object.stage = object.id === id
               ? NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT
               : object.stage;
+
             return object;
           })
         });
@@ -143,7 +149,6 @@ class ReactNotificationComponent extends React.Component {
         this.setState({
           notifications: this.state.notifications.map((item) => {
             const object = item;
-
             object.stage = object.id === notification.id
               ? NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT
               : object.stage;
@@ -159,7 +164,6 @@ class ReactNotificationComponent extends React.Component {
     this.setState({
       notifications: this.state.notifications.map((item) => {
         const object = item;
-
         object.stage = object.id === notification.id
           ? NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT
           : object.stage;
@@ -201,10 +205,10 @@ class ReactNotificationComponent extends React.Component {
       return (
         <div className="react-notification-root">
           <div className="notification-container-mobile-top">
-            {top.length > 0 && top}
+            {top && top.length > 0}
           </div>
           <div className="notification-container-mobile-bottom">
-            {bottom.length > 0 && bottom}
+            {bottom && bottom.length > 0}
           </div>
         </div>
       );
@@ -219,16 +223,16 @@ class ReactNotificationComponent extends React.Component {
     return (
       <div className="react-notification-root">
         <div className="notification-container-top-left">
-          {topLeft.length > 0 && topLeft}
+          {topLeft && topLeft.length > 0}
         </div>
         <div className="notification-container-top-right">
-          {topRight.length > 0 && topRight}
+          {topRight && topRight.length > 0}
         </div>
         <div className="notification-container-bottom-left">
-          {bottomLeft.length > 0 && bottomLeft}
+          {bottomLeft && bottomLeft.length > 0}
         </div>
         <div className="notification-container-bottom-right">
-          {bottomRight.length > 0 && bottomRight}
+          {bottomRight && bottomRight.length > 0}
         </div>
       </div>
     );

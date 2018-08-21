@@ -52,8 +52,10 @@ export function shouldNotificationHaveSliding(notification) {
   );
 }
 
-function htmlClassesForExistingType(type) {
-  switch (type.toLowerCase()) {
+export function htmlClassesForExistingType(type) {
+  const lowerCaseType = type.toLowerCase();
+
+  switch (lowerCaseType) {
     case NOTIFICATION_TYPE.DEFAULT:
       return [NOTIFICATION_BASE_CLASS, "notification-default"];
     case NOTIFICATION_TYPE.SUCCESS:
@@ -65,7 +67,7 @@ function htmlClassesForExistingType(type) {
     case NOTIFICATION_TYPE.INFO:
       return [NOTIFICATION_BASE_CLASS, "notification-info"];
     default:
-      throw new Error(`Type '${type}' is not valid nor user-defined`);
+      return [NOTIFICATION_BASE_CLASS];
   }
 }
 
@@ -112,19 +114,11 @@ export function getNotificationsForMobileView(notifications) {
 
   notifications.forEach((notification) => {
     const container = notification.container.toLowerCase();
-    switch (container) {
-      case TOP_LEFT:
-      case TOP_RIGHT:
-        top.push(notification);
-        break;
-      case BOTTOM_LEFT:
-      case BOTTOM_RIGHT:
-        bottom.push(notification);
-        break;
-      default:
-        // throw error just in case validation didn't work properly
-        throw new Error(`Container ${notification.container} is not valid`);
-    }
+    if (container === TOP_LEFT || container === TOP_RIGHT) {
+      top.push(notification);
+    } else if (container === BOTTOM_LEFT || container === BOTTOM_RIGHT) {
+      bottom.push(notification);
+    } else throw new Error(`Container ${notification.container} is not valid`);
   });
 
   return { top, bottom };
@@ -145,23 +139,15 @@ export function getNotificationsForEachContainer(notifications) {
     } = CONTAINER;
 
     const container = notification.container.toLowerCase();
-    switch (container) {
-      case TOP_LEFT:
-        topLeft.push(notification);
-        break;
-      case TOP_RIGHT:
-        topRight.push(notification);
-        break;
-      case BOTTOM_LEFT:
-        bottomLeft.push(notification);
-        break;
-      case BOTTOM_RIGHT:
-        bottomRight.push(notification);
-        break;
-      default:
-        // throw error just in case validation didn't work properly
-        throw new Error(`Container ${notification.container} is not valid`);
-    }
+    if (container === TOP_LEFT) {
+      topLeft.push(notification);
+    } else if (container === TOP_RIGHT) {
+      topRight.push(notification);
+    } else if (container === BOTTOM_LEFT) {
+      bottomLeft.push(notification);
+    } else if (container === BOTTOM_RIGHT) {
+      bottomRight.push(notification);
+    } else throw new Error(`Container ${notification.container} is not valid`);
   });
 
   return {
@@ -375,10 +361,9 @@ export function getIconHtmlContent(notification, onClickHandler) {
   );
 }
 
-function getRandomId() {
+export function getRandomId() {
   return Math.random().toString(36).substr(2, 9);
 }
-
 
 export function getNotificationOptions(options, userDefinedTypes) {
   const notification = options;
@@ -398,7 +383,7 @@ export function getNotificationOptions(options, userDefinedTypes) {
   } = notification;
 
   // for now we'll use Math.random for id
-  notification.id = getRandomId();
+  notification.id = exports.getRandomId();
 
   // validate notification's title
   validateTitle(notification);

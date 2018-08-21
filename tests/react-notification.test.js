@@ -2,18 +2,22 @@ import React from "react";
 import ReactNotification from "src/react-notification";
 import Enzyme, { mount } from "enzyme";
 import React16Adapter from "enzyme-adapter-react-16";
-import toJson from "enzyme-to-json";
 import sinon from "sinon";
-import notificationObject from "tests/mocks/notification.mock";
+import notificationMock from "tests/mocks/notification.mock";
+import { NOTIFICATION_STAGE } from "src/constants";
 
-Enzyme.configure({ adapter: new React16Adapter() });
+Enzyme.configure({
+  // react 16 adapter
+  adapter: new React16Adapter()
+});
 
 describe("Notification component", () => {
   let clock;
   let component;
-  let node;
 
-  let instance = () => component.instance();
+  // arrow function helpers
+  const getNotificationMock = (edits = {}) => Object.assign({}, notificationMock, edits);
+  const instance = () => component.instance();
 
   beforeEach(() => {
     // set fake timer
@@ -24,15 +28,46 @@ describe("Notification component", () => {
     // restore fake timer
     clock.restore();
 
-    // unmount
-    component.unmount();
+    if (component) {
+      // unmount
+      component.unmount();
+    }
+  });
+
+  it("timeout handler skips setting state if stage is REMOVAL/EXIT", () => {
+    const notification = getNotificationMock({
+      dismiss: { duration: 200 },
+      stage: NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT
+    });
+
+    component = mount(<ReactNotification notification={notification} />);
+
+    clock.tick(400);
+
+    expect(component.state()).toMatchSnapshot();
+  });
+
+  it("timeout handler updates state", () => {
+    const notification = getNotificationMock({
+      dismiss: { duration: 100 },
+      stage: undefined
+    });
+    const toggleTimeoutRemoval = jest.fn();
+
+    component = mount(<ReactNotification
+      notification={notification}
+      toggleTimeoutRemoval={toggleTimeoutRemoval}
+    />);
+
+    clock.tick(400);
+
+    expect(toggleTimeoutRemoval.mock.calls.length).toBe(1);
+    expect(component.state()).toMatchSnapshot();
   });
 
   it("component sets timeout for duration > 0", () => {
     // add dismiss option with duration set
-    let notification = Object.assign({}, notificationObject, {
-      dismiss: { duration: 2000 }
-    });
+    const notification = getNotificationMock({ dismiss: { duration: 2000 } });
 
     // mount
     component = mount(<ReactNotification notification={notification} />);
@@ -43,9 +78,7 @@ describe("Notification component", () => {
 
   it("component does not set timeout for duration = 0", () => {
     // add dismiss option with duration set
-    const notification = Object.assign({}, notificationObject, {
-      dismiss: { duration: 0 }
-    });
+    const notification = getNotificationMock({ dismiss: { duration: 0 } });
 
     // mount
     component = mount(<ReactNotification notification={notification} />);
@@ -55,9 +88,7 @@ describe("Notification component", () => {
 
   it("component does not set timeout for duration < 0", () => {
     // add dismiss option with duration set
-    const notification = Object.assign({}, notificationObject, {
-      dismiss: { duration: -1 }
-    });
+    const notification = getNotificationMock({ dismiss: { duration: -1 } });
 
     // mount
     component = mount(<ReactNotification notification={notification} />);
@@ -66,7 +97,7 @@ describe("Notification component", () => {
   });
 
   it("component does not set timeout for undefined dismiss option", () => {
-    const notification = Object.assign({}, notificationObject, { dismiss: {} });
+    const notification = getNotificationMock({ dismiss: {} });
 
     // mount
     component = mount(<ReactNotification notification={notification} />);
@@ -79,7 +110,7 @@ describe("Notification component", () => {
     let spy = jest.spyOn(ReactNotification.prototype, "onNotificationClick");
 
     component = mount(<ReactNotification
-      notification={notificationObject}
+      notification={notificationMock}
       onClickHandler={onClickHandler}
     />);
 

@@ -7,10 +7,8 @@ export default {
 
   container: "top-right",
 
-  // top or bottom insertion
   insert: "top",
 
-  // dismissable by click or touch
   dismissable: {
     click: true,
     touch: false,

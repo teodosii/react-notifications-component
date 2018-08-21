@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Wrapper component component does not set state to default values on initialization 1`] = `
+Object {
+  "breakpoint": 320,
+  "isMobile": false,
+  "notifications": Array [],
+  "width": 1024,
+}
+`;
+
+exports[`Wrapper component component sets state to default values on initialization 1`] = `
+Object {
+  "breakpoint": 768,
+  "isMobile": true,
+  "notifications": Array [],
+  "width": 1024,
+}
+`;
+
+exports[`Wrapper component component sets userDefinedTypes on initialization 1`] = `
+Object {
+  "breakpoint": 768,
+  "isMobile": true,
+  "notifications": Array [],
+  "userDefinedTypes": Array [
+    Object {
+      "htmlClasses": Array [
+        "awesome",
+      ],
+      "name": "awesome",
+    },
+  ],
+  "width": 1024,
+}
+`;

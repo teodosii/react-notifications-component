@@ -1,5 +1,7 @@
+import React from "react";
 import notificationObject from "tests/mocks/notification.mock";
 import { cssWidth } from "src/utils";
+
 import {
   isBottomContainer,
   isTopContainer,
@@ -10,7 +12,10 @@ import {
   hasFullySwiped,
   getRootHeightStyle,
   getNotificationsForEachContainer,
-  htmlClassesForUserDefinedType
+  htmlClassesForExistingType,
+  getNotificationOptions,
+  getIconHtmlContent,
+  getInitialSlidingState
 } from "src/helpers";
 
 import {
@@ -29,94 +34,111 @@ import {
 import {
   CONTAINER,
   INSERTION,
-  NOTIFICATION_TYPE,
-  NOTIFICATION_BASE_CLASS,
-  NOTIFICATION_STAGE
+  NOTIFICATION_TYPE
 } from "src/constants";
 
+const getNotificationMock = (edits) => Object.assign({}, notificationObject, edits);
+const getContentMock = () => <div className="content"></div>;
+const getDefinedTypesMock = () => [{ name: "awesome", htmlClasses: ["awesome"] }];
+
 describe("test suite for helpers", () => {
-  it("container is bottom", () => {
+  it("isBottomContainer returns true if container is BOTTOM_*", () => {
     expect(isBottomContainer(CONTAINER.BOTTOM_LEFT)).toBe(true);
     expect(isBottomContainer(CONTAINER.BOTTOM_RIGHT)).toBe(true);
   });
 
-  it("container is not bottom", () => {
+  it("isBottomContainer returns false if container is TOP_*", () => {
     expect(isBottomContainer(CONTAINER.TOP_LEFT)).toBe(false);
     expect(isBottomContainer(CONTAINER.TOP_RIGHT)).toBe(false);
   });
 
-  it("container is top", () => {
+  it("isTopContainer returns true if container is TOP_*", () => {
     expect(isTopContainer(CONTAINER.TOP_LEFT)).toBe(true);
     expect(isTopContainer(CONTAINER.TOP_RIGHT)).toBe(true);
   });
 
-  it("container is not top", () => {
+  it("isTopContainer returns false if container is BOTTOM_*", () => {
     expect(isTopContainer(CONTAINER.BOTTOM_LEFT)).toBe(false);
     expect(isTopContainer(CONTAINER.BOTTOM_RIGHT)).toBe(false);
   });
 
-  it("notification will slide", () => {
+  it("notification will slide for top/top or bottom/bottom", () => {
+    const { TOP, BOTTOM } = INSERTION;
+    const { TOP_LEFT, BOTTOM_LEFT } = CONTAINER;
+
     // expect to have sliding for top/top
-    expect(shouldNotificationHaveSliding({
-      insert: INSERTION.TOP,
-      container: CONTAINER.TOP_LEFT
-    })).toBe(true);
-
+    expect(shouldNotificationHaveSliding({ insert: TOP, container: TOP_LEFT })).toBe(true);
     // expect to have sliding for bottom/bottom
-    expect(shouldNotificationHaveSliding({
-      insert: INSERTION.BOTTOM,
-      container: CONTAINER.BOTTOM_LEFT
-    })).toBe(true);
+    expect(shouldNotificationHaveSliding({ insert: BOTTOM, container: BOTTOM_LEFT })).toBe(true);
   });
 
-  it("notification will not slide", () => {
+  it("notification will not slide for bottom/top nor top/bottom", () => {
+    const { TOP, BOTTOM } = INSERTION;
+    const { TOP_LEFT, BOTTOM_LEFT } = CONTAINER;
+
     // no sliding for bottom/top combination
-    expect(shouldNotificationHaveSliding({
-      insert: INSERTION.BOTTOM,
-      container: CONTAINER.TOP_LEFT
-    })).toBe(false);
-
+    expect(shouldNotificationHaveSliding({ insert: BOTTOM, container: TOP_LEFT })).toBe(false);
     // no sliding for top/bottom combination
-    expect(shouldNotificationHaveSliding({
-      insert: INSERTION.TOP,
-      container: CONTAINER.BOTTOM_LEFT
-    })).toBe(false);
+    expect(shouldNotificationHaveSliding({ insert: TOP, container: BOTTOM_LEFT })).toBe(false);
   });
 
-  it("width is set in pixels", () => {
-    expect(cssWidth(undefined)).toBeUndefined();
-    expect(cssWidth(100)).toMatch("100px");
+  it("htmlClassesForExistingType returns HTML classes based on type", () => {
+    expect(htmlClassesForExistingType(NOTIFICATION_TYPE.DEFAULT)).toEqual([
+      "notification-item",
+      "notification-default"
+    ]);
+
+    expect(htmlClassesForExistingType(NOTIFICATION_TYPE.SUCCESS)).toEqual([
+      "notification-item",
+      "notification-success"
+    ]);
+
+    expect(htmlClassesForExistingType(NOTIFICATION_TYPE.DANGER)).toEqual([
+      "notification-item",
+      "notification-danger"
+    ]);
+
+    expect(htmlClassesForExistingType(NOTIFICATION_TYPE.WARNING)).toEqual([
+      "notification-item",
+      "notification-warning"
+    ]);
+
+    expect(htmlClassesForExistingType(NOTIFICATION_TYPE.INFO)).toEqual([
+      "notification-item",
+      "notification-info"
+    ]);
   });
 
-  it("corresponding array of CSS classes is returned for an existing type", () => {
-    const type = NOTIFICATION_TYPE;
-    const baseClass = NOTIFICATION_BASE_CLASS;
+  it("getHtmlClassesForType returns base class if content is defined", () => {
+    const notification = getNotificationMock({ content: getContentMock() });
 
-    // expect to return corresponding CSS class for each defined notification type
-    expect(getHtmlClassesForType({ type: type.DEFAULT })).toEqual([baseClass, "notification-default"]);
-    expect(getHtmlClassesForType({ type: type.SUCCESS })).toEqual([baseClass, "notification-success"]);
-    expect(getHtmlClassesForType({ type: type.DANGER })).toEqual([baseClass, "notification-danger"]);
-    expect(getHtmlClassesForType({ type: type.WARNING })).toEqual([baseClass, "notification-warning"]);
-    expect(getHtmlClassesForType({ type: type.INFO })).toEqual([baseClass, "notification-info"]);
+    expect(getHtmlClassesForType(notification)).toEqual(["notification-item"]);
   });
 
-  it("corresponding array of CSS classes is returned for a custom type", () => {
-    const baseClass = NOTIFICATION_BASE_CLASS;
+  it("getHtmlClassesForType returns HTML classes if custom types are not defined", () => {
+    const notification = getNotificationMock();
+    delete notification.userDefinedTypes;
 
-    // define custom types
-    const userDefinedTypes = [{ name: "awesome", htmlClasses: ["awesome"] }];
-
-    // expect to return custom type
-    expect(getHtmlClassesForType({ type: "awesome", userDefinedTypes })).toEqual([baseClass, "awesome"])
+    expect(getHtmlClassesForType(notification)).toMatchSnapshot();
   });
 
-  it("custom types are case-sensitive", () => {
-    // expect to throw for case differences
-    expect(() => getHtmlClassesForType({ type: "AWESOME", userDefinedTypes })).toThrow();
-  })
+  it("getHtmlClassesForType throws exception if custom defined type cannot be found", () => {
+    const notification = getNotificationMock({ userDefinedTypes: [] });
 
-  it("notifications for mobile are returned", () => {
-    let notifications = [
+    expect(() => getHtmlClassesForType(notification)).toThrow();
+  });
+
+  it("getHtmlClassesForType returns custom HTML classes if custom types are defined", () => {
+    const notification = getNotificationMock({
+      type: "awesome",
+      userDefinedTypes: getDefinedTypesMock()
+    });
+
+    expect(getHtmlClassesForType(notification)).toMatchSnapshot();
+  });
+
+  it("getNotificationsForMobileView returns mobile notifications", () => {
+    const notifications = [
       { container: CONTAINER.TOP_LEFT },
       { container: CONTAINER.TOP_RIGHT },
       { container: CONTAINER.BOTTOM_LEFT },
@@ -127,7 +149,7 @@ describe("test suite for helpers", () => {
     expect(() => getNotificationsForMobileView(notifications)).not.toThrow();
 
     // notifications for mobile
-    let result = getNotificationsForMobileView(notifications);
+    const result = getNotificationsForMobileView(notifications);
 
     // expect to have have both top and bottom
     expect(result.top.length).toBe(2);
@@ -137,8 +159,8 @@ describe("test suite for helpers", () => {
     expect(() => getNotificationsForMobileView([{ container: "" }])).toThrow();
   });
 
-  it("notifications for desktop are returned", () => {
-    let result = getNotificationsForEachContainer([
+  it("getNotificationsForEachContainer returns desktop notifications for each container", () => {
+    const result = getNotificationsForEachContainer([
       { container: CONTAINER.TOP_LEFT },
       { container: CONTAINER.TOP_RIGHT },
       { container: CONTAINER.BOTTOM_LEFT },
@@ -172,14 +194,104 @@ describe("test suite for helpers", () => {
     expect(getCubicBezierTransition(800, "ease-out", 200, "all")).toBe("800ms all ease-out 200ms");
   });
 
-  it("notification swipes completely", () => {
+  it("hasFullySwiped returns true if notification swipes completely", () => {
     global.window.innerWidth = 100;
     expect(hasFullySwiped(40)).toBe(true);
   });
 
-  it("notification does not swipe completely", () => {
+  it("hasFullySwiped returns false if notification does not swipe completely", () => {
     global.window.innerWidth = 100;
     expect(hasFullySwiped(35)).toBe(false);
+  });
+
+  it("getInitialSlidingState has sliding", () => {
+    const notification = getNotificationMock({ insert: "top", container: "top-left" });
+    const res = getInitialSlidingState({ notification, isFirstNotification: false });
+
+    expect(res).toMatchSnapshot();
+  });
+
+  it("getInitialSlidingState has no sliding", () => {
+    const notification = getNotificationMock({ insert: "top", container: "bottom-left" });
+    const res = getInitialSlidingState({ notification, isFirstNotification: false });
+
+    expect(res).toMatchSnapshot();
+  });
+
+  it("getInitialSlidingState has no animation", () => {
+    const notification = getNotificationMock({ animationIn: [], insert: "top", container: "bottom-left" });
+    const res = getInitialSlidingState({ notification, isFirstNotification: true });
+
+    expect(res).toMatchSnapshot();
+  });
+
+  it("getIconHtmlContent returns custom icon", () => {
+    const dismissIcon = { className: "react-awesome", content: getContentMock() };
+    const notification = getNotificationMock({ dismissIcon });
+
+    expect(getIconHtmlContent(notification)).toMatchSnapshot();
+  });
+
+  it("getIconHtmlContent returns standard icon", () => {
+    const notification = getNotificationMock();
+    delete notification.dismissIcon;
+
+    expect(getIconHtmlContent(notification)).toMatchSnapshot();
+  });
+
+  it("cssWidth returns undefined for undefined width", () => {
+    expect(cssWidth(undefined)).toBeUndefined();
+  });
+
+  it("cssWidth returns width in pixels", () => {
+    expect(cssWidth(100)).toMatch("100px");
+  });
+
+  it("getNotificationOptions sets custom types if defined", () => {
+    const notification = getNotificationMock();
+    delete notification.content;
+    const res = getNotificationOptions(notification, getDefinedTypesMock());
+
+    expect(res).toMatchSnapshot({ id: expect.any(String) });
+  });
+
+  it("getNotificationOptions does not set custom types if content is defined", () => {
+    const notification = getNotificationMock({ content: getContentMock() });
+    const res = getNotificationOptions(notification, getDefinedTypesMock());
+
+    expect(res).toMatchSnapshot({ id: expect.any(String) });
+  });
+
+  it("getNotificationOptions sets width if defined", () => {
+    const notification = getNotificationMock({ width: 100 });
+
+    expect(getNotificationOptions(notification)).toMatchSnapshot({ id: expect.any(String) });
+  });
+
+  it("getNotificationOptions sets default values", () => {
+    let notification = getNotificationMock();
+    delete notification.touchSlidingExit;
+    expect(getNotificationOptions(notification)).toMatchSnapshot({ id: expect.any(String) });
+
+    notification = getNotificationMock();
+    delete notification.touchSlidingExit.swipe;
+    delete notification.touchSlidingExit.fade;
+    expect(getNotificationOptions(notification)).toMatchSnapshot({ id: expect.any(String) });
+  });
+
+  it("getHtmlClassesForType returns standard HTML classes if no custom types are defined", () => {
+    const type = NOTIFICATION_TYPE;
+
+    expect(getHtmlClassesForType({ type: type.DEFAULT })).toMatchSnapshot();
+    expect(getHtmlClassesForType({ type: type.SUCCESS })).toMatchSnapshot();
+    expect(getHtmlClassesForType({ type: type.DANGER })).toMatchSnapshot();
+    expect(getHtmlClassesForType({ type: type.WARNING })).toMatchSnapshot();
+    expect(getHtmlClassesForType({ type: type.INFO })).toMatchSnapshot();
+  });
+
+  it("getHtmlClassesForType search for custom type is case sensitive", () => {
+    // expect to throw for case differences
+    expect(() => getHtmlClassesForType({ type: "AWESOME", userDefinedTypes })).toThrow();
   });
 
   it("root element's style is properly set", () => {
@@ -257,7 +369,7 @@ describe("test suite for helpers", () => {
 
   it("validates title option", () => {
     // expect to skip for defined `content`
-    expect(validateTitle({ content: {} })).toBeUndefined();
+    expect(validateTitle({ content: getContentMock() })).toBeUndefined();
 
     // expect not to throw for undefined message
     expect(() => validateTitle({})).not.toThrow();
@@ -268,7 +380,7 @@ describe("test suite for helpers", () => {
 
   it("validates message option", () => {
     // expect to skip for defined `content`
-    expect(validateMessage({ content: {} })).toBeUndefined();
+    expect(validateMessage({ content: getContentMock() })).toBeUndefined();
 
     // expect to throw for undefined
     expect(() => validateMessage({})).toThrow();
@@ -279,7 +391,7 @@ describe("test suite for helpers", () => {
 
   it("validates type option", () => {
     // expect to return if content is set
-    expect(validateType({ content: {} })).toBeUndefined();
+    expect(validateType({ content: getContentMock() })).toBeUndefined();
 
     // expect to throw for undefined type
     expect(() => validateType()).toThrow();
@@ -321,7 +433,7 @@ describe("test suite for helpers", () => {
   it("validates user defined types", () => {
     const definedTypes = [{ name: "awesome" }];
 
-    expect(validateUserDefinedTypes({ content: {} }, definedTypes)).toBeUndefined();
+    expect(validateUserDefinedTypes({ content: getContentMock() }, definedTypes)).toBeUndefined();
     expect(validateUserDefinedTypes({ type: NOTIFICATION_TYPE.SUCCESS }, definedTypes)).toBeUndefined();
 
     // should throw if type cannot be found
@@ -339,7 +451,7 @@ describe("test suite for helpers", () => {
     expect(validateInsert("top")).toBe("top");
     expect(validateInsert("bottom")).toBe("bottom");
 
-    // expect to throw for NaN values
+    // expect to throw for invalid type
     expect(() => validateInsert({})).toThrow();
   });
 

@@ -1,5 +1,5 @@
 module.exports = {
-  "verbose": true,
+  "verbose": false,
   "snapshotSerializers": ["enzyme-to-json/serializer"],
   "setupTestFrameworkScriptFile": "<rootDir>/tests/utils/setup.js",
   "collectCoverage": true,

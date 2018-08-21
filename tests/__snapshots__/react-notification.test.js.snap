@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification component timeout handler skips setting state if stage is REMOVAL/EXIT 1`] = `
+Object {
+  "animatedElementClasses": Array [
+    "notification-item",
+    "notification-success",
+    "animated",
+    "fadeIn",
+  ],
+  "hasSliding": true,
+  "rootElementStyle": Object {
+    "height": "0px",
+    "transition": "600ms height cubic-bezier(0.215, 0.61, 0.355, 1) 0ms",
+    "width": undefined,
+  },
+}
+`;
+
+exports[`Notification component timeout handler updates state 1`] = `
+Object {
+  "animatedElementClasses": Array [
+    "notification-item",
+    "notification-success",
+    "animated",
+    "fadeIn",
+  ],
+  "hasSliding": true,
+  "rootElementStyle": Object {
+    "height": "0px",
+    "transition": "600ms height cubic-bezier(0.215, 0.61, 0.355, 1) 0ms",
+    "width": undefined,
+  },
+}
+`;
