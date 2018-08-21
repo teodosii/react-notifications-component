@@ -1,14 +1,14 @@
-[![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![devDependencies Status](https://david-dm.org/teodosii/react-notifications-component/dev-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=dev)
+[![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![peerDependencies Status](https://david-dm.org/teodosii/react-notifications-component/peer-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=peer) [![devDependencies Status](https://david-dm.org/teodosii/react-notifications-component/dev-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=dev) [![Build Status](https://travis-ci.org/teodosii/react-notifications-component.svg?branch=master)](https://travis-ci.org/teodosii/react-notifications-component) [![Coverage Status](https://coveralls.io/repos/github/teodosii/react-notifications-component/badge.svg?branch=master)](https://coveralls.io/github/teodosii/react-notifications-component?branch=master)
 
-# :alien: react-notifications-component
+# react-notifications-component
 
 Highly configurable and easy to use React Component to notify your users!
 
-## :star: Demo
+## Demo
 
 https://teodosii.github.io/react-notifications-component/
 
-## :boom: Features
+## Features
 
 - Touch support
 - Responsive notifications
@@ -25,13 +25,13 @@ https://teodosii.github.io/react-notifications-component/
 - Custom transitions on swiping
 - Top/bottom notification insertion
 
-## :eyes: Install
+## Install
 
 ```
 npm install react-notifications-component
 ```
 
-## :hammer: Usage
+## Usage
 
 You must place `ReactNotificationsComponent` component at the root level of the application in order to work properly, otherwise it might conflict with other DOM elements due to the positioning.
 
@@ -78,20 +78,24 @@ class App extends React.Component {
 
 **Note:** It is important to import `react-notifications-component` CSS theme, which is located in `dist\theme.css`
 
-## :metal: Development
+## Development
 
+First build the library
 ```
 npm run build:library
+```
+then run the webpack server to see the app running
+```
 npm run start
 ```
 
-## :wrench: Test
+## Test
 
 ```
 npm run test
 ```
 
-## :fire: API
+## API
 
 `addNotification(options)`
 
@@ -101,7 +105,7 @@ Render a new notification. Method returns a unique ID representing the rendered 
 
 Manually remove a notification by ID. Nothing will happen if notification does not exist.
 
-## :sparkles: Examples
+## Examples
 
 1. #### Custom notification type
 Following example shows usage of custom notification type defined as option
@@ -201,7 +205,7 @@ You also need to update your CSS correspondingly to your custom markup
 }
 ```
 
-## :pencil: Options
+## Options
 
 <table>
   <tr>
@@ -296,13 +300,13 @@ You also need to update your CSS correspondingly to your custom markup
   </tr>
 </table>
 
-## :sunglasses: Roadmap
+## Roadmap
 
 - Release `v1.0.0`
 - Improve tests for better coverage (up to `100%`)
 - Move `react-notifications-component` theme to a separate `npm` package
 
-## :rocket: Ideas
+## Ideas
 
 - Containers for other positions (`top-center`, `bottom-center`, `center` or even `custom`)
 - Events support (`onShow`, `onRemoved`, `onClicked`, `onTimeoutDismissed` etc)
