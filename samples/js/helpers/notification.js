@@ -8,14 +8,11 @@ export default {
   insert: "top",
 
   dismissable: {
-    click: false,
+    click: true,
     touch: false
   },
 
-  dismissIcon: {
-    className: "notification-close",
-    content: <span>&times;</span>
-  },
+  dismissIcon: null,
 
   animationIn: ["animated", "fadeIn"],
   animationOut: ["animated", "fadeOut"],
@@ -52,6 +49,6 @@ export default {
   },
   
   dismiss: {
-    duration: 55000
+    duration: 5000
   }
 };
