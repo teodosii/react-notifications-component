@@ -1,5 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Notification component componentDidMount sets initial state 1`] = `
+Object {
+  "animatedElementClasses": Array [
+    "notification-item",
+    "notification-success",
+    "animated",
+    "fadeIn",
+  ],
+  "hasSliding": true,
+  "rootElementStyle": Object {
+    "height": "0px",
+    "transition": "600ms height cubic-bezier(0.215, 0.61, 0.355, 1) 0ms",
+    "width": undefined,
+  },
+}
+`;
+
+exports[`Notification component componentDidMount sets initial state 2`] = `
+Object {
+  "animatedElementClasses": Array [
+    "notification-item",
+    "notification-success",
+  ],
+  "hasSliding": true,
+  "rootElementStyle": Object {
+    "height": "0px",
+    "transition": undefined,
+    "width": undefined,
+  },
+}
+`;
+
+exports[`Notification component onTransitionEnd updates state with needed CSS classes 1`] = `[Function]`;
+
+exports[`Notification component onTransitionEnd updates state with needed CSS classes 2`] = `[Function]`;
+
 exports[`Notification component timeout handler skips setting state if stage is REMOVAL/EXIT 1`] = `
 Object {
   "animatedElementClasses": Array [
