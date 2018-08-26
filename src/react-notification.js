@@ -32,8 +32,7 @@ export default class ReactNotification extends React.Component {
     this.onTouchEnd = this.onTouchEnd.bind(this);
 
     // ref elements
-    this.rootDOM = null;
-    this.childDOM = null;
+    this.rootDOM = React.createRef();
 
     // component's state
     this.state = getInitialSlidingState(props);
@@ -66,7 +65,7 @@ export default class ReactNotification extends React.Component {
       this.setState({
         rootElementStyle: getRootHeightStyle(
           notification,
-          this.rootDOM.scrollHeight
+          this.rootDOM.current.scrollHeight
         )
       }, () => requestAnimationFrame(() => toggleTimeoutRemoval(notification)));
     };
@@ -110,7 +109,7 @@ export default class ReactNotification extends React.Component {
     // stop propagation of transitionEnd
     e.stopPropagation();
 
-    if (!e.target.isSameNode(this.rootDOM)) {
+    if (!e.target.isSameNode(this.rootDOM.current)) {
       // skip if target is rootDOM node
       return;
     }
@@ -159,7 +158,7 @@ export default class ReactNotification extends React.Component {
       width: cssWidth(notification.width),
 
       // set height instead of auto
-      height: `${this.rootDOM.scrollHeight}px`
+      height: `${this.rootDOM.current.scrollHeight}px`
     };
 
     // if `resize` has been fired then no animation is going to happen
@@ -179,7 +178,7 @@ export default class ReactNotification extends React.Component {
     const { notification } = this.props;
 
     this.setState({
-      rootElementStyle: getRootHeightStyle(notification, this.rootDOM.scrollHeight)
+      rootElementStyle: getRootHeightStyle(notification, this.rootDOM.current.scrollHeight)
     }, () => requestAnimationFrame(() => this.props.onClickHandler(notification)));
   }
 
@@ -205,7 +204,7 @@ export default class ReactNotification extends React.Component {
         animatedElementClasses: getHtmlClassesForType(notification),
         rootElementStyle: getRootHeightStyle(
           notification,
-          this.rootDOM.scrollHeight
+          this.rootDOM.current.scrollHeight
         )
       }, () => {
         // remove notification from state
@@ -264,7 +263,7 @@ export default class ReactNotification extends React.Component {
 
     if (notification.stage === NOTIFICATION_STAGE.REMOVAL) {
       onAnimationEnd = null;
-      rootElementStyle = getRootHeightStyle(notification, this.rootDOM.scrollHeight);
+      rootElementStyle = getRootHeightStyle(notification, this.rootDOM.current.scrollHeight);
     } else if (notification.stage === NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT) {
       onAnimationEnd = this.onSmartSlidingEnd;
       onTransitionEnd = this.onSmartSlidingEnd;
@@ -287,12 +286,11 @@ export default class ReactNotification extends React.Component {
           className="notification-item-root"
           onAnimationEnd={onAnimationEnd}
           onTransitionEnd={onTransitionEnd}
-          ref={(input) => { this.rootDOM = input; }}
+          ref={this.rootDOM}
           style={rootElementStyle}
         >
           <div
             className={`${animatedElementClasses} notification-item-child`}
-            ref={(input) => { this.childDOM = input; }}
             style={childElementStyle}
           >
             {notification.content}
@@ -303,12 +301,12 @@ export default class ReactNotification extends React.Component {
 
     const icon = <div
       className="notification-close"
-      onClick={this.onClickHandler}>
+      onClick={this.onNotificationClick}>
       <span>&times;</span>
     </div>;
 
     const htmlCloseIconContent = notification.dismissIcon
-      ? getIconHtmlContent(notification, this.onClickHandler)
+      ? getIconHtmlContent(notification, this.onNotificationClick)
       : icon;
 
     let notificationTitle;
@@ -326,12 +324,11 @@ export default class ReactNotification extends React.Component {
         className="notification-item-root"
         onAnimationEnd={onAnimationEnd}
         onTransitionEnd={onTransitionEnd}
-        ref={(input) => { this.rootDOM = input; }}
+        ref={this.rootDOM}
         style={rootElementStyle}
       >
         <div
           className={`${animatedElementClasses} notification-item-child`}
-          ref={(input) => { this.childDOM = input; }}
           style={childElementStyle}
         >
           <div className="notification-content">

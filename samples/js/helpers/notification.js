@@ -8,7 +8,7 @@ export default {
   insert: "top",
 
   dismissable: {
-    click: true,
+    click: false,
     touch: false
   },
 
@@ -52,6 +52,6 @@ export default {
   },
   
   dismiss: {
-    duration: 5000
+    duration: 55000
   }
 };

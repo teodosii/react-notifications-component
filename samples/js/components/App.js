@@ -6,11 +6,13 @@ import Content from "./Content";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.instance = React.createRef();
     this.addNotification = this.addNotification.bind(this);
   }
 
   addNotification(notification) {
-    return this.instance.addNotification(notification);
+    return this.instance.current.addNotification(notification);
   }
 
   render() {
@@ -21,7 +23,7 @@ export default class App extends React.Component {
             htmlClasses: ["notification-awesome"],
             name: "awesome"
           }]}
-          ref={input => this.instance = input}
+          ref={this.instance}
           isMobile={true}
         />
         <Header />
