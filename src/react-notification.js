@@ -15,6 +15,8 @@ export default class ReactNotification extends React.Component {
   constructor(props) {
     super(props);
 
+    this.endOfSmartSliding = false;
+
     // methods binding
     this.onTransitionEnd = this.onTransitionEnd.bind(this);
     this.onNotificationClick = this.onNotificationClick.bind(this);
@@ -81,22 +83,19 @@ export default class ReactNotification extends React.Component {
   }
 
   onTransitionEnd() {
-    // sliding has finished
-    // we need to add CSS classes to animate
+    // sliding has finished, we need to add CSS classes to animate
 
     const { notification } = this.props;
     const { animationIn } = notification;
 
     // get html classes for type
-    const animatedElementClasses = getHtmlClassesForType(notification);
+    let animatedElementClasses = getHtmlClassesForType(notification);
 
     // make element visible now
     animatedElementClasses.push("notification-visible");
 
-    if (animationIn && animationIn.length) {
-      // append animation classes
-      animationIn.forEach(item => animatedElementClasses.push(item));
-    }
+    // append animation classes
+    animatedElementClasses = animatedElementClasses.concat(animationIn || []);
 
     this.setState({
       animatedElementClasses,
@@ -131,8 +130,8 @@ export default class ReactNotification extends React.Component {
     if (
       !notification.animationOut
       || !notification.animationOut.length
-      || this.endOfSmartSliding) {
-      // toggle notification removal
+      || this.endOfSmartSliding
+    ) {
       this.props.toggleRemoval(notification);
     }
 
@@ -292,7 +291,7 @@ export default class ReactNotification extends React.Component {
           style={rootElementStyle}
         >
           <div
-            className={animatedElementClasses}
+            className={`${animatedElementClasses} notification-item-child`}
             ref={(input) => { this.childDOM = input; }}
             style={childElementStyle}
           >
@@ -331,7 +330,7 @@ export default class ReactNotification extends React.Component {
         style={rootElementStyle}
       >
         <div
-          className={animatedElementClasses}
+          className={`${animatedElementClasses} notification-item-child`}
           ref={(input) => { this.childDOM = input; }}
           style={childElementStyle}
         >
