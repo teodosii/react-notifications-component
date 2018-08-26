@@ -78,7 +78,7 @@
 }
 
 .notification-message {
-  max-width: calc(100% - 10px);
+  max-width: calc(100% - 15px);
   font-size: 14px;
   line-height: 150%;
   word-wrap: break-word;
@@ -98,4 +98,5 @@
 .notification-content {
   padding: 8px 15px;
   display: inline-block;
+  width: 100%;
 }

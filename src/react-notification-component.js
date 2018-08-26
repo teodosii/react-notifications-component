@@ -141,10 +141,10 @@ class ReactNotificationComponent extends React.Component {
   }
 
   onNotificationClick(notification) {
-    const hasDismissOption = notification.dismissable.click
-      || notification.dismissable.icon;
+    const { dismissable, dismissIcon } = notification;
+    const dismissByClick = dismissable && dismissable.click;
 
-    if (hasDismissOption) {
+    if (dismissByClick || dismissIcon) {
       requestAnimationFrame(() => {
         this.setState({
           notifications: this.state.notifications.map((item) => {
@@ -205,10 +205,10 @@ class ReactNotificationComponent extends React.Component {
       return (
         <div className="react-notification-root">
           <div className="notification-container-mobile-top">
-            {top && top.length > 0}
+            {top.length > 0 && top}
           </div>
           <div className="notification-container-mobile-bottom">
-            {bottom && bottom.length > 0}
+            {bottom.length > 0 && bottom}
           </div>
         </div>
       );
@@ -223,16 +223,16 @@ class ReactNotificationComponent extends React.Component {
     return (
       <div className="react-notification-root">
         <div className="notification-container-top-left">
-          {topLeft && topLeft.length > 0}
+          {topLeft.length > 0 && topLeft}
         </div>
         <div className="notification-container-top-right">
-          {topRight && topRight.length > 0}
+          {topRight.length > 0 && topRight}
         </div>
         <div className="notification-container-bottom-left">
-          {bottomLeft && bottomLeft.length > 0}
+          {bottomLeft.length > 0 && bottomLeft}
         </div>
         <div className="notification-container-bottom-right">
-          {bottomRight && bottomRight.length > 0}
+          {bottomRight.length > 0 && bottomRight}
         </div>
       </div>
     );
