@@ -28,7 +28,10 @@ import {
   validateMessage,
   validateType,
   validateContainer,
-  validateUserDefinedTypes
+  validateUserDefinedTypes,
+  validateAnimationOut,
+  validateAnimationIn,
+  validateDismissIconOption
 } from "src/validators";
 
 import {
@@ -309,17 +312,26 @@ describe("test suite for helpers", () => {
   });
 
   it("validates dismiss icon option", () => {
-    // expect to throw if `className` is not defined
+    // throws if className is not defined
     expect(() => validateDismissIconOption({})).toThrow();
 
-    // expect to throw if `className` is not String
-    expect(() => validateDismissIconOption({ className: false })).toThrow();
+    // throws if className is not String
+    expect(() => validateDismissIconOption({ className: [1, 2] })).toThrow();
 
-    // expect to throw if `content` is not defined
+    // throws if content is not defined
     expect(() => validateDismissIconOption({ className: [] })).toThrow();
 
-    // expect to throw if `content` is not a valid React element
-    expect(() => validateDismissIconOption({ className: [], content: [] })).toThrow();
+    // throws if content is not a valid React element
+    expect(() => validateDismissIconOption({ className: [], content: [1, 2] })).toThrow();
+
+    // throws if content is missing
+    expect(() => validateDismissIconOption({ className: "hello-world" })).toThrow();
+
+    // throws if content is not a valid React element
+    expect(() => validateDismissIconOption({ className: "hello-world", content: [1, 2] })).toThrow();
+
+    // normal behavior no throw
+    expect(() => validateDismissIconOption({ className: "custom-icon", content: <div></div> })).not.toThrow();
   });
 
   it("validates timeout dismiss option", () => {
@@ -334,6 +346,32 @@ describe("test suite for helpers", () => {
 
     // expect to throw for negative duration
     expect(() => validateTimeoutDismissOption({ duration: -100 })).toThrow();
+  });
+
+  it("validates animation in", () => {
+    // expect not to throw for null argument
+    expect(() => validateAnimationIn(null)).not.toThrow();
+
+    // expect empty array for missing argument
+    expect(validateAnimationIn().length).toBe(0);
+
+    // expect to throw for argument other than Array
+    expect(() => validateAnimationIn(10)).toThrow();
+
+    expect(validateAnimationIn(["github", "react"])).toEqual(["github", "react"]);
+  });
+
+  it("validates animation out", () => {
+    // expect not to throw for null argument
+    expect(() => validateAnimationOut(null)).not.toThrow();
+
+    // expect empty array for missing argument
+    expect(validateAnimationOut().length).toBe(0);
+
+    // expect to throw for argument other than Array
+    expect(() => validateAnimationOut(10)).toThrow();
+
+    expect(validateAnimationOut(["github", "react"])).toEqual(["github", "react"]);
   });
 
   it("validates generic transition option", () => {
@@ -355,12 +393,12 @@ describe("test suite for helpers", () => {
     });
 
     // expect default values to be set
-    expect(validateTransition({}, defaults)).toEqual(defaults);
+    expect(validateTransition(null, defaults)).toEqual(defaults);
 
     // expect to throw for NaN duration
     expect(() => validateTransition({ duration: "" }, defaults)).toThrow();
 
-    // expect to throw for `cubicBezier` is not String
+    // expect to throw for cubicBezier not being a String
     expect(() => validateTransition({ cubicBezier: 0 }, defaults)).toThrow();
 
     // expect to throw for NaN delay
@@ -386,7 +424,7 @@ describe("test suite for helpers", () => {
     expect(() => validateMessage({})).toThrow();
 
     // expect to throw for non String values
-    expect(() => validateMessage({ message: 0 })).toThrow();
+    expect(() => validateMessage({ message: [] })).toThrow();
   });
 
   it("validates type option", () => {
@@ -398,6 +436,12 @@ describe("test suite for helpers", () => {
 
     // expect to throw if type is not string
     expect(() => validateType({ type: {} })).toThrow();
+
+    // expect to throw for undefined type
+    expect(() => validateType({})).toThrow();
+
+    // expect to throw error for missing type
+    expect(() => validateType({ type: "INVALID" })).toThrow();
 
     expect(validateType({ type: NOTIFICATION_TYPE.SUCCESS })).toBe("success");
   });
@@ -460,5 +504,7 @@ describe("test suite for helpers", () => {
 
     // expect to throw for NaN values
     expect(() => validateWidth({ width: {} })).toThrow();
+
+    expect(validateWidth()).toBe(0);
   });
 });

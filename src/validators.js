@@ -143,13 +143,9 @@ export function validateTitle(notification) {
 }
 
 export function validateMessage(notification) {
-  const {
-    content,
-    message
-  } = notification;
+  const { content, message } = notification;
 
   // message not required
-  // if content is supplied
   if (content) return;
 
   if (!message) {
@@ -164,10 +160,7 @@ export function validateMessage(notification) {
 }
 
 export function validateType(notification, userDefinedTypes) {
-  const {
-    content,
-    type
-  } = notification;
+  const { content, type } = notification;
 
   // skip type validation
   if (content) return undefined;
