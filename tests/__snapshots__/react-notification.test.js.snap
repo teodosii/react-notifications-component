@@ -1,5 +1,184 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Notification component component renders custom content 1`] = `
+<ReactNotification
+  notification={
+    Object {
+      "animationIn": Array [
+        "animated",
+        "fadeIn",
+      ],
+      "animationOut": Array [
+        "animated",
+        "fadeOut",
+      ],
+      "container": "top-right",
+      "content": <div
+        className="custom-content"
+      />,
+      "dismissable": Object {
+        "click": false,
+        "touch": false,
+      },
+      "insert": "top",
+      "message": "Document has been updated!",
+      "slidingEnter": Object {
+        "cubicBezier": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+        "delay": 0,
+        "duration": 600,
+      },
+      "slidingExit": Object {
+        "cubicBezier": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+        "delay": 0,
+        "duration": 600,
+      },
+      "title": "Success",
+      "touchSlidingBack": Object {
+        "cubicBezier": "ease-in",
+        "delay": 0,
+        "duration": 600,
+      },
+      "touchSlidingExit": Object {
+        "fade": Object {
+          "cubicBezier": "ease-in",
+          "delay": 0,
+          "duration": 300,
+        },
+        "swipe": Object {
+          "cubicBezier": "ease-in",
+          "delay": 0,
+          "duration": 600,
+        },
+      },
+      "type": "success",
+    }
+  }
+>
+  <div
+    className="notification-item-root"
+    onClick={null}
+    onTouchCancel={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    onTransitionEnd={[Function]}
+    style={
+      Object {
+        "height": "0px",
+        "transition": "600ms height cubic-bezier(0.215, 0.61, 0.355, 1) 0ms",
+        "width": undefined,
+      }
+    }
+  >
+    <div
+      className="notification-item animated fadeIn notification-item-child"
+    >
+      <div
+        className="custom-content"
+      />
+    </div>
+  </div>
+</ReactNotification>
+`;
+
+exports[`Notification component component renders dismiss icon 1`] = `
+<ReactNotification
+  notification={
+    Object {
+      "animationIn": Array [
+        "animated",
+        "fadeIn",
+      ],
+      "animationOut": Array [
+        "animated",
+        "fadeOut",
+      ],
+      "container": "top-right",
+      "dismissIcon": Object {
+        "className": "notification-close",
+        "content": <span>
+          ×
+        </span>,
+      },
+      "dismissable": Object {
+        "click": true,
+        "touch": false,
+      },
+      "insert": "top",
+      "message": "Document has been updated!",
+      "slidingEnter": Object {
+        "cubicBezier": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+        "delay": 0,
+        "duration": 600,
+      },
+      "slidingExit": Object {
+        "cubicBezier": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+        "delay": 0,
+        "duration": 600,
+      },
+      "title": null,
+      "touchSlidingBack": Object {
+        "cubicBezier": "ease-in",
+        "delay": 0,
+        "duration": 600,
+      },
+      "touchSlidingExit": Object {
+        "fade": Object {
+          "cubicBezier": "ease-in",
+          "delay": 0,
+          "duration": 300,
+        },
+        "swipe": Object {
+          "cubicBezier": "ease-in",
+          "delay": 0,
+          "duration": 600,
+        },
+      },
+      "type": "success",
+    }
+  }
+>
+  <div
+    className="notification-item-root"
+    onClick={[Function]}
+    onTouchCancel={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    onTransitionEnd={[Function]}
+    style={
+      Object {
+        "height": "0px",
+        "transition": "600ms height cubic-bezier(0.215, 0.61, 0.355, 1) 0ms",
+        "width": undefined,
+      }
+    }
+  >
+    <div
+      className="notification-item notification-success animated fadeIn notification-item-child"
+    >
+      <div
+        className="notification-content"
+      >
+        <div
+          className="notification-close"
+          onClick={[Function]}
+        >
+          <span>
+            ×
+          </span>
+        </div>
+        <p
+          className="notification-message"
+        >
+          Document has been updated!
+        </p>
+      </div>
+    </div>
+  </div>
+</ReactNotification>
+`;
+
 exports[`Notification component componentDidMount sets initial state 1`] = `
 Object {
   "animatedElementClasses": Array [

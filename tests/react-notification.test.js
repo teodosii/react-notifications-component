@@ -5,6 +5,7 @@ import React16Adapter from "enzyme-adapter-react-16";
 import sinon from "sinon";
 import notificationMock from "tests/mocks/notification.mock";
 import { NOTIFICATION_STAGE } from "src/constants";
+import toJson from "enzyme-to-json";
 
 Enzyme.configure({
   // react 16 adapter
@@ -33,6 +34,34 @@ describe("Notification component", () => {
       // unmount
       component.unmount();
     }
+  });
+
+  it("component renders custom content", () => {
+    component = mount(
+      <ReactNotification notification={getNotificationMock({
+        dismissable: {
+          click: false,
+          touch: false
+        },
+        content: <div className="custom-content"></div>
+      })} />
+    );
+
+    expect(toJson(component)).toMatchSnapshot();
+  });
+
+  it("component renders dismiss icon", () => {
+    component = mount(
+      <ReactNotification notification={getNotificationMock({
+        title: null,
+        dismissIcon: {
+          className: "notification-close",
+          content: <span>&times;</span>
+        }
+      })} />
+    );
+
+    expect(toJson(component)).toMatchSnapshot();
   });
 
   it("onTransitionEnd updates state with needed CSS classes", () => {
