@@ -37,7 +37,8 @@ import {
 import {
   CONTAINER,
   INSERTION,
-  NOTIFICATION_TYPE
+  NOTIFICATION_TYPE,
+  NOTIFICATION_BASE_CLASS
 } from "src/constants";
 
 const getNotificationMock = (edits) => Object.assign({}, notificationObject, edits);
@@ -112,10 +113,14 @@ describe("test suite for helpers", () => {
     ]);
   });
 
+  it("htmlClassesForExistingType returns base class as default", () => {
+    expect(htmlClassesForExistingType("OTHER")).toEqual([NOTIFICATION_BASE_CLASS]);
+  })
+
   it("getHtmlClassesForType returns base class if content is defined", () => {
     const notification = getNotificationMock({ content: getContentMock() });
 
-    expect(getHtmlClassesForType(notification)).toEqual(["notification-item"]);
+    expect(getHtmlClassesForType(notification)).toEqual([NOTIFICATION_BASE_CLASS]);
   });
 
   it("getHtmlClassesForType returns HTML classes if custom types are not defined", () => {
