@@ -1,4 +1,6 @@
-1. #### Custom notification type
+## Examples
+
+#### Custom notification type
 Following example shows usage of custom notification type defined as option
 
 ```jsx
@@ -46,7 +48,7 @@ Custom types need to use custom CSS (not included in `react-notifications-compon
 }
 ```
 
-2. #### Custom content with FontAwesome's check mark
+#### Custom content with FontAwesome's check mark
 This example shows usage of Font Awesome check mark to be included in your notification along with desired custom content
 
 ```jsx

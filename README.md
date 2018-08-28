@@ -107,7 +107,7 @@ Manually remove a notification by ID. Nothing will happen if notification does n
 
 ## Examples
 
-[Examples](https://github.com/teodosii/react-notifications-component/tree/master/samples)
+View examples [here](https://github.com/teodosii/react-notifications-component/tree/master/samples)
 
 ## Options
 
