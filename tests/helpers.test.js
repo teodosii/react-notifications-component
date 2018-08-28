@@ -351,6 +351,9 @@ describe("test suite for helpers", () => {
 
     // expect to throw for negative duration
     expect(() => validateTimeoutDismissOption({ duration: -100 })).toThrow();
+
+    // normal behavior not to throw
+    expect(() => validateTimeoutDismissOption({ duration: 2000 })).not.toThrow();
   });
 
   it("validates animation in", () => {

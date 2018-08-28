@@ -179,6 +179,84 @@ exports[`Notification component component renders dismiss icon 1`] = `
 </ReactNotification>
 `;
 
+exports[`Notification component component sets touch events to null on TOUCH_SLIDING_ANIMATION_EXIT 1`] = `
+<ReactNotification
+  notification={
+    Object {
+      "animationIn": Array [
+        "animated",
+        "fadeIn",
+      ],
+      "animationOut": Array [
+        "animated",
+        "fadeOut",
+      ],
+      "container": "top-right",
+      "content": <div
+        className="custom-cc"
+      />,
+      "dismissable": Object {
+        "click": true,
+        "touch": false,
+      },
+      "insert": "top",
+      "message": "Document has been updated!",
+      "slidingEnter": Object {
+        "cubicBezier": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+        "delay": 0,
+        "duration": 600,
+      },
+      "slidingExit": Object {
+        "cubicBezier": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+        "delay": 0,
+        "duration": 600,
+      },
+      "stage": "TOUCH_SLIDING_ANIMATION_EXIT",
+      "title": "Success",
+      "touchSlidingBack": Object {
+        "cubicBezier": "ease-in",
+        "delay": 0,
+        "duration": 600,
+      },
+      "touchSlidingExit": Object {
+        "fade": Object {
+          "cubicBezier": "ease-in",
+          "delay": 0,
+          "duration": 300,
+        },
+        "swipe": Object {
+          "cubicBezier": "ease-in",
+          "delay": 0,
+          "duration": 600,
+        },
+      },
+      "type": "success",
+    }
+  }
+>
+  <div
+    className="notification-item-root"
+    onAnimationEnd={[Function]}
+    onClick={null}
+    onTouchCancel={null}
+    onTouchEnd={null}
+    onTouchMove={null}
+    onTouchStart={null}
+    onTransitionEnd={[Function]}
+    style={Object {}}
+  >
+    <div
+      className=" notification-item-child"
+      style={Object {}}
+    >
+      <div
+        className="custom-cc"
+      />
+    </div>
+  </div>
+</ReactNotification>
+`;
+
 exports[`Notification component componentDidMount sets initial state 1`] = `
 Object {
   "animatedElementClasses": Array [

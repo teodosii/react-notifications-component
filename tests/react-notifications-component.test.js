@@ -38,6 +38,83 @@ describe("Wrapper component", () => {
     component.unmount();
   });
 
+  it("toggleTimeoutRemoval does not change stage if id does not match", () => {
+    component = mount(<ReactNotificationComponent />);
+    addNotification(getNotificationMock());
+
+    const stage = state().notifications[0].stage;
+
+    // toggle removal
+    instance().toggleTimeoutRemoval({ id: 0 });
+
+    // expect stage to match old stage
+    expect(state().notifications[0].stage).toEqual(stage);
+  });
+
+  it("toggleTouchEnd does not change stage if id does not match", () => {
+    component = mount(<ReactNotificationComponent />);
+    addNotification(getNotificationMock());
+
+    const stage = state().notifications[0].stage;
+
+    // toggle removal
+    instance().toggleTouchEnd({ id: 0 });
+
+    // expect stage to match old stage
+    expect(state().notifications[0].stage).toEqual(stage);
+  });
+
+  it("removeNotification does not change stage if id does not match", () => {
+    component = mount(<ReactNotificationComponent />);
+    addNotification(getNotificationMock());
+
+    const stage = state().notifications[0].stage;
+
+    instance().removeNotification({ id: 0 });
+
+    // expect stage to match old stage
+    expect(state().notifications[0].stage).toEqual(stage);
+
+    // wait for requestAnimationFrame
+    clock.tick(400);
+
+    // expect stage to match old stage
+    expect(state().notifications[0].stage).toEqual(stage);
+  });
+
+  it("onNotificationClick does not change stage if id does not match", () => {
+    component = mount(<ReactNotificationComponent />);
+    addNotification(getNotificationMock());
+
+    const stage = state().notifications[0].stage;
+
+    // toggle notification click
+    instance().onNotificationClick({ dismissable: { click: true } });
+
+    clock.tick(400);
+
+    // expect stage to match old stage
+    expect(state().notifications[0].stage).toEqual(stage);
+  });
+
+  it("addNotification adds notifications at the bottom", () => {
+    component = mount(<ReactNotificationComponent />);
+    const id = addNotification(getNotificationMock({ insert: "BOTTOM" }));
+    const id2 = addNotification(getNotificationMock({ insert: "BOTTOM" }));
+
+    expect(state().notifications[0].id).toEqual(id);
+    expect(state().notifications[1].id).toEqual(id2);
+  });
+
+  it("addNotification adds notifications at the top", () => {
+    component = mount(<ReactNotificationComponent />);
+    const id = addNotification(getNotificationMock({ insert: "TOP" }));
+    const id2 = addNotification(getNotificationMock({ insert: "TOP" }));
+
+    expect(state().notifications[0].id).toEqual(id2);
+    expect(state().notifications[1].id).toEqual(id);
+  });
+
   it("component sets state to default values on initialization", () => {
     component = mount(<ReactNotificationComponent />);
     expect(state()).toMatchSnapshot();

@@ -6,6 +6,7 @@ import sinon from "sinon";
 import notificationMock from "tests/mocks/notification.mock";
 import { NOTIFICATION_STAGE } from "src/constants";
 import toJson from "enzyme-to-json";
+import * as Helpers from "src/helpers";
 
 Enzyme.configure({
   // react 16 adapter
@@ -154,6 +155,22 @@ describe("Notification component", () => {
     expect(toggleRemoval.mock.calls.length).toBe(1);
   });
 
+  it("component sets touch events to null on TOUCH_SLIDING_ANIMATION_EXIT", () => {
+    Helpers.handleStageTransition = jest.fn().mockImplementation(() => ({
+      rootElementStyle: {},
+      childElementStyle: {}
+    }));
+
+    const component = mount(
+      <ReactNotification notification={getNotificationMock({
+        content: <div className="custom-cc"></div>,
+        stage: NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT
+      })} />
+    );
+
+    expect(toJson(component)).toMatchSnapshot();
+  });
+
   it("componentDidMount sets initial state", () => {
     const spy = jest.spyOn(ReactNotification.prototype, "componentDidMount");
 
@@ -247,13 +264,13 @@ describe("Notification component", () => {
     const onClickHandler = jest.fn();
     const spy = jest.spyOn(ReactNotification.prototype, "onNotificationClick");
 
-    component = mount(<ReactNotification
-      notification={notificationMock}
+    const component = mount(<ReactNotification
+      notification={getNotificationMock({ dismissable: { click: true } })}
       onClickHandler={onClickHandler}
     />);
 
     // trigger click
-    component.find(".notification-item").simulate("click");
+    component.find(".notification-item-root").simulate("click");
 
     // expect instance onClickHandler to be called
     expect(spy.mock.calls.length).toBe(1);

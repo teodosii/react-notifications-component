@@ -205,10 +205,10 @@ class ReactNotificationComponent extends React.Component {
       return (
         <div className="react-notification-root">
           <div className="notification-container-mobile-top">
-            {top.length > 0 && top}
+            {top}
           </div>
           <div className="notification-container-mobile-bottom">
-            {bottom.length > 0 && bottom}
+            {bottom}
           </div>
         </div>
       );
@@ -223,16 +223,16 @@ class ReactNotificationComponent extends React.Component {
     return (
       <div className="react-notification-root">
         <div className="notification-container-top-left">
-          {topLeft.length > 0 && topLeft}
+          {topLeft}
         </div>
         <div className="notification-container-top-right">
-          {topRight.length > 0 && topRight}
+          {topRight}
         </div>
         <div className="notification-container-bottom-left">
-          {bottomLeft.length > 0 && bottomLeft}
+          {bottomLeft}
         </div>
         <div className="notification-container-bottom-right">
-          {bottomRight.length > 0 && bottomRight}
+          {bottomRight}
         </div>
       </div>
     );
