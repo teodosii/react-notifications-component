@@ -22,8 +22,10 @@ module.exports = {
     alias: {
       "rc-notifications": path.resolve(__dirname, "src"),
       src: path.resolve(__dirname, "src"),
-      samples: path.resolve(__dirname, "samples"),
-      tests: path.resolve(__dirname, "tests")
+      helpers: path.resolve(__dirname, "samples/js/helpers"),
+      components: path.resolve(__dirname, "samples/js/components"),
+      images: path.resolve(__dirname, "samples/images"),
+      styles: path.resolve(__dirname, "samples/styles")
     },
     extensions: [".js", ".css", ".scss"]
   },
@@ -33,6 +35,10 @@ module.exports = {
       test: /\.(js|jsx)$/,
       use: ["babel-loader"],
       exclude: /node_modules/
+    }, {
+      test: /\.(js|jsx)$/,
+      use: ["eslint-loader"],
+      include: /samples/
     }, {
       test: /\.(css|scss)$/,
       use: [
