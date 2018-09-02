@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![peerDependencies Status](https://david-dm.org/teodosii/react-notifications-component/peer-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=peer) [![devDependencies Status](https://david-dm.org/teodosii/react-notifications-component/dev-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=dev) [![Build Status](https://travis-ci.org/teodosii/react-notifications-component.svg?branch=master)](https://travis-ci.org/teodosii/react-notifications-component) [![Coverage Status](https://coveralls.io/repos/github/teodosii/react-notifications-component/badge.svg?branch=master)](https://coveralls.io/github/teodosii/react-notifications-component?branch=master)
+[![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![Build Status](https://travis-ci.org/teodosii/react-notifications-component.svg?branch=master)](https://travis-ci.org/teodosii/react-notifications-component) [![Coverage Status](https://coveralls.io/repos/github/teodosii/react-notifications-component/badge.svg?branch=master)](https://coveralls.io/github/teodosii/react-notifications-component?branch=master) [![dependencies Status](https://david-dm.org/teodosii/react-notifications-component/status.svg)](https://david-dm.org/teodosii/react-notifications-component) [![peerDependencies Status](https://david-dm.org/teodosii/react-notifications-component/peer-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=peer) [![devDependencies Status](https://david-dm.org/teodosii/react-notifications-component/dev-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=dev)
 
 # react-notifications-component
 
@@ -107,7 +107,7 @@ Manually remove a notification by ID. Nothing will happen if notification does n
 
 ## Examples
 
-View examples [here](https://github.com/teodosii/react-notifications-component/tree/master/samples)
+View examples [here](https://github.com/teodosii/react-notifications-component/blob/master/samples/README.md)
 
 ## Options
 
@@ -210,7 +210,7 @@ View examples [here](https://github.com/teodosii/react-notifications-component/t
 - Improve tests for better coverage (up to `100%`)
 - Move `react-notifications-component` theme to a separate `npm` package
 
-## Ideas
+## Future development
 
 - Containers for other positions (`top-center`, `bottom-center`, `center` or even `custom`)
 - Events support (`onShow`, `onRemoved`, `onClicked`, `onTimeoutDismissed` etc)
