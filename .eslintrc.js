@@ -19,8 +19,7 @@ module.exports = {
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "airbnb-base"
+    "plugin:react/recommended"
   ],
   "env": {
     "es6": true,
@@ -37,10 +36,6 @@ module.exports = {
     "react/prop-types": "off",
     "allowShortCircuit": true,
     "allowTernary": true,
-    "import/no-extraneous-dependencies": [
-      "error",
-      { "devDependencies": true }
-    ],
     "react/jsx-uses-vars": "error"
   }
 }
