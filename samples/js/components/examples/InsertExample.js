@@ -1,11 +1,10 @@
 import React from "react";
-import notification from "../../helpers/notification";
+import notification from "helpers/notification";
 import {
-  getContainer,
   getType,
   getMessage,
   getTitle
-} from "../../helpers/randomize";
+} from "helpers/randomize";
 
 export default function InsertExample({ addNotification }) {
   const add = (insert) => {

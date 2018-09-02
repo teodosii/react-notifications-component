@@ -1,10 +1,8 @@
 import React from "react";
 import Highlight from "react-highlight";
-import { usage } from "../../helpers/code";
-import notification from "../../helpers/notification";
-import notificationObject from "../../../../tests/mocks/notification.mock";
+import { usage } from "helpers/code";
 
-export default function UsageExample({ addNotification }) {
+export default function UsageExample() {
   return (
     <div className="row">
       <div className="col-lg-8 offset-lg-2 column col-md-10 offset-md-1 col-sm-12 heading">

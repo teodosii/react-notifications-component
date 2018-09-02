@@ -1,12 +1,12 @@
 import React from "react";
 import Highlight from "react-highlight";
-import { install, usage } from "../helpers/code";
-import ContainerExample from "./examples/ContainerExample";
-import TypeExample from "./examples/TypeExample";
-import InsertExample from "./examples/InsertExample";
-import AnimationWrapper from "./examples/AnimationExample";
-import CustomContentExample from "./examples/CustomContentExample";
-import UsageExample from "./examples/UsageExample";
+import { install, } from "helpers/code";
+import ContainerExample from "components/examples/ContainerExample";
+import TypeExample from "components/examples/TypeExample";
+import InsertExample from "components/examples/InsertExample";
+import AnimationWrapper from "components/examples/AnimationExample";
+import CustomContentExample from "components/examples/CustomContentExample";
+import UsageExample from "components/examples/UsageExample";
 
 function NPMInstall() {
   return (
@@ -34,7 +34,7 @@ function ExampleHeading() {
       </div>
     </div>
   );
-};
+}
 
 const Examples = ({ addNotification }) => {
   return (

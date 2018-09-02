@@ -1,5 +1,3 @@
-import React from "react";
-
 export default {
   title: "Awesomeness",
   message: "Awesome Notifications!",
@@ -47,7 +45,7 @@ export default {
       delay: 0
     }
   },
-  
+
   dismiss: {
     duration: 5000
   }

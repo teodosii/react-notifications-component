@@ -1,10 +1,10 @@
 import React from "react";
-import notification from "../../helpers/notification";
+import notification from "helpers/notification";
 import {
   getContainer,
   getMessage,
   getTitle
-} from "../../helpers/randomize";
+} from "helpers/randomize";
 
 export default class TypeExample extends React.Component {
   constructor(props) {

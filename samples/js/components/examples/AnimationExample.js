@@ -1,11 +1,10 @@
 import React from "react";
-import notification from "../../helpers/notification";
+import notification from "helpers/notification";
 import {
   getContainer,
   getType,
-  getMessage,
-  getTitle
-} from "../../helpers/randomize";
+  getMessage
+} from "helpers/randomize";
 
 function AnimationInExample({ addNotification }) {
   const add = (htmlClasses) => {

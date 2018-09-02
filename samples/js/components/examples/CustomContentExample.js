@@ -1,7 +1,7 @@
 import React from "react";
-import notification from "../../helpers/notification";
-import reactImage from "../../../images/react.png";
-import { getContainer } from "../../helpers/randomize";
+import notification from "helpers/notification";
+import reactImage from "images/react.png";
+import { getContainer } from "helpers/randomize";
 
 export default class CustomContentExample extends React.Component {
   constructor(props) {

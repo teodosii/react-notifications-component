@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Header({ instance }) {
+export default function Header() {
   return (
     <div className="header">
       <div className="header-content">
@@ -9,6 +9,7 @@ export default function Header({ instance }) {
         <div className="header-buttons">
           <a
             target="_blank"
+            rel="noopener noreferrer"
             className="btn btn-primary no-corner"
             href={"https://github.com/teodosii/react-notifications-component"}
           >

@@ -1,8 +1,18 @@
-import React from "react";
+const containers = [
+  "top-left",
+  "top-right",
+  "bottom-left",
+  "bottom-right"
+];
 
-const containers = ["top-left", "top-right", "bottom-left", "bottom-right"];
-
-const types = ["success", "danger", "warning", "default", "info", "awesome"];
+const types = [
+  "success",
+  "danger",
+  "warning",
+  "default",
+  "info",
+  "awesome"
+];
 
 const successMessages = [
   "All your data has been successfully updated",
