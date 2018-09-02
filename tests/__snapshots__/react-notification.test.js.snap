@@ -289,9 +289,37 @@ Object {
 }
 `;
 
-exports[`Notification component onTransitionEnd updates state with needed CSS classes 1`] = `[Function]`;
+exports[`Notification component onTransitionEnd updates state with needed CSS classes 1`] = `
+Object {
+  "animatedElementClasses": Array [
+    "notification-item",
+    "notification-success",
+    "notification-visible",
+    "html5",
+    "css3",
+  ],
+  "hasSliding": true,
+  "rootElementStyle": Object {
+    "height": "auto",
+    "width": undefined,
+  },
+}
+`;
 
-exports[`Notification component onTransitionEnd updates state with needed CSS classes 2`] = `[Function]`;
+exports[`Notification component onTransitionEnd updates state with needed CSS classes 2`] = `
+Object {
+  "animatedElementClasses": Array [
+    "notification-item",
+    "notification-success",
+    "notification-visible",
+  ],
+  "hasSliding": true,
+  "rootElementStyle": Object {
+    "height": "auto",
+    "width": undefined,
+  },
+}
+`;
 
 exports[`Notification component timeout handler skips setting state if stage is REMOVAL/EXIT 1`] = `
 Object {

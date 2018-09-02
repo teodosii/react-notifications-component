@@ -176,13 +176,35 @@ export function slidingExitTransition(notification) {
   );
 }
 
+export function touchSwipeTransition(notification) {
+  const { swipe } = notification.touchSlidingExit;
+
+  return getCubicBezierTransition(
+    swipe.duration,
+    swipe.cubicBezier,
+    swipe.delay,
+    "left"
+  );
+}
+
+export function touchFadeTransition(notification) {
+  const { fade } = notification.touchSlidingExit;
+
+  return getCubicBezierTransition(
+    fade.duration,
+    fade.cubicBezier,
+    fade.delay,
+    "opacity"
+  );
+}
+
 export function getInitialSlidingState({ notification, isFirstNotification }) {
   // no sliding needed for first notification in container
   const hasSliding = shouldNotificationHaveSliding(notification) && !isFirstNotification;
   const state = {};
 
   // set default classes for animated element
-  state.animatedElementClasses = exports.getHtmlClassesForType(notification);
+  state.animatedElementClasses = getHtmlClassesForType(notification);
   state.rootElementStyle = {
     height: "0",
     marginBottom: 0,
@@ -204,8 +226,8 @@ export function getInitialSlidingState({ notification, isFirstNotification }) {
 
 export function getChildStyleForTouchTransitionExit(notification, startX, currentX) {
   const width = window.innerWidth * 2;
-  const touchSwipe = exports.touchSwipeTransition(notification);
-  const touchFade = exports.touchFadeTransition(notification);
+  const touchSwipe = touchSwipeTransition(notification);
+  const touchFade = touchFadeTransition(notification);
 
   return {
     opacity: 0,
@@ -221,11 +243,11 @@ export function getChildStyleForTouchTransitionExit(notification, startX, curren
 
 export function handleTouchSlidingAnimationExit(notification, currentX, startX) {
   // set current html classes
-  const animatedElementClasses = exports.getHtmlClassesForType(notification);
+  const animatedElementClasses = getHtmlClassesForType(notification);
   // set opacity and left to pull-out notification
   const childElementStyle = getChildStyleForTouchTransitionExit(notification, startX, currentX);
   // sliding out transition
-  const slidingTransition = exports.slidingExitTransition(notification);
+  const slidingTransition = slidingExitTransition(notification);
 
   return {
     childElementStyle,
@@ -242,7 +264,7 @@ export function handleTouchSlidingAnimationExit(notification, currentX, startX) 
 
 export function handleSlidingAnimationExit(notification) {
   const { animationOut } = notification;
-  const animatedElementClasses = exports.getHtmlClassesForType(notification);
+  const animatedElementClasses = getHtmlClassesForType(notification);
 
   if (animationOut) {
     // add CSS classes if any defined
@@ -283,7 +305,7 @@ export function handleStageTransition(notification, state) {
   if (notification.resized) {
     // window got resized, do not apply animations
     rootElementStyle = stateRootStyle;
-    animatedElementClasses = exports.getHtmlClassesForType(notification);
+    animatedElementClasses = getHtmlClassesForType(notification);
   } else {
     // use values from state
     rootElementStyle = stateRootStyle;
@@ -313,28 +335,6 @@ export function getRootHeightStyle(notification, scrollHeight) {
       notification.slidingExit.delay
     )
   };
-}
-
-export function touchSwipeTransition(notification) {
-  const { swipe } = notification.touchSlidingExit;
-
-  return getCubicBezierTransition(
-    swipe.duration,
-    swipe.cubicBezier,
-    swipe.delay,
-    "left"
-  );
-}
-
-export function touchFadeTransition(notification) {
-  const { fade } = notification.touchSlidingExit;
-
-  return getCubicBezierTransition(
-    fade.duration,
-    fade.cubicBezier,
-    fade.delay,
-    "opacity"
-  );
 }
 
 export function getIconHtmlContent(notification, onClickHandler) {
@@ -383,7 +383,7 @@ export function getNotificationOptions(options, userDefinedTypes) {
   } = notification;
 
   // for now we'll use Math.random for id
-  notification.id = exports.getRandomId();
+  notification.id = getRandomId();
 
   // validate notification's title
   validateTitle(notification);

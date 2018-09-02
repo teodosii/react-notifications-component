@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test suite for stage-helpers adds CSS animation classes on removal if animationOut is defined 1`] = `
+Object {
+  "animatedElementClasses": Array [
+    "notification-item",
+    "notification-success",
+    "jest-test",
+  ],
+  "rootElementStyle": Object {
+    "height": 0,
+    "marginBottom": 0,
+    "transition": "600ms all cubic-bezier(0.215, 0.61, 0.355, 1) 0ms",
+    "width": undefined,
+  },
+}
+`;
+
+exports[`test suite for stage-helpers does not add CSS animation classes on removal if animationOut is undefined 1`] = `
+Object {
+  "animatedElementClasses": Array [
+    "notification-item",
+    "notification-success",
+  ],
+  "rootElementStyle": Object {
+    "height": 0,
+    "marginBottom": 0,
+    "transition": "600ms all cubic-bezier(0.215, 0.61, 0.355, 1) 0ms",
+    "width": undefined,
+  },
+}
+`;
+
+exports[`test suite for stage-helpers notification slides to the left edge of the window 1`] = `
+Object {
+  "left": "-2048px",
+  "opacity": 0,
+  "position": "relative",
+  "transition": "600ms left ease-in 0ms, 300ms opacity ease-in 0ms",
+}
+`;
+
+exports[`test suite for stage-helpers notification slides to the right edge of the window 1`] = `
+Object {
+  "left": "2048px",
+  "opacity": 0,
+  "position": "relative",
+  "transition": "600ms left ease-in 0ms, 300ms opacity ease-in 0ms",
+}
+`;

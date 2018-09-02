@@ -48,8 +48,7 @@ export default class ReactNotification extends React.Component {
 
   componentWillUnmount() {
     if (this.timeoutId) {
-      // timeout cleanup
-      clearTimeout(this.timeoutId);
+      this.timeoutId = clearTimeout(this.timeoutId);
     }
   }
 

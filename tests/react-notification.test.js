@@ -15,12 +15,7 @@ Enzyme.configure({
 
 describe("Notification component", () => {
   let clock;
-  let component;
-
-  // arrow function helpers
   const getNotificationMock = (edits = {}) => Object.assign({}, notificationMock, edits);
-  const instance = () => component.instance();
-  const state = () => component.state();
 
   beforeEach(() => {
     // set fake timer
@@ -30,15 +25,10 @@ describe("Notification component", () => {
   afterEach(() => {
     // restore fake timer
     clock.restore();
-
-    if (component) {
-      // unmount
-      component.unmount();
-    }
   });
 
   it("component renders custom content", () => {
-    component = mount(
+    const component = mount(
       <ReactNotification notification={getNotificationMock({
         dismissable: {
           click: false,
@@ -52,7 +42,7 @@ describe("Notification component", () => {
   });
 
   it("component renders dismiss icon", () => {
-    component = mount(
+    const component = mount(
       <ReactNotification notification={getNotificationMock({
         title: null,
         dismissIcon: {
@@ -65,15 +55,41 @@ describe("Notification component", () => {
     expect(toJson(component)).toMatchSnapshot();
   });
 
+  it("component clears timeout on umounting", () => {
+    const spy = jest.spyOn(clock, "clearTimeout");
+    const toggleTimeoutRemoval = jest.fn();
+    const component = mount(
+      <ReactNotification
+        toggleTimeoutRemoval={toggleTimeoutRemoval}
+        notification={
+          getNotificationMock({
+            dismiss: { duration: 400 }
+          })
+        } />
+    );
+
+    const timeoutId = component.instance().timeoutId;
+
+    // timeout is set
+    expect(timeoutId).toBeDefined();
+
+    // unmount
+    component.unmount();
+
+    // expect clearTimeout to have been called
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(timeoutId);
+  })
+
   it("onTransitionEnd updates state with needed CSS classes", () => {
-    component = mount(
+    let component = mount(
       <ReactNotification notification={getNotificationMock({ animationIn: ["html5", "css3"] })} />
     );
 
     // manually call function
     component.instance().onTransitionEnd();
     // expect correct state update
-    expect(component.state).toMatchSnapshot();
+    expect(component.state()).toMatchSnapshot();
 
     component = mount(
       <ReactNotification notification={getNotificationMock({ animationIn: null })} />
@@ -81,24 +97,23 @@ describe("Notification component", () => {
     // manually call function
     component.instance().onTransitionEnd();
     // expect correct state update
-    expect(component.state).toMatchSnapshot();
+    expect(component.state()).toMatchSnapshot();
   });
 
   it("onTouchSmartSlidingEnd returns if target node is NOT the root node", () => {
-    component = mount(
+    const component = mount(
       <ReactNotification notification={getNotificationMock({
         stage: NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT
       })} />
     );
 
     component.find(".notification-item-child").simulate("transitionend");
-    // expect endOfSmartSliding to be false
-    expect(instance().endOfSmartSliding).toBe(false);
+    expect(component.instance().endOfSmartSliding).toBe(false);
   });
 
   it("onTouchSmartSlidingEnd toggles removal", () => {
     const toggleRemoval = jest.fn();
-    component = mount(
+    const component = mount(
       <ReactNotification toggleRemoval={toggleRemoval} notification={getNotificationMock({
         stage: NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT
       })} />
@@ -106,7 +121,7 @@ describe("Notification component", () => {
 
     component.find(".notification-item-root").simulate("transitionend")
     // expect endOfSmartSliding to be true
-    expect(instance().endOfSmartSliding).toBe(true);
+    expect(component.instance().endOfSmartSliding).toBe(true);
 
     component.find(".notification-item-root").simulate("transitionend")
     // expect toggleRemoval to be called
@@ -115,7 +130,7 @@ describe("Notification component", () => {
 
   it("onSmartSlidingEnd toggles removal for undefined/empty animationOut", () => {
     const toggleRemoval = jest.fn();
-    component = mount(
+    let component = mount(
       <ReactNotification toggleRemoval={toggleRemoval} notification={getNotificationMock({
         stage: NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT,
         animationOut: null
@@ -124,6 +139,7 @@ describe("Notification component", () => {
 
     // trigger transitionend event
     component.find(".notification-item-root").simulate("transitionend");
+    // expect mock call
     expect(toggleRemoval.mock.calls.length).toBe(1);
 
     component = mount(
@@ -135,15 +151,18 @@ describe("Notification component", () => {
 
     // trigger transitionend event
     component.find(".notification-item-root").simulate("transitionend");
+    // expect mock call
     expect(toggleRemoval.mock.calls.length).toBe(2);
   });
 
   it("onSmartSlidingEnd toggles removal on 2nd function call", () => {
     const toggleRemoval = jest.fn();
-    component = mount(
-      <ReactNotification toggleRemoval={toggleRemoval} notification={getNotificationMock({
-        stage: NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT
-      })} />
+    const component = mount(
+      <ReactNotification
+        toggleRemoval={toggleRemoval}
+        notification={getNotificationMock({
+          stage: NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT
+        })} />
     );
 
     // trigger transitionend event
@@ -174,19 +193,21 @@ describe("Notification component", () => {
   it("componentDidMount sets initial state", () => {
     const spy = jest.spyOn(ReactNotification.prototype, "componentDidMount");
 
-    component = mount(
+    let component = mount(
       <ReactNotification notification={getNotificationMock({ resized: false })} />
     );
 
+    // expect mock to be called
     expect(spy.mock.calls.length).toBe(1);
-    expect(state()).toMatchSnapshot();
+    expect(component.state()).toMatchSnapshot();
 
     component = mount(
       <ReactNotification notification={getNotificationMock({ resized: true })} />
     );
 
+    // expect mock to be called
     expect(spy.mock.calls.length).toBe(2);
-    expect(state()).toMatchSnapshot();
+    expect(component.state()).toMatchSnapshot();
   });
 
   it("timeout handler skips setting state if stage is REMOVAL/EXIT", () => {
@@ -195,40 +216,42 @@ describe("Notification component", () => {
       stage: NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT
     });
 
-    component = mount(<ReactNotification notification={notification} />);
+    const component = mount(<ReactNotification notification={notification} />);
 
+    // tick
     clock.tick(400);
 
     expect(component.state()).toMatchSnapshot();
   });
 
   it("timeout handler updates state", () => {
-    const notification = getNotificationMock({
-      dismiss: { duration: 100 },
-      stage: undefined
-    });
     const toggleTimeoutRemoval = jest.fn();
 
-    component = mount(<ReactNotification
-      notification={notification}
+    const component = mount(<ReactNotification
+      notification={getNotificationMock({
+        dismiss: { duration: 100 },
+        stage: undefined
+      })}
       toggleTimeoutRemoval={toggleTimeoutRemoval}
     />);
 
     clock.tick(400);
 
+    // expect mock to be called
     expect(toggleTimeoutRemoval.mock.calls.length).toBe(1);
     expect(component.state()).toMatchSnapshot();
   });
 
   it("component sets timeout for duration > 0", () => {
-    // add dismiss option with duration set
-    const notification = getNotificationMock({ dismiss: { duration: 2000 } });
-
     // mount
-    component = mount(<ReactNotification notification={notification} />);
+    const component = mount(
+      <ReactNotification
+        notification={getNotificationMock({ dismiss: { duration: 2000 } })}
+      />
+    );
 
     // expect timeoutId to have been set
-    expect(instance().timeoutId).toBeDefined();
+    expect(component.instance().timeoutId).toBeDefined();
   });
 
   it("component does not set timeout for duration = 0", () => {
@@ -236,9 +259,9 @@ describe("Notification component", () => {
     const notification = getNotificationMock({ dismiss: { duration: 0 } });
 
     // mount
-    component = mount(<ReactNotification notification={notification} />);
+    const component = mount(<ReactNotification notification={notification} />);
 
-    expect(instance().timeoutId).toBeUndefined();
+    expect(component.instance().timeoutId).toBeUndefined();
   });
 
   it("component does not set timeout for duration < 0", () => {
@@ -246,18 +269,18 @@ describe("Notification component", () => {
     const notification = getNotificationMock({ dismiss: { duration: -1 } });
 
     // mount
-    component = mount(<ReactNotification notification={notification} />);
+    const component = mount(<ReactNotification notification={notification} />);
 
-    expect(instance().timeoutId).toBeUndefined();
+    expect(component.instance().timeoutId).toBeUndefined();
   });
 
   it("component does not set timeout for undefined dismiss option", () => {
     const notification = getNotificationMock({ dismiss: {} });
 
     // mount
-    component = mount(<ReactNotification notification={notification} />);
+    const component = mount(<ReactNotification notification={notification} />);
 
-    expect(instance().timeoutId).toBeUndefined();
+    expect(component.instance().timeoutId).toBeUndefined();
   });
 
   it("clicks notification and calls onNotificationClick prop", () => {
