@@ -49,10 +49,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.addNotification = this.addNotification.bind(this);
+    this.notificationDOMRef = React.createRef();
   }
 
   addNotification() {
-    this.notificationDOMRef.addNotification({
+    this.notificationDOMRef.current.addNotification({
       title: "Awesomeness",
       message: "Awesome Notifications!",
       type: "success",
@@ -68,7 +69,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app-content">
-        <ReactNotification ref={input => this.notificationDOMRef = input} />
+        <ReactNotification ref={this.notificationDOMRef} />
         <button onClick={this.addNotification} className="btn btn-primary">
           Add Awesome Notification
         </button>
