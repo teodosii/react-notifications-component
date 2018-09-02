@@ -1,7 +1,7 @@
 ## Examples
 
-#### Custom notification type
-1\. Following example shows usage of custom notification type defined as option
+#### 1\. Custom notification type
+Following example shows usage of custom notification type defined as option
 
 ```jsx
 import React from "react";
@@ -39,7 +39,7 @@ class App extends React.Component {
 }
 ```
 
-2.\ Custom types need to use custom CSS (not included in `react-notifications-component`)
+Custom types need to use custom CSS (not included in `react-notifications-component`)
 
 ```scss
 .notification-awesome {
@@ -48,7 +48,7 @@ class App extends React.Component {
 }
 ```
 
-#### Custom content with FontAwesome's check mark
+#### 2\. Custom content with FontAwesome's check mark
 This example shows usage of Font Awesome check mark to be included in your notification along with desired custom content
 
 ```jsx
