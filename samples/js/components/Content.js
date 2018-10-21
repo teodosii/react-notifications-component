@@ -21,11 +21,12 @@ function NPMInstall() {
   );
 }
 
-function ExampleHeading() {
+function ExampleHeading({ removeNotification }) {
   return (
     <div className="row">
       <div className="col-lg-6 offset-lg-3 column col-md-10 offset-md-1 col-sm-12 heading">
         <h2 className="text-center">Examples</h2>
+        <button className="btn btn-danger btn-no-margin" onClick={removeNotification}>Remove Last Notification</button>
         <div className="alert alert-warning alert-small">
           <i className="fa fa-info-circle"></i>
           All notifications have been set to be automatically dismissed after <code className="white-code">5000ms</code>.
@@ -36,12 +37,12 @@ function ExampleHeading() {
   );
 }
 
-const Examples = ({ addNotification }) => {
+const Examples = ({ addNotification, removeNotification }) => {
   return (
     <React.Fragment>
       <NPMInstall />
       <UsageExample addNotification={addNotification} />
-      <ExampleHeading />
+      <ExampleHeading removeNotification={removeNotification} />
       <ContainerExample addNotification={addNotification} />
       <TypeExample addNotification={addNotification} />
       <CustomContentExample addNotification={addNotification} />
@@ -51,11 +52,13 @@ const Examples = ({ addNotification }) => {
   );
 };
 
-export default function Content({ addNotification }) {
+export default function Content({ addNotification, removeNotification }) {
   return (
     <div className="content">
       <div className="container">
-        <Examples addNotification={addNotification} />
+        <Examples
+          addNotification={addNotification}
+          removeNotification={removeNotification} />
       </div>
     </div>
   );
