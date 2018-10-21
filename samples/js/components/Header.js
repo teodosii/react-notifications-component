@@ -1,4 +1,6 @@
 import React from "react";
+import "react-github-button/assets/style.css";
+import GitHubButton from "react-github-button";
 
 export default function Header() {
   return (
@@ -7,14 +9,7 @@ export default function Header() {
         <h1 className="header-title">React-Notifications</h1>
         <p className="header-desc">Notifications for React. Highly configurable and easy to use</p>
         <div className="header-buttons">
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-primary no-corner"
-            href={"https://github.com/teodosii/react-notifications-component"}
-          >
-            View on Github
-          </a>
+          <GitHubButton type="stargazers" size="large" namespace="teodosii" repo="react-notifications-component" />
         </div>
       </div>
     </div>

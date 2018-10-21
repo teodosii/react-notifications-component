@@ -1,3 +1,19 @@
+.notification-container-top-center {
+  position: fixed;
+  z-index: 8000;
+  transform: translateX(-50%);
+  top: 20px;
+  left: 50%;
+}
+
+.notification-container-bottom-center {
+  position: fixed;
+  z-index: 8000;
+  transform: translateX(-50%);
+  bottom: 20px;
+  left: 50%;
+}
+
 .notification-container-top-left {
   position: fixed;
   left: 20px;

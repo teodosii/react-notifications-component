@@ -24,8 +24,6 @@ class ReactNotificationComponent extends React.Component {
     super(props);
 
     this.state = {
-      // window width
-      width: window.innerWidth,
       // option for responsiveness (defaults to true)
       isMobile: props.isMobile,
       // responsiveness breakpoint (defaults to 768)
@@ -59,8 +57,12 @@ class ReactNotificationComponent extends React.Component {
   }
 
   componentDidMount() {
-    // add listener for `resize` event
-    window.addEventListener("resize", this.handleResize);
+    this.setState({
+      width: window.innerWidth
+    }, () => {
+      // add listener for `resize` event
+      window.addEventListener("resize", this.handleResize);
+    });
   }
 
   componentWillUnmount() {
@@ -92,7 +94,6 @@ class ReactNotificationComponent extends React.Component {
     });
   }
 
-  // part of API
   addNotification(object) {
     const { notifications: data } = this.state;
 
@@ -113,7 +114,6 @@ class ReactNotificationComponent extends React.Component {
     return notification.id;
   }
 
-  // part of API
   removeNotification(id) {
     this.setState({
       notifications: this.state.notifications.map((item) => {
@@ -176,6 +176,10 @@ class ReactNotificationComponent extends React.Component {
   toggleRemoval(notification) {
     this.setState({
       notifications: this.state.notifications.filter(item => item.id !== notification.id)
+    }, () => {
+      if (this.props.onNotificationRemoval) {
+        this.props.onNotificationRemoval(notification.id);
+      }
     });
   }
 
@@ -217,8 +221,10 @@ class ReactNotificationComponent extends React.Component {
     const notificationsPerContainer = getNotificationsForEachContainer(state.notifications);
     const topLeft = this.renderReactNotifications(notificationsPerContainer.topLeft);
     const topRight = this.renderReactNotifications(notificationsPerContainer.topRight);
+    const topCenter = this.renderReactNotifications(notificationsPerContainer.topCenter);
     const bottomLeft = this.renderReactNotifications(notificationsPerContainer.bottomLeft);
     const bottomRight = this.renderReactNotifications(notificationsPerContainer.bottomRight);
+    const bottomCenter = this.renderReactNotifications(notificationsPerContainer.bottomCenter);
 
     return (
       <div className="react-notification-root">
@@ -233,6 +239,12 @@ class ReactNotificationComponent extends React.Component {
         </div>
         <div className="notification-container-bottom-right">
           {bottomRight}
+        </div>
+        <div className="notification-container-top-center">
+          {topCenter}
+        </div>
+        <div className="notification-container-bottom-center">
+          {bottomCenter}
         </div>
       </div>
     );

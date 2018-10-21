@@ -178,6 +178,10 @@ strong {
   border-radius: 0;
 }
 
+button.btn-no-margin {
+  margin-top: 0;
+}
+
 .alert .icon {
   font-size: 16px;
   margin-right: 8px;
@@ -190,6 +194,12 @@ strong {
   text-align: center;
   position: relative;
   margin-bottom: 30px;
+  
+  .header-buttons {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
   .header-content {
     top: 50%;

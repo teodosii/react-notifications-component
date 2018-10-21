@@ -3,8 +3,10 @@ export const NOTIFICATION_BASE_CLASS = "notification-item";
 export const CONTAINER = {
   BOTTOM_LEFT: "bottom-left",
   BOTTOM_RIGHT: "bottom-right",
+  BOTTOM_CENTER: "bottom-center",
   TOP_LEFT: "top-left",
-  TOP_RIGHT: "top-right"
+  TOP_RIGHT: "top-right",
+  TOP_CENTER: "top-center",
 };
 
 export const INSERTION = {
@@ -20,9 +22,18 @@ export const NOTIFICATION_TYPE = {
   WARNING: "warning"
 };
 
+export const REMOVAL = {
+  TIMEOUT: 1,
+  MANUAL: 2
+};
+
 export const NOTIFICATION_STAGE = {
   // used for both sliding and animation at the same time
   SLIDING_ANIMATION_EXIT: "SLIDING_ANIMATION_EXIT",
+
+  // SLIDING_ANIMATION_REMOVE: 1,
+  // SLIDING_ANIMATION_TIMEOUT: 2,
+  // SLIDING_ANIMATION_CLICK: 3,
 
   // used for onTouchMove/onTouchEnd to slide and animate
   TOUCH_SLIDING_ANIMATION_EXIT: "TOUCH_SLIDING_ANIMATION_EXIT",

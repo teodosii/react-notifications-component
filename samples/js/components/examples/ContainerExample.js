@@ -33,14 +33,18 @@ export default class ContainerExample extends React.Component {
             <code className="white-code">Container</code> can be set from predefined values {" "}
             <code className="white-code">top-left</code>, {" "}
             <code className="white-code">top-right</code>, {" "}
+            <code className="white-code">top-center</code>, {" "}
             <code className="white-code">bottom-left</code>, {" "}
-            <code className="white-code">bottom-right</code> or <code className="white-code">custom</code> to suit your needs
+            <code className="white-code">bottom-right</code>, {" "}
+            <code className="white-code">bottom-center</code>
           </div>
           <div>
             <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("top-left")}>Top Left</button>{" "}
             <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("top-right")}>Top Right</button>{" "}
+            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("top-center")}>Top Center</button>{" "}
             <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("bottom-left")}>Bottom Left</button>{" "}
             <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("bottom-right")}>Bottom Right</button>{" "}
+            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("bottom-center")}>Bottom Center</button>{" "}
           </div>
         </div>
       </div>

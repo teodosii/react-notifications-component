@@ -176,9 +176,16 @@ export default class ReactNotification extends React.Component {
   onNotificationClick() {
     const { notification } = this.props;
 
+    const rootElementStyle = getRootHeightStyle(
+      notification,
+      this.rootDOM.current.scrollHeight
+    );
+
     this.setState({
-      rootElementStyle: getRootHeightStyle(notification, this.rootDOM.current.scrollHeight)
-    }, () => requestAnimationFrame(() => this.props.onClickHandler(notification)));
+      rootElementStyle
+    }, () => requestAnimationFrame(() => {
+      this.props.onClickHandler(notification);
+    }));
   }
 
   onTouchStart(e) {
@@ -255,8 +262,8 @@ export default class ReactNotification extends React.Component {
     const animatedElementClasses = (stage.animatedElementClasses || []).join(" ");
     let { rootElementStyle } = stage;
 
+    // set `onClick` event if notification is dismissable
     if (notification.dismissable.click) {
-      // set `onClick` event if notification is dismissable
       ({ onNotificationClick } = this);
     }
 

@@ -1,8 +1,10 @@
 const containers = [
   "top-left",
   "top-right",
+  "top-center",
   "bottom-left",
-  "bottom-right"
+  "bottom-right",
+  "bottom-center"
 ];
 
 const types = [

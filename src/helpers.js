@@ -33,6 +33,7 @@ export function isBottomContainer(container) {
   return (
     container === CONTAINER.BOTTOM_LEFT
     || container === CONTAINER.BOTTOM_RIGHT
+    || container === CONTAINER.BOTTOM_CENTER
   );
 }
 
@@ -40,6 +41,7 @@ export function isTopContainer(container) {
   return (
     container === CONTAINER.TOP_LEFT
     || container === CONTAINER.TOP_RIGHT
+    || container === CONTAINER.TOP_CENTER
   );
 }
 
@@ -102,21 +104,14 @@ export function getHtmlClassesForType(notification) {
 }
 
 export function getNotificationsForMobileView(notifications) {
-  const {
-    TOP_LEFT,
-    TOP_RIGHT,
-    BOTTOM_LEFT,
-    BOTTOM_RIGHT
-  } = CONTAINER;
-
   const bottom = [];
   const top = [];
 
   notifications.forEach((notification) => {
     const container = notification.container.toLowerCase();
-    if (container === TOP_LEFT || container === TOP_RIGHT) {
+    if (isTopContainer(container)) {
       top.push(notification);
-    } else if (container === BOTTOM_LEFT || container === BOTTOM_RIGHT) {
+    } else if (isBottomContainer(container)) {
       bottom.push(notification);
     } else throw new Error(`Container ${notification.container} is not valid`);
   });
@@ -127,34 +122,37 @@ export function getNotificationsForMobileView(notifications) {
 export function getNotificationsForEachContainer(notifications) {
   const topLeft = [];
   const topRight = [];
+  const topCenter = [];
   const bottomLeft = [];
   const bottomRight = [];
+  const bottomCenter = [];
 
   notifications.forEach((notification) => {
-    const {
-      TOP_LEFT,
-      TOP_RIGHT,
-      BOTTOM_LEFT,
-      BOTTOM_RIGHT
-    } = CONTAINER;
-
     const container = notification.container.toLowerCase();
-    if (container === TOP_LEFT) {
+    if (container === CONTAINER.TOP_LEFT) {
       topLeft.push(notification);
-    } else if (container === TOP_RIGHT) {
+    } else if (container === CONTAINER.TOP_RIGHT) {
       topRight.push(notification);
-    } else if (container === BOTTOM_LEFT) {
+    } else if (container === CONTAINER.TOP_CENTER) {
+      topCenter.push(notification);
+    } else if (container === CONTAINER.BOTTOM_LEFT) {
       bottomLeft.push(notification);
-    } else if (container === BOTTOM_RIGHT) {
+    } else if (container === CONTAINER.BOTTOM_RIGHT) {
       bottomRight.push(notification);
-    } else throw new Error(`Container ${notification.container} is not valid`);
+    } else if (container === CONTAINER.BOTTOM_CENTER) {
+      bottomCenter.push(notification);
+    } else {
+      throw new Error(`Container ${notification.container} is not valid`);
+    }
   });
 
   return {
     topLeft,
     topRight,
+    topCenter,
     bottomLeft,
-    bottomRight
+    bottomRight,
+    bottomCenter
   };
 }
 
