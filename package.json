@@ -1,6 +1,6 @@
 {
   "name": "react-notifications-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/react-notifications-component.js",
@@ -15,7 +15,8 @@
     "test": "jest",
     "predeploy": "npm run build:prod",
     "deploy": "gh-pages -d dist",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "publish": "npm run prod && npm publish"
   },
   "repository": {
     "type": "git",
@@ -84,6 +85,8 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-github-button": "^0.1.11",
+    "react-github-corner": "^2.3.0",
     "react-highlight": "^0.12.0",
     "react-test-renderer": "^16.4.1",
     "regenerator-runtime": "^0.12.1",
