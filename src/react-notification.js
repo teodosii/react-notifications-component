@@ -58,7 +58,7 @@ export default class ReactNotification extends React.Component {
       const { notification, toggleTimeoutRemoval } = this.props;
 
       // skip timeout removal if it's already in a removal process
-      if (notification.stage === NOTIFICATION_STAGE.REMOVAL
+      if (notification.stage === NOTIFICATION_STAGE.MANUAL_REMOVAL
         || notification.stage === NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT) return;
 
       this.setState({
@@ -267,7 +267,7 @@ export default class ReactNotification extends React.Component {
       ({ onNotificationClick } = this);
     }
 
-    if (notification.stage === NOTIFICATION_STAGE.REMOVAL) {
+    if (notification.stage === NOTIFICATION_STAGE.MANUAL_REMOVAL) {
       onAnimationEnd = null;
       rootElementStyle = getRootHeightStyle(notification, this.rootDOM.current.scrollHeight);
     } else if (notification.stage === NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT) {

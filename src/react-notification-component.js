@@ -7,7 +7,8 @@ import {
 
 import {
   INSERTION,
-  NOTIFICATION_STAGE
+  NOTIFICATION_STAGE,
+  REMOVAL
 } from "src/constants";
 
 import {
@@ -72,28 +73,32 @@ class ReactNotificationComponent extends React.Component {
   handleResize() {
     this.setState({
       width: window.innerWidth,
-      notifications: this.state.notifications.map((notification) => {
-        const object = notification;
-        object.resized = true;
-
-        return object;
+      notifications: this.state.notifications.map(notification => {
+        notification.resized = true;
+        return notification;
       })
     });
   }
 
   toggleTimeoutRemoval(notification) {
-    this.setState({
-      notifications: this.state.notifications.map((item) => {
-        const object = item;
-        object.stage = object.id === notification.id
-          ? NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT
-          : object.stage;
+    const { SLIDING_ANIMATION_EXIT } = NOTIFICATION_STAGE;
+    const { TIMEOUT } = REMOVAL;
 
-        return object;
+    this.setState({
+      notifications: this.state.notifications.map(item => {
+        if (item.id === notification.id) {
+          // set stage flag
+          item.stage = SLIDING_ANIMATION_EXIT;
+          // set removal flag
+          item.removedBy = TIMEOUT;
+        }
+
+        return item;
       })
     });
   }
 
+  // API call
   addNotification(object) {
     const { notifications: data } = this.state;
 
@@ -107,33 +112,38 @@ class ReactNotificationComponent extends React.Component {
     this.setState({
       notifications:
         notification.insert === INSERTION.TOP
-          ? [notification].concat(data)
-          : data.concat([notification])
+          ? [notification, ...data]
+          : [...data, notification]
     });
 
     return notification.id;
   }
 
+  // API call
   removeNotification(id) {
     this.setState({
-      notifications: this.state.notifications.map((item) => {
-        const object = item;
-        object.stage = object.id === id
-          ? NOTIFICATION_STAGE.REMOVAL
-          : object.stage;
+      notifications: this.state.notifications.map(item => {
+        if (item.id === id) {
+          // set stage flag
+          item.stage = NOTIFICATION_STAGE.MANUAL_REMOVAL;
+          // set removal flag
+          item.removedBy = REMOVAL.API;
+        }
 
-        return object;
+        return item;
       })
     }, () => {
       requestAnimationFrame(() => {
         this.setState({
-          notifications: this.state.notifications.map((item) => {
-            const object = item;
-            object.stage = object.id === id
-              ? NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT
-              : object.stage;
+          notifications: this.state.notifications.map(item => {
+            if (item.id === id) {
+              // set stage flag
+              item.stage = NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT;
+              // set removal flag
+              item.removedBy = REMOVAL.API;
+            }
 
-            return object;
+            return item;
           })
         });
       });
@@ -147,28 +157,35 @@ class ReactNotificationComponent extends React.Component {
     if (dismissByClick || dismissIcon) {
       requestAnimationFrame(() => {
         this.setState({
-          notifications: this.state.notifications.map((item) => {
-            const object = item;
-            object.stage = object.id === notification.id
-              ? NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT
-              : object.stage;
+          notifications: this.state.notifications.map(item => {
+            if (item.id === notification.id) {
+              // set stage flag
+              item.stage = NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT;
+              // set removal flag
+              item.removedBy = REMOVAL.CLICK;
+            }
 
-            return object;
+            return item;
           })
         });
       });
     }
   }
 
+  // called after a full swipe in order to remove notification from state
   toggleTouchEnd(notification) {
-    this.setState({
-      notifications: this.state.notifications.map((item) => {
-        const object = item;
-        object.stage = object.id === notification.id
-          ? NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT
-          : object.stage;
+    const { TOUCH_SLIDING_ANIMATION_EXIT } = NOTIFICATION_STAGE;
 
-        return object;
+    this.setState({
+      notifications: this.state.notifications.map(item => {
+        if (item.id === notification.id) {
+          // set stage flag
+          item.stage = TOUCH_SLIDING_ANIMATION_EXIT;
+          // set removal flag
+          item.removedBy = REMOVAL.TOUCH;
+        }
+
+        return item;
       })
     });
   }
@@ -178,7 +195,7 @@ class ReactNotificationComponent extends React.Component {
       notifications: this.state.notifications.filter(item => item.id !== notification.id)
     }, () => {
       if (this.props.onNotificationRemoval) {
-        this.props.onNotificationRemoval(notification.id);
+        this.props.onNotificationRemoval(notification.id, notification.stage);
       }
     });
   }

@@ -286,17 +286,22 @@ export function handleStageTransition(notification, state) {
   let rootElementStyle;
 
   const {
+    TOUCH_SLIDING_ANIMATION_EXIT,
+    SLIDING_ANIMATION_EXIT
+  } = NOTIFICATION_STAGE;
+
+  const {
     animatedElementClasses: stateAnimatedElementClasses,
     rootElementStyle: stateRootStyle,
     currentX,
     startX
   } = state;
 
-  if (notification.stage === NOTIFICATION_STAGE.TOUCH_SLIDING_ANIMATION_EXIT) {
+  if (notification.stage === TOUCH_SLIDING_ANIMATION_EXIT) {
     return handleTouchSlidingAnimationExit(notification, currentX, startX);
   }
 
-  if (notification.stage === NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT) {
+  if (notification.stage === SLIDING_ANIMATION_EXIT) {
     return handleSlidingAnimationExit(notification);
   }
 

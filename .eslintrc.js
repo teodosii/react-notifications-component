@@ -34,10 +34,8 @@ module.exports = {
   "rules": {
     "quotes": "off",
     "linebreak-style": "off",
-    "import/no-cycle": "off",
     "comma-dangle": "off",
     "react/prop-types": "off",
-    "allowShortCircuit": true,
     "allowTernary": true,
     "react/jsx-uses-vars": "error"
   }
