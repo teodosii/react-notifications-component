@@ -62,6 +62,7 @@ export default class App extends React.Component {
           removeNotification={this.removeNotification}
           addNotification={this.addNotification} />
         <GithubCorner
+          target="_blank"
           size={125}
           href="https://github.com/teodosii/react-notifications-component" />
       </React.Fragment>
