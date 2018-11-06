@@ -165,7 +165,7 @@ describe("Wrapper component", () => {
     notification = state().notifications.find(item => item.id === id);
 
     // expect REMOVAL stage
-    expect(notification.stage).toBe(NOTIFICATION_STAGE.REMOVAL);
+    expect(notification.stage).toBe(NOTIFICATION_STAGE.MANUAL_REMOVAL);
 
     // tick
     clock.tick(100);

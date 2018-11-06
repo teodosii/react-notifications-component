@@ -171,15 +171,19 @@ describe("test suite for helpers", () => {
     const result = getNotificationsForEachContainer([
       { container: CONTAINER.TOP_LEFT },
       { container: CONTAINER.TOP_RIGHT },
+      { container: CONTAINER.TOP_CENTER },
       { container: CONTAINER.BOTTOM_LEFT },
-      { container: CONTAINER.BOTTOM_RIGHT }
+      { container: CONTAINER.BOTTOM_RIGHT },
+      { container: CONTAINER.BOTTOM_CENTER }
     ]);
 
     // expect each container to be filled in
     expect(result.topLeft.length).toBe(1);
     expect(result.topRight.length).toBe(1);
+    expect(result.topCenter.length).toBe(1);
     expect(result.bottomLeft.length).toBe(1);
     expect(result.bottomRight.length).toBe(1);
+    expect(result.bottomCenter.length).toBe(1);
 
     // expect to throw for invalid container
     expect(() => getNotificationsForEachContainer([{ container: "" }])).toThrow();
