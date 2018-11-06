@@ -10,6 +10,6 @@ cache:
 install:
   - npm install
 script:
-  - npm run build:prod
+  - npm run prod
   - npm test
   - npm run coveralls
