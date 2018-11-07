@@ -11,10 +11,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.addNotification = this.addNotification.bind(this);
+    this.notificationDOMRef = React.createRef();
   }
 
   addNotification() {
-    this.notificationDOMRef.addNotification({
+    this.notificationDOMRef.current.addNotification({
       // other properties have been omitted for brevity
       type: "awesome",
       title: "Custom",
@@ -31,7 +32,7 @@ class App extends React.Component {
             htmlClasses: ["notification-awesome"],
             name: "awesome"
           }]}
-          ref={input => this.notificationDOMRef = input}
+          ref={this.notificationDOMRef}
         />
       </div>
     );

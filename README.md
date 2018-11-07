@@ -114,6 +114,38 @@ View examples [here](https://github.com/teodosii/react-notifications-component/b
 
 ## Options
 
+There are 2 types of options. In order to configure the root component - `<ReactNotificationComponent />` - you need to set props to be used as options
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>isMobile</td>
+    <td><code>Boolean</code></td>
+    <td>Set whether you want component to be <code>responsive</code> or not</td>
+  </tr>
+  <tr>
+    <td>breakpoint</td>
+    <td><code>Number</code></td>
+    <td>Breakpoint for showing mobile notifications, it defaults to <code>768</code> (px). If window width is smaller than set number, then the responsive containers will be shown - <code>top</code> and <code>bottom</code></td>
+  </tr>
+  <tr>
+    <td>types</td>
+    <td><code>Object</code></td>
+    <td><code>User defined types</code> - see examples on GitHub pages</td>
+  </tr>
+  <tr>
+    <td>onNotificationRemoval</td>
+    <td><code>Function</code></td>
+    <td>Callback function to be called when notification has been removed. Function is called with <code>id</code> and <code>removedBy</code> as parameters. <code>removedBy</code> parameter takes one of the following values <ul><li>1 - <code>timeout</code></li> <li>2 - <code>click</code></li> <li>3 - <code>touch</code></li> <li>4 - <code>API call</code></li></ul></td>
+  </tr>
+</table>
+
+In order to configure the notification itself you need to use the following properties when calling `addNotification`
+
 <table>
   <tr>
     <th>Name</th>
