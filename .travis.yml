@@ -4,11 +4,9 @@ node_js:
 branches:
   only:
     - master
-cache:
-  directories:
-  - node_modules
 install:
   - npm install
+  - npm rebuild node-sass
 script:
   - npm run prod
   - npm test
