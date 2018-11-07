@@ -28,12 +28,12 @@ class ReactNotificationComponent extends React.Component {
       // option for responsiveness (defaults to true)
       isMobile: props.isMobile,
       // responsiveness breakpoint (defaults to 768)
-      breakpoint: props.width,
+      breakpoint: props.breakpoint,
       // notifications array data
       notifications: []
     };
 
-    if (isNullOrUndefined(props.width)) {
+    if (isNullOrUndefined(props.breakpoint)) {
       // set default breakpoint
       this.state.breakpoint = 768;
     }
@@ -195,7 +195,7 @@ class ReactNotificationComponent extends React.Component {
       notifications: this.state.notifications.filter(item => item.id !== notification.id)
     }, () => {
       if (this.props.onNotificationRemoval) {
-        this.props.onNotificationRemoval(notification.id, notification.stage);
+        this.props.onNotificationRemoval(notification.id, notification.removedBy);
       }
     });
   }

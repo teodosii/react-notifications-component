@@ -132,7 +132,7 @@ describe("Wrapper component", () => {
   });
 
   it("component does not set state to default values on initialization", () => {
-    component = mount(<ReactNotificationComponent width={320} isMobile={false} />);
+    component = mount(<ReactNotificationComponent breakpoint={320} isMobile={false} />);
     expect(state()).toMatchSnapshot();
   });
 
