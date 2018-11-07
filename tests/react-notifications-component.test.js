@@ -19,9 +19,20 @@ describe("Wrapper component", () => {
   const state = () => component.state();
   const instance = () => component.instance();
 
-  const getTypesMock = () => [{ name: "awesome", htmlClasses: ["awesome"] }];
-  const getNotificationMock = (edits = {}) => Object.assign({}, notificationMock, edits);
-  const addNotification = (mock) => instance().addNotification(mock);
+  const getTypesMock = function () {
+    return [{
+      name: "awesome",
+      htmlClasses: ["awesome"]
+    }];
+  };
+
+  const getNotificationMock = function (edits = {}) {
+    return Object.assign({}, notificationMock, edits);
+  };
+
+  const addNotification = function (mock) {
+    return instance().addNotification(mock);
+  };
 
   beforeEach(() => {
     component = mount(<ReactNotificationComponent />);
@@ -263,7 +274,7 @@ describe("Wrapper component", () => {
     component = mount(<ReactNotificationComponent />);
 
     // add notifications
-    let id = addNotification(getNotificationMock());
+    const id = addNotification(getNotificationMock());
 
     // expect lengt to match number of added notifications
     expect(state().notifications.length).toBe(1);
@@ -276,6 +287,21 @@ describe("Wrapper component", () => {
 
     // expect decrease
     expect(component.state().notifications.length).toBe(0);
+  });
+
+  it("onNotificationRemoval is called on notification removal if defined", () => {
+    const mock = jest.fn();
+
+    // mount with callback prop `onNotificationRemoval`
+    component = mount(<ReactNotificationComponent onNotificationRemoval={mock} />);
+
+    // add notification
+    const id = addNotification(getNotificationMock());
+
+    // trigger removal
+    instance().toggleRemoval({ id });
+
+    expect(mock).toHaveBeenCalledTimes(1);
   });
 
   it("renders notification properly", () => {
