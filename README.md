@@ -8,7 +8,7 @@ Highly configurable and easy to use React Component to notify your users!
 
 https://teodosii.github.io/react-notifications-component/
 
-![alt text](https://raw.githubusercontent.com/teodosii/react-notifications-component/master/github-preview.PNG "Preview")
+![alt text](https://raw.githubusercontent.com/teodosii/react-notifications-component/master/github-preview.gif "Preview")
 
 ## Features
 
