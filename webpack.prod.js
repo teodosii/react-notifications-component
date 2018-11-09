@@ -64,9 +64,6 @@ module.exports = {
       filename: "theme.css"
     }),
     new CleanWebpackPlugin(["dist"]),
-    new UglifyJSPlugin({
-      sourceMap: true
-    }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production")
     })

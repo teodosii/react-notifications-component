@@ -6,6 +6,9 @@ module.exports = {
     "ecmaVersion": 6,
     "sourceType": "module"
   },
+  "globals": {
+    "process": true
+  },
   "settings": {
     "react": {
       version: "16.4.2"

@@ -14,6 +14,12 @@ module.exports = {
     libraryTarget: "commonjs2"
   },
 
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("production")
+    })
+  ],
+
   resolve: {
     extensions: [".js", ".jsx", ".json"],
     alias: {
