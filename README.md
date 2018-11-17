@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![Build Status](https://travis-ci.org/teodosii/react-notifications-component.svg?branch=master)](https://travis-ci.org/teodosii/react-notifications-component) [![Coverage Status](https://coveralls.io/repos/github/teodosii/react-notifications-component/badge.svg?branch=master)](https://coveralls.io/github/teodosii/react-notifications-component?branch=master) [![dependencies Status](https://david-dm.org/teodosii/react-notifications-component/status.svg)](https://david-dm.org/teodosii/react-notifications-component) [![peerDependencies Status](https://david-dm.org/teodosii/react-notifications-component/peer-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=peer) [![devDependencies Status](https://david-dm.org/teodosii/react-notifications-component/dev-status.svg)](https://david-dm.org/teodosii/react-notifications-component?type=dev)
+[![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![Build Status](https://travis-ci.org/teodosii/react-notifications-component.svg?branch=master)](https://travis-ci.org/teodosii/react-notifications-component) [![Coverage Status](https://coveralls.io/repos/github/teodosii/react-notifications-component/badge.svg?branch=master)](https://coveralls.io/github/teodosii/react-notifications-component?branch=master)
 
 # react-notifications-component
 
@@ -12,20 +12,64 @@ https://teodosii.github.io/react-notifications-component/
 
 ## Features
 
-- Touch support :heavy_check_mark:
-- Responsive notifications :heavy_check_mark:
-- Standard notification types (`default`, `success`, `info`, `danger`, `warning`) :heavy_check_mark:
-- Custom notification types :heavy_check_mark:
-- Custom notification content (`images`, `icons` etc) :heavy_check_mark:
-- Dismiss after timeout :heavy_check_mark:
-- Dismissable by swiping :heavy_check_mark:
-- Dismissable by clicking :heavy_check_mark:
-- Dismissable by custom X icon :heavy_check_mark:
-- Custom animations on show :heavy_check_mark:
-- Custom animations on exit :heavy_check_mark:
-- Custom transitions on sliding :heavy_check_mark:
-- Custom transitions on swiping :heavy_check_mark:
-- Notification insertion at both ends of container :heavy_check_mark:
+<table>
+  <tr>
+    <td>Touch support</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Responsive notifications</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Standard notification types (<code>default</code>, <code>success</code>, <code>info</code>, <code>danger</code>, <code>warning</code>)</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Custom notification types</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Custom notification content - <code>images</code>, <code>icons</code> etc</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Dismiss after timeout</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Dismissable by swiping</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Dismissable by clicking</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Dismissable by custom &times; icon</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Custom animations on show</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Custom animations on exit</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Custom transitions on sliding</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Custom transitions on swiping</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+  <tr>
+    <td>Notification insertion at both ends of container</td>
+    <td>:heavy_check_mark:</td>
+  </tr>
+</table>
 
 ## Install
 
@@ -44,6 +88,7 @@ For further information on supported options, check documentation.
 ```jsx
 import React from "react";
 import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -79,7 +124,7 @@ class App extends React.Component {
 }
 ```
 
-**Note:** It is important to import `react-notifications-component` CSS theme, which is located in `dist\theme.css`
+**Note:** It is important to import `react-notifications-component` CSS theme, which is located in `dist/theme.css`
 
 ## Development
 
