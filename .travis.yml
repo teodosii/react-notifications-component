@@ -8,6 +8,6 @@ install:
   - npm install
   - npm rebuild node-sass
 script:
-  - npm run prod
+  - npm run build:library:prod
   - npm test
   - npm run coveralls

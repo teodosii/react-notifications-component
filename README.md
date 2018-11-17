@@ -2,7 +2,7 @@
 
 # react-notifications-component
 
-Highly configurable and easy to use React Component to notify your users!
+Highly configurable and easy to use React component to notify your users!
 
 ## Demo
 
@@ -12,20 +12,20 @@ https://teodosii.github.io/react-notifications-component/
 
 ## Features
 
-- Touch support
-- Responsive notifications
-- Predefined standard notification types (`default`, `success`, `info`, `danger`, `warning`)
-- Custom notification types
-- Custom notification content (`images`, `icons` etc)
-- Dismiss after number of seconds
-- Dismissable by swiping
-- Dismissable by clicking
-- Dismissable by custom X icon
-- Custom animations on show
-- Custom animations on exit
-- Custom transitions on sliding
-- Custom transitions on swiping
-- Top/bottom notification insertion
+- Touch support :heavy_check_mark:
+- Responsive notifications :heavy_check_mark:
+- Standard notification types (`default`, `success`, `info`, `danger`, `warning`) :heavy_check_mark:
+- Custom notification types :heavy_check_mark:
+- Custom notification content (`images`, `icons` etc) :heavy_check_mark:
+- Dismiss after timeout :heavy_check_mark:
+- Dismissable by swiping :heavy_check_mark:
+- Dismissable by clicking :heavy_check_mark:
+- Dismissable by custom X icon :heavy_check_mark:
+- Custom animations on show :heavy_check_mark:
+- Custom animations on exit :heavy_check_mark:
+- Custom transitions on sliding :heavy_check_mark:
+- Custom transitions on swiping :heavy_check_mark:
+- Notification insertion at both ends of container :heavy_check_mark:
 
 ## Install
 
@@ -37,7 +37,7 @@ npm install react-notifications-component
 
 You must place `ReactNotificationsComponent` component at the root level of the application in order to work properly, otherwise it might conflict with other DOM elements due to the positioning.
 
-Use ref arrow syntax when declaring `ReactNotificationsComponent` in order to have access to internal method `addNotification`. All API methods provided must be called like this.
+Use ref syntax when declaring `ReactNotificationsComponent` in order to have access to internal method `addNotification`. All API methods provided must be called like this.
 
 For further information on supported options, check documentation.
 
@@ -85,7 +85,7 @@ class App extends React.Component {
 
 First build the library
 ```
-npm run build:library
+npm run build:library:dev
 ```
 then run the webpack server to see the app running
 ```
