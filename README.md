@@ -238,18 +238,3 @@ In order to configure the notification itself you need to use the following prop
     <td>Overwrite notification's <code>width</code> defined by stylesheets</td>
   </tr>
 </table>
-
-## Roadmap
-
-- Release `v1.0.0`
-- Improve tests for better coverage (up to `100%`)
-- Move `react-notifications-component` theme to a separate `npm` package
-
-## Future development
-
-- Containers for other positions (`top-center`, `bottom-center`, `center` or even `custom`)
-- Events support (`onShow`, `onRemoved`, `onClicked`, `onTimeoutDismissed` etc)
-- Show time left (`progress-bar` like)
-- `Modal` notification
-
-**Note:** Feedback on wanted/existing features is **_appreciated_**
