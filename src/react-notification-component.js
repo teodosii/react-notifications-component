@@ -1,14 +1,13 @@
 import React from "react";
 import ReactNotification from "src/react-notification";
-import {
-  isArray,
-  isNullOrUndefined
-} from "src/utils";
+import PropTypes from "prop-types";
+import { isArray } from "src/utils";
 
 import {
   INSERTION,
   NOTIFICATION_STAGE,
-  REMOVAL
+  REMOVAL,
+  BREAKPOINT
 } from "src/constants";
 
 import {
@@ -21,27 +20,29 @@ import {
 import "src/scss/notification.scss";
 
 class ReactNotificationComponent extends React.Component {
+  static propTypes = {
+    // option for responsiveness (defaults to true)
+    isMobile: PropTypes.bool,
+    // responsiveness breakpoint (defaults to 768)
+    breakpoint: PropTypes.number,
+    types: PropTypes.array,
+    onNotificationRemoval: PropTypes.func
+  }
+
+  static defaultProps = {
+    isMobile: true,
+    breakpoint: BREAKPOINT
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
-      // option for responsiveness (defaults to true)
       isMobile: props.isMobile,
-      // responsiveness breakpoint (defaults to 768)
       breakpoint: props.breakpoint,
       // notifications array data
       notifications: []
     };
-
-    if (isNullOrUndefined(props.breakpoint)) {
-      // set default breakpoint
-      this.state.breakpoint = 768;
-    }
-
-    if (isNullOrUndefined(props.isMobile)) {
-      // option defaults to true
-      this.state.isMobile = true;
-    }
 
     if (isArray(props.types)) {
       // check for custom types

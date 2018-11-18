@@ -22,7 +22,7 @@ https://teodosii.github.io/react-notifications-component/
     <td>:heavy_check_mark:</td>
   </tr>
   <tr>
-    <td>Standard notification types (<code>default</code>, <code>success</code>, <code>info</code>, <code>danger</code>, <code>warning</code>)</td>
+    <td>Standard notification types <br/> (<code>default</code>, <code>success</code>, <code>info</code>, <code>danger</code>, <code>warning</code>)</td>
     <td>:heavy_check_mark:</td>
   </tr>
   <tr>
@@ -30,7 +30,7 @@ https://teodosii.github.io/react-notifications-component/
     <td>:heavy_check_mark:</td>
   </tr>
   <tr>
-    <td>Custom notification content - <code>images</code>, <code>icons</code> etc</td>
+    <td>Custom notification content <br />(<code>images</code>, <code>icons</code> etc)</td>
     <td>:heavy_check_mark:</td>
   </tr>
   <tr>

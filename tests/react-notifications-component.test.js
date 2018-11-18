@@ -4,7 +4,7 @@ import Enzyme, { mount } from "enzyme";
 import React16Adapter from "enzyme-adapter-react-16";
 import sinon from "sinon";
 import notificationMock from "tests/mocks/notification.mock";
-import { NOTIFICATION_STAGE } from "src/constants";
+import { NOTIFICATION_STAGE, BREAKPOINT } from "src/constants";
 
 Enzyme.configure({
   // use react-16 adapter
@@ -15,22 +15,20 @@ describe("Wrapper component", () => {
   let component;
   let clock;
 
-  // arrow function helpers
+  // helpers
   const state = () => component.state();
   const instance = () => component.instance();
+  
+  const getTypesMock = () => [{
+    name: "awesome",
+    htmlClasses: ["awesome"]
+  }];
 
-  const getTypesMock = function () {
-    return [{
-      name: "awesome",
-      htmlClasses: ["awesome"]
-    }];
-  };
-
-  const getNotificationMock = function (edits = {}) {
+  const getNotificationMock = (edits = {}) => {
     return Object.assign({}, notificationMock, edits);
   };
 
-  const addNotification = function (mock) {
+  const addNotification = (mock) => {
     return instance().addNotification(mock);
   };
 
@@ -323,24 +321,30 @@ describe("Wrapper component", () => {
     expect(notif.props.toggleTouchEnd).toBeDefined();
   });
 
-  it("renders mobile if `isMobile` is set", () => {
+  it("renders mobile for 512px width if `isMobile` is true", () => {
     // width for mobile view
     global.window.innerWidth = 512;
 
+    // just in case we update breakpoint in near future
+    expect(global.window.innerWidth).toBeLessThan(BREAKPOINT);
+
     // mount
-    component = mount(<ReactNotificationComponent isMobile={true} />);
+    component = mount(<ReactNotificationComponent />);
 
     // all mobile containers rendered
     expect(component.find(".notification-container-mobile-top").length).toBe(1);
     expect(component.find(".notification-container-mobile-bottom").length).toBe(1);
   });
 
-  it("renders desktop if `isMobile` is not set", () => {
+  it("renders desktop for 512px width if `isMobile` is false", () => {
     // width for mobile view
     global.window.innerWidth = 512;
 
+    // just in case we update breakpoint in near future
+    expect(global.window.innerWidth).toBeLessThan(BREAKPOINT);
+
     // mount
-    component = mount(<ReactNotificationComponent />);
+    component = mount(<ReactNotificationComponent isMobile={false} />);
 
     // all desktop containers rendered
     expect(component.find(".notification-container-top-left").length).toBe(1);

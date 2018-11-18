@@ -90,3 +90,5 @@ export const ERROR = {
   // custom types
   TYPE_NOT_FOUND: "custom type not found"
 };
+
+export const BREAKPOINT = 768;

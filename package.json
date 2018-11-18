@@ -1,6 +1,6 @@
 {
   "name": "react-notifications-component",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/react-notifications-component.js",
@@ -12,10 +12,10 @@
     "watch:library": "webpack -w --config webpack.dev.js",
     "start": "webpack-dev-server --config ./webpack.samples.dev.js",
     "test": "jest",
-    "predeploy": "npm run build:prod",
+    "predeploy": "npm run build:samples:prod",
     "deploy": "gh-pages -d dist",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "publish": "npm run prod && npm publish"
+    "publish": "npm run build:library:prod && npm publish"
   },
   "repository": {
     "type": "git",
