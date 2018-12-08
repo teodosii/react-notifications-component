@@ -382,11 +382,12 @@ export function getNotificationOptions(options, userDefinedTypes) {
     touchSlidingExit,
     dismissable,
     dismiss,
-    width
+    width,
+    id
   } = notification;
 
-  // for now we'll use Math.random for id
-  notification.id = getRandomId();
+  // Use notification id if passed or generate random ID
+  notification.id = id || getRandomId();
 
   // validate notification's title
   validateTitle(notification);
