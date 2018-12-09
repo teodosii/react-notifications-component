@@ -53,7 +53,7 @@ Custom types need to use custom CSS (not included in `react-notifications-compon
 This example shows usage of Font Awesome check mark to be included in your notification along with desired custom content
 
 ```jsx
-this.reactNotificationRef.addNotification({
+this.notificationDOMRef.current.addNotification({
   // other properties have been omitted for brevity
   container: "top-right",
   content: (

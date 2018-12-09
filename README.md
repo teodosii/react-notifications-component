@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/react-notifications-component.svg)](https://badge.fury.io/js/react-notifications-component) [![Build Status](https://travis-ci.org/teodosii/react-notifications-component.svg?branch=master)](https://travis-ci.org/teodosii/react-notifications-component) [![Coverage Status](https://coveralls.io/repos/github/teodosii/react-notifications-component/badge.svg?branch=master)](https://coveralls.io/github/teodosii/react-notifications-component?branch=master)
+[![npm version](https://badgen.net/npm/v/react-notifications-component)](https://www.npmjs.com/package/react-notifications-component) [![npm](https://img.shields.io/npm/dm/react-notifications-component.svg)](https://www.npmjs.com/package/react-notifications-component) [![Build Status](https://travis-ci.org/teodosii/react-notifications-component.svg?branch=master)](https://travis-ci.org/teodosii/react-notifications-component) [![Coverage Status](https://coveralls.io/repos/github/teodosii/react-notifications-component/badge.svg?branch=master)](https://coveralls.io/github/teodosii/react-notifications-component?branch=master) [![Dependency Status](https://david-dm.org/teodosii/react-notifications-component.svg)](https://david-dm.org/teodosii/react-notifications-component) [![Minified & Gzipped size](https://badgen.net/bundlephobia/minzip/react-notifications-component)](https://bundlephobia.com/result?p=react-notifications-component) [![License](https://badgen.net/github/license/teodosii/react-notifications-component)]((https://badge.fury.io/js/react-notifications-component))
 
 # react-notifications-component
 
@@ -15,59 +15,59 @@ https://teodosii.github.io/react-notifications-component/
 <table>
   <tr>
     <td>Touch support</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Responsive notifications</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Standard notification types <br/> (<code>default</code>, <code>success</code>, <code>info</code>, <code>danger</code>, <code>warning</code>)</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Custom notification types</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Custom notification content <br />(<code>images</code>, <code>icons</code> etc)</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Dismiss after timeout</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Dismissable by swiping</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Dismissable by clicking</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Dismissable by custom &times; icon</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Custom animations on show</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Custom animations on exit</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Custom transitions on sliding</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Custom transitions on swiping</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
   <tr>
     <td>Notification insertion at both ends of container</td>
-    <td>:heavy_check_mark:</td>
+    <td>:white_check_mark:</td>
   </tr>
 </table>
 
@@ -155,7 +155,7 @@ Manually remove a notification by ID. Nothing will happen if notification does n
 
 ## Examples
 
-View examples [here](https://github.com/teodosii/react-notifications-component/blob/master/samples/README.md)
+View examples [here](https://github.com/teodosii/react-notifications-component/blob/master/samples/README.md) and [here](https://github.com/teodosii/react-notifications-component/tree/master/samples/js/components/examples)
 
 ## Options
 
@@ -196,6 +196,11 @@ In order to configure the notification itself you need to use the following prop
     <th>Name</th>
     <th>Type</th>
     <th>Description</th>
+  </tr>
+  <tr>
+    <td>id</td>
+    <td><code>String</code></td>
+    <td><code>Id</code> of the notification. Option is not required and should be used only if you want to have <code>custom</code> id over <code>random</code> id that is generated internally</td>
   </tr>
   <tr>
     <td>title</td>
