@@ -63,7 +63,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "theme.css"
     }),
-    new CleanWebpackPlugin(["dist"]),
+    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production")
     })

@@ -1,6 +1,6 @@
 {
   "name": "react-notifications-component",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/react-notifications-component.js",
@@ -15,7 +15,7 @@
     "predeploy": "npm run build:samples:prod",
     "deploy": "gh-pages -d dist",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-    "publish": "npm run build:library:prod && npm publish"
+    "publish:npm": "npm run build:library:prod && npm publish"
   },
   "repository": {
     "type": "git",
@@ -50,9 +50,10 @@
     "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "bootstrap": "^4.1.1",
-    "clean-webpack-plugin": "^1.0.0",
+    "clean-webpack-plugin": "^2.0.1",
     "coveralls": "^3.0.2",
     "css-loader": "^1.0.0",
+    "css-select-base-adapter": "^0.1.1",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.4",
@@ -90,8 +91,8 @@
     "style-loader": "^0.23.0",
     "uglifyjs-webpack-plugin": "2.0.1",
     "url-loader": "^1.0.1",
-    "webpack": "^4.15.1",
-    "webpack-cli": "^3.1.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
