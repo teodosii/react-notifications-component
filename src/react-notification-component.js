@@ -101,8 +101,6 @@ class ReactNotificationComponent extends React.Component {
 
   // API call
   addNotification(object) {
-    const { notifications: data } = this.state;
-
     // call will throw exception if object does not match rules
     const notification = getNotificationOptions(
       object,
@@ -110,12 +108,12 @@ class ReactNotificationComponent extends React.Component {
       this.state.userDefinedTypes
     );
 
-    this.setState({
+    this.setState((prevState) => ({
       notifications:
         notification.insert === INSERTION.TOP
-          ? [notification, ...data]
-          : [...data, notification]
-    });
+          ? [notification, ...prevState.notifications]
+          : [...prevState.notifications, notification]
+    }));
 
     return notification.id;
   }
