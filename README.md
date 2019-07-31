@@ -124,6 +124,41 @@ class App extends React.Component {
 }
 ```
 
+Or with React Hooks:
+
+```jsx
+import React, { useRef } from "react";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
+
+function App() {
+  const notificationDOMRef = useRef(null);
+
+  const addNotification = () => {
+    notificationDOMRef.current.addNotification({
+      title: "Awesomeness",
+      message: "Awesome Notifications!",
+      type: "success",
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+      dismiss: { duration: 2000 },
+      dismissable: { click: true }
+    });
+  }
+
+  return (
+    <div className="app-content">
+      <ReactNotification ref={notificationDOMRef} />
+      <button onClick={addNotification} className="btn btn-primary">
+        Add Awesome Notification
+      </button>
+    </div>
+  );
+}
+```
+
 **Note:** It is important to import `react-notifications-component` CSS theme, which is located in `dist/theme.css`
 
 ## Development
