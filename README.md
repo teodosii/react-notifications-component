@@ -4,6 +4,8 @@
 
 Highly configurable and easy to use React component to notify your users!
 
+> :tada: :tada: :tada: `react-notifications-component@2.0.0` is coming soon! Stay tuned! No more refs, smaller package size and better docs
+
 ## Demo
 
 https://teodosii.github.io/react-notifications-component/
