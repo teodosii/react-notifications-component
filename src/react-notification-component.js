@@ -1,19 +1,18 @@
 import React from "react";
 import ReactNotification from "src/react-notification";
 import PropTypes from "prop-types";
+import store from './store';
 import { isArray } from "src/utils";
-
 import {
   INSERTION,
   NOTIFICATION_STAGE,
   REMOVAL,
   BREAKPOINT
 } from "src/constants";
-
 import {
   getNotificationsForEachContainer,
   getNotificationsForMobileView,
-  getNotificationOptions
+  setNotificationDefaults
 } from "src/helpers";
 
 // react-notifications-component theme
@@ -21,9 +20,7 @@ import "src/scss/notification.scss";
 
 class ReactNotificationComponent extends React.Component {
   static propTypes = {
-    // option for responsiveness (defaults to true)
     isMobile: PropTypes.bool,
-    // responsiveness breakpoint (defaults to 768)
     breakpoint: PropTypes.number,
     types: PropTypes.array,
     onNotificationRemoval: PropTypes.func
@@ -40,7 +37,6 @@ class ReactNotificationComponent extends React.Component {
     this.state = {
       isMobile: props.isMobile,
       breakpoint: props.breakpoint,
-      // notifications array data
       notifications: []
     };
 
@@ -50,21 +46,21 @@ class ReactNotificationComponent extends React.Component {
     }
 
     this.addNotification = this.addNotification.bind(this);
+    this.removeNotification = this.removeNotification.bind(this);
     this.onNotificationClick = this.onNotificationClick.bind(this);
     this.toggleRemoval = this.toggleRemoval.bind(this);
     this.toggleTimeoutRemoval = this.toggleTimeoutRemoval.bind(this);
-    this.handleResize = this.handleResize.bind(this);
-    this.renderReactNotifications = this.renderReactNotifications.bind(this);
     this.toggleTouchEnd = this.toggleTouchEnd.bind(this);
   }
 
   componentDidMount() {
-    this.setState({
-      width: window.innerWidth
-    }, () => {
-      // add listener for `resize` event
-      window.addEventListener("resize", this.handleResize);
+    store.register({
+      addNotification: this.addNotification,
+      removeNotification: this.removeNotification
     });
+
+    this.setState({ width: window.innerWidth });
+    window.addEventListener("resize", () => this.handleResize());
   }
 
   componentWillUnmount() {
@@ -72,41 +68,34 @@ class ReactNotificationComponent extends React.Component {
   }
 
   handleResize() {
-    this.setState({
+    this.setState((prevState) => ({
       width: window.innerWidth,
-      notifications: this.state.notifications.map(notification => {
-        notification.resized = true;
-        return notification;
-      })
-    });
+      notifications: prevState.notifications.map(notification => ({
+        ...notification,
+        resized: true
+      }))
+    }));
   }
 
   toggleTimeoutRemoval(notification) {
     const { SLIDING_ANIMATION_EXIT } = NOTIFICATION_STAGE;
     const { TIMEOUT } = REMOVAL;
 
-    this.setState({
-      notifications: this.state.notifications.map(item => {
+    this.setState((prevState) => ({
+      notifications: prevState.notifications.map(item => {
         if (item.id === notification.id) {
-          // set stage flag
           item.stage = SLIDING_ANIMATION_EXIT;
-          // set removal flag
           item.removedBy = TIMEOUT;
         }
 
         return item;
       })
-    });
+    }));
   }
 
-  // API call
   addNotification(object) {
-    // call will throw exception if object does not match rules
-    const notification = getNotificationOptions(
-      object,
-      // we need this to validate custom types if any
-      this.state.userDefinedTypes
-    );
+    const { userDefinedTypes } = this.state;
+    const notification = setNotificationDefaults(object, userDefinedTypes);
 
     this.setState((prevState) => ({
       notifications:
@@ -118,88 +107,78 @@ class ReactNotificationComponent extends React.Component {
     return notification.id;
   }
 
-  // API call
   removeNotification(id) {
-    this.setState({
-      notifications: this.state.notifications.map(item => {
+    const callback = () => requestAnimationFrame(() => {
+      this.setState((prevState) => ({
+        notifications: prevState.notifications.map(item => {
+          if (item.id === id) {
+            item.stage = NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT;
+            item.removedBy = REMOVAL.API;
+          }
+
+          return item;
+        })
+      }));
+    });
+
+    this.setState((prevState) => ({
+      notifications: prevState.notifications.map(item => {
         if (item.id === id) {
-          // set stage flag
           item.stage = NOTIFICATION_STAGE.MANUAL_REMOVAL;
-          // set removal flag
           item.removedBy = REMOVAL.API;
         }
 
         return item;
       })
-    }, () => {
-      requestAnimationFrame(() => {
-        this.setState({
-          notifications: this.state.notifications.map(item => {
-            if (item.id === id) {
-              // set stage flag
-              item.stage = NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT;
-              // set removal flag
-              item.removedBy = REMOVAL.API;
-            }
-
-            return item;
-          })
-        });
-      });
-    });
+    }), callback);
   }
 
   onNotificationClick(notification) {
     const { dismissable, dismissIcon } = notification;
-    const dismissByClick = dismissable && dismissable.click;
+    const dismissableByClick = dismissable && dismissable.click;
+    if (!dismissableByClick && !dismissIcon) return;
 
-    if (dismissByClick || dismissIcon) {
-      requestAnimationFrame(() => {
-        this.setState({
-          notifications: this.state.notifications.map(item => {
-            if (item.id === notification.id) {
-              // set stage flag
-              item.stage = NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT;
-              // set removal flag
-              item.removedBy = REMOVAL.CLICK;
-            }
+    this.setState((prevState) => ({
+      notifications: prevState.notifications.map(item => {
+        if (item.id === notification.id) {
+          item.stage = NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT;
+          item.removedBy = REMOVAL.CLICK;
+        }
 
-            return item;
-          })
-        });
-      });
-    }
+        return item;
+      })
+    }));
   }
 
-  // called after a full swipe in order to remove notification from state
   toggleTouchEnd(notification) {
     const { TOUCH_SLIDING_ANIMATION_EXIT } = NOTIFICATION_STAGE;
 
-    this.setState({
-      notifications: this.state.notifications.map(item => {
+    this.setState((prevState) => ({
+      notifications: prevState.notifications.map(item => {
         if (item.id === notification.id) {
-          // set stage flag
           item.stage = TOUCH_SLIDING_ANIMATION_EXIT;
-          // set removal flag
           item.removedBy = REMOVAL.TOUCH;
         }
 
         return item;
       })
-    });
+    }));
   }
 
   toggleRemoval(notification) {
-    this.setState({
-      notifications: this.state.notifications.filter(item => item.id !== notification.id)
-    }, () => {
-      if (this.props.onNotificationRemoval) {
-        this.props.onNotificationRemoval(notification.id, notification.removedBy);
-      }
-    });
+    const { onNotificationRemoval } = this.props;
+
+    const callback = () => {
+      if (!onNotificationRemoval) return;
+      onNotificationRemoval(notification.id, notification.removedBy);
+    };
+
+    this.setState((prevState) => ({
+      notifications: prevState.notifications.filter(({ id }) => id !== notification.id)
+    }), callback);
   }
 
-  renderReactNotifications(notifications) {
+  renderNotifications(notifications) {
     return notifications.map(notification => <ReactNotification
       key={notification.id}
       notification={notification}
@@ -211,36 +190,33 @@ class ReactNotificationComponent extends React.Component {
     />);
   }
 
-  render() {
-    const {
-      state,
-      props
-    } = this;
+  renderMobileNotifications() {
+    const { notifications } = this.state;
+    const mobileNotifications = getNotificationsForMobileView(notifications);
+    const top = this.renderNotifications(mobileNotifications.top);
+    const bottom = this.renderNotifications(mobileNotifications.bottom);
 
-    if (props.isMobile && state.width <= state.breakpoint) {
-      const mobileNotifications = getNotificationsForMobileView(state.notifications);
-      const top = this.renderReactNotifications(mobileNotifications.top);
-      const bottom = this.renderReactNotifications(mobileNotifications.bottom);
-
-      return (
-        <div className="react-notification-root">
-          <div className="notification-container-mobile-top">
-            {top}
-          </div>
-          <div className="notification-container-mobile-bottom">
-            {bottom}
-          </div>
+    return (
+      <div className="react-notification-root">
+        <div className="notification-container-mobile-top">
+          {top}
         </div>
-      );
-    }
+        <div className="notification-container-mobile-bottom">
+          {bottom}
+        </div>
+      </div>
+    );
+  }
 
-    const notificationsPerContainer = getNotificationsForEachContainer(state.notifications);
-    const topLeft = this.renderReactNotifications(notificationsPerContainer.topLeft);
-    const topRight = this.renderReactNotifications(notificationsPerContainer.topRight);
-    const topCenter = this.renderReactNotifications(notificationsPerContainer.topCenter);
-    const bottomLeft = this.renderReactNotifications(notificationsPerContainer.bottomLeft);
-    const bottomRight = this.renderReactNotifications(notificationsPerContainer.bottomRight);
-    const bottomCenter = this.renderReactNotifications(notificationsPerContainer.bottomCenter);
+  renderScreenNotifications() {
+    const { notifications } = this.state;
+    const notificationsPerContainer = getNotificationsForEachContainer(notifications);
+    const topLeft = this.renderNotifications(notificationsPerContainer.topLeft);
+    const topRight = this.renderNotifications(notificationsPerContainer.topRight);
+    const topCenter = this.renderNotifications(notificationsPerContainer.topCenter);
+    const bottomLeft = this.renderNotifications(notificationsPerContainer.bottomLeft);
+    const bottomRight = this.renderNotifications(notificationsPerContainer.bottomRight);
+    const bottomCenter = this.renderNotifications(notificationsPerContainer.bottomCenter);
 
     return (
       <div className="react-notification-root">
@@ -265,6 +241,17 @@ class ReactNotificationComponent extends React.Component {
       </div>
     );
   }
+
+  render() {
+    const { isMobile } = this.props;
+    const { width, breakpoint } = this.state;
+
+    if (isMobile && width <= breakpoint) {
+      return this.renderMobileNotifications();
+    }
+
+    return this.renderScreenNotifications();
+  }
 }
 
-export default ReactNotificationComponent;
+export { ReactNotificationComponent, store };

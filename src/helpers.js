@@ -1,32 +1,15 @@
-import React from "react";
 import {
   ERROR,
   NOTIFICATION_BASE_CLASS,
   CONTAINER,
   INSERTION,
-  NOTIFICATION_TYPE,
+  NOTIFICATION_TYPE as NT,
   NOTIFICATION_STAGE
 } from "src/constants";
-
-import {
-  validateDismissIconOption,
-  validateAnimationIn,
-  validateAnimationOut,
-  validateTimeoutDismissOption,
-  validateTransition,
-  validateTitle,
-  validateMessage,
-  validateType,
-  validateContainer,
-  validateDismissable,
-  validateInsert,
-  validateWidth,
-  validateUserDefinedTypes
-} from "src/validators";
-
 import {
   cssWidth,
-  isNullOrUndefined
+  isNullOrUndefined,
+  getRandomId
 } from "src/utils";
 
 export function isBottomContainer(container) {
@@ -58,30 +41,23 @@ export function htmlClassesForExistingType(type) {
   const lowerCaseType = type.toLowerCase();
 
   switch (lowerCaseType) {
-    case NOTIFICATION_TYPE.DEFAULT:
+    case NT.DEFAULT:
       return [NOTIFICATION_BASE_CLASS, "notification-default"];
-    case NOTIFICATION_TYPE.SUCCESS:
+    case NT.SUCCESS:
       return [NOTIFICATION_BASE_CLASS, "notification-success"];
-    case NOTIFICATION_TYPE.DANGER:
+    case NT.DANGER:
       return [NOTIFICATION_BASE_CLASS, "notification-danger"];
-    case NOTIFICATION_TYPE.WARNING:
+    case NT.WARNING:
       return [NOTIFICATION_BASE_CLASS, "notification-warning"];
-    case NOTIFICATION_TYPE.INFO:
+    case NT.INFO:
       return [NOTIFICATION_BASE_CLASS, "notification-info"];
     default:
       return [NOTIFICATION_BASE_CLASS];
   }
 }
 
-export function getHtmlClassesForType(notification) {
-  const {
-    // option set by user
-    type,
-    // array value containing all custom types
-    userDefinedTypes
-  } = notification;
-
-  if (notification.content) {
+export function getHtmlClassesForType({ type, userDefinedTypes, content }) {
+  if (content) {
     // return only base class if type is not defined
     return [NOTIFICATION_BASE_CLASS];
   }
@@ -340,40 +316,93 @@ export function getRootHeightStyle(notification, scrollHeight) {
   };
 }
 
-export function getIconHtmlContent(notification, onClickHandler) {
-  // use icon defined by user
-  if (notification.dismissIcon) {
-    return (
-      <div
-        className={notification.dismissIcon.className}
-        onClick={onClickHandler}
-      >
-        {notification.dismissIcon.content}
-      </div>
-    );
+function defaultAnimationIn(animationIn) {
+  return animationIn || [];
+}
+
+function defaultAnimationOut(animationOut) {
+  return animationOut || [];
+}
+
+function defaultTransition(transition, defaults) {
+  const { duration, cubicBezier, delay } = defaults;
+  const transitionOptions = transition || {};
+
+  if (isNullOrUndefined(transitionOptions.duration)) {
+    transitionOptions.duration = duration;
   }
 
-  // use standard icon
-  return (
-    <div
-      className="notification-close"
-      onClick={onClickHandler}
-    >
-      <span>&times;</span>
-    </div>
-  );
+  if (isNullOrUndefined(transitionOptions.cubicBezier)) {
+    transitionOptions.cubicBezier = cubicBezier;
+  }
+
+  if (isNullOrUndefined(transitionOptions.delay)) {
+    transitionOptions.delay = delay;
+  }
+
+  return transitionOptions;
 }
 
-export function getRandomId() {
-  return Math.random().toString(36).substr(2, 9);
+function defaultType({ content, type }) {
+  if (content) return undefined;
+  return type.toLowerCase();
 }
 
-export function getNotificationOptions(options, userDefinedTypes) {
+function defaultContainer(container) {
+  return container.toLowerCase();
+}
+
+function defaultDismissable(dismissable) {
+  const option = dismissable;
+
+  if (!option) {
+    return {
+      click: true,
+      touch: true
+    };
+  }
+
+  if (isNullOrUndefined(option.click)) {
+    option.click = true;
+  }
+
+  if (isNullOrUndefined(option.touch)) {
+    option.touch = true;
+  }
+
+  return option;
+}
+
+function defaultInsert(insert) {
+  if (!insert) return "top";
+  return insert.toLowerCase();
+}
+
+function defaultWidth(width) {
+  if (isNullOrUndefined(width)) return 0;
+  return width;
+}
+
+function defaultUserDefinedTypes({ content, type }, definedTypes) {
+  if (content) return undefined;
+
+  if (
+    type === NT.SUCCESS
+    || type === NT.DANGER
+    || type === NT.INFO
+    || type === NT.DEFAULT
+    || type === NT.WARNING
+    || !definedTypes
+  ) return undefined;
+
+  return definedTypes;
+}
+
+export function setNotificationDefaults(options, userDefinedTypes) {
   const notification = options;
   const {
     insert,
     container,
-    dismissIcon,
     animationIn,
     animationOut,
     slidingEnter,
@@ -381,84 +410,44 @@ export function getNotificationOptions(options, userDefinedTypes) {
     touchSlidingBack,
     touchSlidingExit,
     dismissable,
-    dismiss,
     width,
     id
   } = notification;
 
-  // Use notification id if passed or generate random ID
   notification.id = id || getRandomId();
-
-  // validate notification's title
-  validateTitle(notification);
-
-  // validate notification's body message
-  validateMessage(notification);
-
-  // validate notification's type
-  notification.type = validateType(notification, userDefinedTypes);
+  notification.type = defaultType(notification, userDefinedTypes);
 
   if (userDefinedTypes && !notification.content) {
-    // validate user defined types if any
-    notification.userDefinedTypes = validateUserDefinedTypes(notification, userDefinedTypes);
+    notification.userDefinedTypes = defaultUserDefinedTypes(notification, userDefinedTypes);
   }
 
-  // validate notification's container
-  notification.container = validateContainer(container);
-
-  // set default insertion
-  notification.insert = validateInsert(insert);
-
-  // set default dismissable options
-  notification.dismissable = validateDismissable(dismissable);
-
-  // assert `dismissIcon` matches rules
-  validateDismissIconOption(dismissIcon);
-
-  // validate `animationIn` array
-  notification.animationIn = validateAnimationIn(animationIn);
-
-  // validate `animationOut` array
-  notification.animationOut = validateAnimationOut(animationOut);
+  notification.container = defaultContainer(container);
+  notification.insert = defaultInsert(insert);
+  notification.dismissable = defaultDismissable(dismissable);
+  notification.animationIn = defaultAnimationIn(animationIn);
+  notification.animationOut = defaultAnimationOut(animationOut);
 
   if (!isNullOrUndefined(width)) {
-    // set width option only if defined
-    notification.width = validateWidth(width);
+    notification.width = defaultWidth(width);
   }
 
-  // defaults
   const slidingEnterDefaults = { duration: 600, cubicBezier: "linear", delay: 0 };
   const slidingExitDefaults = { duration: 600, cubicBezier: "linear", delay: 0 };
   const swipeBackDefaults = { duration: 600, cubicBezier: "ease-in", delay: 0 };
   const swipeExitDefaults = { duration: 600, cubicBezier: "ease-in", delay: 0 };
   const swipeCompleteDefaults = { duration: 300, cubicBezier: "ease-in", delay: 0 };
-
-  // set defaults for sliding enter transition
-  notification.slidingEnter = validateTransition(slidingEnter, slidingEnterDefaults);
-
-  // set defaults for sliding exit transition
-  notification.slidingExit = validateTransition(slidingExit, slidingExitDefaults);
-
-  // set defaults for sliding back on touchEnd/touchCancel
-  notification.touchSlidingBack = validateTransition(touchSlidingBack, swipeBackDefaults);
-
-  // let it empty object if undefined
+  notification.slidingEnter = defaultTransition(slidingEnter, slidingEnterDefaults);
+  notification.slidingExit = defaultTransition(slidingExit, slidingExitDefaults);
+  notification.touchSlidingBack = defaultTransition(touchSlidingBack, swipeBackDefaults);
   notification.touchSlidingExit = touchSlidingExit || {};
-
-  // set defaults for swipe transition when swipe is complete
-  notification.touchSlidingExit.swipe = validateTransition(
+  notification.touchSlidingExit.swipe = defaultTransition(
     notification.touchSlidingExit.swipe || {},
     swipeExitDefaults
   );
-
-  // set defaults for fade transition when swipe is complete
-  notification.touchSlidingExit.fade = validateTransition(
+  notification.touchSlidingExit.fade = defaultTransition(
     notification.touchSlidingExit.fade || {},
     swipeCompleteDefaults
   );
-
-  // assert `dismiss` matches rules
-  validateTimeoutDismissOption(dismiss);
 
   return notification;
 }

@@ -25,10 +25,8 @@ export const NOTIFICATION_TYPE = {
 export const NOTIFICATION_STAGE = {
   // used for both sliding and animation at the same time
   SLIDING_ANIMATION_EXIT: "SLIDING_ANIMATION_EXIT",
-
   // used for onTouchMove/onTouchEnd to slide and animate
   TOUCH_SLIDING_ANIMATION_EXIT: "TOUCH_SLIDING_ANIMATION_EXIT",
-
   // used by API call to remove notification
   MANUAL_REMOVAL: "REMOVAL"
 };
@@ -42,53 +40,53 @@ export const REMOVAL = {
 
 export const ERROR = {
   // dismiss icon option
-  DISMISS_ICON_CLASS: "className property of dismissIcon option is required",
-  DISMISS_ICON_CONTENT: "content property of dismissIcon option is required",
-  DISMISS_ICON_STRING: "className property of dismissIcon option must be a String",
-  DISMISS_ICON_INVALID: "content property of dismissIcon option must be a valid React element",
+  DISMISS_ICON_CLASS: "Validation error. className property of dismissIcon option is required",
+  DISMISS_ICON_CONTENT: "Validation error. content property of dismissIcon option is required",
+  DISMISS_ICON_STRING: "Validation error. className property of dismissIcon option must be a String",
+  DISMISS_ICON_INVALID: "Validation error. content property of dismissIcon option must be a valid React element",
 
   // animations
-  ANIMATION_IN: "animationIn option must be an array",
-  ANIMATION_OUT: "animationOut option must be an array",
+  ANIMATION_IN: "Validation error. animationIn option must be an array",
+  ANIMATION_OUT: "Validation error. animationOut option must be an array",
 
   // dismiss
-  DISMISS_REQUIRED: "duration property of dismiss option is required",
-  DISMISS_NUMBER: "duration property of dismiss option must be a Number",
-  DISMISS_POSITIVE: "duration property of dismiss option must be a positive Number",
+  DISMISS_REQUIRED: "Validation error. duration property of dismiss option is required",
+  DISMISS_NUMBER: "Validation error. duration property of dismiss option must be a Number",
+  DISMISS_POSITIVE: "Validation error. duration property of dismiss option must be a positive Number",
 
   // title
-  TITLE_STRING: "title option must be a String.",
+  TITLE_STRING: "Validation error. title option must be a String.",
 
   // message
-  MESSAGE_REQUIRED: "message option is required",
-  MESSAGE_STRING: "message option must be a String",
+  MESSAGE_REQUIRED: "Validation error. message option is required",
+  MESSAGE_STRING: "Validation error. message option must be a String",
 
   // type
-  TYPE_REQUIRED: "type option is required",
-  TYPE_STRING: "type option must be a String",
-  TYPE_NOT_EXISTENT: "type option not found",
+  TYPE_REQUIRED: "Validation error. type option is required",
+  TYPE_STRING: "Validation error. type option must be a String",
+  TYPE_NOT_EXISTENT: "Validation error. type option not found",
 
   // container
-  CONTAINER_REQUIRED: "container option is required",
-  CONTAINER_STRING: "container option must be a String",
+  CONTAINER_REQUIRED: "Validation error. container option is required",
+  CONTAINER_STRING: "Validation error. container option must be a String",
 
   // dismissable
-  DISMISSABLE_CLICK_BOOL: "click property of dismissable option must be a Boolean",
-  DISMISSABLE_TOUCH_BOOL: "touch property of dismissable option must be a Boolean",
+  DISMISSABLE_CLICK_BOOL: "Validation error. click property of dismissable option must be a Boolean",
+  DISMISSABLE_TOUCH_BOOL: "Validation error. touch property of dismissable option must be a Boolean",
 
   // width
-  WIDTH_NUMBER: "width option must be a Number",
+  WIDTH_NUMBER: "Validation error. width option must be a Number",
 
   // insert
-  INSERT_STRING: "insert option must be a String",
+  INSERT_STRING: "Validation error. insert option must be a String",
 
   // transition
-  TRANSITION_DURATION_NUMBER: "duration property of transition option must be a Number",
-  TRANSITION_CUBICBEZIER_NUMBER: "cubicBezier property of transition option must be a String",
-  TRANSITION_DELAY_NUMBER: "delay property of transition option must be a Number",
+  TRANSITION_DURATION_NUMBER: "Validation error. duration property of transition option must be a Number",
+  TRANSITION_CUBICBEZIER_NUMBER: "Validation error. cubicBezier property of transition option must be a String",
+  TRANSITION_DELAY_NUMBER: "Validation error. delay property of transition option must be a Number",
 
   // custom types
-  TYPE_NOT_FOUND: "custom type not found"
+  TYPE_NOT_FOUND: "Validation error. custom type not found"
 };
 
 export const BREAKPOINT = 768;

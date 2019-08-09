@@ -67,7 +67,10 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      watch: true,
+      beforeEmit: true
+    }),
     new HtmlWebpackPlugin({
       inject: true,
       template: "./samples/html/index.html"

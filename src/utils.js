@@ -21,3 +21,7 @@ export function isBoolean(object) {
 export function isArray(object) {
   return !isNullOrUndefined(object) && object.constructor === Array;
 }
+
+export function getRandomId() {
+  return Math.random().toString(36).substr(2, 9);
+}

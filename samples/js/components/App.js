@@ -1,5 +1,5 @@
 import React from "react";
-import ReactNotification from "rc-notifications/react-notification-component";
+import { ReactNotificationComponent as ReactNotification, store } from "rc-notifications/react-notification-component";
 import Header from "components/Header";
 import Content from "components/Content";
 import GithubCorner from "react-github-corner";
@@ -12,16 +12,12 @@ export default class App extends React.Component {
       notifications: []
     };
 
-    this.instance = React.createRef();
     this.addNotification = this.addNotification.bind(this);
     this.removeNotification = this.removeNotification.bind(this);
-
-    // this.onNotificationRemoval = this.onNotificationRemoval.bind(this);
   }
 
   addNotification(notification) {
-    const id = this.instance.current.addNotification(notification);
-
+    const id = store.addNotification(notification);
     return this.setState({
       notifications: [
         ...this.state.notifications,
@@ -37,7 +33,7 @@ export default class App extends React.Component {
     const id = notifications[notifications.length - 1];
 
     // trigger notification removal
-    this.instance.current.removeNotification(id);
+    store.removeNotification(id);
 
     // remove notification from state
     this.setState({
@@ -49,12 +45,10 @@ export default class App extends React.Component {
     return (
       <React.Fragment>
         <ReactNotification
-          // onNotificationRemoval={this.onNotificationRemoval}
           types={[{
             htmlClasses: ["notification-awesome"],
             name: "awesome"
           }]}
-          ref={this.instance}
           isMobile={true}
         />
         <Header />

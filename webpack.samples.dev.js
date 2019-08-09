@@ -59,7 +59,7 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin("dist/index.html", {
+    new CleanWebpackPlugin({
       watch: true,
       beforeEmit: true
     }),
