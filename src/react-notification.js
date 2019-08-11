@@ -54,13 +54,10 @@ export default class ReactNotification extends React.Component {
 
     // Skip timeout removal if it's already in a removal process
     if (notification.stage === ML || notification.stage === TS) return;
+    const callback = () => requestAnimationFrame(() => toggleTimeoutRemoval(notification));
+    const state = { rootElementStyle: getRootHeightStyle(notification, this.getScrollHeight()) };
 
-    this.setState({
-      rootElementStyle: getRootHeightStyle(
-        notification,
-        this.getScrollHeight()
-      )
-    }, () => requestAnimationFrame(() => toggleTimeoutRemoval(notification)));
+    this.setState(state, callback);
   }
 
   setRemovalTimeout(dismiss) {
@@ -160,8 +157,9 @@ export default class ReactNotification extends React.Component {
   onNotificationClick() {
     const { notification, onClickHandler } = this.props;
     const rootElementStyle = getRootHeightStyle(notification, this.getScrollHeight());
+    const callback = () => requestAnimationFrame(() => onClickHandler(notification));
 
-    this.setState({ rootElementStyle }, () => onClickHandler(notification));
+    this.setState({ rootElementStyle }, callback);
   }
 
   onTouchStart(event) {
@@ -181,7 +179,8 @@ export default class ReactNotification extends React.Component {
         rootElementStyle: getRootHeightStyle(notification, this.getScrollHeight())
       };
       
-      return this.setState(state, () => toggleTouchEnd(notification));
+      const callback = () => requestAnimationFrame(() => toggleTouchEnd(notification));
+      return this.setState(state, callback);
     }
 
     return this.setState({

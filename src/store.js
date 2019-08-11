@@ -144,13 +144,15 @@ function Store() {
   this.userDefinedTypes = null;
   this.add = () => {};
   this.addNotification = (notification) => {
+    const { userDefinedTypes } = this;
+
     if (process.env.NODE_ENV === 'development') {
       const transitions = ['slidingEnter','slidingExit', 'touchSlidingBack', 'touchSlidingExit'];
       transitions.forEach((transition) => validateTransition(transition));
-      validators.forEach((validator) => validator(notification, this.userDefinedTypes));
+      validators.forEach((validator) => validator(notification, userDefinedTypes));
     }
 
-    this.add(parseNotification(notification));
+    this.add(parseNotification(notification, userDefinedTypes));
   };
   this.removeNotification = () => {};
   this.register = ({ addNotification, removeNotification, userDefinedTypes }) => {

@@ -67,8 +67,6 @@ class ReactNotificationComponent extends React.Component {
   }
 
   add(notification) {
-
-    
     this.setState((prevState) => ({
       notifications:
         notification.insert === INSERTION.TOP
