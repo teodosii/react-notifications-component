@@ -1,4 +1,5 @@
 import React from 'react';
+import { parseNotification } from './helpers';
 import { ERROR, NOTIFICATION_TYPE as NT } from './constants';
 import {
   isNullOrUndefined,
@@ -39,7 +40,7 @@ const validators = [
     if (!isString(message)) throw new Error(ERROR.MESSAGE_STRING);
   },
 
-  function({ content, type, userDefinedTypes }) {
+  function({ content, type }, userDefinedTypes) {
     if (content) return;
     if (!type) throw new Error(ERROR.TYPE_REQUIRED);
     if (!isString(type)) throw new Error(ERROR.TYPE_STRING);
@@ -96,7 +97,7 @@ const validators = [
     if (!React.isValidElement(iconContent)) throw new Error(DISMISS_ICON_INVALID);
   },
 
-  function({ type, content, userDefinedTypes }) {
+  function({ type, content }, userDefinedTypes) {
     if (content) return;
 
     if (
@@ -140,21 +141,22 @@ const validators = [
 ];
 
 function Store() {
-  this.isRegistered = false;
+  this.userDefinedTypes = null;
   this.add = () => {};
   this.addNotification = (notification) => {
     if (process.env.NODE_ENV === 'development') {
       const transitions = ['slidingEnter','slidingExit', 'touchSlidingBack', 'touchSlidingExit'];
       transitions.forEach((transition) => validateTransition(transition));
-      validators.forEach((validator) => validator(notification));
+      validators.forEach((validator) => validator(notification, this.userDefinedTypes));
     }
 
-    this.add(notification);
+    this.add(parseNotification(notification));
   };
   this.removeNotification = () => {};
-  this.register = ({ addNotification, removeNotification }) => {
+  this.register = ({ addNotification, removeNotification, userDefinedTypes }) => {
     this.add = addNotification;
     this.removeNotification = removeNotification;
+    this.userDefinedTypes = userDefinedTypes;
   };
 
   return this;

@@ -4,15 +4,14 @@ import PropTypes from "prop-types";
 import store from './store';
 import { isArray } from "src/utils";
 import {
-  INSERTION,
-  NOTIFICATION_STAGE,
+  NOTIFICATION_STAGE as NS,
   REMOVAL,
+  INSERTION,
   BREAKPOINT
 } from "src/constants";
 import {
   getNotificationsForEachContainer,
-  getNotificationsForMobileView,
-  setNotificationDefaults
+  getNotificationsForMobileView
 } from "src/helpers";
 
 // react-notifications-component theme
@@ -41,13 +40,12 @@ class ReactNotificationComponent extends React.Component {
     };
 
     if (isArray(props.types)) {
-      // check for custom types
       this.state.userDefinedTypes = props.types;
     }
 
-    this.addNotification = this.addNotification.bind(this);
-    this.removeNotification = this.removeNotification.bind(this);
-    this.onNotificationClick = this.onNotificationClick.bind(this);
+    this.add = this.add.bind(this);
+    this.remove = this.remove.bind(this);
+    this.onClick = this.onClick.bind(this);
     this.toggleRemoval = this.toggleRemoval.bind(this);
     this.toggleTimeoutRemoval = this.toggleTimeoutRemoval.bind(this);
     this.toggleTouchEnd = this.toggleTouchEnd.bind(this);
@@ -55,8 +53,9 @@ class ReactNotificationComponent extends React.Component {
 
   componentDidMount() {
     store.register({
-      addNotification: this.addNotification,
-      removeNotification: this.removeNotification
+      addNotification: this.add,
+      removeNotification: this.remove,
+      userDefinedTypes: this.props.types
     });
 
     this.setState({ width: window.innerWidth });
@@ -65,6 +64,45 @@ class ReactNotificationComponent extends React.Component {
 
   componentWillUnmount() {
     this.mounted = false;
+  }
+
+  add(notification) {
+
+    
+    this.setState((prevState) => ({
+      notifications:
+        notification.insert === INSERTION.TOP
+          ? [notification, ...prevState.notifications]
+          : [...prevState.notifications, notification]
+    }));
+
+    return notification.id;
+  }
+
+  remove(id) {
+    const callback = () => requestAnimationFrame(() => {
+      this.setState((prevState) => ({
+        notifications: prevState.notifications.map(item => {
+          if (item.id === id) {
+            item.stage = NS.SLIDING_ANIMATION_EXIT;
+            item.removedBy = REMOVAL.API;
+          }
+
+          return item;
+        })
+      }));
+    });
+
+    this.setState((prevState) => ({
+      notifications: prevState.notifications.map(item => {
+        if (item.id === id) {
+          item.stage = NS.MANUAL_REMOVAL;
+          item.removedBy = REMOVAL.API;
+        }
+
+        return item;
+      })
+    }), callback);
   }
 
   handleResize() {
@@ -78,7 +116,7 @@ class ReactNotificationComponent extends React.Component {
   }
 
   toggleTimeoutRemoval(notification) {
-    const { SLIDING_ANIMATION_EXIT } = NOTIFICATION_STAGE;
+    const { SLIDING_ANIMATION_EXIT } = NS;
     const { TIMEOUT } = REMOVAL;
 
     this.setState((prevState) => ({
@@ -93,47 +131,7 @@ class ReactNotificationComponent extends React.Component {
     }));
   }
 
-  addNotification(object) {
-    const { userDefinedTypes } = this.state;
-    const notification = setNotificationDefaults(object, userDefinedTypes);
-
-    this.setState((prevState) => ({
-      notifications:
-        notification.insert === INSERTION.TOP
-          ? [notification, ...prevState.notifications]
-          : [...prevState.notifications, notification]
-    }));
-
-    return notification.id;
-  }
-
-  removeNotification(id) {
-    const callback = () => requestAnimationFrame(() => {
-      this.setState((prevState) => ({
-        notifications: prevState.notifications.map(item => {
-          if (item.id === id) {
-            item.stage = NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT;
-            item.removedBy = REMOVAL.API;
-          }
-
-          return item;
-        })
-      }));
-    });
-
-    this.setState((prevState) => ({
-      notifications: prevState.notifications.map(item => {
-        if (item.id === id) {
-          item.stage = NOTIFICATION_STAGE.MANUAL_REMOVAL;
-          item.removedBy = REMOVAL.API;
-        }
-
-        return item;
-      })
-    }), callback);
-  }
-
-  onNotificationClick(notification) {
+  onClick(notification) {
     const { dismissable, dismissIcon } = notification;
     const dismissableByClick = dismissable && dismissable.click;
     if (!dismissableByClick && !dismissIcon) return;
@@ -141,7 +139,7 @@ class ReactNotificationComponent extends React.Component {
     this.setState((prevState) => ({
       notifications: prevState.notifications.map(item => {
         if (item.id === notification.id) {
-          item.stage = NOTIFICATION_STAGE.SLIDING_ANIMATION_EXIT;
+          item.stage = NS.SLIDING_ANIMATION_EXIT;
           item.removedBy = REMOVAL.CLICK;
         }
 
@@ -151,7 +149,7 @@ class ReactNotificationComponent extends React.Component {
   }
 
   toggleTouchEnd(notification) {
-    const { TOUCH_SLIDING_ANIMATION_EXIT } = NOTIFICATION_STAGE;
+    const { TOUCH_SLIDING_ANIMATION_EXIT } = NS;
 
     this.setState((prevState) => ({
       notifications: prevState.notifications.map(item => {
@@ -183,7 +181,7 @@ class ReactNotificationComponent extends React.Component {
       key={notification.id}
       notification={notification}
       isFirstNotification={notifications.length === 1}
-      onClickHandler={this.onNotificationClick}
+      onClickHandler={this.onClick}
       toggleRemoval={this.toggleRemoval}
       toggleTimeoutRemoval={this.toggleTimeoutRemoval}
       toggleTouchEnd={this.toggleTouchEnd}

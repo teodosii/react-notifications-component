@@ -398,7 +398,7 @@ function defaultUserDefinedTypes({ content, type }, definedTypes) {
   return definedTypes;
 }
 
-export function setNotificationDefaults(options, userDefinedTypes) {
+export function parseNotification(options, userDefinedTypes) {
   const notification = options;
   const {
     insert,
