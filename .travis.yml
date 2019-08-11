@@ -5,9 +5,7 @@ branches:
   only:
     - master
 install:
-  - npm install
   - npm rebuild node-sass
+  - npm install
 script:
   - npm run build:library:prod
-  - npm test
-  - npm run coveralls

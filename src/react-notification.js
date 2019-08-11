@@ -216,7 +216,7 @@ export default class ReactNotification extends React.Component {
           className={dismissIcon.className}
           onClick={this.onNotificationClick}
         >
-          { dismissIcon.content }
+          {dismissIcon.content}
         </div>
       );
     }
@@ -299,7 +299,7 @@ export default class ReactNotification extends React.Component {
             className={`${animatedElementClasses} notification-item-child`}
             style={childElementStyle}
           >
-            { notification.content }
+            {notification.content}
           </div>
         </div>
       );
