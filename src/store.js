@@ -152,7 +152,7 @@ function Store() {
       validators.forEach((validator) => validator(notification, userDefinedTypes));
     }
 
-    this.add(parseNotification(notification, userDefinedTypes));
+    return this.add(parseNotification(notification, userDefinedTypes));
   };
   this.removeNotification = () => {};
   this.register = ({ addNotification, removeNotification, userDefinedTypes }) => {
