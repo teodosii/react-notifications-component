@@ -36,9 +36,7 @@ export default class App extends React.Component {
     store.removeNotification(id);
 
     // remove notification from state
-    this.setState({
-      notifications: notifications.filter(item => item !== id)
-    });
+    this.setState({ notifications: notifications.filter(item => item !== id) });
   }
 
   render() {

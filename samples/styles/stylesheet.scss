@@ -14,7 +14,7 @@ body {
 
 html,
 body,
-.notification-item-root,
+.n-parent,
 .notification-title,
 .notification-message,
 .notification-item {
@@ -30,7 +30,7 @@ body,
     "Segoe UI Symbol" !important;
 }
 
-.notification-item-root {
+.n-parent {
   backface-visibility: hidden;
   transform: translateZ(0) scale(1.0, 1.0);
 }

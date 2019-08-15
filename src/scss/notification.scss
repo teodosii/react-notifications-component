@@ -1,7 +1,7 @@
 @import "./_containers.scss";
 @import "./_types.scss";
 
-.notification-item-root,
+.n-parent,
 .notification-title,
 .notification-message,
 .notification-item {
@@ -35,8 +35,8 @@
 
 .notification-container-mobile-top .notification-item,
 .notification-container-mobile-bottom .notification-item,
-.notification-container-mobile-top .notification-item-root,
-.notification-container-mobile-bottom .notification-item-root {
+.notification-container-mobile-top .n-parent,
+.notification-container-mobile-bottom .n-parent {
   max-width: 100%;
   width: 100%;
 }
@@ -49,23 +49,23 @@
   box-shadow: 1px 3px 4px rgba(0, 0, 0, 0.2);
 }
 
-.notification-container-top-right .notification-item-root,
-.notification-container-bottom-right .notification-item-root {
+.notification-container-top-right .n-parent,
+.notification-container-bottom-right .n-parent {
   margin-left: auto;
 }
 
-.notification-container-top-left .notification-item-root,
-.notification-container-bottom-left .notification-item-root {
+.notification-container-top-left .n-parent,
+.notification-container-bottom-left .n-parent {
   margin-right: auto;
 }
 
-.notification-container-mobile-top .notification-item-root,
-.notification-container-mobile-bottom .notification-item-root {
+.notification-container-mobile-top .n-parent,
+.notification-container-mobile-bottom .n-parent {
   margin-left: auto;
   margin-right: auto;
 }
 
-.notification-item-root { 
+.n-parent { 
   width: 275px;
   margin-bottom: 15px;
 }
@@ -84,15 +84,6 @@
   word-wrap: break-word;
   margin-bottom: 0;
   margin-top: 0;
-}
-
-.notification-invisible {
-  visibility: hidden;
-  max-width: 375px;
-}
-
-.notification-visible {
-  visibility: visible;
 }
 
 .notification-content {
