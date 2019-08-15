@@ -6,25 +6,17 @@ import {
   shouldNotificationHaveSliding
 } from "src/helpers";
 
-const STEP = {
-  init: 'init',
-  slideIn: 'slideIn',
-  animate: 'animate',
-  slideOut: 'slideOut'
-};
-
 export default class ReactNotification extends React.Component {
   constructor(props) {
     super(props);
     this.rootElementRef = React.createRef();
     this.onClick = this.onClick.bind(this);
-    this.onTransitionEnd = this.onTransitionEnd.bind(this);
 
     const state = {
-      step: STEP.init,
       parentStyle: { height: 0, overflow: 'hidden' },
       childStyle: { opacity: 0 },
-      htmlClassList: getHtmlClassesForType(props.notification)
+      htmlClassList: getHtmlClassesForType(props.notification),
+      onTransitionEnd: null
     };
 
     this.state = state;
@@ -32,7 +24,7 @@ export default class ReactNotification extends React.Component {
 
   static propTypes = {
     onClick: PropTypes.func.isRequired,
-    updatePositions: PropTypes.func.isRequired,
+    toggleRemoval: PropTypes.func.isRequired,
     count: PropTypes.number.isRequired
   }
 
@@ -55,7 +47,6 @@ export default class ReactNotification extends React.Component {
     }
 
     this.setState({
-      step: STEP.animate,
       parentStyle: {
         height: `${this.getScrollHeight()}px`,
         transition: willSlide
@@ -63,6 +54,22 @@ export default class ReactNotification extends React.Component {
           : '10ms height'
       }
     }, callback);
+  }
+
+  removeNotification() {
+    const { notification, toggleRemoval } = this.props;
+
+    this.setState({
+      height: 0,
+      transition: getTransition(notification.slidingExit, 'height'),
+      onTransitionEnd: () => {
+        toggleRemoval(notification.id);
+      },
+      htmlClassList: [
+        ...notification.animationOut,
+        ...getHtmlClassesForType(notification)
+      ]
+    });
   }
 
   componentWillUnmount() {}
@@ -95,20 +102,16 @@ export default class ReactNotification extends React.Component {
     );
   }
 
-  onTransitionEnd() {
-    return () => {};
-  }
-
   renderCustomContent() {
     const { notification } = this.props;
-    const { parentStyle, childStyle, htmlClassList } = this.state;
+    const { onTransitionEnd, parentStyle, childStyle, htmlClassList } = this.state;
 
     return (
       <div
         ref={this.rootElementRef}
         onClick={this.onClick}
         style={parentStyle}
-        onTransitionEnd={this.onTransitionEnd}
+        onTransitionEnd={onTransitionEnd}
         className='n-parent'
       >
         <div
@@ -123,7 +126,7 @@ export default class ReactNotification extends React.Component {
 
   renderNotification() {
     const { notification: { title, message, dismissIcon } } = this.props;
-    const { parentStyle, childStyle, htmlClassList } = this.state;
+    const { onTransitionEnd, parentStyle, childStyle, htmlClassList } = this.state;
 
     return (
       <div
@@ -131,7 +134,7 @@ export default class ReactNotification extends React.Component {
         onClick={this.onClick}
         className='n-parent'
         style={parentStyle}
-        onTransitionEnd={this.onTransitionEnd}
+        onTransitionEnd={onTransitionEnd}
       >
         <div
           className={`${[...htmlClassList, 'n-child'].join(' ')}`}

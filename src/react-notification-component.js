@@ -73,7 +73,7 @@ class ReactNotificationComponent extends React.Component {
 
   remove() {}
 
-  removeNotification(notification) {
+  toggleRemoval(notification) {
     const callback = () => {
       const { onNotificationRemoval } = this.props;
       if (onNotificationRemoval) {
@@ -86,8 +86,6 @@ class ReactNotificationComponent extends React.Component {
     }), callback);
   }
 
-  updatePositions() {}
-  
   onClick() {}
 
   renderNotifications(notifications) {
@@ -95,8 +93,8 @@ class ReactNotificationComponent extends React.Component {
       key={notification.id}
       notification={notification}
       onClick={this.onClick}
-      updatePositions={this.updatePositions}
       count={notifications.length}
+      toggleRemoval={this.toggleRemoval}
     />);
   }
 
