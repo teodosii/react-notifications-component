@@ -32,7 +32,7 @@ class ReactNotificationComponent extends React.Component {
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
     this.onClick = this.onClick.bind(this);
-    this.updatePositions = this.updatePositions.bind(this);
+    this.toggleRemoval = this.toggleRemoval.bind(this);
   }
 
   static propTypes = {
@@ -73,16 +73,16 @@ class ReactNotificationComponent extends React.Component {
 
   remove() {}
 
-  toggleRemoval(notification) {
+  toggleRemoval(id, removalFlag) {
+    const { onNotificationRemoval } = this.props;
     const callback = () => {
-      const { onNotificationRemoval } = this.props;
       if (onNotificationRemoval) {
-        onNotificationRemoval(notification.id, notification.removedBy);
+        onNotificationRemoval(id, removalFlag);
       }
     };
 
     this.setState(({ notifications }) => ({
-      notifications: notifications.filter(({ id }) => id !== notification.id)
+      notifications: notifications.filter(({ id: nId }) => nId !== id)
     }), callback);
   }
 

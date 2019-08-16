@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   getTransition,
+  hasFullySwiped,
   getHtmlClassesForType,
   shouldNotificationHaveSliding
 } from "src/helpers";
@@ -11,12 +12,16 @@ export default class ReactNotification extends React.Component {
     super(props);
     this.rootElementRef = React.createRef();
     this.onClick = this.onClick.bind(this);
+    this.onTouchStart = this.onTouchStart.bind(this);
+    this.onTouchMove = this.onTouchMove.bind(this);
+    this.onTouchEnd = this.onTouchEnd.bind(this);
 
     const state = {
       parentStyle: { height: 0, overflow: 'hidden' },
       childStyle: { opacity: 0 },
       htmlClassList: getHtmlClassesForType(props.notification),
-      onTransitionEnd: null
+      onTransitionEnd: null,
+      touchEnabled: true
     };
 
     this.state = state;
@@ -56,14 +61,16 @@ export default class ReactNotification extends React.Component {
     }, callback);
   }
 
-  removeNotification() {
+  removeNotification(removalFlag) {
     const { notification, toggleRemoval } = this.props;
 
     this.setState({
-      height: 0,
-      transition: getTransition(notification.slidingExit, 'height'),
+      parentStyle: {
+        height: 0,
+        transition: getTransition(notification.slidingExit, 'height')
+      },
       onTransitionEnd: () => {
-        toggleRemoval(notification.id);
+        toggleRemoval(notification.id, removalFlag);
       },
       htmlClassList: [
         ...notification.animationOut,
@@ -78,7 +85,61 @@ export default class ReactNotification extends React.Component {
     return this.rootElementRef.current.scrollHeight;
   }
 
-  onClick() {}
+  onClick() {
+    this.removeNotification('');
+  }
+
+  onTouchStart({ touches }) {
+    const [{ pageX }] = touches;
+    this.setState({
+      startX: pageX,
+      currentX: pageX
+    });
+  }
+
+  onTouchMove({ touches }) {
+    const { startX } = this.state;
+    const {
+      toggleRemoval,
+      notification: { id, touchSlidingExit: { swipe, fade } }
+    } = this.props;
+
+    const [{ pageX }] = touches;
+    const distance = pageX - startX;
+    const swipeTo = window.innerWidth * 2;
+
+    if (hasFullySwiped(distance)) {
+      return this.setState({
+        touchEnabled: false,
+        parentStyle: {
+          left: `${pageX - startX >= 0 ? swipeTo : -swipeTo}px`,
+          position: 'relative',
+          transition: `${getTransition(swipe, 'left')}, ${getTransition(fade, 'opacity')}`
+        },
+        onTransitionEnd: () => toggleRemoval(id, '')
+      });
+    }
+
+    return this.setState({
+      currentX: pageX,
+      parentStyle: {
+        position: 'relative',
+        left: `${0 + distance}px`
+      }
+    });
+  }
+
+  onTouchEnd() {
+    const { notification: { touchSlidingBack } } = this.props;
+
+    this.setState({
+      parentStyle: {
+        left: 0,
+        position: 'relative',
+        transition: getTransition(touchSlidingBack, 'left')
+      }
+    });
+  }
 
   renderCustomX(dismissIcon) {
     return (
@@ -126,7 +187,13 @@ export default class ReactNotification extends React.Component {
 
   renderNotification() {
     const { notification: { title, message, dismissIcon } } = this.props;
-    const { onTransitionEnd, parentStyle, childStyle, htmlClassList } = this.state;
+    const {
+      onTransitionEnd,
+      parentStyle,
+      childStyle,
+      htmlClassList,
+      touchEnabled
+    } = this.state;
 
     return (
       <div
@@ -135,6 +202,9 @@ export default class ReactNotification extends React.Component {
         className='n-parent'
         style={parentStyle}
         onTransitionEnd={onTransitionEnd}
+        onTouchStart={touchEnabled ? this.onTouchStart : null}
+        onTouchMove={touchEnabled ? this.onTouchMove : null}
+        onTouchEnd={touchEnabled ? this.onTouchEnd : null}
       >
         <div
           className={`${[...htmlClassList, 'n-child'].join(' ')}`}
@@ -163,10 +233,8 @@ export default class ReactNotification extends React.Component {
   render() {
     const { notification: { content } } = this.props;
 
-    if (content) {
-      return this.renderCustomContent();
-    }
-
-    return this.renderNotification();
+    return content
+      ? this.renderCustomContent()
+      : this.renderNotification();
   }
 }

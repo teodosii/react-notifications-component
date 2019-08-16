@@ -21,6 +21,13 @@ export function isTopContainer(container) {
     || container === CONTAINER.TOP_CENTER;
 }
 
+export function hasFullySwiped(diffX) {
+  const swipeLength = Math.abs(diffX);
+  const requiredSwipeLength = (40 / 100) * window.innerWidth;
+
+  return swipeLength >= requiredSwipeLength;
+}
+
 export function shouldNotificationHaveSliding(notification, count) {
   if (count <= 1) return false;
 
