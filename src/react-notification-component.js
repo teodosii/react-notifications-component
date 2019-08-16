@@ -2,18 +2,13 @@ import React from "react";
 import ReactNotification from "src/react-notification";
 import PropTypes from "prop-types";
 import store from './store';
-import { isArray } from "src/utils";
-import {
-  INSERTION,
-  BREAKPOINT
-} from "src/constants";
 import {
   getNotificationsForEachContainer,
   getNotificationsForMobileView
 } from "src/helpers";
 
-// react-notifications-component theme
 import "src/scss/notification.scss";
+const BREAKPOINT = 768;
 
 class ReactNotificationComponent extends React.Component {
   constructor(props) {
@@ -25,13 +20,8 @@ class ReactNotificationComponent extends React.Component {
       notifications: []
     };
 
-    if (isArray(props.types)) {
-      this.state.userDefinedTypes = props.types;
-    }
-
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
-    this.onClick = this.onClick.bind(this);
     this.toggleRemoval = this.toggleRemoval.bind(this);
   }
 
@@ -61,17 +51,27 @@ class ReactNotificationComponent extends React.Component {
   componentWillUnmount() {}
 
   add(notification) {
-    this.setState((prevState) => ({
+    this.setState(({ notifications }) => ({
       notifications:
-        notification.insert === INSERTION.TOP
-          ? [notification, ...prevState.notifications]
-          : [...prevState.notifications, notification]
+        notification.insert === 'top'
+          ? [notification, ...notifications]
+          : [...notifications, notification]
     }));
 
     return notification.id;
   }
 
-  remove() {}
+  remove(id) {
+    this.setState(({ notifications }) => ({
+      notifications: notifications.map((notification) => {
+        if (notification.id === id) {
+          notification.removed = true;
+        }
+
+        return notification;
+      })
+    }));
+  }
 
   toggleRemoval(id, removalFlag) {
     const { onNotificationRemoval } = this.props;
@@ -86,15 +86,13 @@ class ReactNotificationComponent extends React.Component {
     }), callback);
   }
 
-  onClick() {}
-
   renderNotifications(notifications) {
     return notifications.map(notification => <ReactNotification
       key={notification.id}
       notification={notification}
-      onClick={this.onClick}
-      count={notifications.length}
       toggleRemoval={this.toggleRemoval}
+      count={notifications.length}
+      removed={notification.removed}
     />);
   }
 

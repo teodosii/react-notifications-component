@@ -88,5 +88,3 @@ export const ERROR = {
   // custom types
   TYPE_NOT_FOUND: "Validation error. custom type not found"
 };
-
-export const BREAKPOINT = 768;

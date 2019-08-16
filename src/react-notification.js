@@ -28,9 +28,9 @@ export default class ReactNotification extends React.Component {
   }
 
   static propTypes = {
-    onClick: PropTypes.func.isRequired,
     toggleRemoval: PropTypes.func.isRequired,
-    count: PropTypes.number.isRequired
+    count: PropTypes.number.isRequired,
+    removed: PropTypes.bool
   }
 
   componentDidMount() {
@@ -59,6 +59,12 @@ export default class ReactNotification extends React.Component {
           : '10ms height'
       }
     }, callback);
+  }
+
+  componentDidUpdate({ removed }) {
+    if (this.props.removed && !removed) {
+      this.removeNotification('');
+    }
   }
 
   removeNotification(removalFlag) {
