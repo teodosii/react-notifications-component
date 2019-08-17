@@ -10,13 +10,13 @@ import {
 } from "src/utils";
 
 function validateTransition(props, propName) {
-  const { duration, cubicBezier, delay } = props[propName] || {};
+  const { duration, timingFunction, delay } = props[propName] || {};
 
   if (!isNullOrUndefined(duration) && !isNumber(duration)) {
     throw new Error(ERROR.TRANSITION_DURATION_NUMBER);
   }
 
-  if (!isNullOrUndefined(cubicBezier) && !isString(cubicBezier)) {
+  if (!isNullOrUndefined(timingFunction) && !isString(timingFunction)) {
     throw new Error(ERROR.TRANSITION_CUBICBEZIER_NUMBER);
   }
 

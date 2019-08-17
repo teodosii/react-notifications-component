@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Timer from './timer';
 import {
   getTransition,
   hasFullySwiped,
@@ -15,16 +16,17 @@ export default class ReactNotification extends React.Component {
     this.onTouchStart = this.onTouchStart.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
 
-    const state = {
+    this.state = {
       parentStyle: { height: 0, overflow: 'hidden' },
       childStyle: { opacity: 0 },
       htmlClassList: getHtmlClassesForType(props.notification),
+      animationPlayState: 'running',
       onTransitionEnd: null,
       touchEnabled: true
     };
-
-    this.state = state;
   }
 
   static propTypes = {
@@ -33,9 +35,22 @@ export default class ReactNotification extends React.Component {
     removed: PropTypes.bool
   }
 
+  componentWillUnmount() {
+    if (this.timeout) {
+      this.timeout.clear();
+    }
+  }
+
   componentDidMount() {
     const { notification, count } = this.props;
     const willSlide = shouldNotificationHaveSliding(notification, count);
+
+    const onTransitionEnd = () => {
+      const { dismiss: { duration, onScreen, pauseOnHover } } = notification;
+      if (duration > 0 && !onScreen && pauseOnHover) {
+        this.timer = new Timer(() => this.removeNotification(''), duration);
+      }
+    };
 
     const callback = () => {
       requestAnimationFrame(() => {
@@ -57,7 +72,8 @@ export default class ReactNotification extends React.Component {
         transition: willSlide
           ? getTransition(notification.slidingEnter, 'height')
           : '10ms height'
-      }
+      },
+      onTransitionEnd
     }, callback);
   }
 
@@ -84,8 +100,6 @@ export default class ReactNotification extends React.Component {
       ]
     });
   }
-
-  componentWillUnmount() {}
 
   getScrollHeight() {
     return this.rootElementRef.current.scrollHeight;
@@ -147,59 +161,119 @@ export default class ReactNotification extends React.Component {
     });
   }
 
-  renderCustomX(dismissIcon) {
+  onMouseEnter() {
+    if (this.timeout) {
+      this.timeout.pause();
+    } else {
+      this.setState({ animationPlayState: 'paused' });
+    }
+  }
+
+  onMouseLeave() {
+    if (this.timeout) {
+      this.timeout.resume();
+    } else {
+      this.setState({ animationPlayState: 'running' });
+    }
+  }
+
+  renderTitle() {
+    const { notification: { title } } = this.props;
+    if (!title) return null;
     return (
-      <div
-        className={dismissIcon.className}
-        onClick={this.onNotificationClick}
-      >
-        {dismissIcon.content}
-      </div>
+      <p className="notification-title">
+        {title}
+      </p>
     );
   }
 
-  renderBasicX() {
+  renderMessage() {
+    const { notification: { message } } = this.props;
+    return (
+      <p className="notification-message">
+        {message}
+      </p>
+    );
+  }
+
+  renderCloseIcon() {
     return (
       <div
         className="notification-close"
-        onClick={this.onNotificationClick}
-      >
-        <span>&times;</span>
+        onClick={this.onClick}
+      ></div>
+    );
+  }
+
+  renderTimer() {
+    const { notification: { dismiss } } = this.props;
+    const { duration, onScreen } = dismiss;
+    const { animationPlayState } = this.state;
+
+    if (!onScreen) return;
+
+    const style = {
+      animationName: 'timer',
+      animationDuration: `${duration}ms`,
+      animationTimingFunction: 'linear',
+      animationFillMode: 'forwards',
+      animationDelay: 0,
+      animationPlayState
+    };
+
+    const onAnimationEnd = () => this.removeNotification();
+
+    return (
+      <div className="timer">
+        <div
+          className="timer-filler"
+          onAnimationEnd={onAnimationEnd}
+          style={style}
+        >
+        </div>
       </div>
     );
   }
 
   renderCustomContent() {
     const { notification } = this.props;
-    const { onTransitionEnd, parentStyle, childStyle, htmlClassList } = this.state;
+    const { childStyle, htmlClassList } = this.state;
 
     return (
       <div
-        ref={this.rootElementRef}
-        onClick={this.onClick}
-        style={parentStyle}
-        onTransitionEnd={onTransitionEnd}
-        className='n-parent'
+        className={`${[...htmlClassList, 'n-child'].join(' ')}`}
+        style={childStyle}
       >
-        <div
-          className={`${[...htmlClassList, 'n-child'].join(' ')}`}
-          style={childStyle}
-        >
-          {notification.content}
-        </div>
+        {notification.content}
       </div>
     );
   }
 
   renderNotification() {
-    const { notification: { title, message, dismissIcon } } = this.props;
-    const {
-      onTransitionEnd,
-      parentStyle,
-      childStyle,
-      htmlClassList,
-      touchEnabled
-    } = this.state;
+    const { childStyle, htmlClassList } = this.state;
+    const { notification: { dismiss: { duration, pauseOnHover } } } = this.props;
+    const hasMouseEvents = duration > 0 && pauseOnHover;
+
+    return (
+      <div
+        className={`${[...htmlClassList, 'n-child'].join(' ')}`}
+        onMouseEnter={hasMouseEvents ? this.onMouseEnter : null}
+        onMouseLeave={hasMouseEvents ? this.onMouseLeave : null}
+        style={childStyle}
+      >
+        <div className="notification-content">
+          { this.renderCloseIcon() }
+          { this.renderTitle() }
+          { this.renderMessage() }
+          { this.renderTimer() }
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    const { notification: { content } } = this.props;
+    const { parentStyle, onTransitionEnd, touchEnabled } = this.state;
 
     return (
       <div
@@ -212,35 +286,12 @@ export default class ReactNotification extends React.Component {
         onTouchMove={touchEnabled ? this.onTouchMove : null}
         onTouchEnd={touchEnabled ? this.onTouchEnd : null}
       >
-        <div
-          className={`${[...htmlClassList, 'n-child'].join(' ')}`}
-          style={childStyle}
-        >
-          <div className="notification-content">
-            { dismissIcon
-              ? this.renderCustomX()
-              : this.renderBasicX()
-            }
-            { title &&
-              <p className="notification-title">
-                {title}
-              </p>
-            }
-            { <p className="notification-message">
-                {message}
-              </p>
-            }
-          </div>
-        </div>
+        {
+          content
+            ? this.renderCustomContent()
+            : this.renderNotification()
+        }
       </div>
-    );
-  }
-
-  render() {
-    const { notification: { content } } = this.props;
-
-    return content
-      ? this.renderCustomContent()
-      : this.renderNotification();
+    )
   }
 }

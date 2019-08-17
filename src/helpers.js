@@ -126,8 +126,8 @@ export function getNotificationsForEachContainer(notifications) {
   };
 }
 
-export function getTransition({ duration, cubicBezier, delay }, property) {
-  return `${duration}ms ${property} ${cubicBezier} ${delay}ms`;
+export function getTransition({ duration, timingFunction, delay }, property) {
+  return `${duration}ms ${property} ${timingFunction} ${delay}ms`;
 }
 
 export function slidingExitTransition(notification) {
@@ -153,15 +153,15 @@ function defaultAnimationOut(animationOut) {
 }
 
 function defaultTransition(transition, defaults) {
-  const { duration, cubicBezier, delay } = defaults;
+  const { duration, timingFunction, delay } = defaults;
   const transitionOptions = transition || {};
 
   if (isNullOrUndefined(transitionOptions.duration)) {
     transitionOptions.duration = duration;
   }
 
-  if (isNullOrUndefined(transitionOptions.cubicBezier)) {
-    transitionOptions.cubicBezier = cubicBezier;
+  if (isNullOrUndefined(transitionOptions.timingFunction)) {
+    transitionOptions.timingFunction = timingFunction;
   }
 
   if (isNullOrUndefined(transitionOptions.delay)) {
@@ -259,11 +259,11 @@ export function parseNotification(options, userDefinedTypes) {
     notification.width = defaultWidth(width);
   }
 
-  const slidingEnterDefaults = { duration: 600, cubicBezier: "linear", delay: 0 };
-  const slidingExitDefaults = { duration: 600, cubicBezier: "linear", delay: 0 };
-  const swipeBackDefaults = { duration: 600, cubicBezier: "ease-in", delay: 0 };
-  const swipeExitDefaults = { duration: 600, cubicBezier: "ease-in", delay: 0 };
-  const swipeCompleteDefaults = { duration: 300, cubicBezier: "ease-in", delay: 0 };
+  const slidingEnterDefaults = { duration: 600, timingFunction: "linear", delay: 0 };
+  const slidingExitDefaults = { duration: 600, timingFunction: "linear", delay: 0 };
+  const swipeBackDefaults = { duration: 600, timingFunction: "ease-in", delay: 0 };
+  const swipeExitDefaults = { duration: 600, timingFunction: "ease-in", delay: 0 };
+  const swipeCompleteDefaults = { duration: 300, timingFunction: "ease-in", delay: 0 };
   notification.slidingEnter = defaultTransition(slidingEnter, slidingEnterDefaults);
   notification.slidingExit = defaultTransition(slidingExit, slidingExitDefaults);
   notification.touchSlidingBack = defaultTransition(touchSlidingBack, swipeBackDefaults);

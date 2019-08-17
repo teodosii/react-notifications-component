@@ -82,7 +82,7 @@ export const ERROR = {
 
   // transition
   TRANSITION_DURATION_NUMBER: "Validation error. duration property of transition option must be a Number",
-  TRANSITION_CUBICBEZIER_NUMBER: "Validation error. cubicBezier property of transition option must be a String",
+  TRANSITION_CUBICBEZIER_NUMBER: "Validation error. timingFunction property of transition option must be a String",
   TRANSITION_DELAY_NUMBER: "Validation error. delay property of transition option must be a Number",
 
   // custom types
