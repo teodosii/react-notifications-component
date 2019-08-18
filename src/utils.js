@@ -2,7 +2,7 @@ export function cssWidth(width) {
   return width ? `${width}px` : undefined;
 }
 
-export function isNullOrUndefined(prop) {
+export function isNull(prop) {
   return prop === null || prop === undefined;
 }
 
@@ -19,7 +19,7 @@ export function isBoolean(object) {
 }
 
 export function isArray(object) {
-  return !isNullOrUndefined(object) && object.constructor === Array;
+  return !isNull(object) && object.constructor === Array;
 }
 
 export function getRandomId() {

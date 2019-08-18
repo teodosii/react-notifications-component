@@ -1,16 +1,13 @@
 import React from "react";
 import notification from "helpers/notification";
-import {
-  getType,
-  getMessage,
-  getTitle
-} from "helpers/randomize";
+import { store } from 'rc-notifications/react-notification-component';
+import { getType, getMessage, getTitle } from "helpers/randomize";
 
-export default function InsertExample({ addNotification }) {
+export default function InsertExample() {
   const add = (insert) => {
     const type = getType();
 
-    return addNotification(Object.assign({}, notification, {
+    return store.addNotification(Object.assign({}, notification, {
       type,
       insert,
       message: getMessage(type),
@@ -28,8 +25,12 @@ export default function InsertExample({ addNotification }) {
           <code className="white-code">bottom</code> of the container
         </div>
         <div>
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add("top")}>Top </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add("bottom")}>Bottom</button>
+          <button type="button" className="btn btn-outline-secondary" onClick={() => add("top")}>
+            Top
+          </button>{" "}
+          <button type="button" className="btn btn-outline-secondary" onClick={() => add("bottom")}>
+            Bottom
+          </button>
         </div>
       </div>
     </div>

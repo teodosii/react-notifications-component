@@ -8,7 +8,6 @@ import {
 } from "src/helpers";
 
 import "src/scss/notification.scss";
-const BREAKPOINT = 768;
 
 class ReactNotificationComponent extends React.Component {
   constructor(props) {
@@ -23,6 +22,7 @@ class ReactNotificationComponent extends React.Component {
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
     this.toggleRemoval = this.toggleRemoval.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
 
   static propTypes = {
@@ -34,7 +34,7 @@ class ReactNotificationComponent extends React.Component {
 
   static defaultProps = {
     isMobile: true,
-    breakpoint: BREAKPOINT
+    breakpoint: 768
   }
 
   componentDidMount() {
@@ -45,10 +45,12 @@ class ReactNotificationComponent extends React.Component {
     });
 
     this.setState({ width: window.innerWidth });
-    window.addEventListener("resize", () => this.handleResize());
+    window.addEventListener("resize", this.handleResize);
   }
 
-  componentWillUnmount() {}
+  handleResize() {
+    this.setState({ width: window.innerWidth });
+  }
 
   add(notification) {
     this.setState(({ notifications }) => ({

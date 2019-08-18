@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Timer from './timer';
+import { REMOVAL } from './constants';
 import {
   getTransition,
   hasFullySwiped,
@@ -21,10 +22,8 @@ export default class ReactNotification extends React.Component {
 
     this.state = {
       parentStyle: { height: 0, overflow: 'hidden' },
-      childStyle: { opacity: 0 },
       htmlClassList: getHtmlClassesForType(props.notification),
       animationPlayState: 'running',
-      onTransitionEnd: null,
       touchEnabled: true
     };
   }
@@ -36,28 +35,27 @@ export default class ReactNotification extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.timeout) {
-      this.timeout.clear();
+    if (this.timer) {
+      this.timer.clear();
     }
   }
 
   componentDidMount() {
     const { notification, count } = this.props;
+    const { dismiss: { duration, onScreen } } = notification;
     const willSlide = shouldNotificationHaveSliding(notification, count);
 
     const onTransitionEnd = () => {
-      const { dismiss: { duration, onScreen, pauseOnHover } } = notification;
-      if (duration > 0 && !onScreen && pauseOnHover) {
-        this.timer = new Timer(() => this.removeNotification(''), duration);
-      }
+      if (!duration || onScreen) return;
+
+      // Will set timer only if duration > 0 and onScreen = false
+      const callback = () => this.removeNotification(REMOVAL.TIMEOUT);
+      this.timer = new Timer(callback, duration);
     };
 
     const callback = () => {
       requestAnimationFrame(() => {
         this.setState(prevState => ({
-          childStyle: {
-            opacity: 1
-          },
           htmlClassList: [
             ...notification.animationIn,
             ...prevState.htmlClassList, 
@@ -79,25 +77,41 @@ export default class ReactNotification extends React.Component {
 
   componentDidUpdate({ removed }) {
     if (this.props.removed && !removed) {
-      this.removeNotification('');
+      this.removeNotification(REMOVAL.MANUAL);
     }
   }
 
   removeNotification(removalFlag) {
     const { notification, toggleRemoval } = this.props;
+    const { dismiss: { waitForAnimation } } = notification;
+    const htmlClassList = [
+      ...notification.animationOut,
+      ...getHtmlClassesForType(notification)
+    ];
+
+    const parentStyle = {
+      height: 0,
+      transition: getTransition(notification.slidingExit, 'height')
+    };
+
+    const onTransitionEnd = () => toggleRemoval(notification.id, removalFlag);
+
+    if (waitForAnimation) {
+      return this.setState({
+        htmlClassList,
+        onAnimationEnd: () => {
+          this.setState({
+            parentStyle,
+            onTransitionEnd
+          });
+        }
+      })
+    }
 
     this.setState({
-      parentStyle: {
-        height: 0,
-        transition: getTransition(notification.slidingExit, 'height')
-      },
-      onTransitionEnd: () => {
-        toggleRemoval(notification.id, removalFlag);
-      },
-      htmlClassList: [
-        ...notification.animationOut,
-        ...getHtmlClassesForType(notification)
-      ]
+      parentStyle,
+      onTransitionEnd,
+      htmlClassList
     });
   }
 
@@ -106,7 +120,7 @@ export default class ReactNotification extends React.Component {
   }
 
   onClick() {
-    this.removeNotification('');
+    this.removeNotification(REMOVAL.CLICK);
   }
 
   onTouchStart({ touches }) {
@@ -120,8 +134,13 @@ export default class ReactNotification extends React.Component {
   onTouchMove({ touches }) {
     const { startX } = this.state;
     const {
+      notification,
       toggleRemoval,
-      notification: { id, touchSlidingExit: { swipe, fade } }
+      notification: {
+        id,
+        slidingExit,
+        touchSlidingExit: { swipe, fade }
+      }
     } = this.props;
 
     const [{ pageX }] = touches;
@@ -129,49 +148,66 @@ export default class ReactNotification extends React.Component {
     const swipeTo = window.innerWidth * 2;
 
     if (hasFullySwiped(distance)) {
-      return this.setState({
+      return this.setState(({ parentStyle }) => ({
         touchEnabled: false,
         parentStyle: {
-          left: `${pageX - startX >= 0 ? swipeTo : -swipeTo}px`,
           position: 'relative',
-          transition: `${getTransition(swipe, 'left')}, ${getTransition(fade, 'opacity')}`
+          left: `${pageX - startX >= 0 ? swipeTo : -swipeTo}px`,
+          transition: `${getTransition(swipe, 'left')}, ${getTransition(fade, 'opacity')}`,
+          height: parentStyle.height
         },
-        onTransitionEnd: () => toggleRemoval(id, '')
-      });
+        htmlClassList: [
+          ...notification.animationOut,
+          ...getHtmlClassesForType(notification)
+        ],
+        onTransitionEnd: () => {
+          this.setState(({ parentStyle }) => ({
+            parentStyle: {
+              height: 0,
+              left: parentStyle.left,
+              position: 'relative',
+              transition: `${getTransition(slidingExit, 'height')}`
+            },
+            onTransitionEnd: () => toggleRemoval(id, '')
+          }));
+        }
+      }));
     }
 
-    return this.setState({
+    return this.setState(({ parentStyle }) => ({
       currentX: pageX,
       parentStyle: {
         position: 'relative',
+        height: parentStyle.height,
         left: `${0 + distance}px`
       }
-    });
+    }));
   }
 
   onTouchEnd() {
     const { notification: { touchSlidingBack } } = this.props;
 
-    this.setState({
+    this.setState(({ parentStyle }) => ({
       parentStyle: {
         left: 0,
         position: 'relative',
+        height: parentStyle.height,
         transition: getTransition(touchSlidingBack, 'left')
       }
-    });
+    }));
   }
 
   onMouseEnter() {
-    if (this.timeout) {
-      this.timeout.pause();
+    if (this.timer) {
+      this.timer.pause();
     } else {
       this.setState({ animationPlayState: 'paused' });
     }
   }
 
   onMouseLeave() {
-    if (this.timeout) {
-      this.timeout.resume();
+    if (this.timer) {
+      this.timer.resume();
     } else {
       this.setState({ animationPlayState: 'running' });
     }
@@ -221,7 +257,7 @@ export default class ReactNotification extends React.Component {
       animationPlayState
     };
 
-    const onAnimationEnd = () => this.removeNotification();
+    const onAnimationEnd = () => this.removeNotification(REMOVAL.TIMEOUT);
 
     return (
       <div className="timer">
@@ -237,12 +273,11 @@ export default class ReactNotification extends React.Component {
 
   renderCustomContent() {
     const { notification } = this.props;
-    const { childStyle, htmlClassList } = this.state;
+    const { htmlClassList } = this.state;
 
     return (
       <div
         className={`${[...htmlClassList, 'n-child'].join(' ')}`}
-        style={childStyle}
       >
         {notification.content}
       </div>
@@ -250,7 +285,7 @@ export default class ReactNotification extends React.Component {
   }
 
   renderNotification() {
-    const { childStyle, htmlClassList } = this.state;
+    const { htmlClassList } = this.state;
     const { notification: { dismiss: { duration, pauseOnHover } } } = this.props;
     const hasMouseEvents = duration > 0 && pauseOnHover;
 
@@ -259,7 +294,6 @@ export default class ReactNotification extends React.Component {
         className={`${[...htmlClassList, 'n-child'].join(' ')}`}
         onMouseEnter={hasMouseEvents ? this.onMouseEnter : null}
         onMouseLeave={hasMouseEvents ? this.onMouseLeave : null}
-        style={childStyle}
       >
         <div className="notification-content">
           { this.renderCloseIcon() }
@@ -273,7 +307,12 @@ export default class ReactNotification extends React.Component {
 
   render() {
     const { notification: { content } } = this.props;
-    const { parentStyle, onTransitionEnd, touchEnabled } = this.state;
+    const {
+      parentStyle,
+      onAnimationEnd,
+      onTransitionEnd,
+      touchEnabled
+    } = this.state;
 
     return (
       <div
@@ -281,6 +320,7 @@ export default class ReactNotification extends React.Component {
         onClick={this.onClick}
         className='n-parent'
         style={parentStyle}
+        onAnimationEnd={onAnimationEnd}
         onTransitionEnd={onTransitionEnd}
         onTouchStart={touchEnabled ? this.onTouchStart : null}
         onTouchMove={touchEnabled ? this.onTouchMove : null}

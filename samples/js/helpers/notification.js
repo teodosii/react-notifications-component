@@ -5,15 +5,8 @@ export default {
   container: "top-right",
   insert: "top",
 
-  dismissable: {
-    click: true,
-    touch: false
-  },
-
-  dismissIcon: null,
-
   animationIn: ["animated", "fadeIn"],
-  animationOut: ["animated", "fadeOut"],
+  animationOut: ["animated", "bounceOutRight"],
 
   slidingEnter: {
     duration: 600,
@@ -47,8 +40,12 @@ export default {
   },
 
   dismiss: {
-    duration: 5000,
+    duration: 0,
     onScreen: false,
-    pauseOnHover: true
+    pauseOnHover: true,
+    waitForAnimation: true,
+    touchSliding: false,
+    click: true,
+    touch: true
   }
 };

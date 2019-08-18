@@ -4,10 +4,7 @@ import {
   NOTIFICATION_BASE_CLASS,
   NOTIFICATION_TYPE as NT,
 } from "src/constants";
-import {
-  isNullOrUndefined,
-  getRandomId
-} from "src/utils";
+import { isNull, getRandomId } from "src/utils";
 
 export function isBottomContainer(container) {
   return container === CONTAINER.BOTTOM_LEFT
@@ -156,15 +153,15 @@ function defaultTransition(transition, defaults) {
   const { duration, timingFunction, delay } = defaults;
   const transitionOptions = transition || {};
 
-  if (isNullOrUndefined(transitionOptions.duration)) {
+  if (isNull(transitionOptions.duration)) {
     transitionOptions.duration = duration;
   }
 
-  if (isNullOrUndefined(transitionOptions.timingFunction)) {
+  if (isNull(transitionOptions.timingFunction)) {
     transitionOptions.timingFunction = timingFunction;
   }
 
-  if (isNullOrUndefined(transitionOptions.delay)) {
+  if (isNull(transitionOptions.delay)) {
     transitionOptions.delay = delay;
   }
 
@@ -180,8 +177,8 @@ function defaultContainer(container) {
   return container.toLowerCase();
 }
 
-function defaultDismissable(dismissable) {
-  const option = dismissable;
+function defaultDismiss(dismiss) {
+  const option = dismiss;
 
   if (!option) {
     return {
@@ -190,11 +187,11 @@ function defaultDismissable(dismissable) {
     };
   }
 
-  if (isNullOrUndefined(option.click)) {
+  if (isNull(option.click)) {
     option.click = true;
   }
 
-  if (isNullOrUndefined(option.touch)) {
+  if (isNull(option.touch)) {
     option.touch = true;
   }
 
@@ -207,7 +204,7 @@ function defaultInsert(insert) {
 }
 
 function defaultWidth(width) {
-  if (isNullOrUndefined(width)) return 0;
+  if (isNull(width)) return 0;
   return width;
 }
 
@@ -237,7 +234,7 @@ export function parseNotification(options, userDefinedTypes) {
     slidingExit,
     touchSlidingBack,
     touchSlidingExit,
-    dismissable,
+    dismiss,
     width,
     id
   } = notification;
@@ -251,11 +248,11 @@ export function parseNotification(options, userDefinedTypes) {
 
   notification.container = defaultContainer(container);
   notification.insert = defaultInsert(insert);
-  notification.dismissable = defaultDismissable(dismissable);
+  notification.dismiss = defaultDismiss(dismiss);
   notification.animationIn = defaultAnimationIn(animationIn);
   notification.animationOut = defaultAnimationOut(animationOut);
 
-  if (!isNullOrUndefined(width)) {
+  if (!isNull(width)) {
     notification.width = defaultWidth(width);
   }
 

@@ -1,10 +1,7 @@
 import React from "react";
 import notification from "helpers/notification";
-import {
-  getType,
-  getMessage,
-  getTitle
-} from "helpers/randomize";
+import { store } from 'rc-notifications/react-notification-component';
+import { getType, getMessage, getTitle } from "helpers/randomize";
 
 export default class ContainerExample extends React.Component {
   constructor(props) {
@@ -13,10 +10,9 @@ export default class ContainerExample extends React.Component {
   }
 
   add(container) {
-    const { addNotification } = this.props;
     const type = getType();
 
-    return addNotification(Object.assign({}, notification, {
+    return store.addNotification(Object.assign({}, notification, {
       title: getTitle(type),
       message: getMessage(type),
       container,
@@ -39,12 +35,24 @@ export default class ContainerExample extends React.Component {
             <code className="white-code">bottom-center</code>
           </div>
           <div>
-            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("top-left")}>Top Left</button>{" "}
-            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("top-right")}>Top Right</button>{" "}
-            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("top-center")}>Top Center</button>{" "}
-            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("bottom-left")}>Bottom Left</button>{" "}
-            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("bottom-right")}>Bottom Right</button>{" "}
-            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("bottom-center")}>Bottom Center</button>{" "}
+            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("top-left")}>
+              Top Left
+            </button>{" "}
+            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("top-right")}>
+              Top Right
+            </button>{" "}
+            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("top-center")}>
+              Top Center
+            </button>{" "}
+            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("bottom-left")}>
+              Bottom Left
+            </button>{" "}
+            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("bottom-right")}>
+              Bottom Right
+            </button>{" "}
+            <button type="button" className="btn btn-outline-secondary" onClick={() => this.add("bottom-center")}>
+              Bottom Center
+            </button>{" "}
           </div>
         </div>
       </div>

@@ -4,7 +4,6 @@ export default function (callback, delay) {
   let remaining = delay;
 
   this.pause = function() {
-    console.log('pause');
     clearTimeout(timerId);
     remaining -= Date.now() - start;
   };

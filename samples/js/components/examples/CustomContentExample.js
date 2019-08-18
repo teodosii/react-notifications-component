@@ -2,6 +2,7 @@ import React from "react";
 import notification from "helpers/notification";
 import reactImage from "images/react.png";
 import { getContainer } from "helpers/randomize";
+import { store } from 'rc-notifications/react-notification-component';
 
 export default class CustomContentExample extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export default class CustomContentExample extends React.Component {
       message = "Error! You have no update rights";
     }
 
-    this.props.addNotification(Object.assign({}, notification, {
+    store.addNotification(Object.assign({}, notification, {
       width: 275,
       container: getContainer(),
       content: (
@@ -50,7 +51,7 @@ export default class CustomContentExample extends React.Component {
   }
 
   add() {
-    this.props.addNotification(Object.assign({}, notification, {
+    store.addNotification(Object.assign({}, notification, {
       width: 325,
       container: getContainer(),
       content: (

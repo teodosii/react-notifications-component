@@ -1,49 +1,67 @@
-import React from 'react';
 import { parseNotification } from './helpers';
 import { ERROR, NOTIFICATION_TYPE as NT } from './constants';
 import {
-  isNullOrUndefined,
+  isNull,
   isString,
   isNumber,
   isBoolean,
   isArray
 } from "src/utils";
 
-function validateTransition(props, propName) {
-  const { duration, timingFunction, delay } = props[propName] || {};
+function validateTransition(notification, transition) {
+  const {
+    TRANSITION_DURATION_NUMBER,
+    TRANSITION_CUBICBEZIER_NUMBER,
+    TRANSITION_DELAY_NUMBER
+  } = ERROR;
 
-  if (!isNullOrUndefined(duration) && !isNumber(duration)) {
-    throw new Error(ERROR.TRANSITION_DURATION_NUMBER);
+  const { duration, timingFunction, delay } = notification[transition] || {};
+
+  if (!isNull(duration) && !isNumber(duration)) {
+    throw new Error(TRANSITION_DURATION_NUMBER.replace('transition', transition));
   }
 
-  if (!isNullOrUndefined(timingFunction) && !isString(timingFunction)) {
-    throw new Error(ERROR.TRANSITION_CUBICBEZIER_NUMBER);
+  if (!isNull(timingFunction) && !isString(timingFunction)) {
+    throw new Error(TRANSITION_CUBICBEZIER_NUMBER.replace('transition', transition));
   }
 
-  if (!isNullOrUndefined(delay) && !isNumber(delay)) {
-    throw new Error(ERROR.TRANSITION_DELAY_NUMBER);
+  if (!isNull(delay) && !isNumber(delay)) {
+    throw new Error(TRANSITION_DELAY_NUMBER.replace('transition', transition));
   }
 }
 
 const validators = [
+  // `title` validator
   function({ content, title }) {
     if (content) return;
-    if (isNullOrUndefined(title)) return;
+    if (isNull(title)) return;
     if (typeof title !== "string") {
       throw new Error(ERROR.TITLE_STRING);
     }
   },
 
+  // `message` validator
   function({ content, message }) {
     if (content) return;
-    if (!message) throw new Error(ERROR.MESSAGE_REQUIRED);
-    if (!isString(message)) throw new Error(ERROR.MESSAGE_STRING);
+    if (!message) {
+      throw new Error(ERROR.MESSAGE_REQUIRED);
+    }
+
+    if (!isString(message)) {
+      throw new Error(ERROR.MESSAGE_STRING);
+    }
   },
 
+  // `type` validator
   function({ content, type }, userDefinedTypes) {
     if (content) return;
-    if (!type) throw new Error(ERROR.TYPE_REQUIRED);
-    if (!isString(type)) throw new Error(ERROR.TYPE_STRING);
+    if (!type) {
+      throw new Error(ERROR.TYPE_REQUIRED);
+    }
+
+    if (!isString(type)) {
+      throw new Error(ERROR.TYPE_STRING);
+    }
 
     if (
       !userDefinedTypes
@@ -57,46 +75,34 @@ const validators = [
     }
   },
 
+  // `container` validator
   function({ container }) {
-    if (!container) throw new Error(ERROR.CONTAINER_REQUIRED);
-    if (!isString(container)) throw new Error(ERROR.CONTAINER_STRING);
+    if (isNull(container)) {
+      throw new Error(ERROR.CONTAINER_REQUIRED);
+    }
+
+    if (!isString(container)) {
+      throw new Error(ERROR.CONTAINER_STRING);
+    }
   },
 
-  function({ dismissable }) {
-    if (!dismissable) return;
-    const { click, touch } = dismissable;
-    const { DISMISSABLE_CLICK_BOOL, DISMISSABLE_TOUCH_BOOL } = ERROR;
-    if (!isNullOrUndefined(click) && !isBoolean(click)) throw new Error(DISMISSABLE_CLICK_BOOL);
-    if (!isNullOrUndefined(touch) && !isBoolean(touch)) throw new Error(DISMISSABLE_TOUCH_BOOL);
-  },
-
+  // `insert` validator
   function ({ insert }) {
-    if (!insert) return;
-    if (!isString(insert)) throw new Error(ERROR.INSERT_STRING);
+    if (isNull(insert)) return;
+    if (!isString(insert)) {
+      throw new Error(ERROR.INSERT_STRING);
+    }
   },
 
+  // `width` validator
   function({ width }) {
-    if (isNullOrUndefined(width)) return
-    if (!isNumber(width)) throw new Error(ERROR.WIDTH_NUMBER);
+    if (isNull(width)) return;
+    if (!isNumber(width)) {
+      throw new Error(ERROR.WIDTH_NUMBER);
+    }
   },
 
-  function({ dismissIcon }) {
-    if (isNullOrUndefined(dismissIcon)) return;
-
-    const {
-      DISMISS_ICON_CLASS,
-      DISMISS_ICON_STRING,
-      DISMISS_ICON_CONTENT,
-      DISMISS_ICON_INVALID
-    } = ERROR;
-
-    const { className: iconClassName, content: iconContent } = dismissIcon;
-    if (!iconClassName) throw new Error(DISMISS_ICON_CLASS);
-    if (!isString(iconClassName)) throw new Error(DISMISS_ICON_STRING);
-    if (!iconContent) throw new Error(DISMISS_ICON_CONTENT);
-    if (!React.isValidElement(iconContent)) throw new Error(DISMISS_ICON_INVALID);
-  },
-
+  // `userDefinedTypes` validator
   function({ type, content }, userDefinedTypes) {
     if (content) return;
 
@@ -114,29 +120,64 @@ const validators = [
     }
   },
 
+  // `animationIn` validator
   function({ animationIn }) {
-    if (isNullOrUndefined(animationIn)) return;
-    if (!isArray(animationIn)) throw new Error(ERROR.ANIMATION_IN);
+    if (isNull(animationIn)) return;
+    if (!isArray(animationIn)) {
+      throw new Error(ERROR.ANIMATION_IN);
+    }
   },
 
+  // `animationOut` validator
   function({ animationOut }) {
-    if (isNullOrUndefined(animationOut)) return;
-    if (!isArray(animationOut)) throw new Error(ERROR.ANIMATION_OUT);
+    if (isNull(animationOut)) return;
+    if (!isArray(animationOut)) {
+      throw new Error(ERROR.ANIMATION_OUT);
+    }
   },
 
+  // `dismiss` validator
   function({ dismiss }) {
+    if (!dismiss) return;
+
     const {
       DISMISS_NUMBER,
       DISMISS_REQUIRED,
       DISMISS_POSITIVE,
+      DISMISS_CLICK_BOOL,
+      DISMISS_TOUCH_BOOL,
+      DISMISS_TOUCH_SLIDING,
+      DISMISS_WAIT
     } = ERROR;
 
-    if (!dismiss) return;
+    const { duration, click, touch, waitForAnimation: wait, touchSliding } = dismiss;
+    if (isNull(duration)) {
+      throw new Error(DISMISS_REQUIRED);
+    }
 
-    const { duration } = dismiss;
-    if (isNullOrUndefined(duration)) throw new Error(DISMISS_REQUIRED);
-    if (!isNumber(duration)) throw new Error(DISMISS_NUMBER);
-    if (duration < 0) throw new Error(DISMISS_POSITIVE);
+    if (!isNumber(duration)) {
+      throw new Error(DISMISS_NUMBER);
+    }
+
+    if (duration < 0) {
+      throw new Error(DISMISS_POSITIVE);
+    }
+
+    if (!isNull(click) && !isBoolean(click)) {
+      throw new Error(DISMISS_CLICK_BOOL);
+    }
+
+    if (!isNull(touch) && !isBoolean(touch)) {
+      throw new Error(DISMISS_TOUCH_BOOL);
+    }
+
+    if (!isNull(wait) && !isBoolean(wait)) {
+      throw new Error(DISMISS_WAIT);
+    }
+
+    if (!isNull(touchSliding) && !isBoolean(touchSliding)) {
+      throw new Error(DISMISS_TOUCH_SLIDING);
+    }
   }
 ];
 
@@ -148,7 +189,7 @@ function Store() {
 
     if (process.env.NODE_ENV === 'development') {
       const transitions = ['slidingEnter','slidingExit', 'touchSlidingBack', 'touchSlidingExit'];
-      transitions.forEach((transition) => validateTransition(transition));
+      transitions.forEach((transition) => validateTransition(notification, transition));
       validators.forEach((validator) => validator(notification, userDefinedTypes));
     }
 
