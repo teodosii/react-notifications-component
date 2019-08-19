@@ -10,31 +10,31 @@ export default {
 
   slidingEnter: {
     duration: 600,
-    timingFunction: "cubic-bezier(0.215, 0.61, 0.355, 1)",
+    timingFunction: "ease-in",
     delay: 0
   },
 
   slidingExit: {
     duration: 600,
-    timingFunction: "cubic-bezier(0.215, 0.61, 0.355, 1)",
+    timingFunction: "ease-out",
     delay: 0
   },
 
   touchSlidingBack: {
     duration: 600,
-    timingFunction: "ease-in",
+    timingFunction: "linear",
     delay: 0
   },
 
   touchSlidingExit: {
     swipe: {
       duration: 600,
-      timingFunction: "ease-in",
+      timingFunction: "linear",
       delay: 0,
     },
     fade: {
       duration: 300,
-      timingFunction: "ease-in",
+      timingFunction: "linear",
       delay: 0
     }
   },

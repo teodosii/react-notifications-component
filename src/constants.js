@@ -1,25 +1,25 @@
-export const NOTIFICATION_BASE_CLASS = "notification-item";
+export const NOTIFICATION_BASE_CLASS = 'notification-item';
 
 export const CONTAINER = {
-  BOTTOM_LEFT: "bottom-left",
-  BOTTOM_RIGHT: "bottom-right",
-  BOTTOM_CENTER: "bottom-center",
-  TOP_LEFT: "top-left",
-  TOP_RIGHT: "top-right",
-  TOP_CENTER: "top-center",
+  BOTTOM_LEFT: 'bottom-left',
+  BOTTOM_RIGHT: 'bottom-right',
+  BOTTOM_CENTER: 'bottom-center',
+  TOP_LEFT: 'top-left',
+  TOP_RIGHT: 'top-right',
+  TOP_CENTER: 'top-center',
 };
 
 export const INSERTION = {
-  TOP: "top",
-  BOTTOM: "bottom"
+  TOP: 'top',
+  BOTTOM: 'bottom'
 };
 
 export const NOTIFICATION_TYPE = {
-  SUCCESS: "success",
-  DANGER: "danger",
-  INFO: "info",
-  DEFAULT: "default",
-  WARNING: "warning"
+  SUCCESS: 'success',
+  DANGER: 'danger',
+  INFO: 'info',
+  DEFAULT: 'default',
+  WARNING: 'warning'
 };
 
 export const REMOVAL = {
@@ -31,45 +31,45 @@ export const REMOVAL = {
 
 export const ERROR = {
   // animations
-  ANIMATION_IN: "Validation error. `animationIn` option must be an array",
-  ANIMATION_OUT: "Validation error. `animationOut` option must be an array",
+  ANIMATION_IN: 'Validation error. `animationIn` option must be an array',
+  ANIMATION_OUT: 'Validation error. `animationOut` option must be an array',
 
   // dismiss
-  DISMISS_REQUIRED: "Validation error. `duration` property of `dismiss` option is required",
-  DISMISS_NUMBER: "Validation error. `duration` property of `dismiss` option must be a Number",
-  DISMISS_POSITIVE: "Validation error. `duration` property of `dismiss` option must be a positive Number",
-  DISMISS_CLICK_BOOL: "Validation error. `click` property of `dismiss` option must be a Boolean",
-  DISMISS_TOUCH_BOOL: "Validation error. `touch` property of `dismiss` option must be a Boolean",
-  DISMISS_WAIT: "Validation error. `waitForAnimation` property of `dismiss` option must be a Boolean",
-  DISMISS_TOUCH_SLIDING: "Validation error. `touchSliding` property of `dismiss` option must be a Boolean",
+  DISMISS_REQUIRED: 'Validation error. `duration` property of `dismiss` option is required',
+  DISMISS_NUMBER: 'Validation error. `duration` property of `dismiss` option must be a Number',
+  DISMISS_POSITIVE: 'Validation error. `duration` property of `dismiss` option must be a positive Number',
+  DISMISS_CLICK_BOOL: 'Validation error. `click` property of `dismiss` option must be a Boolean',
+  DISMISS_TOUCH_BOOL: 'Validation error. `touch` property of `dismiss` option must be a Boolean',
+  DISMISS_WAIT: 'Validation error. `waitForAnimation` property of `dismiss` option must be a Boolean',
+  DISMISS_TOUCH_SLIDING: 'Validation error. `touchSliding` property of `dismiss` option must be a Boolean',
 
   // title
-  TITLE_STRING: "Validation error. `title` option must be a String.",
+  TITLE_STRING: 'Validation error. `title` option must be a String.',
 
   // message
-  MESSAGE_REQUIRED: "Validation error. `message` option is required",
-  MESSAGE_STRING: "Validation error. `message` option must be a String",
+  MESSAGE_REQUIRED: 'Validation error. `message` option is required',
+  MESSAGE_STRING: 'Validation error. `message` option must be a String',
 
   // type
-  TYPE_REQUIRED: "Validation error. `type` option is required",
-  TYPE_STRING: "Validation error. `type` option must be a String",
-  TYPE_NOT_EXISTENT: "Validation error. `type` option not found",
+  TYPE_REQUIRED: 'Validation error. `type` option is required',
+  TYPE_STRING: 'Validation error. `type` option must be a String',
+  TYPE_NOT_EXISTENT: 'Validation error. `type` option not found',
 
   // container
-  CONTAINER_REQUIRED: "Validation error. `container` option is required",
-  CONTAINER_STRING: "Validation error. `container` option must be a String",
+  CONTAINER_REQUIRED: 'Validation error. `container` option is required',
+  CONTAINER_STRING: 'Validation error. `container` option must be a String',
 
   // width
-  WIDTH_NUMBER: "Validation error. `width` option must be a Number",
+  WIDTH_NUMBER: 'Validation error. `width` option must be a Number',
 
   // insert
-  INSERT_STRING: "Validation error. `insert` option must be a String",
+  INSERT_STRING: 'Validation error. `insert` option must be a String',
 
   // transition
-  TRANSITION_DURATION_NUMBER: "Validation error. `duration` property of `transition` option must be a Number",
-  TRANSITION_CUBICBEZIER_NUMBER: "Validation error. `timingFunction` property of `transition` option must be a String",
-  TRANSITION_DELAY_NUMBER: "Validation error. `delay` property of `transition` option must be a Number",
+  TRANSITION_DURATION_NUMBER: 'Validation error. `duration` property of `transition` option must be a Number',
+  TRANSITION_TIMING_FUNCTION: 'Validation error. `timingFunction` property of `transition` option must be a String',
+  TRANSITION_DELAY_NUMBER: 'Validation error. `delay` property of `transition` option must be a Number',
 
   // custom types
-  TYPE_NOT_FOUND: "Validation error. Custom type not found"
+  TYPE_NOT_FOUND: 'Validation error. Custom type not found'
 };

@@ -7,7 +7,7 @@ import {
   hasFullySwiped,
   getHtmlClassesForType,
   shouldNotificationHaveSliding
-} from "src/helpers";
+} from 'src/helpers';
 
 export default class ReactNotification extends React.Component {
   constructor(props) {
@@ -217,7 +217,7 @@ export default class ReactNotification extends React.Component {
     const { notification: { title } } = this.props;
     if (!title) return null;
     return (
-      <p className="notification-title">
+      <p className='notification-title'>
         {title}
       </p>
     );
@@ -226,7 +226,7 @@ export default class ReactNotification extends React.Component {
   renderMessage() {
     const { notification: { message } } = this.props;
     return (
-      <p className="notification-message">
+      <p className='notification-message'>
         {message}
       </p>
     );
@@ -235,7 +235,7 @@ export default class ReactNotification extends React.Component {
   renderCloseIcon() {
     return (
       <div
-        className="notification-close"
+        className='notification-close'
         onClick={this.onClick}
       ></div>
     );
@@ -260,9 +260,9 @@ export default class ReactNotification extends React.Component {
     const onAnimationEnd = () => this.removeNotification(REMOVAL.TIMEOUT);
 
     return (
-      <div className="timer">
+      <div className='timer'>
         <div
-          className="timer-filler"
+          className='timer-filler'
           onAnimationEnd={onAnimationEnd}
           style={style}
         >
@@ -295,7 +295,7 @@ export default class ReactNotification extends React.Component {
         onMouseEnter={hasMouseEvents ? this.onMouseEnter : null}
         onMouseLeave={hasMouseEvents ? this.onMouseLeave : null}
       >
-        <div className="notification-content">
+        <div className='notification-content'>
           { this.renderCloseIcon() }
           { this.renderTitle() }
           { this.renderMessage() }

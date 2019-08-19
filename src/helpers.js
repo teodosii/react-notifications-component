@@ -3,8 +3,8 @@ import {
   INSERTION,
   NOTIFICATION_BASE_CLASS,
   NOTIFICATION_TYPE as NT,
-} from "src/constants";
-import { isNull, getRandomId } from "src/utils";
+} from 'src/constants';
+import { isNull, getRandomId } from 'src/utils';
 
 export function isBottomContainer(container) {
   return container === CONTAINER.BOTTOM_LEFT
@@ -21,7 +21,6 @@ export function isTopContainer(container) {
 export function hasFullySwiped(diffX) {
   const swipeLength = Math.abs(diffX);
   const requiredSwipeLength = (40 / 100) * window.innerWidth;
-
   return swipeLength >= requiredSwipeLength;
 }
 
@@ -29,47 +28,39 @@ export function shouldNotificationHaveSliding(notification, count) {
   if (count <= 1) return false;
 
   return (
-    // sliding occurs only when having more than 1 notification shown
     count > 1
-    // slide DOWN if container is top and insertion is at top
     && ((notification.insert === INSERTION.TOP && isTopContainer(notification.container))
-    // slide UP if container is bottom and insertion is at bottom
     || (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)))
   );
 }
 
 export function htmlClassesForExistingType(type) {
-  const lowerCaseType = type.toLowerCase();
-
-  switch (lowerCaseType) {
+  switch (type) {
     case NT.DEFAULT:
-      return [NOTIFICATION_BASE_CLASS, "notification-default"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-default'];
     case NT.SUCCESS:
-      return [NOTIFICATION_BASE_CLASS, "notification-success"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-success'];
     case NT.DANGER:
-      return [NOTIFICATION_BASE_CLASS, "notification-danger"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-danger'];
     case NT.WARNING:
-      return [NOTIFICATION_BASE_CLASS, "notification-warning"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-warning'];
     case NT.INFO:
-      return [NOTIFICATION_BASE_CLASS, "notification-info"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-info'];
     default:
       return [NOTIFICATION_BASE_CLASS];
   }
 }
 
 export function getHtmlClassesForType({ type, content, userDefinedTypes }) {
-  if (content) {
-    // return base class only if type is not defined
-    return [NOTIFICATION_BASE_CLASS];
-  }
+  const base = [NOTIFICATION_BASE_CLASS];
+  if (content) return base;
 
-  if (!userDefinedTypes) {
-    // use existing type
+  if (isNull(userDefinedTypes)) {
     return htmlClassesForExistingType(type);
   }
 
   const foundType = userDefinedTypes.find(q => q.name === type);
-  return [NOTIFICATION_BASE_CLASS].concat(foundType.htmlClasses);
+  return base.concat(foundType.htmlClasses);
 }
 
 export function getNotificationsForMobileView(notifications) {
@@ -127,28 +118,6 @@ export function getTransition({ duration, timingFunction, delay }, property) {
   return `${duration}ms ${property} ${timingFunction} ${delay}ms`;
 }
 
-export function slidingExitTransition(notification) {
-  return getTransition(notification.slidingExit, "all");
-}
-
-export function touchSwipeTransition(notification) {
-  const { swipe } = notification.touchSlidingExit;
-  return getTransition(swipe, "left");
-}
-
-export function touchFadeTransition(notification) {
-  const { fade } = notification.touchSlidingExit;
-  return getTransition(fade, "opacity");
-}
-
-function defaultAnimationIn(animationIn) {
-  return animationIn || [];
-}
-
-function defaultAnimationOut(animationOut) {
-  return animationOut || [];
-}
-
 function defaultTransition(transition, defaults) {
   const { duration, timingFunction, delay } = defaults;
   const transitionOptions = transition || {};
@@ -168,44 +137,18 @@ function defaultTransition(transition, defaults) {
   return transitionOptions;
 }
 
-function defaultType({ content, type }) {
-  if (content) return undefined;
-  return type.toLowerCase();
-}
-
-function defaultContainer(container) {
-  return container.toLowerCase();
-}
-
 function defaultDismiss(dismiss) {
   const option = dismiss;
-
-  if (!option) {
-    return {
-      click: true,
-      touch: true
-    };
-  }
-
+  const def = { click: true, touch: true };
+  
+  if (!option) return def;
   if (isNull(option.click)) {
     option.click = true;
   }
-
   if (isNull(option.touch)) {
     option.touch = true;
   }
-
   return option;
-}
-
-function defaultInsert(insert) {
-  if (!insert) return "top";
-  return insert.toLowerCase();
-}
-
-function defaultWidth(width) {
-  if (isNull(width)) return 0;
-  return width;
 }
 
 function defaultUserDefinedTypes({ content, type }, definedTypes) {
@@ -226,7 +169,10 @@ function defaultUserDefinedTypes({ content, type }, definedTypes) {
 export function parseNotification(options, userDefinedTypes) {
   const notification = options;
   const {
+    id,
+    type,
     insert,
+    content,
     container,
     animationIn,
     animationOut,
@@ -235,44 +181,39 @@ export function parseNotification(options, userDefinedTypes) {
     touchSlidingBack,
     touchSlidingExit,
     dismiss,
-    width,
-    id
+    width
   } = notification;
 
   notification.id = id || getRandomId();
-  notification.type = defaultType(notification, userDefinedTypes);
+  notification.type = content ? null : type.toLowerCase();
 
-  if (userDefinedTypes && !notification.content) {
+  if (userDefinedTypes && !content) {
     notification.userDefinedTypes = defaultUserDefinedTypes(notification, userDefinedTypes);
   }
 
-  notification.container = defaultContainer(container);
-  notification.insert = defaultInsert(insert);
-  notification.dismiss = defaultDismiss(dismiss);
-  notification.animationIn = defaultAnimationIn(animationIn);
-  notification.animationOut = defaultAnimationOut(animationOut);
-
   if (!isNull(width)) {
-    notification.width = defaultWidth(width);
+    notification.width = width;
   }
 
-  const slidingEnterDefaults = { duration: 600, timingFunction: "linear", delay: 0 };
-  const slidingExitDefaults = { duration: 600, timingFunction: "linear", delay: 0 };
-  const swipeBackDefaults = { duration: 600, timingFunction: "ease-in", delay: 0 };
-  const swipeExitDefaults = { duration: 600, timingFunction: "ease-in", delay: 0 };
-  const swipeCompleteDefaults = { duration: 300, timingFunction: "ease-in", delay: 0 };
-  notification.slidingEnter = defaultTransition(slidingEnter, slidingEnterDefaults);
-  notification.slidingExit = defaultTransition(slidingExit, slidingExitDefaults);
-  notification.touchSlidingBack = defaultTransition(touchSlidingBack, swipeBackDefaults);
-  notification.touchSlidingExit = touchSlidingExit || {};
-  notification.touchSlidingExit.swipe = defaultTransition(
-    notification.touchSlidingExit.swipe || {},
-    swipeExitDefaults
-  );
-  notification.touchSlidingExit.fade = defaultTransition(
-    notification.touchSlidingExit.fade || {},
-    swipeCompleteDefaults
-  );
+  notification.container = container.toLowerCase();
+  notification.insert = (insert || 'top').toLowerCase();
+  notification.dismiss = defaultDismiss(dismiss);
+  notification.animationIn = animationIn || [];
+  notification.animationOut = animationOut || [];
+
+  const t = (duration, timingFunction, delay) => ({
+    duration,
+    timingFunction,
+    delay
+  });
+
+  notification.slidingEnter = defaultTransition(slidingEnter, t(600, 'ease-in', 0));
+  notification.slidingExit = defaultTransition(slidingExit, t(600, 'ease-out', 0));
+  notification.touchSlidingBack = defaultTransition(touchSlidingBack, t(600, 'linear', 0));
+
+  const { swipe, fade } = touchSlidingExit || {};
+  notification.touchSlidingExit.swipe = defaultTransition(swipe || {}, t(600, 'linear', 0));
+  notification.touchSlidingExit.fade = defaultTransition(fade || {}, t(300, 'linear', 0));
 
   return notification;
 }

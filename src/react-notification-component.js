@@ -1,13 +1,13 @@
-import React from "react";
-import ReactNotification from "src/react-notification";
-import PropTypes from "prop-types";
+import React from 'react';
+import ReactNotification from 'src/react-notification';
+import PropTypes from 'prop-types';
 import store from './store';
 import {
   getNotificationsForEachContainer,
   getNotificationsForMobileView
-} from "src/helpers";
+} from 'src/helpers';
 
-import "src/scss/notification.scss";
+import 'src/scss/notification.scss';
 
 class ReactNotificationComponent extends React.Component {
   constructor(props) {
@@ -38,14 +38,16 @@ class ReactNotificationComponent extends React.Component {
   }
 
   componentDidMount() {
+    const { types } = this.props;
+
     store.register({
       addNotification: this.add,
       removeNotification: this.remove,
-      userDefinedTypes: this.props.types
+      types
     });
 
     this.setState({ width: window.innerWidth });
-    window.addEventListener("resize", this.handleResize);
+    window.addEventListener('resize', this.handleResize);
   }
 
   handleResize() {
@@ -105,11 +107,11 @@ class ReactNotificationComponent extends React.Component {
     const bottom = this.renderNotifications(mobileNotifications.bottom);
 
     return (
-      <div className="react-notification-root">
-        <div className="notification-container-mobile-top">
+      <div className='react-notification-root'>
+        <div className='notification-container-mobile-top'>
           {top}
         </div>
-        <div className="notification-container-mobile-bottom">
+        <div className='notification-container-mobile-bottom'>
           {bottom}
         </div>
       </div>
@@ -127,23 +129,23 @@ class ReactNotificationComponent extends React.Component {
     const bottomCenter = this.renderNotifications(notificationsPerContainer.bottomCenter);
 
     return (
-      <div className="react-notification-root">
-        <div className="notification-container-top-left">
+      <div className='react-notification-root'>
+        <div className='notification-container-top-left'>
           {topLeft}
         </div>
-        <div className="notification-container-top-right">
+        <div className='notification-container-top-right'>
           {topRight}
         </div>
-        <div className="notification-container-bottom-left">
+        <div className='notification-container-bottom-left'>
           {bottomLeft}
         </div>
-        <div className="notification-container-bottom-right">
+        <div className='notification-container-bottom-right'>
           {bottomRight}
         </div>
-        <div className="notification-container-top-center">
+        <div className='notification-container-top-center'>
           {topCenter}
         </div>
-        <div className="notification-container-bottom-center">
+        <div className='notification-container-bottom-center'>
           {bottomCenter}
         </div>
       </div>
