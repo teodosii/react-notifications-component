@@ -107,12 +107,12 @@ Voila!
   <tr>
     <td><code>isMobile</code></td>
     <td><code>Boolean</code></td>
-    <td>Set whether you want component to be responsive or not. Setting it to be responsive will render the mobile containers only - top and bottom.</td>
+    <td>Set whether you want component to be responsive or not. To be used together with <code>breakpoint</codee></td>
   </tr>
   <tr>
     <td><code>breakpoint</code></td>
     <td><code>Number</code></td>
-    <td>Breakpoint for responsiveness - defaults to 768px</td>
+    <td>Breakpoint for responsiveness - defaults to <code>768</code>px</td>
   </tr>
   <tr>
     <td><code>types</code></td>
