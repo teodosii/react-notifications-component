@@ -93,8 +93,6 @@ Voila!
 
 ## Examples
 
-View examples [here](https://github.com/teodosii/react-notifications-component/blob/master/samples/README.md) and [here](https://github.com/teodosii/react-notifications-component/tree/master/samples/js/components/examples)
-
 ## Options
 
 There are 2 types of options. In order to configure the root component - `<ReactNotificationComponent />` - you need to set props to be used as options
