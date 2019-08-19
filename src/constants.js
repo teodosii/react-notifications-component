@@ -41,7 +41,6 @@ export const ERROR = {
   DISMISS_CLICK_BOOL: 'Validation error. `click` property of `dismiss` option must be a Boolean',
   DISMISS_TOUCH_BOOL: 'Validation error. `touch` property of `dismiss` option must be a Boolean',
   DISMISS_WAIT: 'Validation error. `waitForAnimation` property of `dismiss` option must be a Boolean',
-  DISMISS_TOUCH_SLIDING: 'Validation error. `touchSliding` property of `dismiss` option must be a Boolean',
 
   // title
   TITLE_STRING: 'Validation error. `title` option must be a String.',

@@ -178,7 +178,7 @@ export function parseNotification(options, userDefinedTypes) {
     animationOut,
     slidingEnter,
     slidingExit,
-    touchSlidingBack,
+    touchRevert,
     touchSlidingExit,
     dismiss,
     width
@@ -207,9 +207,9 @@ export function parseNotification(options, userDefinedTypes) {
     delay
   });
 
-  notification.slidingEnter = defaultTransition(slidingEnter, t(600, 'ease-in', 0));
-  notification.slidingExit = defaultTransition(slidingExit, t(600, 'ease-out', 0));
-  notification.touchSlidingBack = defaultTransition(touchSlidingBack, t(600, 'linear', 0));
+  notification.slidingEnter = defaultTransition(slidingEnter, t(600, 'linear', 0));
+  notification.slidingExit = defaultTransition(slidingExit, t(600, 'linear', 0));
+  notification.touchRevert = defaultTransition(touchRevert, t(600, 'linear', 0));
 
   const { swipe, fade } = touchSlidingExit || {};
   notification.touchSlidingExit.swipe = defaultTransition(swipe || {}, t(600, 'linear', 0));

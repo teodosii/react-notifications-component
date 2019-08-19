@@ -134,7 +134,6 @@ export default class ReactNotification extends React.Component {
   onTouchMove({ touches }) {
     const { startX } = this.state;
     const {
-      notification,
       toggleRemoval,
       notification: {
         id,
@@ -146,29 +145,32 @@ export default class ReactNotification extends React.Component {
     const [{ pageX }] = touches;
     const distance = pageX - startX;
     const swipeTo = window.innerWidth * 2;
+    const left = `${pageX - startX >= 0 ? swipeTo : -swipeTo}px`;
 
     if (hasFullySwiped(distance)) {
+      const t1 = getTransition(swipe, 'left');
+      const t2 = getTransition(fade, 'opacity');
+      const onTransitionEnd = () => toggleRemoval(id, REMOVAL.TOUCH);
+
       return this.setState(({ parentStyle }) => ({
         touchEnabled: false,
         parentStyle: {
+          left,
+          opacity: 0,
           position: 'relative',
-          left: `${pageX - startX >= 0 ? swipeTo : -swipeTo}px`,
-          transition: `${getTransition(swipe, 'left')}, ${getTransition(fade, 'opacity')}`,
+          transition: `${t1}, ${t2}`,
           height: parentStyle.height
         },
-        htmlClassList: [
-          ...notification.animationOut,
-          ...getHtmlClassesForType(notification)
-        ],
         onTransitionEnd: () => {
-          this.setState(({ parentStyle }) => ({
+          this.setState(({ parentStyle: { left, opacity, position } }) => ({
             parentStyle: {
+              left,
+              opacity,
+              position,
               height: 0,
-              left: parentStyle.left,
-              position: 'relative',
-              transition: `${getTransition(slidingExit, 'height')}`
+              transition: getTransition(slidingExit, 'height')
             },
-            onTransitionEnd: () => toggleRemoval(id, '')
+            onTransitionEnd
           }));
         }
       }));
@@ -185,14 +187,14 @@ export default class ReactNotification extends React.Component {
   }
 
   onTouchEnd() {
-    const { notification: { touchSlidingBack } } = this.props;
+    const { notification: { touchRevert } } = this.props;
 
     this.setState(({ parentStyle }) => ({
       parentStyle: {
         left: 0,
         position: 'relative',
         height: parentStyle.height,
-        transition: getTransition(touchSlidingBack, 'left')
+        transition: getTransition(touchRevert, 'left')
       }
     }));
   }

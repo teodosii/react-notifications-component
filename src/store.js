@@ -9,7 +9,7 @@ function Store() {
     const { types } = this;
 
     if (process.env.NODE_ENV === 'development') {
-      const transitions = ['slidingEnter','slidingExit', 'touchSlidingBack', 'touchSlidingExit'];
+      const transitions = ['slidingEnter','slidingExit', 'touchRevert', 'touchSlidingExit'];
       transitions.forEach((transition) => validateTransition(notification, transition));
       validators.forEach((validator) => validator(notification, types));
     }
@@ -21,7 +21,7 @@ function Store() {
   this.register = ({ addNotification, removeNotification, types }) => {
     this.add = addNotification;
     this.removeNotification = removeNotification;
-    this.userDefinedTypes = types;
+    this.types = types;
   };
 
   return this;

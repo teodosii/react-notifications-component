@@ -6,21 +6,21 @@ export default {
   insert: "top",
 
   animationIn: ["animated", "fadeIn"],
-  animationOut: ["animated", "bounceOutRight"],
+  animationOut: ["animated", "faster", "fadeOut"],
 
   slidingEnter: {
-    duration: 600,
-    timingFunction: "ease-in",
+    duration: 300,
+    timingFunction: "linear",
     delay: 0
   },
 
   slidingExit: {
-    duration: 600,
-    timingFunction: "ease-out",
+    duration: 300,
+    timingFunction: "linear",
     delay: 0
   },
 
-  touchSlidingBack: {
+  touchRevert: {
     duration: 600,
     timingFunction: "linear",
     delay: 0
@@ -44,7 +44,6 @@ export default {
     onScreen: false,
     pauseOnHover: true,
     waitForAnimation: true,
-    touchSliding: false,
     click: true,
     touch: true
   }

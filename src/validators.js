@@ -137,11 +137,10 @@ export const validators = [
       DISMISS_POSITIVE,
       DISMISS_CLICK_BOOL,
       DISMISS_TOUCH_BOOL,
-      DISMISS_TOUCH_SLIDING,
       DISMISS_WAIT
     } = ERROR;
 
-    const { duration, click, touch, waitForAnimation: wait, touchSliding } = dismiss;
+    const { duration, click, touch, waitForAnimation: wait } = dismiss;
     if (isNull(duration)) {
       throw new Error(DISMISS_REQUIRED);
     }
@@ -164,10 +163,6 @@ export const validators = [
 
     if (!isNull(wait) && !isBoolean(wait)) {
       throw new Error(DISMISS_WAIT);
-    }
-
-    if (!isNull(touchSliding) && !isBoolean(touchSliding)) {
-      throw new Error(DISMISS_TOUCH_SLIDING);
     }
   }
 ];
