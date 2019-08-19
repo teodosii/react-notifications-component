@@ -39,6 +39,56 @@ npm run start
 
 ## Usage
 
+###
+
+Import <code>react-notifications-component</code>
+```js
+import ReactNotification from 'react-notifications-component'
+```
+Import the CSS theme
+```js
+import 'react-notifications-component/theme.css'
+```
+
+SASS files are located in `react-notifications-component/scss`
+
+Render <code>react-notifications-component</code> at the top of your application so that it does not conflict with other absolutely positioned DOM elements.
+```jsx
+const App = () => {
+  return (
+    <div className="app-container">
+      <ReactNotification />
+      <Application />
+    </div>
+  )
+};
+```
+
+Import <code>store</code> where needed - will be used to access `addNotification` and `removeNotification` API methods
+```js
+import { store } from 'react-notifications-component';
+```
+
+Then call `addNotification` and watch the magic happens
+
+```jsx
+store.addNotification({
+  title: "Wonderful!",
+  message: "teodosii@react-notifications-component",
+  type: "success",
+  insert: "top",
+  container: "top-right",
+  animationIn: ["animated", "fadeIn"],
+  animationOut: ["animated", "fadeOut"],
+  dismiss: {
+    duration: 5000,
+    onScreen: true
+  }
+});
+```
+
+Voila!
+
 ## API
 
 ## Examples
