@@ -218,6 +218,10 @@ Manually remove a notification by id.
   </tr>
 </table>
   
+## Migration from v1
+
+In progress
+  
 ## License
 
 MIT
