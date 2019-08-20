@@ -92,11 +92,18 @@ Voila!
 
 ## API
 
+`store.addNotification(options)`
+
+Render a new notification. Method returns a unique id for the rendered notification. Supplied options are internally validated and an exception will be thrown if validation fails.
+
+`store.removeNotification(id)`
+
+Manually remove a notification by id.
+
+
 ## Examples
 
-## Options
-
-### Props
+## Props
 
 <table>
   <tr>
@@ -126,7 +133,90 @@ Voila!
   </tr>
 </table>
 
-### Options
+## Options
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td><code>String</code></td>
+    <td>Id of the notification. Supply id if you prefer to have your own id per notification, otherwise let the component generate the id.</td>
+  </tr>
+  <tr>
+    <td><code>title</code></td>
+    <td><code>String</code></td>
+    <td>Title of the notification. Option is ignored if <code>content</code> is set</td>, otherwise it is <b>required</b></td>
+  </tr>
+  <tr>
+    <td><code>message</code></td>
+    <td><code>String</code></td>
+    <td>Message of the notification. Option is ignored if <code>content</code> is set, otherwise it is <b>required</b></td>
+  </tr>
+  <tr>
+    <td><code>content</code></td>
+    <td><code>React.Component</code></td>
+    <td>Custom notification content, must be a valid <code>React</code> component</td>
+  </tr>
+  <tr>
+    <td><code>type</code></td>
+    <td><code>String</code></td>
+    <td>Type of the notification (<code>success</code>, <code>danger</code>, <code>default</code>, <code>info</code>, <code>warning</code> or <code>custom</code>). Option is ignored if <code>content</code> is set, otherwise it is <b>required</b></td>
+  </tr>
+  <tr>
+    <td><code>container</code></td>
+    <td><code>String</code></td>
+    <td>Container in which the notification will be displayed (<code>top-left</code>, <code>top-right</code>, <code>bottom-left</code>, <code>bottom-right</code>). Option is <b>required<b></td>
+  </tr>
+  <tr>
+    <td><code>insert</code></td>
+    <td><code>String</code></td>
+    <td>Insert notification at the <code>top</code> or at the <code>bottom</code> of the container. Option defaults to <code>top</code></td>
+  </tr>
+  <tr>
+    <td><code>dismiss</code></td>
+    <td><code>Object</code></td>
+    <td>Specify how a notification should be dismissed</td>
+  </tr>
+  <tr>
+    <td><code>animationIn</code></td>
+    <td><code>Array</code></td>
+    <td>Array of CSS classes for animating the notification's entrance</td>
+  </tr>
+  <tr>
+    <td><code>animationOut</code></td>
+    <td><code>Array</code></td>
+    <td>Array of CSS classes for animating the notification's exit</td>
+  </tr>
+  <tr>
+    <td><code>slidingEnter</code></td>
+    <td><code>Object</code></td>
+    <td>Transition to be used when sliding to show a notification</td>
+  </tr>
+  <tr>
+    <td><code>slidingExit</code></td>
+    <td><code>Object</code></td>
+    <td>Transition to be used when sliding to remove a notification</td>
+  </tr>
+  <tr>
+    <td><code>touchRevert</code></td>
+    <td><code>Object</code></td>
+    <td>Transition to be used when sliding back after an incomplete swipe</td>
+  </tr>
+  <tr>
+    <td><code>touchSlidingExit</code></td>
+    <td><code>Object</code></td>
+    <td>Transition to be used when sliding on swipe</td>
+  </tr>
+  <tr>
+    <td><code>width</code></td>
+    <td><code>Number</code></td>
+    <td>Overwrite notification's <code>width</code> defined by CSS</td>
+  </tr>
+</table>
   
 ## License
 
