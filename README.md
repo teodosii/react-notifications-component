@@ -149,7 +149,7 @@ Manually remove a notification by id.
   <tr>
     <td><code>title</code></td>
     <td><code>String</code></td>
-    <td>Title of the notification. Option is ignored if <code>content</code> is set</td>, otherwise it is <b>required</b></td>
+    <td>Title of the notification. Option is ignored if <code>content</code> is set, otherwise it is <b>required</b></td>
   </tr>
   <tr>
     <td><code>message</code></td>
