@@ -40,10 +40,10 @@ export default {
   },
 
   dismiss: {
-    duration: 0,
+    duration: 4000,
     onScreen: false,
     pauseOnHover: true,
-    waitForAnimation: true,
+    waitForAnimation: false,
     click: true,
     touch: true
   }

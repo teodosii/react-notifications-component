@@ -1,3 +1,4 @@
+import React from 'react';
 import { ERROR, NOTIFICATION_TYPE as NT } from './constants';
 import {
   isNull,
@@ -114,6 +115,13 @@ export const validators = [
     }
   },
 
+  function content({ content }) {
+    if (!content) return;
+    if (!React.isValidElement(content)) {
+      throw new Error(ERROR.CONTENT_INVALID);
+    }
+  },
+
   function animationIn({ animationIn }) {
     if (isNull(animationIn)) return;
     if (!isArray(animationIn)) {
@@ -132,37 +140,42 @@ export const validators = [
     if (!dismiss) return;
 
     const {
-      DISMISS_NUMBER,
-      DISMISS_REQUIRED,
-      DISMISS_POSITIVE,
-      DISMISS_CLICK_BOOL,
-      DISMISS_TOUCH_BOOL,
-      DISMISS_WAIT
-    } = ERROR;
+      duration,
+      onScreen,
+      pauseOnHover,
+      waitForAnimation: wait,
+      click, touch
+    } = dismiss;
 
-    const { duration, click, touch, waitForAnimation: wait } = dismiss;
     if (isNull(duration)) {
-      throw new Error(DISMISS_REQUIRED);
+      throw new Error(ERROR.DISMISS_REQUIRED);
     }
 
     if (!isNumber(duration)) {
-      throw new Error(DISMISS_NUMBER);
+      throw new Error(ERROR.DISMISS_NUMBER);
+    }
+    if (duration < 0) {
+      throw new Error(ERROR.DISMISS_POSITIVE);
     }
 
-    if (duration < 0) {
-      throw new Error(DISMISS_POSITIVE);
+    if (!isNull(onScreen) && !isBoolean(onScreen)) {
+      throw new Error(ERROR.DISMISS_ONSCREEN_BOOL);
+    }
+
+    if (!isNull(pauseOnHover) && !isBoolean(pauseOnHover)) {
+      throw new Error(ERROR.DISMISS_PAUSE_BOOL);
     }
 
     if (!isNull(click) && !isBoolean(click)) {
-      throw new Error(DISMISS_CLICK_BOOL);
+      throw new Error(ERROR.DISMISS_CLICK_BOOL);
     }
 
     if (!isNull(touch) && !isBoolean(touch)) {
-      throw new Error(DISMISS_TOUCH_BOOL);
+      throw new Error(ERROR.DISMISS_TOUCH_BOOL);
     }
 
     if (!isNull(wait) && !isBoolean(wait)) {
-      throw new Error(DISMISS_WAIT);
+      throw new Error(ERROR.DISMISS_WAIT);
     }
   }
 ];

@@ -41,6 +41,8 @@ export const ERROR = {
   DISMISS_CLICK_BOOL: 'Validation error. `click` property of `dismiss` option must be a Boolean',
   DISMISS_TOUCH_BOOL: 'Validation error. `touch` property of `dismiss` option must be a Boolean',
   DISMISS_WAIT: 'Validation error. `waitForAnimation` property of `dismiss` option must be a Boolean',
+  DISMISS_PAUSE_BOOL: 'Validation error. `pauseOnHover` property of `dismiss` option must be a Boolean',
+  DISMISS_ONSCREEN_BOOL: 'Validation error. `onScreen` property of `dismiss` option must be a Boolean',
 
   // title
   TITLE_STRING: 'Validation error. `title` option must be a String.',
@@ -57,6 +59,8 @@ export const ERROR = {
   // container
   CONTAINER_REQUIRED: 'Validation error. `container` option is required',
   CONTAINER_STRING: 'Validation error. `container` option must be a String',
+
+  CONTENT_INVALID: 'Validation error. `content` option must be a valid React element',
 
   // width
   WIDTH_NUMBER: 'Validation error. `width` option must be a Number',

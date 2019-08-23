@@ -118,8 +118,7 @@ export function getTransition({ duration, timingFunction, delay }, property) {
   return `${duration}ms ${property} ${timingFunction} ${delay}ms`;
 }
 
-function defaultTransition(transition, defaults) {
-  const { duration, timingFunction, delay } = defaults;
+function defaultTransition(transition, { duration, timingFunction, delay }) {
   const transitionOptions = transition || {};
 
   if (isNull(transitionOptions.duration)) {
@@ -139,15 +138,26 @@ function defaultTransition(transition, defaults) {
 
 function defaultDismiss(dismiss) {
   const option = dismiss;
-  const def = { click: true, touch: true };
-  
-  if (!option) return def;
-  if (isNull(option.click)) {
-    option.click = true;
+  const defaults = {
+    duration: 0,
+    click: true,
+    touch: true,
+    onScreen: false,
+    waitForAnimation: false
+  };
+
+  if (!option) {
+    return defaults;
   }
-  if (isNull(option.touch)) {
-    option.touch = true;
-  }
+
+  Object.keys(defaults).forEach((prop) => {
+    if (isNull(option[prop])) {
+      option[prop] = defaults[prop];
+    }
+  });
+
+  console.log(option);
+
   return option;
 }
 
