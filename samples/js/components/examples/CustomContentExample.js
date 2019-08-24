@@ -2,16 +2,13 @@ import React from "react";
 import notification from "helpers/notification";
 import reactImage from "images/react.png";
 import { getContainer } from "helpers/randomize";
+import { store } from 'rc-notifications/react-notification-component';
 
 export default class CustomContentExample extends React.Component {
   constructor(props) {
     super(props);
-
-    // set method bindings
     this.add = this.add.bind(this);
     this.addCustomIcon = this.addCustomIcon.bind(this);
-
-    // used to preload image
     this.cachedImage = null;
   }
 
@@ -22,7 +19,6 @@ export default class CustomContentExample extends React.Component {
 
   addCustomIcon(type, iconClassName) {
     let message;
-
     if (type === "success") {
       message = "Your agenda has been successfully synced";
     } else if (type === "warning") {
@@ -31,7 +27,7 @@ export default class CustomContentExample extends React.Component {
       message = "Error! You have no update rights";
     }
 
-    this.props.addNotification(Object.assign({}, notification, {
+    store.addNotification(Object.assign({}, notification, {
       width: 275,
       container: getContainer(),
       content: (
@@ -50,10 +46,10 @@ export default class CustomContentExample extends React.Component {
   }
 
   add() {
-    this.props.addNotification(Object.assign({}, notification, {
+    store.addNotification(Object.assign({}, notification, {
       width: 325,
       container: getContainer(),
-      content: (
+      content: () => (
         <div className="custom-image-content">
           <img
             src={this.cachedImage.src}

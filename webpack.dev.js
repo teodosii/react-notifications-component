@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -10,12 +11,13 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "react-notifications-component.js",
+    filename: "js/react-notifications.dev.js",
     library: "ReactNotifications",
     libraryTarget: "commonjs2"
   },
 
   plugins: [
+    new CleanWebpackPlugin({}),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development")
     })

@@ -1,10 +1,7 @@
 import React from "react";
 import notification from "helpers/notification";
-import {
-  getContainer,
-  getMessage,
-  getTitle
-} from "helpers/randomize";
+import { store } from 'rc-notifications/react-notification-component';
+import { getContainer, getMessage, getTitle } from "helpers/randomize";
 
 export default class TypeExample extends React.Component {
   constructor(props) {
@@ -13,7 +10,7 @@ export default class TypeExample extends React.Component {
   }
 
   add(type) {
-    return this.props.addNotification(Object.assign({}, notification, {
+    return store.addNotification(Object.assign({}, notification, {
       type,
       title: getTitle(type),
       message: getMessage(type),

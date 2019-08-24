@@ -1,38 +1,91 @@
+@import "_variables.scss";
+
 .notification-default {
-  background-color: #007bff;
-  border-left: 8px solid darken(#007bff, 15%);
+  background-color: $default;
+  border-left: 8px solid $default_dark;
+
+  .timer {
+    background-color: $default_timer;
+  }
+  .timer-filler {
+    background-color: $default_timer_filler;
+  }
+  .notification-close {
+    background-color: $default;
+  }
 }
 
 .notification-success {
-  background-color: #28a745;
-  border-left: 8px solid darken(#28a745, 15%);
+  background-color: $success;
+  border-left: 8px solid $success_dark;
+
+  .timer {
+    background-color: $success_timer;
+  }
+  .timer-filler {
+    background-color: $success_timer_filler;
+  }
+  .notification-close {
+    background-color: $success;
+  }
 }
 
 .notification-danger {
-  background-color: #dc3545;
-  border-left: 8px solid darken(#dc3545, 15%);
+  background-color: $danger;
+  border-left: 8px solid $danger_dark;
+
+  .timer {
+    background-color: $danger_timer;
+  }
+  .timer-filler {
+    background-color: $danger_timer_filler;
+  }
+  .notification-close {
+    background-color: $danger;
+  }
 }
 
 .notification-info {
-  background-color: #17a2b8;
-  border-left: 8px solid darken(#17a2b8, 15%);
+  background-color: $info;
+  border-left: 8px solid $info_dark;
+
+  .timer {
+    background-color: $info_timer;
+  }
+  .timer-filler {
+    background-color: $info_timer_filler;
+  }
+  .notification-close {
+    background-color: $info;
+  }
 }
 
 .notification-warning {
-  background-color: #eab000;
-  border-left: 8px solid darken(#eab000, 15%);
+  background-color: $warning;
+  border-left: 8px solid $warning_dark;
+
+  .timer {
+    background-color: $warning_timer;
+  }
+  .timer-filler {
+    background-color: $warning_timer_filler;
+  }
+  .notification-close {
+    background-color: $warning;
+  }
 }
 
 .notification-awesome {
-  background-color: #685dc3;
-  border-left: 8px solid darken(#685dc3, 15%);
-}
+  background-color: $awesome;
+  border-left: 8px solid $awesome_dark;
 
-.notification-title,
-.notification-message {
-  color: #fff;
-}
-
-.notification-close span {
-  color: #fff;
+  .timer {
+    background-color: $awesome_timer;
+  }
+  .timer-filler {
+    background-color: $awesome_timer_filler;
+  }
+  .notification-close {
+    background-color: $awesome;
+  }
 }

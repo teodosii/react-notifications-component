@@ -1,35 +1,15 @@
-import React from "react";
-import ReactNotification from "src/react-notification";
-import PropTypes from "prop-types";
+import React from 'react';
+import ReactNotification from 'src/react-notification';
+import PropTypes from 'prop-types';
 import store from './store';
-import { isArray } from "src/utils";
-import {
-  NOTIFICATION_STAGE as NS,
-  REMOVAL,
-  INSERTION,
-  BREAKPOINT
-} from "src/constants";
 import {
   getNotificationsForEachContainer,
   getNotificationsForMobileView
-} from "src/helpers";
+} from 'src/helpers';
 
-// react-notifications-component theme
-import "src/scss/notification.scss";
+import 'src/scss/notification.scss';
 
 class ReactNotificationComponent extends React.Component {
-  static propTypes = {
-    isMobile: PropTypes.bool,
-    breakpoint: PropTypes.number,
-    types: PropTypes.array,
-    onNotificationRemoval: PropTypes.func
-  }
-
-  static defaultProps = {
-    isMobile: true,
-    breakpoint: BREAKPOINT
-  }
-
   constructor(props) {
     super(props);
 
@@ -39,138 +19,74 @@ class ReactNotificationComponent extends React.Component {
       notifications: []
     };
 
-    if (isArray(props.types)) {
-      this.state.userDefinedTypes = props.types;
-    }
-
     this.add = this.add.bind(this);
     this.remove = this.remove.bind(this);
-    this.onClick = this.onClick.bind(this);
     this.toggleRemoval = this.toggleRemoval.bind(this);
-    this.toggleTimeoutRemoval = this.toggleTimeoutRemoval.bind(this);
-    this.toggleTouchEnd = this.toggleTouchEnd.bind(this);
+    this.handleResize = this.handleResize.bind(this);
+  }
+
+  static propTypes = {
+    isMobile: PropTypes.bool,
+    breakpoint: PropTypes.number,
+    types: PropTypes.array,
+    onNotificationRemoval: PropTypes.func
+  }
+
+  static defaultProps = {
+    isMobile: true,
+    breakpoint: 768
   }
 
   componentDidMount() {
+    const { types } = this.props;
+
     store.register({
       addNotification: this.add,
       removeNotification: this.remove,
-      userDefinedTypes: this.props.types
+      types
     });
 
     this.setState({ width: window.innerWidth });
-    window.addEventListener("resize", () => this.handleResize());
+    window.addEventListener('resize', this.handleResize);
   }
 
-  componentWillUnmount() {
-    this.mounted = false;
+  handleResize() {
+    this.setState({ width: window.innerWidth });
   }
 
   add(notification) {
-    this.setState((prevState) => ({
+    this.setState(({ notifications }) => ({
       notifications:
-        notification.insert === INSERTION.TOP
-          ? [notification, ...prevState.notifications]
-          : [...prevState.notifications, notification]
+        notification.insert === 'top'
+          ? [notification, ...notifications]
+          : [...notifications, notification]
     }));
 
     return notification.id;
   }
 
   remove(id) {
-    const callback = () => requestAnimationFrame(() => {
-      this.setState((prevState) => ({
-        notifications: prevState.notifications.map(item => {
-          if (item.id === id) {
-            item.stage = NS.SLIDING_ANIMATION_EXIT;
-            item.removedBy = REMOVAL.API;
-          }
-
-          return item;
-        })
-      }));
-    });
-
-    this.setState((prevState) => ({
-      notifications: prevState.notifications.map(item => {
-        if (item.id === id) {
-          item.stage = NS.MANUAL_REMOVAL;
-          item.removedBy = REMOVAL.API;
+    this.setState(({ notifications }) => ({
+      notifications: notifications.map((notification) => {
+        if (notification.id === id) {
+          notification.removed = true;
         }
 
-        return item;
-      })
-    }), callback);
-  }
-
-  handleResize() {
-    this.setState((prevState) => ({
-      width: window.innerWidth,
-      notifications: prevState.notifications.map(notification => ({
-        ...notification,
-        resized: true
-      }))
-    }));
-  }
-
-  toggleTimeoutRemoval(notification) {
-    const { SLIDING_ANIMATION_EXIT } = NS;
-    const { TIMEOUT } = REMOVAL;
-
-    this.setState((prevState) => ({
-      notifications: prevState.notifications.map(item => {
-        if (item.id === notification.id) {
-          item.stage = SLIDING_ANIMATION_EXIT;
-          item.removedBy = TIMEOUT;
-        }
-
-        return item;
+        return notification;
       })
     }));
   }
 
-  onClick(notification) {
-    const { dismissable, dismissIcon } = notification;
-    const dismissableByClick = dismissable && dismissable.click;
-    if (!dismissableByClick && !dismissIcon) return;
-
-    this.setState((prevState) => ({
-      notifications: prevState.notifications.map(item => {
-        if (item.id === notification.id) {
-          item.stage = NS.SLIDING_ANIMATION_EXIT;
-          item.removedBy = REMOVAL.CLICK;
-        }
-
-        return item;
-      })
-    }));
-  }
-
-  toggleTouchEnd(notification) {
-    const { TOUCH_SLIDING_ANIMATION_EXIT } = NS;
-
-    this.setState((prevState) => ({
-      notifications: prevState.notifications.map(item => {
-        if (item.id === notification.id) {
-          item.stage = TOUCH_SLIDING_ANIMATION_EXIT;
-          item.removedBy = REMOVAL.TOUCH;
-        }
-
-        return item;
-      })
-    }));
-  }
-
-  toggleRemoval(notification) {
+  toggleRemoval(id, removalFlag) {
     const { onNotificationRemoval } = this.props;
-
     const callback = () => {
-      if (!onNotificationRemoval) return;
-      onNotificationRemoval(notification.id, notification.removedBy);
+      if (onNotificationRemoval) {
+        onNotificationRemoval(id, removalFlag);
+      }
     };
 
-    this.setState((prevState) => ({
-      notifications: prevState.notifications.filter(({ id }) => id !== notification.id)
+    this.setState(({ notifications }) => ({
+      notifications: notifications.filter(({ id: nId }) => nId !== id)
     }), callback);
   }
 
@@ -178,11 +94,9 @@ class ReactNotificationComponent extends React.Component {
     return notifications.map(notification => <ReactNotification
       key={notification.id}
       notification={notification}
-      isFirstNotification={notifications.length === 1}
-      onClickHandler={this.onClick}
       toggleRemoval={this.toggleRemoval}
-      toggleTimeoutRemoval={this.toggleTimeoutRemoval}
-      toggleTouchEnd={this.toggleTouchEnd}
+      count={notifications.length}
+      removed={notification.removed}
     />);
   }
 
@@ -193,11 +107,11 @@ class ReactNotificationComponent extends React.Component {
     const bottom = this.renderNotifications(mobileNotifications.bottom);
 
     return (
-      <div className="react-notification-root">
-        <div className="notification-container-mobile-top">
+      <div className='react-notification-root'>
+        <div className='notification-container-mobile-top'>
           {top}
         </div>
-        <div className="notification-container-mobile-bottom">
+        <div className='notification-container-mobile-bottom'>
           {bottom}
         </div>
       </div>
@@ -215,23 +129,23 @@ class ReactNotificationComponent extends React.Component {
     const bottomCenter = this.renderNotifications(notificationsPerContainer.bottomCenter);
 
     return (
-      <div className="react-notification-root">
-        <div className="notification-container-top-left">
+      <div className='react-notification-root'>
+        <div className='notification-container-top-left'>
           {topLeft}
         </div>
-        <div className="notification-container-top-right">
+        <div className='notification-container-top-right'>
           {topRight}
         </div>
-        <div className="notification-container-bottom-left">
+        <div className='notification-container-bottom-left'>
           {bottomLeft}
         </div>
-        <div className="notification-container-bottom-right">
+        <div className='notification-container-bottom-right'>
           {bottomRight}
         </div>
-        <div className="notification-container-top-center">
+        <div className='notification-container-top-center'>
           {topCenter}
         </div>
-        <div className="notification-container-bottom-center">
+        <div className='notification-container-bottom-center'>
           {bottomCenter}
         </div>
       </div>

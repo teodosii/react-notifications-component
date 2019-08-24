@@ -5,48 +5,47 @@ export default {
   container: "top-right",
   insert: "top",
 
-  dismissable: {
-    click: true,
-    touch: false
-  },
-
-  dismissIcon: null,
-
   animationIn: ["animated", "fadeIn"],
-  animationOut: ["animated", "fadeOut"],
+  animationOut: ["animated", "faster", "fadeOut"],
 
   slidingEnter: {
-    duration: 600,
-    cubicBezier: "cubic-bezier(0.215, 0.61, 0.355, 1)",
+    duration: 300,
+    timingFunction: "linear",
     delay: 0
   },
 
   slidingExit: {
-    duration: 600,
-    cubicBezier: "cubic-bezier(0.215, 0.61, 0.355, 1)",
+    duration: 300,
+    timingFunction: "linear",
     delay: 0
   },
 
-  touchSlidingBack: {
+  touchRevert: {
     duration: 600,
-    cubicBezier: "ease-in",
+    timingFunction: "linear",
     delay: 0
   },
 
   touchSlidingExit: {
     swipe: {
       duration: 600,
-      cubicBezier: "ease-in",
+      timingFunction: "linear",
       delay: 0,
     },
     fade: {
       duration: 300,
-      cubicBezier: "ease-in",
+      timingFunction: "linear",
       delay: 0
     }
   },
 
   dismiss: {
-    duration: 5000
+    duration: 4000,
+    onScreen: false,
+    pauseOnHover: true,
+    waitForAnimation: false,
+    showIcon: true,
+    click: true,
+    touch: true
   }
 };

@@ -1,62 +1,57 @@
-.notification-container-top-center {
+.notification-container-top-center,
+.notification-container-bottom-center,
+.notification-container-top-left,
+.notification-container-top-right,
+.notification-container-bottom-left,
+.notification-container-bottom-right,
+.notification-container-mobile-top,
+.notification-container-mobile-bottom {
   position: fixed;
   z-index: 8000;
+}
+
+
+.notification-container-top-center {
   transform: translateX(-50%);
   top: 20px;
   left: 50%;
 }
 
 .notification-container-bottom-center {
-  position: fixed;
-  z-index: 8000;
   transform: translateX(-50%);
-  margin-bottom: -20px;
   bottom: 20px;
   left: 50%;
+  margin-bottom: -15px;
 }
 
 .notification-container-top-left {
-  position: fixed;
   left: 20px;
   top: 20px;
-  z-index: 8000;
 }
 
 .notification-container-top-right {
-  position: fixed;
   right: 20px;
   top: 20px;
-  z-index: 8000;
 }
 
 .notification-container-bottom-left {
-  position: fixed;
   left: 20px;
   bottom: 20px;
-  z-index: 8000;
-  margin-bottom: -20px;
 }
 
 .notification-container-bottom-right {
-  position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 8000;
-  margin-bottom: -20px;
 }
 
 .notification-container-mobile-top {
-  z-index: 8000;
-  position: fixed;
   right: 20px;
   left: 20px;
   top: 20px;
 }
 
 .notification-container-mobile-bottom {
-  z-index: 8000;
-  position: fixed;
   right: 20px;
   left: 20px;
-  bottom: 5px;
+  bottom: 20px;
 }

@@ -41,6 +41,9 @@ module.exports = {
     "comma-dangle": "off",
     "react/prop-types": "off",
     "allowTernary": true,
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error",
+    "no-console": ["error", {
+      allow: ["warn", "error", "trace", "log"]
+    }]
   }
 }

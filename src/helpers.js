@@ -1,95 +1,79 @@
 import {
-  ERROR,
-  NOTIFICATION_BASE_CLASS,
   CONTAINER,
   INSERTION,
+  NOTIFICATION_BASE_CLASS,
   NOTIFICATION_TYPE as NT,
-  NOTIFICATION_STAGE
-} from "src/constants";
-import {
-  cssWidth,
-  isNullOrUndefined,
-  getRandomId
-} from "src/utils";
+} from 'src/constants';
+import { isNull, getRandomId } from 'src/utils';
 
 export function isBottomContainer(container) {
-  return (
-    container === CONTAINER.BOTTOM_LEFT
+  return container === CONTAINER.BOTTOM_LEFT
     || container === CONTAINER.BOTTOM_RIGHT
-    || container === CONTAINER.BOTTOM_CENTER
-  );
+    || container === CONTAINER.BOTTOM_CENTER;
 }
 
 export function isTopContainer(container) {
-  return (
-    container === CONTAINER.TOP_LEFT
+  return container === CONTAINER.TOP_LEFT
     || container === CONTAINER.TOP_RIGHT
-    || container === CONTAINER.TOP_CENTER
-  );
+    || container === CONTAINER.TOP_CENTER;
 }
 
-export function shouldNotificationHaveSliding(notification) {
+export function hasFullySwiped(diffX) {
+  const swipeLength = Math.abs(diffX);
+  const requiredSwipeLength = (40 / 100) * window.innerWidth;
+  return swipeLength >= requiredSwipeLength;
+}
+
+export function shouldNotificationHaveSliding(notification, count) {
+  if (count <= 1) return false;
+
   return (
-    // slide DOWN if container is top and insertion is at top
-    (notification.insert === INSERTION.TOP && isTopContainer(notification.container))
-    // slide UP if container is bottom and insertion is at bottom
-    || (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container))
+    count > 1
+    && ((notification.insert === INSERTION.TOP && isTopContainer(notification.container))
+    || (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)))
   );
 }
 
 export function htmlClassesForExistingType(type) {
-  const lowerCaseType = type.toLowerCase();
-
-  switch (lowerCaseType) {
+  switch (type) {
     case NT.DEFAULT:
-      return [NOTIFICATION_BASE_CLASS, "notification-default"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-default'];
     case NT.SUCCESS:
-      return [NOTIFICATION_BASE_CLASS, "notification-success"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-success'];
     case NT.DANGER:
-      return [NOTIFICATION_BASE_CLASS, "notification-danger"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-danger'];
     case NT.WARNING:
-      return [NOTIFICATION_BASE_CLASS, "notification-warning"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-warning'];
     case NT.INFO:
-      return [NOTIFICATION_BASE_CLASS, "notification-info"];
+      return [NOTIFICATION_BASE_CLASS, 'notification-info'];
     default:
       return [NOTIFICATION_BASE_CLASS];
   }
 }
 
-export function getHtmlClassesForType({ type, userDefinedTypes, content }) {
-  if (content) {
-    // return only base class if type is not defined
-    return [NOTIFICATION_BASE_CLASS];
-  }
+export function getHtmlClassesForType({ type, content, userDefinedTypes }) {
+  const base = [NOTIFICATION_BASE_CLASS];
+  if (content) return base;
 
-  if (!userDefinedTypes) {
-    // existing type
+  if (isNull(userDefinedTypes)) {
     return htmlClassesForExistingType(type);
   }
 
-  // look for custom type if any defined
   const foundType = userDefinedTypes.find(q => q.name === type);
-
-  if (!foundType) {
-    // custom type not found, throw error
-    throw new Error(ERROR.TYPE_NOT_FOUND);
-  }
-
-  // append base class to html classes
-  return [NOTIFICATION_BASE_CLASS].concat(foundType.htmlClasses);
+  return base.concat(foundType.htmlClasses);
 }
 
 export function getNotificationsForMobileView(notifications) {
-  const bottom = [];
   const top = [];
+  const bottom = [];
 
   notifications.forEach((notification) => {
-    const container = notification.container.toLowerCase();
+    const { container } = notification;
     if (isTopContainer(container)) {
       top.push(notification);
     } else if (isBottomContainer(container)) {
       bottom.push(notification);
-    } else throw new Error(`Container ${notification.container} is not valid`);
+    }
   });
 
   return { top, bottom };
@@ -104,7 +88,7 @@ export function getNotificationsForEachContainer(notifications) {
   const bottomCenter = [];
 
   notifications.forEach((notification) => {
-    const container = notification.container.toLowerCase();
+    const { container } = notification;
     if (container === CONTAINER.TOP_LEFT) {
       topLeft.push(notification);
     } else if (container === CONTAINER.TOP_RIGHT) {
@@ -117,8 +101,6 @@ export function getNotificationsForEachContainer(notifications) {
       bottomRight.push(notification);
     } else if (container === CONTAINER.BOTTOM_CENTER) {
       bottomCenter.push(notification);
-    } else {
-      throw new Error(`Container ${notification.container} is not valid`);
     }
   });
 
@@ -132,255 +114,50 @@ export function getNotificationsForEachContainer(notifications) {
   };
 }
 
-export function getCubicBezierTransition(
-  duration = 500,
-  cubicBezier = "linear",
-  delay = 0,
-  property = "height"
-) {
-  return `${duration}ms ${property} ${cubicBezier} ${delay}ms`;
+export function getTransition({ duration, timingFunction, delay }, property) {
+  return `${duration}ms ${property} ${timingFunction} ${delay}ms`;
 }
 
-export function slidingExitTransition(notification) {
-  return getCubicBezierTransition(
-    notification.slidingExit.duration,
-    notification.slidingExit.cubicBezier,
-    notification.slidingExit.delay,
-    "all"
-  );
-}
-
-export function touchSwipeTransition(notification) {
-  const { swipe } = notification.touchSlidingExit;
-
-  return getCubicBezierTransition(
-    swipe.duration,
-    swipe.cubicBezier,
-    swipe.delay,
-    "left"
-  );
-}
-
-export function touchFadeTransition(notification) {
-  const { fade } = notification.touchSlidingExit;
-
-  return getCubicBezierTransition(
-    fade.duration,
-    fade.cubicBezier,
-    fade.delay,
-    "opacity"
-  );
-}
-
-export function getInitialSlidingState({ notification, isFirstNotification }) {
-  // no sliding needed for first notification in container
-  const hasSliding = shouldNotificationHaveSliding(notification) && !isFirstNotification;
-  const state = {};
-
-  // set default classes for animated element
-  state.animatedElementClasses = getHtmlClassesForType(notification);
-  state.rootElementStyle = {
-    height: "0",
-    marginBottom: 0,
-    overflow: "hidden",
-    width: cssWidth(notification.width)
-  };
-
-  if (hasSliding) {
-    // hide content by toggling visibility while sliding
-    state.animatedElementClasses.push("notification-invisible");
-  } else if (notification.animationIn && notification.animationIn.length > 0) {
-    // add user defined notification classes if sliding will not occur
-    notification.animationIn.forEach(item => state.animatedElementClasses.push(item));
-  }
-
-  state.hasSliding = hasSliding;
-  return state;
-}
-
-export function getChildStyleForTouchTransitionExit(notification, startX, currentX) {
-  const width = window.innerWidth * 2;
-  const touchSwipe = touchSwipeTransition(notification);
-  const touchFade = touchFadeTransition(notification);
-
-  return {
-    opacity: 0,
-    position: "relative",
-    transition: `${touchSwipe}, ${touchFade}`,
-
-    // for currentX > startX
-    // we slide to the right limit
-    // otherwise we slide to the left limit
-    left: `${currentX - startX >= 0 ? width : -width}px`
-  };
-}
-
-export function handleTouchSlidingAnimationExit(notification, currentX, startX) {
-  // set current html classes
-  const animatedElementClasses = getHtmlClassesForType(notification);
-  // set opacity and left to pull-out notification
-  const childElementStyle = getChildStyleForTouchTransitionExit(notification, startX, currentX);
-  // sliding out transition
-  const slidingTransition = slidingExitTransition(notification);
-
-  return {
-    childElementStyle,
-    animatedElementClasses,
-    // slide to height 0
-    rootElementStyle: {
-      height: 0,
-      marginBottom: 0,
-      transition: slidingTransition,
-      width: cssWidth(notification.width)
-    },
-  };
-}
-
-export function handleSlidingAnimationExit(notification) {
-  const { animationOut } = notification;
-  const animatedElementClasses = getHtmlClassesForType(notification);
-
-  if (animationOut) {
-    // add CSS classes if any defined
-    animationOut.forEach(item => animatedElementClasses.push(item));
-  }
-
-  return {
-    // slide element to height 0
-    rootElementStyle: {
-      height: 0,
-      marginBottom: 0,
-      transition: slidingExitTransition(notification),
-      width: cssWidth(notification.width)
-    },
-    animatedElementClasses
-  };
-}
-
-export function handleStageTransition(notification, state) {
-  let animatedElementClasses;
-  let rootElementStyle;
-
-  const {
-    TOUCH_SLIDING_ANIMATION_EXIT,
-    SLIDING_ANIMATION_EXIT
-  } = NOTIFICATION_STAGE;
-
-  const {
-    animatedElementClasses: stateAnimatedElementClasses,
-    rootElementStyle: stateRootStyle,
-    currentX,
-    startX
-  } = state;
-
-  if (notification.stage === TOUCH_SLIDING_ANIMATION_EXIT) {
-    return handleTouchSlidingAnimationExit(notification, currentX, startX);
-  }
-
-  if (notification.stage === SLIDING_ANIMATION_EXIT) {
-    return handleSlidingAnimationExit(notification);
-  }
-
-  if (notification.resized) {
-    // window got resized, do not apply animations
-    rootElementStyle = stateRootStyle;
-    animatedElementClasses = getHtmlClassesForType(notification);
-  } else {
-    // use values from state
-    rootElementStyle = stateRootStyle;
-    animatedElementClasses = stateAnimatedElementClasses;
-  }
-
-  return {
-    rootElementStyle,
-    animatedElementClasses
-  };
-}
-
-export function hasFullySwiped(diffX) {
-  const swipeLength = Math.abs(diffX);
-  const requiredSwipeLength = (40 / 100) * window.innerWidth;
-
-  return swipeLength >= requiredSwipeLength;
-}
-
-export function getRootHeightStyle(notification, scrollHeight) {
-  return {
-    height: `${scrollHeight}px`,
-    width: cssWidth(notification.width),
-    transition: getCubicBezierTransition(
-      notification.slidingExit.duration,
-      notification.slidingExit.cubicBezier,
-      notification.slidingExit.delay
-    )
-  };
-}
-
-function defaultAnimationIn(animationIn) {
-  return animationIn || [];
-}
-
-function defaultAnimationOut(animationOut) {
-  return animationOut || [];
-}
-
-function defaultTransition(transition, defaults) {
-  const { duration, cubicBezier, delay } = defaults;
+function defaultTransition(transition, { duration, timingFunction, delay }) {
   const transitionOptions = transition || {};
 
-  if (isNullOrUndefined(transitionOptions.duration)) {
+  if (isNull(transitionOptions.duration)) {
     transitionOptions.duration = duration;
   }
 
-  if (isNullOrUndefined(transitionOptions.cubicBezier)) {
-    transitionOptions.cubicBezier = cubicBezier;
+  if (isNull(transitionOptions.timingFunction)) {
+    transitionOptions.timingFunction = timingFunction;
   }
 
-  if (isNullOrUndefined(transitionOptions.delay)) {
+  if (isNull(transitionOptions.delay)) {
     transitionOptions.delay = delay;
   }
 
   return transitionOptions;
 }
 
-function defaultType({ content, type }) {
-  if (content) return undefined;
-  return type.toLowerCase();
-}
-
-function defaultContainer(container) {
-  return container.toLowerCase();
-}
-
-function defaultDismissable(dismissable) {
-  const option = dismissable;
+function defaultDismiss(dismiss) {
+  const option = dismiss;
+  const defaults = {
+    duration: 0,
+    click: true,
+    touch: true,
+    onScreen: false,
+    waitForAnimation: false,
+    showIcon: false
+  };
 
   if (!option) {
-    return {
-      click: true,
-      touch: true
-    };
+    return defaults;
   }
 
-  if (isNullOrUndefined(option.click)) {
-    option.click = true;
-  }
-
-  if (isNullOrUndefined(option.touch)) {
-    option.touch = true;
-  }
+  Object.keys(defaults).forEach((prop) => {
+    if (isNull(option[prop])) {
+      option[prop] = defaults[prop];
+    }
+  });
 
   return option;
-}
-
-function defaultInsert(insert) {
-  if (!insert) return "top";
-  return insert.toLowerCase();
-}
-
-function defaultWidth(width) {
-  if (isNullOrUndefined(width)) return 0;
-  return width;
 }
 
 function defaultUserDefinedTypes({ content, type }, definedTypes) {
@@ -401,53 +178,51 @@ function defaultUserDefinedTypes({ content, type }, definedTypes) {
 export function parseNotification(options, userDefinedTypes) {
   const notification = options;
   const {
+    id,
+    type,
     insert,
+    content,
     container,
     animationIn,
     animationOut,
     slidingEnter,
     slidingExit,
-    touchSlidingBack,
+    touchRevert,
     touchSlidingExit,
-    dismissable,
-    width,
-    id
+    dismiss,
+    width
   } = notification;
 
   notification.id = id || getRandomId();
-  notification.type = defaultType(notification, userDefinedTypes);
+  notification.type = content ? null : type.toLowerCase();
 
-  if (userDefinedTypes && !notification.content) {
+  if (userDefinedTypes && !content) {
     notification.userDefinedTypes = defaultUserDefinedTypes(notification, userDefinedTypes);
   }
 
-  notification.container = defaultContainer(container);
-  notification.insert = defaultInsert(insert);
-  notification.dismissable = defaultDismissable(dismissable);
-  notification.animationIn = defaultAnimationIn(animationIn);
-  notification.animationOut = defaultAnimationOut(animationOut);
-
-  if (!isNullOrUndefined(width)) {
-    notification.width = defaultWidth(width);
+  if (!isNull(width)) {
+    notification.width = width;
   }
 
-  const slidingEnterDefaults = { duration: 600, cubicBezier: "linear", delay: 0 };
-  const slidingExitDefaults = { duration: 600, cubicBezier: "linear", delay: 0 };
-  const swipeBackDefaults = { duration: 600, cubicBezier: "ease-in", delay: 0 };
-  const swipeExitDefaults = { duration: 600, cubicBezier: "ease-in", delay: 0 };
-  const swipeCompleteDefaults = { duration: 300, cubicBezier: "ease-in", delay: 0 };
-  notification.slidingEnter = defaultTransition(slidingEnter, slidingEnterDefaults);
-  notification.slidingExit = defaultTransition(slidingExit, slidingExitDefaults);
-  notification.touchSlidingBack = defaultTransition(touchSlidingBack, swipeBackDefaults);
-  notification.touchSlidingExit = touchSlidingExit || {};
-  notification.touchSlidingExit.swipe = defaultTransition(
-    notification.touchSlidingExit.swipe || {},
-    swipeExitDefaults
-  );
-  notification.touchSlidingExit.fade = defaultTransition(
-    notification.touchSlidingExit.fade || {},
-    swipeCompleteDefaults
-  );
+  notification.container = container.toLowerCase();
+  notification.insert = (insert || 'top').toLowerCase();
+  notification.dismiss = defaultDismiss(dismiss);
+  notification.animationIn = animationIn || [];
+  notification.animationOut = animationOut || [];
+
+  const t = (duration, timingFunction, delay) => ({
+    duration,
+    timingFunction,
+    delay
+  });
+
+  notification.slidingEnter = defaultTransition(slidingEnter, t(600, 'linear', 0));
+  notification.slidingExit = defaultTransition(slidingExit, t(600, 'linear', 0));
+  notification.touchRevert = defaultTransition(touchRevert, t(600, 'linear', 0));
+
+  const { swipe, fade } = touchSlidingExit || {};
+  notification.touchSlidingExit.swipe = defaultTransition(swipe || {}, t(600, 'linear', 0));
+  notification.touchSlidingExit.fade = defaultTransition(fade || {}, t(300, 'linear', 0));
 
   return notification;
 }

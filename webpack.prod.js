@@ -1,6 +1,6 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
@@ -14,7 +14,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "react-notifications-component.js",
+    filename: "js/react-notifications.prod.js",
     library: "ReactNotifications",
     libraryTarget: "commonjs2"
   },
@@ -26,7 +26,11 @@ module.exports = {
         parallel: true,
         sourceMap: true
       }),
-      new OptimizeCSSAssetsPlugin({})
+      new OptimizeCSSAssetsPlugin({}),
+      new CopyPlugin([
+        { from: 'src/scss', to: 'scss' },
+        { from: 'build/index.js', to: 'index.js' }
+      ])
     ]
   },
 
@@ -63,7 +67,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "theme.css"
     }),
-    new CleanWebpackPlugin({}),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production")
     })

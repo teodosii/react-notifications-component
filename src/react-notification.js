@@ -1,336 +1,345 @@
-import React from "react";
-import { NOTIFICATION_STAGE } from "src/constants";
-import { cssWidth } from "src/utils";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Timer from './timer';
+import { REMOVAL } from './constants';
 import {
-  getHtmlClassesForType,
-  handleStageTransition,
-  getCubicBezierTransition,
+  getTransition,
   hasFullySwiped,
-  getRootHeightStyle,
-  getInitialSlidingState
-} from "src/helpers";
+  getHtmlClassesForType,
+  shouldNotificationHaveSliding
+} from 'src/helpers';
 
 export default class ReactNotification extends React.Component {
   constructor(props) {
     super(props);
-
-    this.endOfSmartSliding = false;
-
-    this.onTransitionEnd = this.onTransitionEnd.bind(this);
-    this.onNotificationClick = this.onNotificationClick.bind(this);
-    this.onSmartSlidingEnd = this.onSmartSlidingEnd.bind(this);
-    this.onTouchSmartSlidingEnd = this.onTouchSmartSlidingEnd.bind(this);
+    this.rootElementRef = React.createRef();
+    this.onClick = this.onClick.bind(this);
     this.onTouchStart = this.onTouchStart.bind(this);
     this.onTouchMove = this.onTouchMove.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
 
-    // ref elements
-    this.rootDOM = React.createRef();
-
-    // component's state
-    this.state = getInitialSlidingState(props);
+    this.state = {
+      parentStyle: { height: 0, overflow: 'hidden' },
+      htmlClassList: getHtmlClassesForType(props.notification),
+      animationPlayState: 'running',
+      touchEnabled: true
+    };
   }
 
-  componentDidMount() {
-    // Start sliding
-    this.smartSliding();
-
-    // Set notification to be dismissed by timeout
-    this.setRemovalTimeout(this.props.notification.dismiss);
+  static propTypes = {
+    toggleRemoval: PropTypes.func.isRequired,
+    count: PropTypes.number.isRequired,
+    removed: PropTypes.bool
   }
 
   componentWillUnmount() {
-    if (!this.timeoutId) return;
-    clearTimeout(this.timeoutId);
+    if (this.timer) {
+      this.timer.clear();
+    }
+  }
+
+  componentDidMount() {
+    const { notification, count } = this.props;
+    const { dismiss: { duration, onScreen } } = notification;
+    const willSlide = shouldNotificationHaveSliding(notification, count);
+
+    const onTransitionEnd = () => {
+      if (!duration || onScreen) return;
+
+      // Will set timer only if duration > 0 and onScreen = false
+      const callback = () => this.removeNotification(REMOVAL.TIMEOUT);
+      this.timer = new Timer(callback, duration);
+    };
+
+    const callback = () => {
+      requestAnimationFrame(() => {
+        this.setState(prevState => ({
+          htmlClassList: [
+            ...notification.animationIn,
+            ...prevState.htmlClassList, 
+          ]
+        }));
+      })
+    }
+
+    this.setState({
+      parentStyle: {
+        height: `${this.getScrollHeight()}px`,
+        transition: willSlide
+          ? getTransition(notification.slidingEnter, 'height')
+          : '10ms height'
+      },
+      onTransitionEnd
+    }, callback);
+  }
+
+  componentDidUpdate({ removed }) {
+    if (this.props.removed && !removed) {
+      this.removeNotification(REMOVAL.MANUAL);
+    }
+  }
+
+  removeNotification(removalFlag) {
+    const { notification, toggleRemoval } = this.props;
+    const { dismiss: { waitForAnimation } } = notification;
+    const htmlClassList = [
+      ...notification.animationOut,
+      ...getHtmlClassesForType(notification)
+    ];
+
+    const parentStyle = {
+      height: 0,
+      transition: getTransition(notification.slidingExit, 'height')
+    };
+
+    const onTransitionEnd = () => toggleRemoval(notification.id, removalFlag);
+
+    if (waitForAnimation) {
+      return this.setState({
+        htmlClassList,
+        onAnimationEnd: () => {
+          this.setState({
+            parentStyle,
+            onTransitionEnd
+          });
+        }
+      })
+    }
+
+    this.setState({
+      parentStyle,
+      onTransitionEnd,
+      htmlClassList
+    });
   }
 
   getScrollHeight() {
-    return this.rootDOM.current.scrollHeight;
+    return this.rootElementRef.current.scrollHeight;
   }
 
-  dismissHandler() {
-    const { notification, toggleTimeoutRemoval } = this.props;
-    const { MANUAL_REMOVAL: ML, TOUCH_SLIDING_ANIMATION_EXIT: TS } = NOTIFICATION_STAGE;
-
-    // Skip timeout removal if it's already in a removal process
-    if (notification.stage === ML || notification.stage === TS) return;
-    const callback = () => requestAnimationFrame(() => toggleTimeoutRemoval(notification));
-    const state = { rootElementStyle: getRootHeightStyle(notification, this.getScrollHeight()) };
-
-    this.setState(state, callback);
+  onClick() {
+    this.removeNotification(REMOVAL.CLICK);
   }
 
-  setRemovalTimeout(dismiss) {
-    if (dismiss && dismiss.duration > 0) {
-      this.timeoutId = setTimeout(
-        () => this.dismissHandler(),
-        dismiss.duration
-      );
-    }
-  }
-
-  onTransitionEnd() {
-    // Sliding has finished
-    // We now need to add CSS classes to animate
-
-    const { notification } = this.props;
-    const { animationIn } = notification;
-
-    // Get html classes for type
-    let animatedElementClasses = getHtmlClassesForType(notification);
-    // Make element visible now
-    animatedElementClasses.push("notification-visible");
-    // Append animation classes
-    animatedElementClasses = animatedElementClasses.concat(animationIn || []);
-
+  onTouchStart({ touches }) {
+    const [{ pageX }] = touches;
     this.setState({
-      animatedElementClasses,
-      rootElementStyle: {
-        height: "auto",
-        width: cssWidth(notification.width)
-      }
+      startX: pageX,
+      currentX: pageX
     });
   }
 
-  onTouchSmartSlidingEnd(event) {
-    // Stop propagation of transitionEnd
-    event.stopPropagation();
-
-    // Skip if target is rootDOM node
-    if (!event.target.isSameNode(this.rootDOM.current)) return;
-
-    if (this.endOfSmartSliding) {
-      const { toggleRemoval, notification } = this.props;
-      toggleRemoval(notification);
-    }
-
-    // Both animation and sliding have finished
-    this.endOfSmartSliding = true;
-  }
-
-  onSmartSlidingEnd() {
-    const { toggleRemoval, notification } = this.props;
-    const { animationOut } = notification;
-
-    if (!animationOut || !animationOut.length || this.endOfSmartSliding) {
-      toggleRemoval(notification);
-    }
-
-    // Both animationEnd and transitionEnd have finished
-    this.endOfSmartSliding = true;
-  }
-
-  smartSliding() {
-    const { notification } = this.props;
-    const { slidingEnter, animationIn, resized } = notification;
-
-    const animatedElementClasses = getHtmlClassesForType(notification);
-    const rootElementStyle = {
-      // Set sliding transition unless `resize` event has been fired
-      // in which case we no longer slide nor animate
-      transition: resized
-        ? undefined
-        : getCubicBezierTransition(
-          slidingEnter.duration,
-          slidingEnter.cubicBezier,
-          slidingEnter.delay
-        ),
-
-      // Overwrite notification's width
-      width: cssWidth(notification.width),
-
-      // Set height instead of auto
-      height: `${this.getScrollHeight()}px`
-    };
-
-    // If resize has been fired then no animation is going to happen
-    if (!resized && animationIn && animationIn.length > 0) {
-      animationIn.forEach(item => animatedElementClasses.push(item));
-    }
-
-    this.setState({
-      rootElementStyle,
-      animatedElementClasses
-    });
-  }
-
-  onNotificationClick() {
-    const { notification, onClickHandler } = this.props;
-    const rootElementStyle = getRootHeightStyle(notification, this.getScrollHeight());
-    const callback = () => requestAnimationFrame(() => onClickHandler(notification));
-
-    this.setState({ rootElementStyle }, callback);
-  }
-
-  onTouchStart(event) {
-    const { pageX } = event.touches[0];
-    this.setState({ startX: pageX, currentX: pageX });
-  }
-
-  onTouchMove(event) {
-    const { notification, toggleTouchEnd } = this.props;
-    const { pageX } = event.touches[0];
+  onTouchMove({ touches }) {
     const { startX } = this.state;
+    const {
+      toggleRemoval,
+      notification: {
+        id,
+        slidingExit,
+        touchSlidingExit: { swipe, fade }
+      }
+    } = this.props;
+
+    const [{ pageX }] = touches;
     const distance = pageX - startX;
+    const swipeTo = window.innerWidth * 2;
+    const left = `${pageX - startX >= 0 ? swipeTo : -swipeTo}px`;
 
     if (hasFullySwiped(distance)) {
-      const state = {
-        animatedElementClasses: getHtmlClassesForType(notification),
-        rootElementStyle: getRootHeightStyle(notification, this.getScrollHeight())
-      };
-      
-      const callback = () => requestAnimationFrame(() => toggleTouchEnd(notification));
-      return this.setState(state, callback);
+      const t1 = getTransition(swipe, 'left');
+      const t2 = getTransition(fade, 'opacity');
+      const onTransitionEnd = () => toggleRemoval(id, REMOVAL.TOUCH);
+
+      return this.setState(({ parentStyle }) => ({
+        touchEnabled: false,
+        parentStyle: {
+          left,
+          opacity: 0,
+          position: 'relative',
+          transition: `${t1}, ${t2}`,
+          height: parentStyle.height
+        },
+        onTransitionEnd: () => {
+          this.setState(({ parentStyle: { left, opacity, position } }) => ({
+            parentStyle: {
+              left,
+              opacity,
+              position,
+              height: 0,
+              transition: getTransition(slidingExit, 'height')
+            },
+            onTransitionEnd
+          }));
+        }
+      }));
     }
 
-    return this.setState({
+    return this.setState(({ parentStyle }) => ({
       currentX: pageX,
-      childElementStyle: {
-        position: "relative",
+      parentStyle: {
+        position: 'relative',
+        height: parentStyle.height,
         left: `${0 + distance}px`
       }
-    });
+    }));
   }
 
   onTouchEnd() {
-    const { touchSlidingBack } = this.props.notification;
+    const { notification: { touchRevert } } = this.props;
 
-    this.setState({
-      childElementStyle: {
-        left: "0",
-        position: "relative",
-        transition: getCubicBezierTransition(
-          touchSlidingBack.duration,
-          touchSlidingBack.cubicBezier,
-          touchSlidingBack.delay,
-          "left"
-        )
+    this.setState(({ parentStyle }) => ({
+      parentStyle: {
+        left: 0,
+        position: 'relative',
+        height: parentStyle.height,
+        transition: getTransition(touchRevert, 'left')
       }
-    });
+    }));
   }
 
-  renderCloseIcon({ dismissIcon }) {
-    if (dismissIcon) {
-      return (
-        <div
-          className={dismissIcon.className}
-          onClick={this.onNotificationClick}
-        >
-          {dismissIcon.content}
-        </div>
-      );
+  onMouseEnter() {
+    if (this.timer) {
+      this.timer.pause();
+    } else {
+      this.setState({ animationPlayState: 'paused' });
     }
+  }
 
+  onMouseLeave() {
+    if (this.timer) {
+      this.timer.resume();
+    } else {
+      this.setState({ animationPlayState: 'running' });
+    }
+  }
+
+  renderTitle() {
+    const { notification: { title } } = this.props;
+    if (!title) return null;
+    return (
+      <p className='notification-title'>
+        {title}
+      </p>
+    );
+  }
+
+  renderMessage() {
+    const { notification: { message } } = this.props;
+    return (
+      <p className='notification-message'>
+        {message}
+      </p>
+    );
+  }
+
+  renderCloseIcon() {
+    const { notification: { dismiss: { showIcon } } } = this.props;
+    if (!showIcon) return null;
     return (
       <div
-        className="notification-close"
-        onClick={this.onNotificationClick}
-      >
-        <span>&times;</span>
+        className='notification-close'
+        onClick={this.onClick}
+      ></div>
+    );
+  }
+
+  renderTimer() {
+    const { notification: { dismiss } } = this.props;
+    const { duration, onScreen } = dismiss;
+    const { animationPlayState } = this.state;
+
+    if (!onScreen) return;
+
+    const style = {
+      animationName: 'timer',
+      animationDuration: `${duration}ms`,
+      animationTimingFunction: 'linear',
+      animationFillMode: 'forwards',
+      animationDelay: 0,
+      animationPlayState
+    };
+
+    const onAnimationEnd = () => this.removeNotification(REMOVAL.TIMEOUT);
+
+    return (
+      <div className='timer'>
+        <div
+          className='timer-filler'
+          onAnimationEnd={onAnimationEnd}
+          style={style}
+        >
+        </div>
       </div>
     );
   }
 
-  renderNotificationTitle(notification) {
-    if (notification.title) {
-      return (
-        <p className="notification-title">
-          {notification.title}
-        </p>
-      );
-    }
+  renderCustomContent() {
+    const { htmlClassList } = this.state;
+    const { notification: { content: CustomContent } } = this.props;
 
-    return null;
+    return (
+      <div
+        className={`${[...htmlClassList, 'n-child'].join(' ')}`}
+      >
+        {
+          React.isValidElement(CustomContent)
+            ? CustomContent
+            : <CustomContent />
+        }
+      </div>
+    );
+  }
+
+  renderNotification() {
+    const { htmlClassList } = this.state;
+    const { notification: { dismiss: { duration, pauseOnHover } } } = this.props;
+    const hasMouseEvents = duration > 0 && pauseOnHover;
+
+    return (
+      <div
+        className={`${[...htmlClassList, 'n-child'].join(' ')}`}
+        onMouseEnter={hasMouseEvents ? this.onMouseEnter : null}
+        onMouseLeave={hasMouseEvents ? this.onMouseLeave : null}
+      >
+        <div className='notification-content'>
+          { this.renderCloseIcon() }
+          { this.renderTitle() }
+          { this.renderMessage() }
+          { this.renderTimer() }
+        </div>
+      </div>
+    );
   }
 
   render() {
-    const { notification } = this.props;
-    let { childElementStyle, hasSliding } = this.state;
-    let { onAnimationEnd } = this;
-    let onNotificationClick = null;
-    let touchHasEnded = false;
-
-    // Set onTransitionEnd event if notification has sliding
-    let onTransitionEnd = hasSliding ? this.onTransitionEnd : null;
-    const stage = handleStageTransition(notification, this.state);
-    const animatedElementClasses = (stage.animatedElementClasses || []).join(" ");
-    let { rootElementStyle } = stage;
-
-    // Set onClick event if notification is dismissable
-    if (notification.dismissable.click) {
-      ({ onNotificationClick } = this);
-    }
-
+    const { notification: { content } } = this.props;
     const {
-      MANUAL_REMOVAL: ML,
-      SLIDING_ANIMATION_EXIT: SE,
-      TOUCH_SLIDING_ANIMATION_EXIT: TSE
-    } = NOTIFICATION_STAGE;
-
-    if (notification.stage === ML) {
-      onAnimationEnd = null;
-      rootElementStyle = getRootHeightStyle(notification, this.getScrollHeight());
-    } else if (notification.stage === SE) {
-      onAnimationEnd = this.onSmartSlidingEnd;
-      onTransitionEnd = this.onSmartSlidingEnd;
-    } else if (notification.stage === TSE) {
-      onAnimationEnd = this.onTouchSmartSlidingEnd;
-      onTransitionEnd = this.onTouchSmartSlidingEnd;
-      onNotificationClick = null;
-      ({ childElementStyle } = stage);
-      touchHasEnded = true;
-    }
-
-    if (notification.content) {
-      return (
-        <div
-          onTouchStart={touchHasEnded ? null : this.onTouchStart}
-          onTouchMove={touchHasEnded ? null : this.onTouchMove}
-          onTouchEnd={touchHasEnded ? null : this.onTouchEnd}
-          onTouchCancel={touchHasEnded ? null : this.onTouchEnd}
-          onClick={onNotificationClick}
-          className="notification-item-root"
-          onAnimationEnd={onAnimationEnd}
-          onTransitionEnd={onTransitionEnd}
-          ref={this.rootDOM}
-          style={rootElementStyle}
-        >
-          <div
-            className={`${animatedElementClasses} notification-item-child`}
-            style={childElementStyle}
-          >
-            {notification.content}
-          </div>
-        </div>
-      );
-    }
+      parentStyle,
+      onAnimationEnd,
+      onTransitionEnd,
+      touchEnabled
+    } = this.state;
 
     return (
       <div
-        onTouchStart={touchHasEnded ? null : this.onTouchStart}
-        onTouchMove={touchHasEnded ? null : this.onTouchMove}
-        onTouchEnd={touchHasEnded ? null : this.onTouchEnd}
-        onTouchCancel={touchHasEnded ? null : this.onTouchEnd}
-        onClick={onNotificationClick}
-        className="notification-item-root"
+        ref={this.rootElementRef}
+        onClick={this.onClick}
+        className='n-parent'
+        style={parentStyle}
         onAnimationEnd={onAnimationEnd}
         onTransitionEnd={onTransitionEnd}
-        ref={this.rootDOM}
-        style={rootElementStyle}
+        onTouchStart={touchEnabled ? this.onTouchStart : null}
+        onTouchMove={touchEnabled ? this.onTouchMove : null}
+        onTouchEnd={touchEnabled ? this.onTouchEnd : null}
       >
-        <div
-          className={`${animatedElementClasses} notification-item-child`}
-          style={childElementStyle}
-        >
-          <div className="notification-content">
-            { this.renderCloseIcon(notification) }
-            { this.renderNotificationTitle(notification) }
-            <p className="notification-message">
-              { notification.message }
-            </p>
-          </div>
-        </div>
+        {
+          content
+            ? this.renderCustomContent()
+            : this.renderNotification()
+        }
       </div>
-    );
+    )
   }
 }
