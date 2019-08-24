@@ -154,6 +154,7 @@ export const validators = [
     const {
       duration,
       onScreen,
+      showIcon,
       pauseOnHover,
       waitForAnimation: wait,
       click, touch
@@ -184,6 +185,10 @@ export const validators = [
 
     if (!isNull(touch) && !isBoolean(touch)) {
       throw new Error(ERROR.DISMISS_TOUCH_BOOL);
+    }
+
+    if (!isNull(showIcon) && !isBoolean(showIcon)) {
+      throw new Error(ERROR.DISMISS_ICON);
     }
 
     if (!isNull(wait) && !isBoolean(wait)) {

@@ -30,11 +30,8 @@ export const REMOVAL = {
 };
 
 export const ERROR = {
-  // animations
   ANIMATION_IN: 'Validation error. `animationIn` option must be an array',
   ANIMATION_OUT: 'Validation error. `animationOut` option must be an array',
-
-  // dismiss
   DISMISS_REQUIRED: 'Validation error. `duration` property of `dismiss` option is required',
   DISMISS_NUMBER: 'Validation error. `duration` property of `dismiss` option must be a Number',
   DISMISS_POSITIVE: 'Validation error. `duration` property of `dismiss` option must be a positive Number',
@@ -43,35 +40,20 @@ export const ERROR = {
   DISMISS_WAIT: 'Validation error. `waitForAnimation` property of `dismiss` option must be a Boolean',
   DISMISS_PAUSE_BOOL: 'Validation error. `pauseOnHover` property of `dismiss` option must be a Boolean',
   DISMISS_ONSCREEN_BOOL: 'Validation error. `onScreen` property of `dismiss` option must be a Boolean',
-
-  // title
+  DISMISS_ICON: 'Validation error. `showIcon` property of `dismiss` option must be a Boolean',
   TITLE_STRING: 'Validation error. `title` option must be a String.',
-
-  // message
   MESSAGE_REQUIRED: 'Validation error. `message` option is required',
   MESSAGE_STRING: 'Validation error. `message` option must be a String',
-
-  // type
   TYPE_REQUIRED: 'Validation error. `type` option is required',
   TYPE_STRING: 'Validation error. `type` option must be a String',
   TYPE_NOT_EXISTENT: 'Validation error. `type` option not found',
-
-  // container
   CONTAINER_REQUIRED: 'Validation error. `container` option is required',
   CONTAINER_STRING: 'Validation error. `container` option must be a String',
   CONTENT_INVALID: 'Validation error. `content` option must be a valid React component/function/element',
-
-  // width
   WIDTH_NUMBER: 'Validation error. `width` option must be a Number',
-
-  // insert
   INSERT_STRING: 'Validation error. `insert` option must be a String',
-
-  // transition
   TRANSITION_DURATION_NUMBER: 'Validation error. `duration` property of `transition` option must be a Number',
   TRANSITION_TIMING_FUNCTION: 'Validation error. `timingFunction` property of `transition` option must be a String',
   TRANSITION_DELAY_NUMBER: 'Validation error. `delay` property of `transition` option must be a Number',
-
-  // custom types
   TYPE_NOT_FOUND: 'Validation error. Custom type not found'
 };

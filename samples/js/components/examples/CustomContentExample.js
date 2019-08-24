@@ -7,12 +7,8 @@ import { store } from 'rc-notifications/react-notification-component';
 export default class CustomContentExample extends React.Component {
   constructor(props) {
     super(props);
-
-    // set method bindings
     this.add = this.add.bind(this);
     this.addCustomIcon = this.addCustomIcon.bind(this);
-
-    // used to preload image
     this.cachedImage = null;
   }
 
@@ -23,7 +19,6 @@ export default class CustomContentExample extends React.Component {
 
   addCustomIcon(type, iconClassName) {
     let message;
-
     if (type === "success") {
       message = "Your agenda has been successfully synced";
     } else if (type === "warning") {

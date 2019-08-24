@@ -44,6 +44,7 @@ export default {
     onScreen: false,
     pauseOnHover: true,
     waitForAnimation: false,
+    showIcon: true,
     click: true,
     touch: true
   }

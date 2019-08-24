@@ -6,7 +6,6 @@ import { getType, getMessage, getTitle } from "helpers/randomize";
 export default function InsertExample() {
   const add = (insert) => {
     const type = getType();
-
     return store.addNotification(Object.assign({}, notification, {
       type,
       insert,

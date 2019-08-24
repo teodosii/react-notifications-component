@@ -235,6 +235,8 @@ export default class ReactNotification extends React.Component {
   }
 
   renderCloseIcon() {
+    const { notification: { dismiss: { showIcon } } } = this.props;
+    if (!showIcon) return null;
     return (
       <div
         className='notification-close'

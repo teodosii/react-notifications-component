@@ -143,7 +143,8 @@ function defaultDismiss(dismiss) {
     click: true,
     touch: true,
     onScreen: false,
-    waitForAnimation: false
+    waitForAnimation: false,
+    showIcon: false
   };
 
   if (!option) {
