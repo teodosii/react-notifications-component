@@ -1,6 +1,6 @@
 {
   "name": "react-notifications-component",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/index.js",
@@ -73,7 +73,6 @@
     "object-assign": "^4.1.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prop-types": "^15.6.2",
-    "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-github-button": "^0.1.11",
     "react-github-corner": "^2.3.0",
@@ -88,7 +87,7 @@
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
   },
-  "dependencies": {
-    "react": "^16.4.2"
+  "peerDependencies": {
+    "react": "^16.0.0"
   }
 }
