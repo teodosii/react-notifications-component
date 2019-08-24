@@ -158,8 +158,8 @@ Manually remove a notification by id.
   </tr>
   <tr>
     <td><code>content</code></td>
-    <td><code>React.Component</code></td>
-    <td>Custom notification content, must be a valid <code>React</code> component.</td>
+    <td><code>Object</code></td>
+    <td>Custom notification content, must be either *Class Component*, *Functional Component* or *React element*.</td>
   </tr>
   <tr>
     <td><code>type</code></td>
@@ -218,9 +218,74 @@ Manually remove a notification by id.
   </tr>
 </table>
   
-##### Transition
+#### Transition
 
-##### Dismiss
+<code>Transition</code> is used each time you define a transition.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>duration</code></td>
+    <td><code>Number</code></td>
+    <td>Transition duration in ms. Its default value ranges from 300 to 600, depending on transition</td>
+  </tr>
+  <tr>
+    <td><code>timingFunction</code></td>
+    <td><code>String</code></td>
+    <td>CSS timing function for the transition, defaults to <code>linear</code></td>
+  </tr>
+  <tr>
+    <td><code>delay</code></td>
+    <td><code>Number</code></td>
+    <td>Delay of the transition in ms, defaults to 0</td>
+  </tr>
+</table>
+
+#### Dismiss
+
+<code>Dismiss</code> is used to describe how a notification should be dismissed.
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>duration</code></td>
+    <td><code>Number</code></td>
+    <td>Time in milliseconds after notification gets dismissed. 0 meaning it never gets dismissed automatically. It defaults to 0</td>
+  </tr>
+  <tr>
+    <td><code>onScreen</code></td>
+    <td><code>Boolean</code></td>
+    <td>Show time left directly on the notification. Defaults to <code>false</code></td>
+  </tr>
+  <tr>
+    <td><code>pauseOnHover</code></td>
+    <td><code>Boolean</code></td>
+    <td>Hovering over notification will pause the dismiss timer. Defaults to <code>false</code></td>
+  </tr>
+  <tr>
+    <td><code>waitForAnimation</code></td>
+    <td><code>Boolean</code></td>
+    <td>When removing a notification by default we trigger the exit animation and the transition to 0 height at the same time. Setting this to <code>true</code> will wait for exit animation to finish and then start the transition to 0 height. Defaults to <code>false</code></td>
+  </tr>
+  <tr>
+    <td><code>click</code></td>
+    <td><code>Boolean</code></td>
+    <td>Enable dismissal by click. Defaults to <code>true</code></td>
+  </tr>
+  <tr>
+    <td><code>touch</code></td>
+    <td><code>Boolean</code></td>
+    <td>Enable dismiss by touch move. Defaults to <code>true</code></td>
+  </tr>
+</table>
   
 ## Migration from v1
 
