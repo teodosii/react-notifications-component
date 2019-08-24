@@ -103,6 +103,8 @@ Manually remove a notification by id.
 
 ## Examples
 
+In progress
+
 ## Props
 
 <table>
@@ -159,7 +161,7 @@ Manually remove a notification by id.
   <tr>
     <td><code>content</code></td>
     <td><code>Object</code></td>
-    <td>Custom notification content, must be either *Class Component*, *Functional Component* or *React element*.</td>
+    <td>Custom notification content, must be either <b>Class Component</b>, <b>Functional Component</b> or <b>React element</b>.</td>
   </tr>
   <tr>
     <td><code>type</code></td>
@@ -258,7 +260,7 @@ Manually remove a notification by id.
   <tr>
     <td><code>duration</code></td>
     <td><code>Number</code></td>
-    <td>Time in milliseconds after notification gets dismissed. 0 meaning it never gets dismissed automatically. It defaults to 0</td>
+    <td>Time in milliseconds after notification gets dismissed. 0 will act as infinite duration. Defaults to <code>0</code></td>
   </tr>
   <tr>
     <td><code>onScreen</code></td>
@@ -273,7 +275,7 @@ Manually remove a notification by id.
   <tr>
     <td><code>waitForAnimation</code></td>
     <td><code>Boolean</code></td>
-    <td>When removing a notification by default we trigger the exit animation and the transition to 0 height at the same time. Setting this to <code>true</code> will wait for exit animation to finish and then start the transition to 0 height. Defaults to <code>false</code></td>
+    <td>When removing a notification by default we trigger the exit animation and the transition to height 0 at the same time. Setting this to <code>true</code> will wait for the exit animation to finish and then start the transition to height 0. Defaults to <code>false</code></td>
   </tr>
   <tr>
     <td><code>click</code></td>
