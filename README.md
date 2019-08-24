@@ -280,12 +280,17 @@ In progress
   <tr>
     <td><code>click</code></td>
     <td><code>Boolean</code></td>
-    <td>Enable dismissal by click. Defaults to <code>true</code></td>
+    <td>Enable dismissal by click, defaults to <code>true</code></td>
   </tr>
   <tr>
     <td><code>touch</code></td>
     <td><code>Boolean</code></td>
-    <td>Enable dismiss by touch move. Defaults to <code>true</code></td>
+    <td>Enable dismiss by touch move, defaults to <code>true</code></td>
+  </tr>
+  <tr>
+    <td><code>showIcon</code></td>
+    <td><code>Boolean</code></td>
+    <td>Show or hide the close icon, defaults to <code>false</code>. If set to <code>true</code>, it will respond to click interaction and will remove notification</td>
   </tr>
 </table>
   
@@ -294,7 +299,7 @@ In progress
 * Ref usage has been deprecated. Import `store` from library and use it for adding and removing notifications
 * `touchSlidingBack` has been renamed to `touchRevert`
 * Default values for transitions have been slightly changed
-* `dismissIcon` has been removed
+* `dismissIcon` has been removed. Use `showIcon` instead. If you relly on customized close icon, then stick to custom content.
 * `dismiss` supports now more options
 * Validators are now no longer included in the prod build, they are only included in the dev build. If you inspect the npm package you will see that the component has 2 builds - `dev` and `prod` - and relies on ENV variable when importing.
   
