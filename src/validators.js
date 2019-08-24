@@ -8,6 +8,15 @@ import {
   isArray
 } from 'src/utils';
 
+function isClassComponent(component) {
+  return typeof component === 'function' 
+    && !!component.prototype.isReactComponent;
+}
+
+function isFunctionComponent(component) {
+  return typeof component === 'function';
+}
+
 export function validateTransition(notification, transition) {
   const {
     TRANSITION_DURATION_NUMBER,
@@ -117,7 +126,10 @@ export const validators = [
 
   function content({ content }) {
     if (!content) return;
-    if (!React.isValidElement(content)) {
+    const isClass = isClassComponent(content);
+    const isFunction = isFunctionComponent(content);
+    const isElem = React.isValidElement(content);
+    if (!isClass && !isFunction && !isElem) {
       throw new Error(ERROR.CONTENT_INVALID);
     }
   },

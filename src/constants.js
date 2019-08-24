@@ -59,8 +59,7 @@ export const ERROR = {
   // container
   CONTAINER_REQUIRED: 'Validation error. `container` option is required',
   CONTAINER_STRING: 'Validation error. `container` option must be a String',
-
-  CONTENT_INVALID: 'Validation error. `content` option must be a valid React element',
+  CONTENT_INVALID: 'Validation error. `content` option must be a valid React component/function/element',
 
   // width
   WIDTH_NUMBER: 'Validation error. `width` option must be a Number',

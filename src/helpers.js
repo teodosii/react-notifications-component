@@ -156,8 +156,6 @@ function defaultDismiss(dismiss) {
     }
   });
 
-  console.log(option);
-
   return option;
 }
 

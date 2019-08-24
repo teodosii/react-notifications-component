@@ -54,7 +54,7 @@ export default class CustomContentExample extends React.Component {
     store.addNotification(Object.assign({}, notification, {
       width: 325,
       container: getContainer(),
-      content: (
+      content: () => (
         <div className="custom-image-content">
           <img
             src={this.cachedImage.src}
