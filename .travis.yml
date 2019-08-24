@@ -6,4 +6,4 @@ branches:
 install:
   - npm install
 script:
-  - npm run build:library:prod
+  - npm run build
