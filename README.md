@@ -162,8 +162,8 @@ Will trigger a `danger` notification.
 ```js
 store.addNotification({
   ...notification,
-  animationIn: ['animated", 'fadeIn'],
-  animationOut: ['animated", 'fadeOut']
+  animationIn: ['animated', 'fadeIn'],
+  animationOut: ['animated', 'fadeOut']
 })
 ```
 
