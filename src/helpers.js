@@ -220,7 +220,9 @@ export function parseNotification(options, userDefinedTypes) {
   notification.slidingExit = defaultTransition(slidingExit, t(600, 'linear', 0));
   notification.touchRevert = defaultTransition(touchRevert, t(600, 'linear', 0));
 
-  const { swipe, fade } = touchSlidingExit || {};
+  const touchExit = touchSlidingExit || {};
+  const { swipe, fade } = touchExit;
+  notification.touchSlidingExit = touchExit;
   notification.touchSlidingExit.swipe = defaultTransition(swipe || {}, t(600, 'linear', 0));
   notification.touchSlidingExit.fade = defaultTransition(fade || {}, t(300, 'linear', 0));
 
