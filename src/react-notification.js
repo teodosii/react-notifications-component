@@ -250,7 +250,7 @@ export default class ReactNotification extends React.Component {
     const { duration, onScreen } = dismiss;
     const { animationPlayState } = this.state;
 
-    if (!onScreen) return;
+    if (!duration || !onScreen) return;
 
     const style = {
       animationName: 'timer',

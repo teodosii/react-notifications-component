@@ -9,7 +9,7 @@ import {
 
 import 'src/scss/notification.scss';
 
-class ReactNotificationComponent extends React.Component {
+export default class ReactNotificationComponent extends React.Component {
   constructor(props) {
     super(props);
 
@@ -164,4 +164,4 @@ class ReactNotificationComponent extends React.Component {
   }
 }
 
-export { ReactNotificationComponent, store };
+export { store };
