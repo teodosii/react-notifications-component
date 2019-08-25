@@ -103,7 +103,139 @@ Manually remove a notification by id.
 
 ## Examples
 
-In progress
+In the following examples for brevity some options will not be mentioned. Strictly focusing on the needed options to present each example. For reference, we will spread each time a `notification` object to have non relevant fields included as wel;/
+
+```jsx
+notification = {
+  title: "Wonderful!",
+  message: "Configurable",
+  type: "success",
+  insert: "top",
+  container: "top-right",
+  animationIn: ["animated", "fadeIn"],
+  animationOut: ["animated", "fadeOut"]
+};
+```
+
+### Notification container
+
+You have in total 6 containers for desktop and 2 for mobile, if component is set to be responsive. List of containers:
+
+* top-left
+* top-right
+* top-center
+* bottom-left
+* bottom-right
+* bottom-center
+
+```jsx
+store.addNotification({
+  ...notification,
+  container: 'top-right'
+})
+```
+
+Will position the notification in top right of the screen.
+
+### Notification type
+
+List of types:
+
+* success
+* danger
+* info
+* default
+* warning
+
+
+```jsx
+store.addNotification({
+  ...notification,
+  type: 'danger'
+})
+```
+
+Will trigger a `danger` notification.
+
+### Animating
+  
+```jsx
+store.addNotification({
+  ...notification,
+  animationIn: ['animated", 'fadeIn'],
+  animationOut: ['animated", 'fadeOut']
+})
+```
+
+`animationIn` and `animationOut` rely on CSS classes that toggle animations. On github pages we rely on `animate.css`, we suggest you to import that package and use their animations as they have plenty.
+
+**Note**: Failing to have animations set properly will lead to bugs in some causes, as `react-notifications-component` relies on `onAnimationEnd` event to know whene an animation has finished.
+
+### Dismiss notification automatically after timeout expires
+
+```jsx
+store.addNotification({
+  ...notification,
+  dismiss: {
+    duration: 2000
+  }
+})
+```
+
+### Dismiss notification automatically with the time left shown on UI
+
+```jsx
+store.addNotification({
+  ...notification,
+  dismiss: {
+    duration: 2000,
+    onScreen: true
+  }
+})
+```
+
+### Pause notification's timeout by hovering
+
+```jsx
+store.addNotification({
+  ...notification,
+  dismiss: {
+    duration: 2000,
+    pauseOnHover: true
+  }
+})
+```
+
+### Change transition
+
+```jsx
+store.addNotification({
+  ...notification,
+  slidingExit: {
+    duration: 800,
+    timingFunction: 'ease-out',
+    delay: 0
+  }
+})
+```
+
+`slidingEnter`, `touchRevert` and `touchSlidingExit` can all be configured in the same way, with the mention that `touchSlidingExit` has 2 transitions nested.
+
+```jsx
+store.addNotification({
+  ...notification,
+  swipe: {
+    duration: 400,
+    timingFunction: 'ease-out',
+    delay: 0,
+  },
+  fade: {
+    duration: 400,
+    timingFunction: 'ease-out',
+    delay: 0
+  }
+})
+```
 
 ## Props
 
