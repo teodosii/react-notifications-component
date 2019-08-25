@@ -7,9 +7,7 @@ const path = require("path");
 
 module.exports = {
   mode: "production",
-
   entry: "./src/react-notification-component.js",
-
   devtool: "source-map",
 
   output: {

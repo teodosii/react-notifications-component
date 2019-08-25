@@ -1,25 +1,9 @@
 import React from "react";
-import Highlight from "react-highlight";
-import { install, } from "helpers/code";
 import ContainerExample from "components/examples/ContainerExample";
 import TypeExample from "components/examples/TypeExample";
 import InsertExample from "components/examples/InsertExample";
 import AnimationWrapper from "components/examples/AnimationExample";
 import CustomContentExample from "components/examples/CustomContentExample";
-import UsageExample from "components/examples/UsageExample";
-
-function NPMInstall() {
-  return (
-    <div className="row">
-      <div className="col-lg-6 offset-lg-3 column col-md-10 offset-md-1 col-sm-12 heading">
-        <h2 className="text-center">Install</h2>
-        <div>
-          <Highlight>{install}</Highlight>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function ExampleHeading() {
   return (
@@ -39,8 +23,6 @@ function ExampleHeading() {
 const Examples = () => {
   return (
     <React.Fragment>
-      <NPMInstall />
-      <UsageExample />
       <ExampleHeading />
       <ContainerExample />
       <TypeExample />

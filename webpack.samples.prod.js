@@ -8,14 +8,11 @@ const path = require("path");
 
 module.exports = {
   mode: "production",
-
   entry: "./samples/js/index.js",
-
-  devtool: "source-map",
 
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "samples.js"
+    filename: "[name].js"
   },
 
   resolve: {
@@ -63,7 +60,16 @@ module.exports = {
         sourceMap: true
       }),
       new OptimizeCSSAssetsPlugin({})
-    ]
+    ],
+    splitChunks: {
+			cacheGroups: {
+				commons: {
+					test: /[\\/]node_modules[\\/]/,
+					name: 'vendors',
+					chunks: 'all'
+				}
+			}
+		}
   },
 
   plugins: [
@@ -82,8 +88,7 @@ module.exports = {
       "process.env.NODE_ENV": JSON.stringify("production")
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: "[name].css"
     })
   ]
 };

@@ -4,9 +4,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
   mode: "development",
-
   entry: "./src/react-notification-component.js",
-
   devtool: "cheap-module-source-map",
 
   output: {
