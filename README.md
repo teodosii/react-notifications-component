@@ -105,7 +105,7 @@ Manually remove a notification by id.
 
 In the following examples for brevity some options will not be mentioned. Strictly focusing on the needed options to present each example. For reference, we will spread each time a `notification` object to have non relevant fields included as wel;/
 
-```jsx
+```js
 notification = {
   title: "Wonderful!",
   message: "Configurable",
@@ -121,14 +121,14 @@ notification = {
 
 You have in total 6 containers for desktop and 2 for mobile, if component is set to be responsive. List of containers:
 
-* top-left
-* top-right
-* top-center
-* bottom-left
-* bottom-right
-* bottom-center
+* `top-left`
+* `top-right`
+* `top-center`
+* `bottom-left`
+* `bottom-right`
+* `bottom-center`
 
-```jsx
+```js
 store.addNotification({
   ...notification,
   container: 'top-right'
@@ -141,14 +141,14 @@ Will position the notification in top right of the screen.
 
 List of types:
 
-* success
-* danger
-* info
-* default
-* warning
+* `success`
+* `danger`
+* `info`
+* `default`
+* `warning`
 
 
-```jsx
+```js
 store.addNotification({
   ...notification,
   type: 'danger'
@@ -159,7 +159,7 @@ Will trigger a `danger` notification.
 
 ### Animating
   
-```jsx
+```js
 store.addNotification({
   ...notification,
   animationIn: ['animated", 'fadeIn'],
@@ -173,7 +173,7 @@ store.addNotification({
 
 ### Dismiss notification automatically after timeout expires
 
-```jsx
+```js
 store.addNotification({
   ...notification,
   dismiss: {
@@ -184,7 +184,7 @@ store.addNotification({
 
 ### Dismiss notification automatically with the time left shown on UI
 
-```jsx
+```js
 store.addNotification({
   ...notification,
   dismiss: {
@@ -196,7 +196,7 @@ store.addNotification({
 
 ### Pause notification's timeout by hovering
 
-```jsx
+```js
 store.addNotification({
   ...notification,
   dismiss: {
@@ -208,7 +208,7 @@ store.addNotification({
 
 ### Change transition
 
-```jsx
+```js
 store.addNotification({
   ...notification,
   slidingExit: {
@@ -221,7 +221,7 @@ store.addNotification({
 
 `slidingEnter`, `touchRevert` and `touchSlidingExit` can all be configured in the same way, with the mention that `touchSlidingExit` has 2 transitions nested.
 
-```jsx
+```js
 store.addNotification({
   ...notification,
   swipe: {
