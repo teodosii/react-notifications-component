@@ -103,7 +103,7 @@ Manually remove a notification by id.
 
 ## Examples
 
-In the following examples for brevity some options will not be mentioned. Strictly focusing on the needed options to present each example. For reference, we will spread each time a `notification` object to have non relevant fields included as wel;/
+In the following examples for brevity some options will not be mentioned. Strictly focusing on the needed options to present each example. For reference, we will be using Object spread operator on a `notification` object to have non relevant fields included as well.
 
 ```js
 notification = {
@@ -169,7 +169,7 @@ store.addNotification({
 
 `animationIn` and `animationOut` rely on CSS classes that toggle animations. On github pages we rely on `animate.css`, we suggest you to import that package and use their animations as they have plenty.
 
-**Note**: Failing to have animations set properly will lead to bugs in some causes, as `react-notifications-component` relies on `onAnimationEnd` event to know whene an animation has finished.
+**Note**: Failing to have animations set properly will lead to bugs in some causes, as `react-notifications-component` relies on `onAnimationEnd` event to know when an animation has finished.
 
 ### Dismiss notification automatically after timeout expires
 
