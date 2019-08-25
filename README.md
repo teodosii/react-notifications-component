@@ -47,11 +47,11 @@ import ReactNotification from 'react-notifications-component'
 ```
 Import the <code>CSS</code> theme
 ```js
-import 'react-notifications-component/theme.css'
+import 'react-notifications-component/dist/theme.css'
 ```
 
 ##### SASS
-<code>SASS</code> files are located in `react-notifications-component/scss`
+<code>SASS</code> files are located in `react-notifications-component/dist/scss`
 
 Render <code>react-notifications-component</code> at the top of your application so that it does not conflict with other absolutely positioned DOM elements.
 ```jsx
