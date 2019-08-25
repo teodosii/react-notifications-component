@@ -120,7 +120,10 @@ export default class ReactNotification extends React.Component {
   }
 
   onClick() {
-    this.removeNotification(REMOVAL.CLICK);
+    const { notification: { dismiss } } = this.props;
+    if (dismiss.click || dismiss.showIcon) {
+      this.removeNotification(REMOVAL.CLICK);
+    }
   }
 
   onTouchStart({ touches }) {
@@ -314,7 +317,7 @@ export default class ReactNotification extends React.Component {
   }
 
   render() {
-    const { notification: { content } } = this.props;
+    const { notification: { content, dismiss: { click } } } = this.props;
     const {
       parentStyle,
       onAnimationEnd,
@@ -325,7 +328,7 @@ export default class ReactNotification extends React.Component {
     return (
       <div
         ref={this.rootElementRef}
-        onClick={this.onClick}
+        onClick={click ? this.onClick : null}
         className='n-parent'
         style={parentStyle}
         onAnimationEnd={onAnimationEnd}
