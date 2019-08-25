@@ -301,6 +301,7 @@ In progress
 * Default values for transitions have been slightly changed
 * `dismissIcon` has been removed. Use `showIcon` instead. If you relly on customized close icon, then stick to custom content.
 * `dismiss` supports now more options
+* `cubicBezier` has been renamed to `timingFunction`
 * Validators are now no longer included in the prod build, they are only included in the dev build. If you inspect the npm package you will see that the component has 2 builds - `dev` and `prod` - and relies on ENV variable when importing.
   
 ## License
