@@ -117,7 +117,7 @@ notification = {
 };
 ```
 
-### Notification container
+#### Notification container
 
 You have in total 6 containers for desktop and 2 for mobile, if component is set to be responsive. List of containers:
 
@@ -137,7 +137,7 @@ store.addNotification({
 
 Will position the notification in top right of the screen.
 
-### Notification type
+#### Notification type
 
 List of types:
 
@@ -157,7 +157,7 @@ store.addNotification({
 
 Will trigger a `danger` notification.
 
-### Animating
+#### Animating
   
 ```js
 store.addNotification({
@@ -171,7 +171,7 @@ store.addNotification({
 
 **Note**: Failing to have animations set properly will lead to bugs in some causes, as `react-notifications-component` relies on `onAnimationEnd` event to know when an animation has finished.
 
-### Dismiss notification automatically after timeout expires
+#### Dismiss notification automatically after timeout expires
 
 ```js
 store.addNotification({
@@ -182,7 +182,7 @@ store.addNotification({
 })
 ```
 
-### Dismiss notification automatically with the time left shown on UI
+#### Dismiss notification automatically with the time left shown on UI
 
 ```js
 store.addNotification({
@@ -194,7 +194,7 @@ store.addNotification({
 })
 ```
 
-### Pause notification's timeout by hovering
+#### Pause notification's timeout by hovering
 
 ```js
 store.addNotification({
@@ -206,7 +206,7 @@ store.addNotification({
 })
 ```
 
-### Change transition
+#### Change transition
 
 ```js
 store.addNotification({
@@ -224,15 +224,17 @@ store.addNotification({
 ```js
 store.addNotification({
   ...notification,
-  swipe: {
-    duration: 400,
-    timingFunction: 'ease-out',
-    delay: 0,
-  },
-  fade: {
-    duration: 400,
-    timingFunction: 'ease-out',
-    delay: 0
+  touchSlidingExit: {
+    swipe: {
+      duration: 400,
+      timingFunction: 'ease-out',
+      delay: 0,
+    },
+    fade: {
+      duration: 400,
+      timingFunction: 'ease-out',
+      delay: 0
+    }
   }
 })
 ```
