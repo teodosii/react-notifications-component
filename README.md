@@ -90,6 +90,8 @@ store.addNotification({
 
 Voila!
 
+**Note**: We rely on `animate.css` in this example as `fadeIn` and `fadeOut` are part of `animate.css`. We recommend using it as it's an excellent animation library, but you're not forced to. If you prefer you may also use your custom animations as long as they're valid CSS animations.
+
 ## API
 
 `store.addNotification(options)`
