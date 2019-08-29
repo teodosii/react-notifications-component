@@ -20,8 +20,14 @@ export default class ReactNotification extends React.Component {
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
 
+    const { notification: { width } } = props;
+
     this.state = {
-      parentStyle: { height: 0, overflow: 'hidden' },
+      parentStyle: {
+        height: 0,
+        overflow: 'hidden',
+        width: width ? `${width}px` : 'auto'
+      },
       htmlClassList: getHtmlClassesForType(props.notification),
       animationPlayState: 'running',
       touchEnabled: true
@@ -43,12 +49,11 @@ export default class ReactNotification extends React.Component {
   componentDidMount() {
     const { notification, count } = this.props;
     const { dismiss: { duration, onScreen } } = notification;
+    const { scrollHeight } = this.rootElementRef.current;
     const willSlide = shouldNotificationHaveSliding(notification, count);
 
     const onTransitionEnd = () => {
       if (!duration || onScreen) return;
-
-      // Will set timer only if duration > 0 and onScreen = false
       const callback = () => this.removeNotification(REMOVAL.TIMEOUT);
       this.timer = new Timer(callback, duration);
     };
@@ -62,17 +67,18 @@ export default class ReactNotification extends React.Component {
           ]
         }));
       })
-    }
+    };
 
-    this.setState({
+    this.setState(({ parentStyle: { width } }) => ({
       parentStyle: {
-        height: `${this.getScrollHeight()}px`,
+        width,
+        height: `${scrollHeight}px`,
         transition: willSlide
           ? getTransition(notification.slidingEnter, 'height')
           : '10ms height'
       },
       onTransitionEnd
-    }, callback);
+    }), callback);
   }
 
   componentDidUpdate({ removed }) {
@@ -89,34 +95,35 @@ export default class ReactNotification extends React.Component {
       ...getHtmlClassesForType(notification)
     ];
 
+    const onTransitionEnd = () => toggleRemoval(notification.id, removalFlag);
     const parentStyle = {
       height: 0,
       transition: getTransition(notification.slidingExit, 'height')
     };
 
-    const onTransitionEnd = () => toggleRemoval(notification.id, removalFlag);
-
     if (waitForAnimation) {
-      return this.setState({
+      return this.setState(({ parentStyle: { width } }) => ({
         htmlClassList,
         onAnimationEnd: () => {
           this.setState({
-            parentStyle,
+            parentStyle: {
+              width,
+              ...parentStyle
+            },
             onTransitionEnd
           });
         }
-      })
+      }));
     }
 
-    this.setState({
-      parentStyle,
+    return this.setState(({ parentStyle: { width } }) => ({
+      parentStyle: {
+        width,
+        ...parentStyle
+      },
       onTransitionEnd,
       htmlClassList
-    });
-  }
-
-  getScrollHeight() {
-    return this.rootElementRef.current.scrollHeight;
+    }));
   }
 
   onClick() {
@@ -158,18 +165,15 @@ export default class ReactNotification extends React.Component {
       return this.setState(({ parentStyle }) => ({
         touchEnabled: false,
         parentStyle: {
+          ...parentStyle,
           left,
           opacity: 0,
-          position: 'relative',
-          transition: `${t1}, ${t2}`,
-          height: parentStyle.height
+          transition: `${t1}, ${t2}`
         },
         onTransitionEnd: () => {
-          this.setState(({ parentStyle: { left, opacity, position } }) => ({
+          this.setState(({ parentStyle }) => ({
             parentStyle: {
-              left,
-              opacity,
-              position,
+              ...parentStyle,
               height: 0,
               transition: getTransition(slidingExit, 'height')
             },
@@ -182,8 +186,7 @@ export default class ReactNotification extends React.Component {
     return this.setState(({ parentStyle }) => ({
       currentX: pageX,
       parentStyle: {
-        position: 'relative',
-        height: parentStyle.height,
+        ...parentStyle,
         left: `${0 + distance}px`
       }
     }));
@@ -194,9 +197,8 @@ export default class ReactNotification extends React.Component {
 
     this.setState(({ parentStyle }) => ({
       parentStyle: {
+        ...parentStyle,
         left: 0,
-        position: 'relative',
-        height: parentStyle.height,
         transition: getTransition(touchRevert, 'left')
       }
     }));

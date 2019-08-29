@@ -71,7 +71,6 @@
     "node-sass": "^4.11.0",
     "object-assign": "^4.1.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "prop-types": "^15.6.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-github-button": "^0.1.11",
@@ -88,5 +87,8 @@
   },
   "peerDependencies": {
     "react": "^16.0.0"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.2"
   }
 }
