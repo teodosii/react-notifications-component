@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.1.0
+
+### Breaking changes
+
+* Removed prop `onNotificationRemoval` as it was rather hard to know which particular notification has been removed.
+
+### Improvements
+
+* Added option `onRemoval` directly to the notification object. Each notification will have its own `onRemoval`, making it easier to track removals.
+
 ## 2.0.0
 
 ### Breaking changes
