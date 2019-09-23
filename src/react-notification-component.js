@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactNotification from 'src/react-notification';
+import ReactNotification from './react-notification';
 import PropTypes from 'prop-types';
 import store from './store';
 import {
   getNotificationsForEachContainer,
   getNotificationsForMobileView
-} from 'src/helpers';
+} from './utils/helpers';
 
 import 'src/scss/notification.scss';
 
@@ -28,8 +28,7 @@ export default class ReactNotificationComponent extends React.Component {
   static propTypes = {
     isMobile: PropTypes.bool,
     breakpoint: PropTypes.number,
-    types: PropTypes.array,
-    onNotificationRemoval: PropTypes.func
+    types: PropTypes.array
   }
 
   static defaultProps = {
@@ -77,14 +76,7 @@ export default class ReactNotificationComponent extends React.Component {
     }));
   }
 
-  toggleRemoval(id, removalFlag) {
-    const { onNotificationRemoval } = this.props;
-    const callback = () => {
-      if (onNotificationRemoval) {
-        onNotificationRemoval(id, removalFlag);
-      }
-    };
-
+  toggleRemoval(id, callback) {
     this.setState(({ notifications }) => ({
       notifications: notifications.filter(({ id: nId }) => nId !== id)
     }), callback);

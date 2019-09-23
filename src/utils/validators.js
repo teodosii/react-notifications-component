@@ -1,12 +1,12 @@
 import React from 'react';
 import { ERROR, NOTIFICATION_TYPE as NT } from './constants';
-import {
-  isNull,
-  isString,
-  isNumber,
-  isBoolean,
-  isArray
-} from 'src/utils';
+
+const isNull = (object) => object === null || object === undefined;
+const isString = (object) => typeof object === 'string';
+const isNumber = (object) => typeof object === 'number';
+const isBoolean = (object) => typeof object === 'boolean';
+const isFunction = (object) => !!(object && object.constructor && object.call && object.apply);
+const isArray = (object) => !isNull(object) && object.constructor === Array;
 
 function isClassComponent(component) {
   return typeof component === 'function' 
@@ -145,6 +145,13 @@ export const validators = [
     if (isNull(animationOut)) return;
     if (!isArray(animationOut)) {
       throw new Error(ERROR.ANIMATION_OUT);
+    }
+  },
+
+  function onRemoval({ onRemoval }) {
+    if (!onRemoval) return;
+    if (!isFunction(onRemoval)) {
+      throw new Error(ERROR.REMOVAL_FUNC);
     }
   },
 

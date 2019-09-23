@@ -3,8 +3,10 @@ import {
   INSERTION,
   NOTIFICATION_BASE_CLASS,
   NOTIFICATION_TYPE as NT,
-} from 'src/constants';
-import { isNull, getRandomId } from 'src/utils';
+} from './constants';
+
+const getRandomId = () => Math.random().toString(36).substr(2, 9);
+const isNull = (object) => object === null || object === undefined;
 
 export function isBottomContainer(container) {
   return container === CONTAINER.BOTTOM_LEFT
@@ -190,7 +192,8 @@ export function parseNotification(options, userDefinedTypes) {
     touchRevert,
     touchSlidingExit,
     dismiss,
-    width
+    width,
+    onRemoval
   } = notification;
 
   notification.id = id || getRandomId();
@@ -209,6 +212,7 @@ export function parseNotification(options, userDefinedTypes) {
   notification.dismiss = defaultDismiss(dismiss);
   notification.animationIn = animationIn || [];
   notification.animationOut = animationOut || [];
+  notification.onRemoval = onRemoval || (() => {});
 
   const t = (duration, timingFunction, delay) => ({
     duration,

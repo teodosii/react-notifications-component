@@ -1,5 +1,5 @@
-import { parseNotification } from './helpers';
-import { validateTransition, validators } from './validators';
+import { parseNotification } from './utils/helpers';
+import { validateTransition, validators } from './utils/validators';
 
 function Store() {
   this.types = null;

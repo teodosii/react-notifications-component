@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Timer from './timer';
-import { REMOVAL } from './constants';
+import Timer from './utils/timer';
 import {
   getTransition,
   hasFullySwiped,
   getHtmlClassesForType,
   shouldNotificationHaveSliding
-} from 'src/helpers';
+} from './utils/helpers';
+import { REMOVAL } from './utils/constants';
 
 export default class ReactNotification extends React.Component {
   constructor(props) {
@@ -89,13 +89,13 @@ export default class ReactNotification extends React.Component {
 
   removeNotification(removalFlag) {
     const { notification, toggleRemoval } = this.props;
-    const { dismiss: { waitForAnimation } } = notification;
+    const { id, onRemoval, dismiss: { waitForAnimation } } = notification;
     const htmlClassList = [
       ...notification.animationOut,
       ...getHtmlClassesForType(notification)
     ];
 
-    const onTransitionEnd = () => toggleRemoval(notification.id, removalFlag);
+    const onTransitionEnd = () => toggleRemoval(id, () => onRemoval(id, removalFlag));
     const parentStyle = {
       height: 0,
       transition: getTransition(notification.slidingExit, 'height')
@@ -147,6 +147,7 @@ export default class ReactNotification extends React.Component {
       toggleRemoval,
       notification: {
         id,
+        onRemoval,
         slidingExit,
         touchSlidingExit: { swipe, fade }
       }
@@ -160,7 +161,9 @@ export default class ReactNotification extends React.Component {
     if (hasFullySwiped(distance)) {
       const t1 = getTransition(swipe, 'left');
       const t2 = getTransition(fade, 'opacity');
-      const onTransitionEnd = () => toggleRemoval(id, REMOVAL.TOUCH);
+      const onTransitionEnd = () => {
+        toggleRemoval(id, () => onRemoval(id, REMOVAL.TOUCH));
+      }
 
       return this.setState(({ parentStyle }) => ({
         touchEnabled: false,
