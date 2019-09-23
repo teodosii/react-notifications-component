@@ -196,6 +196,19 @@ store.addNotification({
 })
 ```
 
+#### Subscribe to notification's removal
+
+Easily subscribe to `onRemoval` by supplying callback as option to the notification object. Callback will get called after the removal animation finishes.
+
+```js
+store.addNotification({
+  ...notification,
+  onRemoval: (id, removedBy) => {
+    ...
+  }
+})
+```
+
 #### Pause notification's timeout by hovering
 
 ```js
@@ -264,11 +277,6 @@ store.addNotification({
     <td><code>Array</code></td>
     <td>Custom types</td>
   </tr>
-  <tr>
-    <td><code>onNotificationRemoval</code></td>
-    <td><code>Function</code></td>
-    <td>Gets called on notification removal with <code>id</code> and <code>removedBy</code> arguments</td>
-  </tr>
 </table>
 
 ## Options
@@ -283,6 +291,11 @@ store.addNotification({
     <td><code>id</code></td>
     <td><code>String</code></td>
     <td>Id of the notification. Supply option only if you prefer to have custom id, otherwise you should let the component handle generation for you.</td>
+  </tr>
+  <tr>
+    <td><code>onRemoval</code></td>
+    <td><code>Function</code></td>
+    <td>Gets called on notification removal with <code>id</code> and <code>removedBy</code> arguments</td>
   </tr>
   <tr>
     <td><code>title</code></td>
