@@ -9,6 +9,7 @@
 ### Improvements
 
 * Added option `onRemoval` directly to the notification object. Each notification will have its own `onRemoval`, making it easier to track removals.
+* Removed `style-loader` from webpack dev config
 
 ## 2.0.0
 
