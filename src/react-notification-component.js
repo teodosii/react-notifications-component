@@ -92,14 +92,15 @@ export default class ReactNotificationComponent extends React.Component {
     />);
   }
 
-  renderMobileNotifications() {
+  renderMobileNotifications(props) {
+    const { className, id } = props;
     const { notifications } = this.state;
     const mobileNotifications = getNotificationsForMobileView(notifications);
     const top = this.renderNotifications(mobileNotifications.top);
     const bottom = this.renderNotifications(mobileNotifications.bottom);
 
     return (
-      <div className='react-notification-root'>
+      <div className={`react-notification-root ${className || ''}`} id={id}>
         <div className='notification-container-mobile-top'>
           {top}
         </div>
@@ -110,7 +111,8 @@ export default class ReactNotificationComponent extends React.Component {
     );
   }
 
-  renderScreenNotifications() {
+  renderScreenNotifications(props) {
+    const { className, id } = props;
     const { notifications } = this.state;
     const notificationsPerContainer = getNotificationsForEachContainer(notifications);
     const topLeft = this.renderNotifications(notificationsPerContainer.topLeft);
@@ -121,7 +123,7 @@ export default class ReactNotificationComponent extends React.Component {
     const bottomCenter = this.renderNotifications(notificationsPerContainer.bottomCenter);
 
     return (
-      <div className='react-notification-root'>
+      <div className={`react-notification-root ${className || ''}`} id={id}>
         <div className='notification-container-top-left'>
           {topLeft}
         </div>
@@ -149,10 +151,10 @@ export default class ReactNotificationComponent extends React.Component {
     const { width, breakpoint } = this.state;
 
     if (isMobile && width <= breakpoint) {
-      return this.renderMobileNotifications();
+      return this.renderMobileNotifications(this.props);
     }
 
-    return this.renderScreenNotifications();
+    return this.renderScreenNotifications(this.props);
   }
 }
 

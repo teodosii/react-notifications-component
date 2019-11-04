@@ -277,6 +277,16 @@ store.addNotification({
     <td><code>Array</code></td>
     <td>Custom types</td>
   </tr>
+  <tr>
+    <td><code>className</code></td>
+    <td><code>string</code></td>
+    <td>Classes assigned to the container</td>
+  </tr>
+  <tr>
+    <td><code>id</code></td>
+    <td><code>string</code></td>
+    <td>Id of the container</td>
+  </tr>
 </table>
 
 ## Options
