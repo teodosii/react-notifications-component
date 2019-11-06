@@ -3,6 +3,7 @@ node_modules/
 samples/
 src/
 tests/
+build/
 .babelrc
 .gitignore
 .eslintrc.js
@@ -10,3 +11,6 @@ tests/
 jest.config.js
 webpack.*.js
 *.log
+.prettierrc.js
+github-preview.png
+.travis.yml
