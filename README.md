@@ -310,27 +310,27 @@ store.addNotification({
   <tr>
     <td><code>title</code></td>
     <td><code>String</code></td>
-    <td>Title of the notification. Option is ignored if <code>content</code> is set, otherwise it is <b>required</b>.</td>
+    <td>Title of the notification. Option is ignored if <code>content</code> is set, otherwise it is required.</td>
   </tr>
   <tr>
     <td><code>message</code></td>
     <td><code>String</code></td>
-    <td>Message of the notification. Option is ignored if <code>content</code> is set, otherwise it is <b>required</b>.</td>
+    <td>Message of the notification. Option is ignored if <code>content</code> is set, otherwise it is required.</td>
   </tr>
   <tr>
     <td><code>content</code></td>
     <td><code>Object</code></td>
-    <td>Custom notification content, must be either <b>Class Component</b>, <b>Functional Component</b> or <b>React element</b>.</td>
+    <td>Custom notification content, must be either Class Component, Functional Component or React element. If being supplied as functional or class component, `id` will be supplied as prop</td>
   </tr>
   <tr>
     <td><code>type</code></td>
     <td><code>String</code></td>
-    <td>Type of the notification. Option is ignored if <code>content</code> is set, otherwise it is <b>required</b>.</td>
+    <td>Type of the notification. Option is ignored if <code>content</code> is set, otherwise it is required.</td>
   </tr>
   <tr>
     <td><code>container</code></td>
     <td><code>String</code></td>
-    <td>Container in which the notification will be displayed. Option is <b>required<b>.</td>
+    <td>Container in which the notification will be displayed. Option is required.</td>
   </tr>
   <tr>
     <td><code>insert</code></td>
