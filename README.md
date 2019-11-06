@@ -320,7 +320,7 @@ store.addNotification({
   <tr>
     <td><code>content</code></td>
     <td><code>Object</code></td>
-    <td>Custom notification content, must be either Class Component, Functional Component or React element. If being supplied as functional or class component, `id` will be supplied as prop</td>
+    <td>Custom notification content, must be either Class Component, Functional Component or React element. If being supplied as functional or class component, <code>id</code> will be supplied as prop</td>
   </tr>
   <tr>
     <td><code>type</code></td>
