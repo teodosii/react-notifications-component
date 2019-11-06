@@ -7,8 +7,8 @@
 
 html,
 body {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 html,
@@ -17,219 +17,208 @@ body,
 .notification-title,
 .notification-message,
 .notification-item {
-  font-family: -apple-system, 
-    BlinkMacSystemFont, 
-    "Segoe UI", 
-    Roboto, 
-    "Helvetica Neue", 
-    Arial, 
-    sans-serif, 
-    "Apple Color Emoji", 
-    "Segoe UI Emoji", 
-    "Segoe UI Symbol" !important;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
 }
 
 div.usage-example {
-  text-align: left;
+	text-align: left;
 }
 
 p.p-default {
-  margin-bottom: 5px;
+	margin-bottom: 5px;
 }
 
 ul.paragraph-list {
-  width: 100%;
-  display: block;
-  padding-left: 0;
-  margin-bottom: 0;
+	width: 100%;
+	display: block;
+	padding-left: 0;
+	margin-bottom: 0;
 
-  li {
-    list-style-type: none;
-    background-color: #f9f9f9;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border: 1px solid #eaeaea;
-  }
+	li {
+		list-style-type: none;
+		background-color: #f9f9f9;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border: 1px solid #eaeaea;
+	}
 
-  li:not(:last-child) {
-    margin-bottom: 10px;
-  }
+	li:not(:last-child) {
+		margin-bottom: 10px;
+	}
 
-  p {
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
+	p {
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
 
-  .alert {
-    margin-bottom: 0;
-  }
+	.alert {
+		margin-bottom: 0;
+	}
 }
 
 .alert-small {
-  padding-top: 8px;
-  padding-bottom: 8px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	margin-top: 8px;
+	margin-bottom: 8px;
 }
 
 .alert .fa {
-  font-size: 16px;
-  margin-right: 10px;
+	font-size: 16px;
+	margin-right: 10px;
 }
 
 .heading {
-  margin-bottom: 20px !important;
+	margin-bottom: 20px !important;
 
-  h1, h2, h3, h4, h5, h6 { 
-    font-weight: bold;
-    margin-bottom: 15px; 
-  }
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		font-weight: bold;
+		margin-bottom: 15px;
+	}
 }
 
 .column {
-  text-align: center;
-  margin-bottom: 50px;
+	text-align: center;
+	margin-bottom: 50px;
 
-  h6 { 
-    font-size: 18px;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
+	h6 {
+		font-size: 18px;
+		font-weight: bold;
+		letter-spacing: 1px;
+	}
 
-  button {
-    border-radius: 0;
-    text-transform: uppercase;
-    margin-top: 10px;
-  }
+	button {
+		border-radius: 0;
+		text-transform: uppercase;
+		margin-top: 10px;
+	}
 }
 
 code:not(.white-code) {
-  background-color: #f7f7f9 !important;
-  border: 1px solid #e1e1e8 !important;
+	background-color: #f7f7f9 !important;
+	border: 1px solid #e1e1e8 !important;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: #f7f7f9;
+	background-color: #f7f7f9;
 }
 
 .table-hover tbody tr:hover {
-  background-color: #efefef;
+	background-color: #efefef;
 }
 
-.table-bordered th, 
+.table-bordered th,
 .table-bordered td {
-  border: 1px solid #e1e1e8;
+	border: 1px solid #e1e1e8;
 }
 
 .alert-warning {
-  color: #7f7813;
-  background-color: #fdfad3;
-  border-color: #fcf8c2;
+	color: #7f7813;
+	background-color: #fdfad3;
+	border-color: #fcf8c2;
 }
 
 .row-center th,
-.row-center td { 
-  text-align: center;
+.row-center td {
+	text-align: center;
 }
 
 .column-block {
-  white-space: nowrap;
+	white-space: nowrap;
 }
 
 .alert-transparent {
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-bottom: 10px;
-  background: none;
-  color: #585858;
-  border: none;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-bottom: 10px;
+	background: none;
+	color: #585858;
+	border: none;
 }
 
 .bold {
-  font-size: 16px !important;
-  font-weight: bold;
+	font-size: 16px !important;
+	font-weight: bold;
 }
 
-h1, 
-h2, 
-h3, 
-h4, 
-h5, 
-h6, 
-p, 
-span, 
-small, 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+small,
 strong {
-  font-family: -apple-system, 
-    BlinkMacSystemFont, 
-    "Segoe UI", 
-    Roboto, 
-    "Helvetica Neue", 
-    Arial, 
-    sans-serif, 
-    "Apple Color Emoji", 
-    "Segoe UI Emoji", 
-    "Segoe UI Symbol";
-  color: #585858;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	color: #585858;
 }
 
 .btn.no-corner {
-  border-radius: 0;
+	border-radius: 0;
 }
 
 button.btn-no-margin {
-  margin-top: 0;
+	margin-top: 0;
 }
 
 .alert .icon {
-  font-size: 16px;
-  margin-right: 8px;
+	font-size: 16px;
+	margin-right: 8px;
 }
 
 .header {
-  width: 100%;
-  height: 350px;
-  background-color: #6ed0ff;
-  text-align: center;
-  position: relative;
-  margin-bottom: 30px;
-  
-  .header-buttons {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+	width: 100%;
+	height: 350px;
+	background-color: #6ed0ff;
+	text-align: center;
+	position: relative;
+	margin-bottom: 30px;
 
-  .header-content {
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-  }
+	.header-buttons {
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+	}
 
-  .header-title {
-    color: #fff;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    letter-spacing: 2px;
-    font-size: 2.75rem;
-  }
+	.header-content {
+		top: 50%;
+		left: 50%;
+		position: absolute;
+		transform: translate(-50%, -50%);
+	}
 
-  .header-desc {
-    color: #fff;
-    font-size: 16px;
-    margin-bottom: 28px;
-    letter-spacing: 0.5px;
-  }
+	.header-title {
+		color: #fff;
+		font-weight: bold;
+		text-transform: uppercase;
+		margin-bottom: 8px;
+		letter-spacing: 2px;
+		font-size: 2.75rem;
+	}
+
+	.header-desc {
+		color: #fff;
+		font-size: 16px;
+		margin-bottom: 28px;
+		letter-spacing: 0.5px;
+	}
 }
 
 .custom-image-content {
-  width: 100%;
+	width: 100%;
 
-  img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+	img {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
 }

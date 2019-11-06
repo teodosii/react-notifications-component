@@ -1,69 +1,69 @@
 .notification-custom-icon {
-  flex-basis: 20%;
-  position: relative;
-  padding: 8px 8px 8px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	flex-basis: 20%;
+	position: relative;
+	padding: 8px 8px 8px 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-  .fa {
-    color: #fff;
-    font-size: 28px;
-  }
+	.fa {
+		color: #fff;
+		font-size: 28px;
+	}
 }
 
 .notification-custom-content {
-  flex-basis: 80%;
-  padding: 12px 12px 12px 8px;
-  display: inline-block;
+	flex-basis: 80%;
+	padding: 12px 12px 12px 8px;
+	display: inline-block;
 }
 
 .notification-custom-success {
-  width: 100%;
-  display: flex;
-  background-color: #28a745;
+	width: 100%;
+	display: flex;
+	background-color: #28a745;
 
-  .notification-custom-icon {
-    border-left: 8px solid darken(#28a745, 15%);
-  }
+	.notification-custom-icon {
+		border-left: 8px solid darken(#28a745, 15%);
+	}
 }
 
 .notification-custom-default {
-  width: 100%;
-  display: flex;
-  background-color: #007bff;
+	width: 100%;
+	display: flex;
+	background-color: #007bff;
 
-  .notification-custom-icon {
-    border-left: 8px solid darken(#007bff, 15%);
-  }
+	.notification-custom-icon {
+		border-left: 8px solid darken(#007bff, 15%);
+	}
 }
 
 .notification-custom-danger {
-  width: 100%;
-  display: flex;
-  background-color: #dc3545;
+	width: 100%;
+	display: flex;
+	background-color: #dc3545;
 
-  .notification-custom-icon {
-    border-left: 8px solid darken(#dc3545, 15%);
-  }
+	.notification-custom-icon {
+		border-left: 8px solid darken(#dc3545, 15%);
+	}
 }
 
 .notification-custom-info {
-  width: 100%;
-  display: flex;
-  background-color: #17a2b8;
+	width: 100%;
+	display: flex;
+	background-color: #17a2b8;
 
-  .notification-custom-icon {
-    border-left: 8px solid darken(#17a2b8, 15%);
-  }
+	.notification-custom-icon {
+		border-left: 8px solid darken(#17a2b8, 15%);
+	}
 }
 
 .notification-custom-warning {
-  width: 100%;
-  display: flex;
-  background-color: #eab000;
+	width: 100%;
+	display: flex;
+	background-color: #eab000;
 
-  .notification-custom-icon {
-    border-left: 8px solid darken(#eab000, 15%);
-  }
+	.notification-custom-icon {
+		border-left: 8px solid darken(#eab000, 15%);
+	}
 }
