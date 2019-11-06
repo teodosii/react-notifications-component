@@ -4,6 +4,7 @@
 
 ### Fixes
 
+* Merged pull request #31 to pass `className` to component
 * Fixed issue #33 - Unsubscribe from `resize` once component was unmounted
 * Fixed issue #35 - `content` now gets `id` supplied as a prop
 
