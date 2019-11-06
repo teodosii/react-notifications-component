@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.2.0
+
+### Fixes
+
+* Fixed issue #33 - Unsubscribe from `resize` once component was unmounted
+* Fixed issue #35 - `content` now gets `id` supplied as a prop
+
 ## 2.1.0
 
 ### Breaking changes
