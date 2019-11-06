@@ -223,36 +223,6 @@ export default class ReactNotification extends React.Component {
     }
   }
 
-  renderTitle() {
-    const { notification: { title } } = this.props;
-    if (!title) return null;
-    return (
-      <p className='notification-title'>
-        {title}
-      </p>
-    );
-  }
-
-  renderMessage() {
-    const { notification: { message } } = this.props;
-    return (
-      <p className='notification-message'>
-        {message}
-      </p>
-    );
-  }
-
-  renderCloseIcon() {
-    const { notification: { dismiss: { showIcon } } } = this.props;
-    if (!showIcon) return null;
-    return (
-      <div
-        className='notification-close'
-        onClick={this.onClick}
-      ></div>
-    );
-  }
-
   renderTimer() {
     const { notification: { dismiss } } = this.props;
     const { duration, onScreen } = dismiss;
@@ -284,8 +254,8 @@ export default class ReactNotification extends React.Component {
   }
 
   renderCustomContent() {
-    const { htmlClassList } = this.state;
-    const { notification: { content: CustomContent } } = this.props;
+    const { htmlClassList, animationPlayState } = this.state;
+    const { notification: { id, content: CustomContent } } = this.props;
 
     return (
       <div
@@ -294,15 +264,25 @@ export default class ReactNotification extends React.Component {
         {
           React.isValidElement(CustomContent)
             ? CustomContent
-            : <CustomContent />
+            : <CustomContent {...{id, animationPlayState}}/>
         }
       </div>
     );
   }
 
   renderNotification() {
+    const {
+      notification: {
+        title,
+        message,
+        dismiss: {
+          showIcon,
+          duration,
+          pauseOnHover
+        }
+      }
+    } = this.props;
     const { htmlClassList } = this.state;
-    const { notification: { dismiss: { duration, pauseOnHover } } } = this.props;
     const hasMouseEvents = duration > 0 && pauseOnHover;
 
     return (
@@ -312,9 +292,9 @@ export default class ReactNotification extends React.Component {
         onMouseLeave={hasMouseEvents ? this.onMouseLeave : null}
       >
         <div className='notification-content'>
-          { this.renderCloseIcon() }
-          { this.renderTitle() }
-          { this.renderMessage() }
+          { showIcon && <div className='notification-close' onClick={this.onClick}></div> }
+          { title && <p className='notification-title'>{title}</p> }
+          { <p className='notification-message'>{message}</p> }
           { this.renderTimer() }
         </div>
       </div>
