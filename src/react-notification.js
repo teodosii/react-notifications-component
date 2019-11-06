@@ -258,18 +258,14 @@ export default class ReactNotification extends React.Component {
   }
 
   renderCustomContent() {
-    const { htmlClassList, animationPlayState } = this.state;
+    const { htmlClassList } = this.state;
     const {
       notification: { id, content: CustomContent }
     } = this.props;
 
     return (
       <div className={`${[...htmlClassList, 'n-child'].join(' ')}`}>
-        {React.isValidElement(CustomContent) ? (
-          CustomContent
-        ) : (
-          <CustomContent {...{ id, animationPlayState }} />
-        )}
+        {React.isValidElement(CustomContent) ? CustomContent : <CustomContent {...{ id }} />}
       </div>
     );
   }
