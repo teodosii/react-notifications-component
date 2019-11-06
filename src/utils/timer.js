@@ -1,4 +1,4 @@
-export default function (callback, delay) {
+export default function(callback, delay) {
   let timerId;
   let start;
   let remaining = delay;

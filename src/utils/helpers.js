@@ -2,22 +2,29 @@ import {
   CONTAINER,
   INSERTION,
   NOTIFICATION_BASE_CLASS,
-  NOTIFICATION_TYPE as NT,
+  NOTIFICATION_TYPE as NT
 } from './constants';
 
-const getRandomId = () => Math.random().toString(36).substr(2, 9);
-const isNull = (object) => object === null || object === undefined;
+const getRandomId = () =>
+  Math.random()
+    .toString(36)
+    .substr(2, 9);
+const isNull = object => object === null || object === undefined;
 
 export function isBottomContainer(container) {
-  return container === CONTAINER.BOTTOM_LEFT
-    || container === CONTAINER.BOTTOM_RIGHT
-    || container === CONTAINER.BOTTOM_CENTER;
+  return (
+    container === CONTAINER.BOTTOM_LEFT ||
+    container === CONTAINER.BOTTOM_RIGHT ||
+    container === CONTAINER.BOTTOM_CENTER
+  );
 }
 
 export function isTopContainer(container) {
-  return container === CONTAINER.TOP_LEFT
-    || container === CONTAINER.TOP_RIGHT
-    || container === CONTAINER.TOP_CENTER;
+  return (
+    container === CONTAINER.TOP_LEFT ||
+    container === CONTAINER.TOP_RIGHT ||
+    container === CONTAINER.TOP_CENTER
+  );
 }
 
 export function hasFullySwiped(diffX) {
@@ -30,9 +37,9 @@ export function shouldNotificationHaveSliding(notification, count) {
   if (count <= 1) return false;
 
   return (
-    count > 1
-    && ((notification.insert === INSERTION.TOP && isTopContainer(notification.container))
-    || (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)))
+    count > 1 &&
+    ((notification.insert === INSERTION.TOP && isTopContainer(notification.container)) ||
+      (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)))
   );
 }
 
@@ -69,7 +76,7 @@ export function getNotificationsForMobileView(notifications) {
   const top = [];
   const bottom = [];
 
-  notifications.forEach((notification) => {
+  notifications.forEach(notification => {
     const { container } = notification;
     if (isTopContainer(container)) {
       top.push(notification);
@@ -89,7 +96,7 @@ export function getNotificationsForEachContainer(notifications) {
   const bottomRight = [];
   const bottomCenter = [];
 
-  notifications.forEach((notification) => {
+  notifications.forEach(notification => {
     const { container } = notification;
     if (container === CONTAINER.TOP_LEFT) {
       topLeft.push(notification);
@@ -153,7 +160,7 @@ function defaultDismiss(dismiss) {
     return defaults;
   }
 
-  Object.keys(defaults).forEach((prop) => {
+  Object.keys(defaults).forEach(prop => {
     if (isNull(option[prop])) {
       option[prop] = defaults[prop];
     }
@@ -166,13 +173,14 @@ function defaultUserDefinedTypes({ content, type }, definedTypes) {
   if (content) return undefined;
 
   if (
-    type === NT.SUCCESS
-    || type === NT.DANGER
-    || type === NT.INFO
-    || type === NT.DEFAULT
-    || type === NT.WARNING
-    || !definedTypes
-  ) return undefined;
+    type === NT.SUCCESS ||
+    type === NT.DANGER ||
+    type === NT.INFO ||
+    type === NT.DEFAULT ||
+    type === NT.WARNING ||
+    !definedTypes
+  )
+    return undefined;
 
   return definedTypes;
 }

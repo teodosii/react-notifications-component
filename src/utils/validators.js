@@ -1,16 +1,15 @@
 import React from 'react';
 import { ERROR, NOTIFICATION_TYPE as NT } from './constants';
 
-const isNull = (object) => object === null || object === undefined;
-const isString = (object) => typeof object === 'string';
-const isNumber = (object) => typeof object === 'number';
-const isBoolean = (object) => typeof object === 'boolean';
-const isFunction = (object) => !!(object && object.constructor && object.call && object.apply);
-const isArray = (object) => !isNull(object) && object.constructor === Array;
+const isNull = object => object === null || object === undefined;
+const isString = object => typeof object === 'string';
+const isNumber = object => typeof object === 'number';
+const isBoolean = object => typeof object === 'boolean';
+const isFunction = object => !!(object && object.constructor && object.call && object.apply);
+const isArray = object => !isNull(object) && object.constructor === Array;
 
 function isClassComponent(component) {
-  return typeof component === 'function' 
-    && !!component.prototype.isReactComponent;
+  return typeof component === 'function' && !!component.prototype.isReactComponent;
 }
 
 function isFunctionComponent(component) {
@@ -18,11 +17,7 @@ function isFunctionComponent(component) {
 }
 
 export function validateTransition(notification, transition) {
-  const {
-    TRANSITION_DURATION_NUMBER,
-    TRANSITION_TIMING_FUNCTION,
-    TRANSITION_DELAY_NUMBER
-  } = ERROR;
+  const { TRANSITION_DURATION_NUMBER, TRANSITION_TIMING_FUNCTION, TRANSITION_DELAY_NUMBER } = ERROR;
 
   const { duration, timingFunction, delay } = notification[transition] || {};
 
@@ -72,12 +67,12 @@ export const validators = [
     }
 
     if (
-      !userDefinedTypes
-      && type !== NT.SUCCESS
-      && type !== NT.DANGER
-      && type !== NT.INFO
-      && type !== NT.DEFAULT
-      && type !== NT.WARNING
+      !userDefinedTypes &&
+      type !== NT.SUCCESS &&
+      type !== NT.DANGER &&
+      type !== NT.INFO &&
+      type !== NT.DEFAULT &&
+      type !== NT.WARNING
     ) {
       throw new Error(ERROR.TYPE_NOT_EXISTENT);
     }
@@ -111,13 +106,14 @@ export const validators = [
     if (content) return;
 
     if (
-      type === NT.SUCCESS
-      || type === NT.DANGER
-      || type === NT.INFO
-      || type === NT.DEFAULT
-      || type === NT.WARNING
-      || !userDefinedTypes
-    ) return;
+      type === NT.SUCCESS ||
+      type === NT.DANGER ||
+      type === NT.INFO ||
+      type === NT.DEFAULT ||
+      type === NT.WARNING ||
+      !userDefinedTypes
+    )
+      return;
 
     if (!userDefinedTypes.find(p => p.name === type)) {
       throw new Error(ERROR.TYPE_NOT_FOUND);
@@ -164,7 +160,8 @@ export const validators = [
       showIcon,
       pauseOnHover,
       waitForAnimation: wait,
-      click, touch
+      click,
+      touch
     } = dismiss;
 
     if (isNull(duration)) {

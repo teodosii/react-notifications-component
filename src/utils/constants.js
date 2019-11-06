@@ -6,7 +6,7 @@ export const CONTAINER = {
   BOTTOM_CENTER: 'bottom-center',
   TOP_LEFT: 'top-left',
   TOP_RIGHT: 'top-right',
-  TOP_CENTER: 'top-center',
+  TOP_CENTER: 'top-center'
 };
 
 export const INSERTION = {
@@ -34,12 +34,16 @@ export const ERROR = {
   ANIMATION_OUT: 'Validation error. `animationOut` option must be an array',
   DISMISS_REQUIRED: 'Validation error. `duration` property of `dismiss` option is required',
   DISMISS_NUMBER: 'Validation error. `duration` property of `dismiss` option must be a Number',
-  DISMISS_POSITIVE: 'Validation error. `duration` property of `dismiss` option must be a positive Number',
+  DISMISS_POSITIVE:
+    'Validation error. `duration` property of `dismiss` option must be a positive Number',
   DISMISS_CLICK_BOOL: 'Validation error. `click` property of `dismiss` option must be a Boolean',
   DISMISS_TOUCH_BOOL: 'Validation error. `touch` property of `dismiss` option must be a Boolean',
-  DISMISS_WAIT: 'Validation error. `waitForAnimation` property of `dismiss` option must be a Boolean',
-  DISMISS_PAUSE_BOOL: 'Validation error. `pauseOnHover` property of `dismiss` option must be a Boolean',
-  DISMISS_ONSCREEN_BOOL: 'Validation error. `onScreen` property of `dismiss` option must be a Boolean',
+  DISMISS_WAIT:
+    'Validation error. `waitForAnimation` property of `dismiss` option must be a Boolean',
+  DISMISS_PAUSE_BOOL:
+    'Validation error. `pauseOnHover` property of `dismiss` option must be a Boolean',
+  DISMISS_ONSCREEN_BOOL:
+    'Validation error. `onScreen` property of `dismiss` option must be a Boolean',
   DISMISS_ICON: 'Validation error. `showIcon` property of `dismiss` option must be a Boolean',
   TITLE_STRING: 'Validation error. `title` option must be a String.',
   MESSAGE_REQUIRED: 'Validation error. `message` option is required',
@@ -49,12 +53,16 @@ export const ERROR = {
   TYPE_NOT_EXISTENT: 'Validation error. `type` option not found',
   CONTAINER_REQUIRED: 'Validation error. `container` option is required',
   CONTAINER_STRING: 'Validation error. `container` option must be a String',
-  CONTENT_INVALID: 'Validation error. `content` option must be a valid React component/function/element',
+  CONTENT_INVALID:
+    'Validation error. `content` option must be a valid React component/function/element',
   WIDTH_NUMBER: 'Validation error. `width` option must be a Number',
   INSERT_STRING: 'Validation error. `insert` option must be a String',
-  TRANSITION_DURATION_NUMBER: 'Validation error. `duration` property of `transition` option must be a Number',
-  TRANSITION_TIMING_FUNCTION: 'Validation error. `timingFunction` property of `transition` option must be a String',
-  TRANSITION_DELAY_NUMBER: 'Validation error. `delay` property of `transition` option must be a Number',
+  TRANSITION_DURATION_NUMBER:
+    'Validation error. `duration` property of `transition` option must be a Number',
+  TRANSITION_TIMING_FUNCTION:
+    'Validation error. `timingFunction` property of `transition` option must be a String',
+  TRANSITION_DELAY_NUMBER:
+    'Validation error. `delay` property of `transition` option must be a Number',
   TYPE_NOT_FOUND: 'Validation error. Custom type not found',
   REMOVAL_FUNC: 'Validation error. `onRemoval` must be a function'
 };

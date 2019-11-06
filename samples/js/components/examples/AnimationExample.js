@@ -1,45 +1,78 @@
 import React from 'react';
 import notification from 'helpers/notification';
 import { store } from 'rc-notifications/react-notification-component';
-import { getContainer, getType, getMessage } from "helpers/randomize";
+import { getContainer, getType, getMessage } from 'helpers/randomize';
 
 function AnimationInExample() {
-  const add = (htmlClasses) => {
+  const add = htmlClasses => {
     const type = getType();
 
-    return store.addNotification(Object.assign({}, notification, {
-      animationIn: htmlClasses,
-      container: getContainer(),
-      message: getMessage(type),
-      type
-    }));
+    return store.addNotification(
+      Object.assign({}, notification, {
+        animationIn: htmlClasses,
+        container: getContainer(),
+        message: getMessage(type),
+        type
+      })
+    );
   };
 
   return (
     <div className="row">
       <div className="col-lg-6 offset-lg-3 column col-md-10 offset-md-1 col-sm-12">
         <h6>Animation Entrance</h6>
-        <div>Entrance <code className="white-code">animation</code> can be customised by specifying CSS classes</div>
         <div>
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated bounceIn"])}>
+          Entrance <code className="white-code">animation</code> can be customised by specifying CSS
+          classes
+        </div>
+        <div>
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated bounceIn'])}
+          >
             Bounce In
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated fadeIn"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated fadeIn'])}
+          >
             Fade In
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated flipInX"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated flipInX'])}
+          >
             Flip In X
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated flipInY"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated flipInY'])}
+          >
             Flip In Y
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated zoomIn"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated zoomIn'])}
+          >
             Zoom In
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated flash"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated flash'])}
+          >
             Flash
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated jackInTheBox"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated jackInTheBox'])}
+          >
             Jack In The Box
           </button>
         </div>
@@ -49,39 +82,64 @@ function AnimationInExample() {
 }
 
 function AnimationOutExample() {
-  const add = (htmlClasses) => {
+  const add = htmlClasses => {
     const type = getType();
 
-    return store.addNotification(Object.assign({}, notification, {
-      slidingExit: { delay: 300 },
-      animationOut: htmlClasses,
-      container: getContainer(),
-      message: getMessage(type),
-      type
-    }));
+    return store.addNotification(
+      Object.assign({}, notification, {
+        slidingExit: { delay: 300 },
+        animationOut: htmlClasses,
+        container: getContainer(),
+        message: getMessage(type),
+        type
+      })
+    );
   };
 
   return (
     <div className="row">
       <div className="col-lg-6 offset-lg-3 column col-md-10 offset-md-1 col-sm-12">
         <h6>Animation Exit</h6>
-        <div>Exit <code className="white-code">animation</code> can be customised by specifying CSS classes</div>
         <div>
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated bounceOut"])}>
+          Exit <code className="white-code">animation</code> can be customised by specifying CSS
+          classes
+        </div>
+        <div>
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated bounceOut'])}
+          >
             Bounce Out
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated fadeOut"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated fadeOut'])}
+          >
             Fade Out
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated flipOutX"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated flipOutX'])}
+          >
             Flip Out X
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated flipOutY"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated flipOutY'])}
+          >
             Flip Out Y
-          </button>{" "}
-          <button type="button" className="btn btn-outline-secondary" onClick={() => add(["animated zoomOut"])}>
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add(['animated zoomOut'])}
+          >
             Zoom Out
-          </button>{" "}
+          </button>{' '}
         </div>
       </div>
     </div>

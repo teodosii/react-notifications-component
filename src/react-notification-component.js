@@ -2,10 +2,7 @@ import React from 'react';
 import ReactNotification from './react-notification';
 import PropTypes from 'prop-types';
 import store from './store';
-import {
-  getNotificationsForEachContainer,
-  getNotificationsForMobileView
-} from './utils/helpers';
+import { getNotificationsForEachContainer, getNotificationsForMobileView } from './utils/helpers';
 
 import 'src/scss/notification.scss';
 
@@ -29,12 +26,12 @@ export default class ReactNotificationComponent extends React.Component {
     isMobile: PropTypes.bool,
     breakpoint: PropTypes.number,
     types: PropTypes.array
-  }
+  };
 
   static defaultProps = {
     isMobile: true,
     breakpoint: 768
-  }
+  };
 
   componentDidMount() {
     const { types } = this.props;
@@ -70,7 +67,7 @@ export default class ReactNotificationComponent extends React.Component {
 
   remove(id) {
     this.setState(({ notifications }) => ({
-      notifications: notifications.map((notification) => {
+      notifications: notifications.map(notification => {
         if (notification.id === id) {
           notification.removed = true;
         }
@@ -81,19 +78,24 @@ export default class ReactNotificationComponent extends React.Component {
   }
 
   toggleRemoval(id, callback) {
-    this.setState(({ notifications }) => ({
-      notifications: notifications.filter(({ id: nId }) => nId !== id)
-    }), callback);
+    this.setState(
+      ({ notifications }) => ({
+        notifications: notifications.filter(({ id: nId }) => nId !== id)
+      }),
+      callback
+    );
   }
 
   renderNotifications(notifications) {
-    return notifications.map(notification => <ReactNotification
-      key={notification.id}
-      notification={notification}
-      toggleRemoval={this.toggleRemoval}
-      count={notifications.length}
-      removed={notification.removed}
-    />);
+    return notifications.map(notification => (
+      <ReactNotification
+        key={notification.id}
+        notification={notification}
+        toggleRemoval={this.toggleRemoval}
+        count={notifications.length}
+        removed={notification.removed}
+      />
+    ));
   }
 
   renderMobileNotifications(props) {
@@ -105,12 +107,8 @@ export default class ReactNotificationComponent extends React.Component {
 
     return (
       <div className={`react-notification-root ${className || ''}`} id={id}>
-        <div className='notification-container-mobile-top'>
-          {top}
-        </div>
-        <div className='notification-container-mobile-bottom'>
-          {bottom}
-        </div>
+        <div className="notification-container-mobile-top">{top}</div>
+        <div className="notification-container-mobile-bottom">{bottom}</div>
       </div>
     );
   }
@@ -128,24 +126,12 @@ export default class ReactNotificationComponent extends React.Component {
 
     return (
       <div className={`react-notification-root ${className || ''}`} id={id}>
-        <div className='notification-container-top-left'>
-          {topLeft}
-        </div>
-        <div className='notification-container-top-right'>
-          {topRight}
-        </div>
-        <div className='notification-container-bottom-left'>
-          {bottomLeft}
-        </div>
-        <div className='notification-container-bottom-right'>
-          {bottomRight}
-        </div>
-        <div className='notification-container-top-center'>
-          {topCenter}
-        </div>
-        <div className='notification-container-bottom-center'>
-          {bottomCenter}
-        </div>
+        <div className="notification-container-top-left">{topLeft}</div>
+        <div className="notification-container-top-right">{topRight}</div>
+        <div className="notification-container-bottom-left">{bottomLeft}</div>
+        <div className="notification-container-bottom-right">{bottomRight}</div>
+        <div className="notification-container-top-center">{topCenter}</div>
+        <div className="notification-container-bottom-center">{bottomCenter}</div>
       </div>
     );
   }
