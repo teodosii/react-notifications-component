@@ -12,5 +12,5 @@ jest.config.js
 webpack.*.js
 *.log
 .prettierrc.js
-github-preview.png
+github-preview.gif
 .travis.yml
