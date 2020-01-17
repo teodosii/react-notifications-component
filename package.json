@@ -1,10 +1,11 @@
 {
   "name": "react-notifications-component",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/index.js",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "build": "npm run build:library:dev && npm run build:library:prod",
     "build:library:dev": "webpack --config webpack.dev.js",
     "build:library:prod": "webpack --config webpack.prod.js",
@@ -68,7 +69,8 @@
     "gh-pages": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.4.1",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
+    "npm-force-resolutions": "0.0.3",
     "object-assign": "^4.1.1",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "prettier": "^1.18.2",
@@ -80,11 +82,14 @@
     "regenerator-runtime": "^0.13.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
-    "uglifyjs-webpack-plugin": "2.0.1",
+    "uglifyjs-webpack-plugin": "^2.1.1",
     "url-loader": "^1.0.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
+  },
+  "resolutions": {
+    "serialize-javascript": "^2.1.1"
   },
   "peerDependencies": {
     "react": "^16.0.0"
