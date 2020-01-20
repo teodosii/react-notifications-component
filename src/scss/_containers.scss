@@ -10,6 +10,13 @@
   z-index: 8000;
 }
 
+.notification-container-top-center,
+.notification-container-bottom-center,
+.notification-container-top-right,
+.notification-container-bottom-left,
+.notification-container-bottom-right {
+  width: 325px;
+}
 
 .notification-container-top-center {
   transform: translateX(-50%);
