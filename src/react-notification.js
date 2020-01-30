@@ -50,9 +50,7 @@ export default class ReactNotification extends React.Component {
 
   componentDidMount() {
     const { notification, count } = this.props;
-    const {
-      dismiss: { duration, onScreen }
-    } = notification;
+    const { dismiss: { duration, onScreen } } = notification;
     const { scrollHeight } = this.rootElementRef.current;
     const willSlide = shouldNotificationHaveSliding(notification, count);
 
@@ -140,10 +138,14 @@ export default class ReactNotification extends React.Component {
 
   onTouchStart({ touches }) {
     const [{ pageX }] = touches;
-    this.setState({
+    this.setState(({ parentStyle }) => ({
       startX: pageX,
-      currentX: pageX
-    });
+      currentX: pageX,
+      parentStyle: {
+        ...parentStyle,
+        position: 'relative'
+      }
+    }));
   }
 
   onTouchMove({ touches }) {
@@ -249,7 +251,6 @@ export default class ReactNotification extends React.Component {
     };
 
     const onAnimationEnd = () => this.removeNotification(REMOVAL.TIMEOUT);
-
     return (
       <div className="timer">
         <div className="timer-filler" onAnimationEnd={onAnimationEnd} style={style}></div>
@@ -260,11 +261,21 @@ export default class ReactNotification extends React.Component {
   renderCustomContent() {
     const { htmlClassList } = this.state;
     const {
-      notification: { id, content: CustomContent }
+      notification: {
+        id,
+        content: CustomContent,
+        dismiss: { duration, pauseOnHover }
+      }
     } = this.props;
 
+    const hasMouseEvents = duration > 0 && pauseOnHover;
+
     return (
-      <div className={`${[...htmlClassList, 'n-child'].join(' ')}`}>
+      <div
+        className={`${[...htmlClassList, 'n-child'].join(' ')}`}
+        onMouseEnter={hasMouseEvents ? this.onMouseEnter : null}
+        onMouseLeave={hasMouseEvents ? this.onMouseLeave : null}
+      >
         {React.isValidElement(CustomContent) ? CustomContent : <CustomContent {...{ id }} />}
       </div>
     );
@@ -289,8 +300,8 @@ export default class ReactNotification extends React.Component {
       >
         <div className="notification-content">
           {showIcon && <div className="notification-close" onClick={this.onClick}></div>}
-          {title && <p className="notification-title">{title}</p>}
-          {<p className="notification-message">{message}</p>}
+          {title && <div className="notification-title">{title}</div>}
+          <div className="notification-message">{message}</div>
           {this.renderTimer()}
         </div>
       </div>
