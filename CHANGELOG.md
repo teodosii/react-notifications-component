@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0
+
+### Fixes
+
+* Fixed issue #52 - Swipe not working on touch devices
+* Fixes issue #42 - `title` and `message` accept now custom content (a React node or a functional component)
+* Fixed issue #41 - `pauseOnHover` was not taken into consideration when used together with `content`
+
 ## 2.2.0
 
 ### Fixes
