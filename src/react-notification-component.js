@@ -89,6 +89,7 @@ export default class ReactNotificationComponent extends React.Component {
   renderNotifications(notifications) {
     return notifications.map(notification => (
       <ReactNotification
+        id={notification.id}
         key={notification.id}
         notification={notification}
         toggleRemoval={this.toggleRemoval}
@@ -106,7 +107,11 @@ export default class ReactNotificationComponent extends React.Component {
     const bottom = this.renderNotifications(mobileNotifications.bottom);
 
     return (
-      <div className={`react-notification-root ${className || ''}`} id={id}>
+      <div
+        id={id}
+        key='mobile'
+        className={`react-notification-root ${className || ''}`}
+      >
         <div className="notification-container-mobile-top">{top}</div>
         <div className="notification-container-mobile-bottom">{bottom}</div>
       </div>
@@ -125,7 +130,11 @@ export default class ReactNotificationComponent extends React.Component {
     const bottomCenter = this.renderNotifications(notificationsPerContainer.bottomCenter);
 
     return (
-      <div className={`react-notification-root ${className || ''}`} id={id}>
+      <div
+        id={id}
+        key='screen'
+        className={`react-notification-root ${className || ''}`}
+      >
         <div className="notification-container-top-left">{topLeft}</div>
         <div className="notification-container-top-right">{topRight}</div>
         <div className="notification-container-bottom-left">{bottomLeft}</div>
