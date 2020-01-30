@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactNotification from './react-notification';
 import PropTypes from 'prop-types';
 import store from './store';
+import ReactNotification from './react-notification';
 import { getNotificationsForEachContainer, getNotificationsForMobileView } from './utils/helpers';
 
 import 'src/scss/notification.scss';
