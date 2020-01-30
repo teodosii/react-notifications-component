@@ -1,21 +1,12 @@
 .notification-container-top-center,
-.notification-container-bottom-center,
 .notification-container-top-left,
 .notification-container-top-right,
-.notification-container-bottom-left,
-.notification-container-bottom-right,
-.notification-container-mobile-top,
-.notification-container-mobile-bottom {
-  position: fixed;
-  z-index: 8000;
-}
-
-.notification-container-top-center,
 .notification-container-bottom-center,
-.notification-container-top-right,
 .notification-container-bottom-left,
 .notification-container-bottom-right {
   width: 325px;
+  position: absolute;
+  pointer-events: all;
 }
 
 .notification-container-top-center {
@@ -48,6 +39,12 @@
 .notification-container-bottom-right {
   bottom: 20px;
   right: 20px;
+}
+
+.notification-container-mobile-top,
+.notification-container-mobile-bottom {
+  pointer-events: all;
+  position: absolute;
 }
 
 .notification-container-mobile-top {
