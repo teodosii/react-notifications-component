@@ -8,6 +8,10 @@
 * Fixes issue #42 - `title` and `message` accept now custom content (a React node or a functional component)
 * Fixed issue #41 - `pauseOnHover` was not taken into consideration when used together with `content`
 
+### Changes
+
+* Changed containers to have fixed width of `325px` instead of `auto` which had different results across different test cases. Mobile containers have not changed, they're full width as before.
+
 ## 2.2.0
 
 ### Fixes
