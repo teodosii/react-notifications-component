@@ -309,12 +309,12 @@ store.addNotification({
   </tr>
   <tr>
     <td><code>title</code></td>
-    <td><code>String</code></td>
+    <td><code>String</code>, <code>React Node</code> or <code>Functional Component</code></td>
     <td>Title of the notification. Option is ignored if <code>content</code> is set, otherwise it is required.</td>
   </tr>
   <tr>
     <td><code>message</code></td>
-    <td><code>String</code></td>
+    <td><code>String</code>, <code>React Node</code> or <code>Functional Component</code></td>
     <td>Message of the notification. Option is ignored if <code>content</code> is set, otherwise it is required.</td>
   </tr>
   <tr>
