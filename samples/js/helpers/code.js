@@ -19,8 +19,7 @@ class App extends React.Component {
       container: "top-right",
       animationIn: ["animated", "fadeIn"],
       animationOut: ["animated", "fadeOut"],
-      dismiss: { duration: 2000 },
-      dismissable: { click: true }
+      dismiss: { duration: 2000 }
     });
   }
 
