@@ -3,6 +3,8 @@
 
 A delightful, easy to use and highly configurable component to help you notify your users out of the box. No messy setup, just beautiful notifications!
 
+> :fire: :fire: :fire: Interested in an animation library for React? I just launched `react-tweenful`, check it out here https://github.com/teodosii/react-tweenful
+
 ## Demo
 
 https://teodosii.github.io/react-notifications-component/
