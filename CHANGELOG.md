@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.4.0
+
+### Fixes
+
+* Fixed issue #56 - Removed random generator for id, instead rely on `counter` property from store as id
+* Fixed #52 - Swipe was not working properly
+
+### Changes
+
+* Implemented #46 - Added `center` container. Did some changes to `top` and `bottom` containers as Chrome blurred content at the beginning of the animation due to the transform property.
+* Changed notifications to take 100% width of the container instead of `auto`.
+
 ## 2.3.0
 
 ### Fixes
