@@ -3,6 +3,8 @@
 
 A delightful, easy to use and highly configurable component to help you notify your users out of the box. No messy setup, just beautiful notifications!
 
+> :fire: :fire: :fire: Interested in an animation library for React? I just launched `react-tweenful`, check it out here https://github.com/teodosii/react-tweenful
+
 ## Demo
 
 https://teodosii.github.io/react-notifications-component/
@@ -310,12 +312,12 @@ store.addNotification({
   </tr>
   <tr>
     <td><code>title</code></td>
-    <td><code>String</code></td>
+    <td><code>String</code>, <code>React Node</code> or <code>Functional Component</code></td>
     <td>Title of the notification. Option is ignored if <code>content</code> is set, otherwise it is required.</td>
   </tr>
   <tr>
     <td><code>message</code></td>
-    <td><code>String</code></td>
+    <td><code>String</code>, <code>React Node</code> or <code>Functional Component</code></td>
     <td>Message of the notification. Option is ignored if <code>content</code> is set, otherwise it is required.</td>
   </tr>
   <tr>
