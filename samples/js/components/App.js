@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactNotification from 'rc-notifications/react-notification-component';
+import ReactNotification from 'rc-notifications';
 import Header from 'components/Header';
 import Content from 'components/Content';
 import GithubCorner from 'react-github-corner';

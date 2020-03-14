@@ -1,6 +1,6 @@
 import React from 'react';
 import notification from 'helpers/notification';
-import { store } from 'rc-notifications/react-notification-component';
+import { store } from 'rc-notifications';
 import { getType, getMessage, getTitle } from 'helpers/randomize';
 
 export default class ContainerExample extends React.Component {
@@ -57,6 +57,13 @@ export default class ContainerExample extends React.Component {
               onClick={() => this.add('top-center')}
             >
               Top Center
+            </button>{' '}
+            <button
+              type="button"
+              className="btn btn-outline-secondary"
+              onClick={() => this.add('center')}
+            >
+              Center
             </button>{' '}
             <button
               type="button"

@@ -3,22 +3,43 @@
 .notification-container-top-right,
 .notification-container-bottom-center,
 .notification-container-bottom-left,
-.notification-container-bottom-right {
+.notification-container-bottom-right,
+.notification-container-center {
   width: 325px;
   position: absolute;
   pointer-events: all;
 }
 
-.notification-container-top-center {
-  transform: translateX(-50%);
-  top: 20px;
-  left: 50%;
+.notification-container-center,
+.notification-container-top-center,
+.notification-container-bottom-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  left: calc(50% - 162.5px);
 }
 
+.notification-container-center {
+  top: 20px;
+  height: 100%;
+  pointer-events: none;
+
+  .center-inner {
+    width: 325px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: all;
+  }
+}
+
+.notification-container-top-center {
+  top: 20px;
+}
 .notification-container-bottom-center {
-  transform: translateX(-50%);
   bottom: 20px;
-  left: 50%;
 }
 
 .notification-container-top-left {

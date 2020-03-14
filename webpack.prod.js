@@ -1,13 +1,13 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: './src/react-notification-component.js',
+  entry: './src/index.js',
   devtool: 'source-map',
 
   output: {
@@ -19,11 +19,7 @@ module.exports = {
 
   optimization: {
     minimizer: [
-      new UglifyJSPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true
-      }),
+      new TerserPlugin(),
       new OptimizeCSSAssetsPlugin({}),
       new CopyPlugin([{ from: 'src/scss', to: 'scss' }, { from: 'build/index.js', to: 'index.js' }])
     ]

@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import store from './store';
-import ReactNotification from './react-notification';
-import { getNotificationsForEachContainer, getNotificationsForMobileView } from './utils/helpers';
+import store from '../store';
+import ReactNotification from './Notification';
+import { getNotificationsForEachContainer, getNotificationsForMobileView } from '../utils/helpers';
 
 import 'src/scss/notification.scss';
 
-export default class ReactNotificationComponent extends React.Component {
+class Container extends React.Component {
   constructor(props) {
     super(props);
 
@@ -107,11 +107,7 @@ export default class ReactNotificationComponent extends React.Component {
     const bottom = this.renderNotifications(mobileNotifications.bottom);
 
     return (
-      <div
-        id={id}
-        key='mobile'
-        className={`react-notification-root ${className || ''}`}
-      >
+      <div id={id} key="mobile" className={`react-notification-root ${className || ''}`}>
         <div className="notification-container-mobile-top">{top}</div>
         <div className="notification-container-mobile-bottom">{bottom}</div>
       </div>
@@ -121,25 +117,25 @@ export default class ReactNotificationComponent extends React.Component {
   renderScreenNotifications(props) {
     const { className, id } = props;
     const { notifications } = this.state;
-    const notificationsPerContainer = getNotificationsForEachContainer(notifications);
-    const topLeft = this.renderNotifications(notificationsPerContainer.topLeft);
-    const topRight = this.renderNotifications(notificationsPerContainer.topRight);
-    const topCenter = this.renderNotifications(notificationsPerContainer.topCenter);
-    const bottomLeft = this.renderNotifications(notificationsPerContainer.bottomLeft);
-    const bottomRight = this.renderNotifications(notificationsPerContainer.bottomRight);
-    const bottomCenter = this.renderNotifications(notificationsPerContainer.bottomCenter);
+    const items = getNotificationsForEachContainer(notifications);
+    const topLeft = this.renderNotifications(items.topLeft);
+    const topRight = this.renderNotifications(items.topRight);
+    const topCenter = this.renderNotifications(items.topCenter);
+    const bottomLeft = this.renderNotifications(items.bottomLeft);
+    const bottomRight = this.renderNotifications(items.bottomRight);
+    const bottomCenter = this.renderNotifications(items.bottomCenter);
+    const center = this.renderNotifications(items.center);
 
     return (
-      <div
-        id={id}
-        key='screen'
-        className={`react-notification-root ${className || ''}`}
-      >
+      <div id={id} key="screen" className={`react-notification-root ${className || ''}`}>
         <div className="notification-container-top-left">{topLeft}</div>
         <div className="notification-container-top-right">{topRight}</div>
         <div className="notification-container-bottom-left">{bottomLeft}</div>
         <div className="notification-container-bottom-right">{bottomRight}</div>
         <div className="notification-container-top-center">{topCenter}</div>
+        <div className="notification-container-center">
+          <div className="center-inner">{center}</div>
+        </div>
         <div className="notification-container-bottom-center">{bottomCenter}</div>
       </div>
     );
@@ -157,4 +153,4 @@ export default class ReactNotificationComponent extends React.Component {
   }
 }
 
-export { store };
+export default Container;

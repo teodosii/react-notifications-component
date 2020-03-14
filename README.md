@@ -126,6 +126,7 @@ You have in total 6 containers for desktop and 2 for mobile, if component is set
 * `top-left`
 * `top-right`
 * `top-center`
+* `center`
 * `bottom-left`
 * `bottom-right`
 * `bottom-center`

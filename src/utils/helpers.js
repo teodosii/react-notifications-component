@@ -1,3 +1,4 @@
+import store from '../store';
 import {
   CONTAINER,
   INSERTION,
@@ -5,10 +6,6 @@ import {
   NOTIFICATION_TYPE as NT
 } from './constants';
 
-const getRandomId = () =>
-  Math.random()
-    .toString(36)
-    .substr(2, 9);
 const isNull = object => object === null || object === undefined;
 
 export function isBottomContainer(container) {
@@ -27,9 +24,9 @@ export function isTopContainer(container) {
   );
 }
 
-export function hasFullySwiped(diffX) {
+export function hasFullySwiped(diffX, width) {
   const swipeLength = Math.abs(diffX);
-  const requiredSwipeLength = (40 / 100) * window.innerWidth;
+  const requiredSwipeLength = (40 / 100) * width;
   return swipeLength >= requiredSwipeLength;
 }
 
@@ -39,7 +36,8 @@ export function shouldNotificationHaveSliding(notification, count) {
   return (
     count > 1 &&
     ((notification.insert === INSERTION.TOP && isTopContainer(notification.container)) ||
-      (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)))
+      (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)) ||
+      notification.container === CONTAINER.CENTER)
   );
 }
 
@@ -78,7 +76,9 @@ export function getNotificationsForMobileView(notifications) {
 
   notifications.forEach(notification => {
     const { container } = notification;
-    if (isTopContainer(container)) {
+    const { CENTER } = CONTAINER;
+
+    if (isTopContainer(container) || container === CENTER) {
       top.push(notification);
     } else if (isBottomContainer(container)) {
       bottom.push(notification);
@@ -95,6 +95,7 @@ export function getNotificationsForEachContainer(notifications) {
   const bottomLeft = [];
   const bottomRight = [];
   const bottomCenter = [];
+  const center = [];
 
   notifications.forEach(notification => {
     const { container } = notification;
@@ -110,6 +111,8 @@ export function getNotificationsForEachContainer(notifications) {
       bottomRight.push(notification);
     } else if (container === CONTAINER.BOTTOM_CENTER) {
       bottomCenter.push(notification);
+    } else if (container === CONTAINER.CENTER) {
+      center.push(notification);
     }
   });
 
@@ -119,7 +122,8 @@ export function getNotificationsForEachContainer(notifications) {
     topCenter,
     bottomLeft,
     bottomRight,
-    bottomCenter
+    bottomCenter,
+    center
   };
 }
 
@@ -204,7 +208,7 @@ export function parseNotification(options, userDefinedTypes) {
     onRemoval
   } = notification;
 
-  notification.id = id || getRandomId();
+  notification.id = id || store.counter;
   notification.type = content ? null : type.toLowerCase();
 
   if (userDefinedTypes && !content) {

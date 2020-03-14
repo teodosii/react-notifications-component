@@ -1,6 +1,6 @@
 import React from 'react';
 import notification from 'helpers/notification';
-import { store } from 'rc-notifications/react-notification-component';
+import { store } from 'rc-notifications';
 import { getContainer, getType, getMessage } from 'helpers/randomize';
 
 function AnimationInExample() {

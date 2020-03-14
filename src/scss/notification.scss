@@ -79,30 +79,26 @@
   }
 }
 
-.n-parent { 
-  width: 275px;
-}
-
 .notification-container-mobile-top .notification-item,
 .notification-container-mobile-bottom .notification-item,
-.notification-container-mobile-top .n-parent,
-.notification-container-mobile-bottom .n-parent {
+.notification-container-mobile-top .notification-parent,
+.notification-container-mobile-bottom .notification-parent {
   max-width: 100%;
   width: 100%;
 }
 
-.notification-container-top-right .n-parent,
-.notification-container-bottom-right .n-parent {
+.notification-container-top-right .notification-parent,
+.notification-container-bottom-right .notification-parent {
   margin-left: auto;
 }
 
-.notification-container-top-left .n-parent,
-.notification-container-bottom-left .n-parent {
+.notification-container-top-left .notification-parent,
+.notification-container-bottom-left .notification-parent {
   margin-right: auto;
 }
 
-.notification-container-mobile-top .n-parent,
-.notification-container-mobile-bottom .n-parent {
+.notification-container-mobile-top .notification-parent,
+.notification-container-mobile-bottom .notification-parent {
   margin-left: auto;
   margin-right: auto;
 }

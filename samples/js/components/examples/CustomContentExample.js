@@ -2,7 +2,7 @@ import React from 'react';
 import notification from 'helpers/notification';
 import reactImage from 'images/react.png';
 import { getContainer } from 'helpers/randomize';
-import { store } from 'rc-notifications/react-notification-component';
+import { store } from 'rc-notifications';
 
 export default class CustomContentExample extends React.Component {
   constructor(props) {

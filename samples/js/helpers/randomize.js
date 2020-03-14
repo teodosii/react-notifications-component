@@ -2,6 +2,7 @@ const containers = [
   'top-left',
   'top-right',
   'top-center',
+  'center',
   'bottom-left',
   'bottom-right',
   'bottom-center'

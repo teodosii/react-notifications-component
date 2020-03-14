@@ -1,6 +1,6 @@
 import React from 'react';
 import notification from 'helpers/notification';
-import { store } from 'rc-notifications/react-notification-component';
+import { store } from 'rc-notifications';
 import { getContainer, getMessage, getTitle } from 'helpers/randomize';
 
 export default class TypeExample extends React.Component {

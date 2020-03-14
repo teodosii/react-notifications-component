@@ -1,8 +1,9 @@
-import { parseNotification } from './utils/helpers';
-import { validateTransition, validators } from './utils/validators';
+import { parseNotification } from '../utils/helpers';
+import { validateTransition, validators } from '../utils/validators';
 
 function Store() {
   this.types = null;
+  this.counter = 0;
   this.add = () => {};
 
   this.addNotification = notification => {
@@ -14,6 +15,7 @@ function Store() {
       validators.forEach(validator => validator(notification, types));
     }
 
+    this.counter += 1;
     return this.add(parseNotification(notification, types));
   };
 

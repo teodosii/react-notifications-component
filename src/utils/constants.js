@@ -6,7 +6,8 @@ export const CONTAINER = {
   BOTTOM_CENTER: 'bottom-center',
   TOP_LEFT: 'top-left',
   TOP_RIGHT: 'top-right',
-  TOP_CENTER: 'top-center'
+  TOP_CENTER: 'top-center',
+  CENTER: 'center'
 };
 
 export const INSERTION = {

@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Timer from './utils/timer';
+import Timer from '../utils/timer';
 import {
   getTransition,
   hasFullySwiped,
   getHtmlClassesForType,
   shouldNotificationHaveSliding
-} from './utils/helpers';
-import { REMOVAL } from './utils/constants';
+} from '../utils/helpers';
+import { REMOVAL } from '../utils/constants';
 
-export default class ReactNotification extends React.Component {
+class Notification extends React.Component {
   constructor(props) {
     super(props);
     this.rootElementRef = React.createRef();
@@ -20,15 +20,13 @@ export default class ReactNotification extends React.Component {
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
 
-    const {
-      notification: { width }
-    } = props;
+    const { notification: { width } } = props;
 
     this.state = {
       parentStyle: {
         height: 0,
         overflow: 'hidden',
-        width: width ? `${width}px` : 'auto'
+        width: width ? `${width}px` : '100%'
       },
       htmlClassList: getHtmlClassesForType(props.notification),
       animationPlayState: 'running',
@@ -162,10 +160,11 @@ export default class ReactNotification extends React.Component {
 
     const [{ pageX }] = touches;
     const distance = pageX - startX;
-    const swipeTo = window.innerWidth * 2;
+    const { offsetWidth: width } = this.rootElementRef.current;
+    const swipeTo = window.innerWidth + width;
     const left = `${pageX - startX >= 0 ? swipeTo : -swipeTo}px`;
 
-    if (hasFullySwiped(distance)) {
+    if (hasFullySwiped(distance, width)) {
       const t1 = getTransition(swipe, 'left');
       const t2 = getTransition(fade, 'opacity');
       const onTransitionEnd = () => {
@@ -203,9 +202,7 @@ export default class ReactNotification extends React.Component {
   }
 
   onTouchEnd() {
-    const {
-      notification: { touchRevert }
-    } = this.props;
+    const { notification: { touchRevert } } = this.props;
 
     this.setState(({ parentStyle }) => ({
       parentStyle: {
@@ -321,7 +318,7 @@ export default class ReactNotification extends React.Component {
       <div
         ref={this.rootElementRef}
         onClick={click ? this.onClick : null}
-        className="n-parent"
+        className="notification-parent"
         style={parentStyle}
         onAnimationEnd={onAnimationEnd}
         onTransitionEnd={onTransitionEnd}
@@ -334,3 +331,5 @@ export default class ReactNotification extends React.Component {
     );
   }
 }
+
+export default Notification;
