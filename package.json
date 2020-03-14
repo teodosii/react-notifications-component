@@ -1,6 +1,6 @@
 {
   "name": "react-notifications-component",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/index.js",
@@ -79,7 +79,7 @@
     "regenerator-runtime": "^0.13.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
-    "uglifyjs-webpack-plugin": "^2.1.1",
+    "terser-webpack-plugin": "^2.3.5",
     "url-loader": "^1.0.1",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
