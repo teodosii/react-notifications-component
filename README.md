@@ -23,11 +23,13 @@ https://teodosii.github.io/react-notifications-component/
 * Small library
 
 ## Getting started
-
 ```
 npm install react-notifications-component
 ```
-
+The step below is only for typescript developers to install typed bindings:
+```
+npm install --save-dev @types/react-notifications-component
+```
 ### Development
 
 First build the library
