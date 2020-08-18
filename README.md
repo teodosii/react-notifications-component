@@ -83,8 +83,8 @@ store.addNotification({
   type: "success",
   insert: "top",
   container: "top-right",
-  animationIn: ["animated", "fadeIn"],
-  animationOut: ["animated", "fadeOut"],
+  animationIn: ["animate__animated", "animate__fadeIn"],
+  animationOut: ["animate__animated", "animate__fadeOut"],
   dismiss: {
     duration: 5000,
     onScreen: true
@@ -94,7 +94,12 @@ store.addNotification({
 
 Voila!
 
-**Note**: We rely on `animate.css` in this example as `fadeIn` and `fadeOut` are part of `animate.css`. We recommend using it as it's an excellent animation library, but you're not forced to. If you prefer you may also use your custom animations as long as they're valid CSS animations.
+**Note**: We rely on `animate.css` in this example as `animate__fadeIn` and `animate__fadeOut` are part of `animate.css`. We recommend using it as it's an excellent animation library, but you're not forced to. If you prefer you may also use your custom animations as long as they're valid CSS animations.
+
+**Note**: `animate.css` latest version has breaking changes. Import `animate.css` by importing as
+```js
+import 'animate.css/animate.compat.css'
+```
 
 ## API
 
