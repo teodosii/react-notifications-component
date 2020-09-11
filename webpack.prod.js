@@ -21,7 +21,12 @@ module.exports = {
     minimizer: [
       new TerserPlugin(),
       new OptimizeCSSAssetsPlugin({}),
-      new CopyPlugin([{ from: 'src/scss', to: 'scss' }, { from: 'build/index.js', to: 'index.js' }])
+      new CopyPlugin({
+        patterns: [
+          { from: 'src/scss', to: 'scss' },
+          { from: 'build/index.js', to: 'index.js' }
+        ],
+      })
     ]
   },
 
