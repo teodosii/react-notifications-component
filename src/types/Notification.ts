@@ -1,8 +1,4 @@
-import {
-  INSERTION,
-  NOTIFICATION_CONTAINER,
-  NOTIFICATION_TYPE
-} from 'src/utils/constants';
+import { INSERTION, NOTIFICATION_CONTAINER, NOTIFICATION_TYPE } from 'src/utils/constants';
 
 export interface iNotification {
   id?: string;

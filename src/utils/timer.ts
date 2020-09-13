@@ -9,7 +9,7 @@ export default class Timer {
   private timerId: number;
   private start: number;
   private remaining: number;
-  private callback: Function
+  private callback: Function;
 
   public pause() {
     clearTimeout(this.timerId);

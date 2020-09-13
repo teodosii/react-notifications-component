@@ -1,16 +1,9 @@
 import store from 'src/store';
+import { iDismiss, iNotification, iNotificationCustomType, iTouchTransition, iTransition } from 'src/types/Notification';
 import {
-  iDismiss,
-  iNotification,
-  iNotificationCustomType,
-  iTouchTransition,
-  iTransition,
-  NotificationContent
-} from 'src/types/Notification';
-import {
-  NOTIFICATION_CONTAINER,
   INSERTION,
   NOTIFICATION_BASE_CLASS,
+  NOTIFICATION_CONTAINER,
   NOTIFICATION_TYPE,
   NOTIFICATION_TYPE as NT
 } from 'src/utils/constants';
@@ -40,13 +33,15 @@ export function hasFullySwiped(diffX: number, width: number) {
 }
 
 export function shouldNotificationHaveSliding(notification: iNotification, count: number) {
-  if (count <= 1) return false;
+  if (count <= 1) {
+    return false;
+  }
 
   return (
     count > 1 &&
     ((notification.insert === INSERTION.TOP && isTopContainer(notification.container)) ||
-      (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)) ||
-      notification.container === NOTIFICATION_CONTAINER.CENTER)
+     (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)) ||
+     notification.container === NOTIFICATION_CONTAINER.CENTER)
   );
 }
 
@@ -68,9 +63,11 @@ export function htmlClassesForExistingType(type: NOTIFICATION_TYPE) {
 }
 
 export function getHtmlClassesForType(notification: iNotification) {
-  const { type, content, userDefinedTypes } = notification
+  const { type, content, userDefinedTypes } = notification;
   const base = [NOTIFICATION_BASE_CLASS];
-  if (content) return base;
+  if (content) {
+    return base;
+  }
 
   if (isNull(userDefinedTypes)) {
     return htmlClassesForExistingType(type);
@@ -185,8 +182,10 @@ function defaultDismiss(dismiss: iDismiss): iDismiss {
 }
 
 function defaultUserDefinedTypes(notification: iNotification, definedTypes: iNotificationCustomType[]) {
-  const { content, type } = notification
-  if (content) return undefined;
+  const { content, type } = notification;
+  if (content) {
+    return undefined;
+  }
 
   if (
     type === NT.SUCCESS ||
@@ -195,8 +194,9 @@ function defaultUserDefinedTypes(notification: iNotification, definedTypes: iNot
     type === NT.DEFAULT ||
     type === NT.WARNING ||
     !definedTypes
-  )
+  ) {
     return undefined;
+  }
 
   return definedTypes;
 }
@@ -249,8 +249,8 @@ export function parseNotification(options: iNotification, userDefinedTypes: any)
   notification.touchRevert = defaultTransition(touchRevert, t(600, 'linear', 0));
 
   const touchExit = touchSlidingExit || {} as iTouchTransition;
-  const swipe = touchExit.swipe || {} as iTransition
-  const fade = touchExit.fade || {} as iTransition
+  const swipe = touchExit.swipe || {} as iTransition;
+  const fade = touchExit.fade || {} as iTransition;
   notification.touchSlidingExit = touchExit;
   notification.touchSlidingExit.swipe = defaultTransition(swipe, t(600, 'linear', 0));
   notification.touchSlidingExit.fade = defaultTransition(fade, t(300, 'linear', 0));

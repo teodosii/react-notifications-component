@@ -63,7 +63,7 @@ export const ERROR = {
   CONTAINER_STRING: 'Validation error. `container` option must be a String',
   CONTENT_INVALID:
     'Validation error. `content` option must be a valid React component/function/element',
-  
+
   WIDTH_NUMBER: 'Validation error. `width` option must be a Number',
   INSERT_STRING: 'Validation error. `insert` option must be a String',
 
@@ -73,7 +73,7 @@ export const ERROR = {
     'Validation error. `timingFunction` property of `transition` option must be a String',
   TRANSITION_DELAY_NUMBER:
     'Validation error. `delay` property of `transition` option must be a Number',
-  
+
   TYPE_NOT_FOUND: 'Validation error. Custom type not found',
   REMOVAL_FUNC: 'Validation error. `onRemoval` must be a function'
 };

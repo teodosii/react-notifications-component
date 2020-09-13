@@ -1,10 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import store from 'src/store';
+import React from 'react';
 import ReactNotification from 'src/components/Notification';
-import { getNotificationsForEachContainer, getNotificationsForMobileView } from 'src/utils/helpers';
-import { iNotification, iNotificationCustomType } from 'src/types/Notification';
 import 'src/scss/notification.scss';
+import store from 'src/store';
+import { iNotification, iNotificationCustomType } from 'src/types/Notification';
+import { getNotificationsForEachContainer, getNotificationsForMobileView } from 'src/utils/helpers';
 
 interface iContainerProps {
   isMobile: boolean;
@@ -54,10 +54,10 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     const { types } = this.props;
 
     store.register({
-      addNotification: this.add,
-      removeNotification: this.remove,
-      types
-    });
+                     addNotification: this.add,
+                     removeNotification: this.remove,
+                     types
+                   });
 
     this.setState({ width: window.innerWidth });
     window.addEventListener('resize', this.handleResize);
@@ -75,8 +75,8 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     this.setState(({ notifications }) => ({
       notifications:
         notification.insert === 'top'
-          ? [notification, ...notifications]
-          : [...notifications, notification]
+        ? [notification, ...notifications]
+        : [...notifications, notification]
     }));
 
     return notification.id;
