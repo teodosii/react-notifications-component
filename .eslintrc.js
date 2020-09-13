@@ -1,7 +1,8 @@
 const path = require("path");
 
 module.exports = {
-  "parser": "babel-eslint",
+  "root": true,
+  "parser": '@typescript-eslint/parser',
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -25,7 +26,8 @@ module.exports = {
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "env": {
     "es6": true,
@@ -33,7 +35,8 @@ module.exports = {
     "jest": true
   },
   "plugins": [
-    "react"
+    "react",
+    "@typescript-eslint"
   ],
   "rules": {
     "quotes": "off",
