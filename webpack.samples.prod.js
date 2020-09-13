@@ -8,7 +8,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: './samples/js/index.js',
+  entry: './samples/js/index.tsx',
 
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -19,6 +19,7 @@ module.exports = {
     alias: {
       'rc-notifications': path.resolve(__dirname, 'src'),
       'src': path.resolve(__dirname, 'src'),
+      'samples': path.resolve(__dirname, 'samples'),
       'helpers': path.resolve(__dirname, 'samples/js/helpers'),
       'components': path.resolve(__dirname, 'samples/js/components'),
       'images': path.resolve(__dirname, 'samples/images'),
