@@ -7,7 +7,7 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.js',
+  entry: './src/index.ts',
   devtool: 'source-map',
 
   output: {
@@ -24,14 +24,14 @@ module.exports = {
       new CopyPlugin({
         patterns: [
           { from: 'src/scss', to: 'scss' },
-          { from: 'build/index.js', to: 'index.js' }
+          { from: 'build/index.ts', to: 'index.js' }
         ],
       })
     ]
   },
 
   resolve: {
-    extensions: ['.js', '.scss'],
+    extensions: ['.js', '.ts', '.tsx', '.scss'],
     alias: {
       src: path.resolve(__dirname, 'src'),
       samples: path.resolve(__dirname, 'samples'),
@@ -41,6 +41,11 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        loader: "awesome-typescript-loader",
+        include: /src/
+      },
       {
         test: /\.(js|jsx)$/,
         use: ['babel-loader'],

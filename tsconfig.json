@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": [
+        "src/*"
+      ]
+    },
+
+    "noImplicitReturns": false,
+    "alwaysStrict": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "sourceMap": true,
+    "maxNodeModuleJsDepth": 0,
+    "module": "es6",
+    "esModuleInterop": true,
+
+    "jsx": "react",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "target": "es2015"
+  },
+
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "global.d.ts",
+    "global_modules.d.ts"
+  ],
+  "exclude": [
+    "src/**/*.js",
+    "node_modules",
+    "build",
+    "samples",
+    "dist",
+    "*.js"
+  ]
+}

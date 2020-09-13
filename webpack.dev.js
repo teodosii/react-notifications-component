@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: './src/index.ts',
   devtool: 'cheap-module-source-map',
 
   output: {
@@ -22,7 +22,7 @@ module.exports = {
   ],
 
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
       src: path.resolve(__dirname, 'src'),
       samples: path.resolve(__dirname, 'samples'),
@@ -32,6 +32,11 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        loader: "awesome-typescript-loader",
+        include: /src/
+      },
       {
         test: /\.(js|jsx)$/,
         use: ['babel-loader'],

@@ -24,11 +24,16 @@ module.exports = {
       'images': path.resolve(__dirname, 'samples/images'),
       'styles': path.resolve(__dirname, 'samples/styles')
     },
-    extensions: ['.js', '.css', '.scss']
+    extensions: ['.js', '.ts', '.tsx', '.css', '.scss']
   },
 
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        loader: "awesome-typescript-loader",
+        exclude: /node_modules/
+      },
       {
         test: /\.(js|jsx)$/,
         use: ['babel-loader'],
