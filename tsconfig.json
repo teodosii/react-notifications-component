@@ -2,11 +2,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "src/*": [
-        "src/*"
-      ]
+      // samples project
+      "samples/*": ["samples/*"],
+      "components/*": ["samples/js/components/*"],
+
+      // library
+      "src/*": ["src/*"]
     },
 
+    "declaration": false,
     "noImplicitReturns": false,
     "alwaysStrict": true,
     "noImplicitThis": false,
@@ -28,17 +32,19 @@
   },
 
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./samples/**/*.ts",
+    "./samples/**/*.tsx",
     "global.d.ts",
     "global_modules.d.ts"
   ],
   "exclude": [
-    "src/**/*.js",
-    "node_modules",
-    "build",
-    "samples",
-    "dist",
+    "./src/**/*.js",
+    "./node_modules",
+    "./build",
+    "./samples",
+    "./dist",
     "*.js"
   ]
 }
