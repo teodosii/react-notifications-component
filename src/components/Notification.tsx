@@ -1,14 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Timer from '../utils/timer';
-import {
-  getTransition,
-  hasFullySwiped,
-  getHtmlClassesForType,
-  shouldNotificationHaveSliding
-} from '../utils/helpers';
-import { REMOVAL } from '../utils/constants';
+import React from 'react';
 import { iNotification } from 'src/types/Notification';
+import { REMOVAL } from '../utils/constants';
+import { getHtmlClassesForType, getTransition, hasFullySwiped, shouldNotificationHaveSliding } from '../utils/helpers';
+import Timer from '../utils/timer';
 
 class iNotificationProps {
   id: string;
@@ -61,7 +56,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     };
   }
 
-  private rootElementRef: React.RefObject<HTMLDivElement>;
+  private readonly rootElementRef: React.RefObject<HTMLDivElement>;
   private timer: Timer;
 
   static propTypes = {
@@ -85,7 +80,9 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     const willSlide = shouldNotificationHaveSliding(notification, count);
 
     const onTransitionEnd = () => {
-      if (!duration || onScreen) return;
+      if (!duration || onScreen) {
+        return;
+      }
       const callback = () => this.removeNotification(REMOVAL.TIMEOUT);
       this.timer = new Timer(callback, duration);
     };
@@ -137,12 +134,12 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
         htmlClassList,
         onAnimationEnd: () => {
           this.setState({
-            parentStyle: {
-              width,
-              ...parentStyle
-            },
-            onTransitionEnd
-          });
+                          parentStyle: {
+                            width,
+                            ...parentStyle
+                          },
+                          onTransitionEnd
+                        });
         }
       }));
     }
@@ -167,7 +164,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
   }
 
   onTouchStart(event: React.TouchEvent<HTMLDivElement>) {
-    const { pageX } = event.touches[0]
+    const { pageX } = event.touches[0];
 
     this.setState(({ parentStyle }) => ({
       startX: pageX,
@@ -180,7 +177,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
   }
 
   onTouchMove(event: React.TouchEvent) {
-    const { pageX } = event.touches[0]
+    const { pageX } = event.touches[0];
     const { startX } = this.state;
     const {
       toggleRemoval,
@@ -271,7 +268,9 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     const { duration, onScreen } = dismiss;
     const { animationPlayState } = this.state;
 
-    if (!duration || !onScreen) return;
+    if (!duration || !onScreen) {
+      return;
+    }
 
     const style = {
       animationName: 'timer',

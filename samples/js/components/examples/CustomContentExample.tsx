@@ -9,7 +9,9 @@ import { iNotification } from 'src/types/Notification';
 export default function CustomContentExample() {
   const [cachedImage] = useState(new Image());
 
-  useEffect(() => (cachedImage.src = reactImage));
+  useEffect(() => {
+    cachedImage.src = reactImage
+  });
 
   return (
     <div className="row">

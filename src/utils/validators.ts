@@ -22,7 +22,7 @@ const isFunction = (object: any) => !!(object && object.constructor && object.ca
 const isArray = (object: any) => !isNull(object) && object.constructor === Array;
 
 function isClassComponent(component: any) {
-  return typeof component === 'function' && !!component.prototype.isReactComponent;
+  return typeof component === 'function' && component.prototype && !!component.prototype.isReactComponent;
 }
 
 function isFunctionComponent(component: any) {

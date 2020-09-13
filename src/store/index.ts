@@ -1,6 +1,6 @@
+import { iNotification, iNotificationCustomType } from 'src/types/Notification';
 import { parseNotification } from 'src/utils/helpers';
 import { validateTransition, validators } from 'src/utils/validators';
-import { iNotification, iNotificationCustomType } from 'src/types/Notification';
 
 interface iStore {
   addNotification(notification: iNotification): string;
