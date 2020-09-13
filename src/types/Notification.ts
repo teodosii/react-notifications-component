@@ -5,24 +5,24 @@ import {
 } from 'src/utils/constants';
 
 export interface iNotification {
-  id: string;
-  onRemoval: Function;
-  title: NotificationTitleMessage;
-  message: NotificationTitleMessage;
-  content: NotificationContent;
+  id?: string;
+  onRemoval?: Function;
+  title?: NotificationTitleMessage;
+  message?: NotificationTitleMessage;
+  content?: NotificationContent;
   type?: NOTIFICATION_TYPE;
-  container: NOTIFICATION_CONTAINER;
-  insert: INSERTION;
-  dismiss: iDismiss;
-  animationIn: string[];
-  animationOut: string[];
-  slidingEnter: iTransition;
-  slidingExit: iTransition;
-  touchRevert: iTransition;
-  touchSlidingExit: iTouchTransition;
-  userDefinedTypes: iNotificationCustomType[];
-  width: number;
-  removed: boolean
+  container?: NOTIFICATION_CONTAINER;
+  insert?: INSERTION;
+  dismiss?: iDismiss;
+  animationIn?: string[];
+  animationOut?: string[];
+  slidingEnter?: iTransition;
+  slidingExit?: iTransition;
+  touchRevert?: iTransition;
+  touchSlidingExit?: iTouchTransition;
+  userDefinedTypes?: iNotificationCustomType[];
+  width?: number;
+  removed?: boolean
 }
 
 export type NotificationTitleMessage = string | React.ReactNode | React.FunctionComponent;

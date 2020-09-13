@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Timer from '../utils/timer';
 import {
@@ -8,7 +8,7 @@ import {
   shouldNotificationHaveSliding
 } from '../utils/helpers';
 import { REMOVAL } from '../utils/constants';
-import { iNotification, iTransition } from 'src/types/Notification';
+import { iNotification } from 'src/types/Notification';
 
 class iNotificationProps {
   id: string;
