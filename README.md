@@ -123,8 +123,8 @@ notification = {
   type: "success",
   insert: "top",
   container: "top-right",
-  animationIn: ["animated", "fadeIn"],
-  animationOut: ["animated", "fadeOut"]
+  animationIn: ["animated fadeIn"],
+  animationOut: ["animated fadeOut"]
 };
 ```
 
