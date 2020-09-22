@@ -24,7 +24,7 @@ module.exports = {
       new CopyPlugin({
         patterns: [
           { from: 'src/scss', to: 'scss' },
-          { from: 'build/index.ts', to: 'index.js' }
+          { from: 'build/index.js', to: 'index.js' }
         ],
       })
     ]
