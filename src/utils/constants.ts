@@ -1,4 +1,4 @@
-export const NOTIFICATION_BASE_CLASS = 'notification-item';
+export const NOTIFICATION_BASE_CLASS = 'notification__item';
 
 export enum NOTIFICATION_CONTAINER {
   BOTTOM_LEFT = 'bottom-left',

@@ -48,15 +48,15 @@ export function shouldNotificationHaveSliding(notification: iNotification, count
 export function htmlClassesForExistingType(type: NOTIFICATION_TYPE) {
   switch (type) {
     case NT.DEFAULT:
-      return [NOTIFICATION_BASE_CLASS, 'notification-default'];
+      return [NOTIFICATION_BASE_CLASS, 'notification__item--default'];
     case NT.SUCCESS:
-      return [NOTIFICATION_BASE_CLASS, 'notification-success'];
+      return [NOTIFICATION_BASE_CLASS, 'notification__item--success'];
     case NT.DANGER:
-      return [NOTIFICATION_BASE_CLASS, 'notification-danger'];
+      return [NOTIFICATION_BASE_CLASS, 'notification__item--danger'];
     case NT.WARNING:
-      return [NOTIFICATION_BASE_CLASS, 'notification-warning'];
+      return [NOTIFICATION_BASE_CLASS, 'notification__item--warning'];
     case NT.INFO:
-      return [NOTIFICATION_BASE_CLASS, 'notification-info'];
+      return [NOTIFICATION_BASE_CLASS, 'notification__item--info'];
     default:
       return [NOTIFICATION_BASE_CLASS];
   }
@@ -78,8 +78,8 @@ export function getHtmlClassesForType(notification: iNotification) {
 }
 
 export function getNotificationsForMobileView(notifications: iNotification[]) {
-  const top = [];
-  const bottom = [];
+  const top: iNotification[] = [];
+  const bottom: iNotification[] = [];
 
   notifications.forEach((notification) => {
     const { container } = notification;
@@ -96,13 +96,13 @@ export function getNotificationsForMobileView(notifications: iNotification[]) {
 }
 
 export function getNotificationsForEachContainer(notifications: iNotification[]) {
-  const topLeft = [];
-  const topRight = [];
-  const topCenter = [];
-  const bottomLeft = [];
-  const bottomRight = [];
-  const bottomCenter = [];
-  const center = [];
+  const topLeft: iNotification[] = [];
+  const topRight: iNotification[] = [];
+  const topCenter: iNotification[] = [];
+  const bottomLeft: iNotification[] = [];
+  const bottomRight: iNotification[] = [];
+  const bottomCenter: iNotification[] = [];
+  const center: iNotification[] = [];
 
   notifications.forEach((notification) => {
     const { container } = notification;
