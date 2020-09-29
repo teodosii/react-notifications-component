@@ -1,18 +1,18 @@
-.notification-container-top-center,
-.notification-container-top-left,
-.notification-container-top-right,
-.notification-container-bottom-center,
-.notification-container-bottom-left,
-.notification-container-bottom-right,
-.notification-container-center {
+.notification-container--top-center,
+.notification-container--top-left,
+.notification-container--top-right,
+.notification-container--bottom-center,
+.notification-container--bottom-left,
+.notification-container--bottom-right,
+.notification-container--center {
   width: 325px;
   position: absolute;
   pointer-events: all;
 }
 
-.notification-container-center,
-.notification-container-top-center,
-.notification-container-bottom-center {
+.notification-container--center,
+.notification-container--top-center,
+.notification-container--bottom-center {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,61 +20,61 @@
   left: calc(50% - 162.5px);
 }
 
-.notification-container-center {
+.notification-container--center {
   top: 20px;
   height: 100%;
   pointer-events: none;
-
-  .center-inner {
-    width: 325px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    pointer-events: all;
-  }
 }
 
-.notification-container-top-center {
+.flex-center {
+  width: 325px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  pointer-events: all;
+}
+
+.notification-container--top-center {
   top: 20px;
 }
-.notification-container-bottom-center {
+.notification-container--bottom-center {
   bottom: 20px;
 }
 
-.notification-container-top-left {
+.notification-container--top-left {
   left: 20px;
   top: 20px;
 }
 
-.notification-container-top-right {
+.notification-container--top-right {
   right: 20px;
   top: 20px;
 }
 
-.notification-container-bottom-left {
+.notification-container--bottom-left {
   left: 20px;
   bottom: 20px;
 }
 
-.notification-container-bottom-right {
+.notification-container--bottom-right {
   bottom: 20px;
   right: 20px;
 }
 
-.notification-container-mobile-top,
-.notification-container-mobile-bottom {
+.notification-container--mobile-top,
+.notification-container--mobile-bottom {
   pointer-events: all;
   position: absolute;
 }
 
-.notification-container-mobile-top {
+.notification-container--mobile-top {
   right: 20px;
   left: 20px;
   top: 20px;
 }
 
-.notification-container-mobile-bottom {
+.notification-container--mobile-bottom {
   right: 20px;
   left: 20px;
   bottom: 20px;
