@@ -40,11 +40,6 @@ class Container extends React.Component<iContainerProps, iContainerState> {
       notifications: [],
       width: undefined
     };
-
-    this.add = this.add.bind(this);
-    this.remove = this.remove.bind(this);
-    this.toggleRemoval = this.toggleRemoval.bind(this);
-    this.handleResize = this.handleResize.bind(this);
   }
 
   static propTypes = propTypes;
@@ -54,10 +49,11 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     const { types } = this.props;
 
     store.register({
-                     addNotification: this.add,
-                     removeNotification: this.remove,
-                     types
-                   });
+      addNotification: this.add,
+      removeNotification: this.remove,
+      removeAllNotifications: this.removeAllNotifications,
+      types
+    });
 
     this.setState({ width: window.innerWidth });
     window.addEventListener('resize', this.handleResize);
@@ -67,22 +63,22 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  handleResize() {
+  handleResize = () => {
     this.setState({ width: window.innerWidth });
   }
 
-  add(notification: iNotification) {
+  add = (notification: iNotification) => {
     this.setState(({ notifications }) => ({
       notifications:
         notification.insert === 'top'
-        ? [notification, ...notifications]
-        : [...notifications, notification]
+          ? [notification, ...notifications]
+          : [...notifications, notification]
     }));
 
     return notification.id;
   }
 
-  remove(id: string) {
+  remove = (id: string) => {
     this.setState(({ notifications }) => ({
       notifications: notifications.map((notification) => {
         if (notification.id === id) {
@@ -94,7 +90,11 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     }));
   }
 
-  toggleRemoval(id: string, callback: () => void) {
+  removeAllNotifications = () => {
+    this.setState({ notifications: [] })
+  }
+
+  toggleRemoval = (id: string, callback: () => void) => {
     this.setState(
       ({ notifications }) => ({
         notifications: notifications.filter(({ id: nId }) => nId !== id)
@@ -124,9 +124,9 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     const bottom = this.renderNotifications(mobileNotifications.bottom);
 
     return (
-      <div id={id} key="mobile" className={`react-notification-root ${className || ''}`}>
-        <div className="notification-container-mobile-top">{top}</div>
-        <div className="notification-container-mobile-bottom">{bottom}</div>
+      <div id={id} key="mobile" className={`notifications-component ${className || ''}`}>
+        <div className="notification-container--mobile-top">{top}</div>
+        <div className="notification-container--mobile-bottom">{bottom}</div>
       </div>
     );
   }
@@ -144,16 +144,16 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     const center = this.renderNotifications(items.center);
 
     return (
-      <div id={id} key="screen" className={`react-notification-root ${className || ''}`}>
-        <div className="notification-container-top-left">{topLeft}</div>
-        <div className="notification-container-top-right">{topRight}</div>
-        <div className="notification-container-bottom-left">{bottomLeft}</div>
-        <div className="notification-container-bottom-right">{bottomRight}</div>
-        <div className="notification-container-top-center">{topCenter}</div>
-        <div className="notification-container-center">
-          <div className="center-inner">{center}</div>
+      <div id={id} key="screen" className={`notifications-component ${className || ''}`}>
+        <div className="notification-container--top-left">{topLeft}</div>
+        <div className="notification-container--top-right">{topRight}</div>
+        <div className="notification-container--bottom-left">{bottomLeft}</div>
+        <div className="notification-container--bottom-right">{bottomRight}</div>
+        <div className="notification-container--top-center">{topCenter}</div>
+        <div className="notification-container--center">
+          <div className="flex-center">{center}</div>
         </div>
-        <div className="notification-container-bottom-center">{bottomCenter}</div>
+        <div className="notification-container--bottom-center">{bottomCenter}</div>
       </div>
     );
   }

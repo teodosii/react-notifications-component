@@ -22,6 +22,7 @@ class Store implements iStore {
 
   public counter: number;
   public removeNotification: (id: string) => void;
+  public removeAllNotifications: () => void;
 
   private types: iNotificationCustomType[];
   private add: (notification: iNotification) => string;
@@ -37,9 +38,10 @@ class Store implements iStore {
     return this.add(parseNotification(notification, this.types));
   }
 
-  public register({ addNotification, removeNotification, types }) {
+  public register({ addNotification, removeNotification, removeAllNotifications, types }) {
     this.add = addNotification;
     this.removeNotification = removeNotification;
+    this.removeAllNotifications = removeAllNotifications;
     this.types = types;
   }
 }
