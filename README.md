@@ -184,8 +184,8 @@ Will trigger a `danger` notification.
 ```js
 store.addNotification({
   ...notification, 
-  animationIn: ['animate__animated', 'animate__fadeIn'], // `animate.css v4` classes
-  animationOut: ['animate__animated', 'animate__fadeOut'] // `animate.css v4` classes
+  animationIn: ['animate__animated animate__fadeIn'], // `animate.css v4` classes
+  animationOut: ['animate__animated animate__fadeOut'] // `animate.css v4` classes
 })
 ```
 
