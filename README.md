@@ -96,10 +96,18 @@ Voila!
 
 **Note**: We rely on `animate.css` in this example as `animate__fadeIn` and `animate__fadeOut` are part of `animate.css`. We recommend using it as it's an excellent animation library, but you're not forced to. If you prefer you may also use your custom animations as long as they're valid CSS animations.
 
-**Note**: `animate.css` latest version has breaking changes. Import `animate.css` by importing as
+**Note**: `animate.css` latest version (`v4`) has breaking changes. It introduces `animate__` prefix so that existing classes don't clash. If you still would like to use classes without prefix you can import `animate.css/animate.compat.css`
 ```js
+// preferred way to import (from `v4`). Uses `animate__` prefix.
+import 'animate.min.css';
+
+// Alternate way to use classes without prefix like `animated fadeIn`
 import 'animate.css/animate.compat.css'
 ```
+
+In the examples, we will be using classes with `animate__` prefix, which is the default behaviour of latest `v4` version of `animate.css`.
+
+For more info on how to use `animate.css`, please refer to [animate.css docs](https://animate.style/)
 
 ## API
 
@@ -114,6 +122,8 @@ Manually remove a notification by id.
 
 ## Examples
 
+
+
 In the following examples for brevity some options will not be mentioned. Strictly focusing on the needed options to present each example. For reference, we will be using Object spread operator on a `notification` object to have non relevant fields included as well.
 
 ```js
@@ -123,8 +133,8 @@ notification = {
   type: "success",
   insert: "top",
   container: "top-right",
-  animationIn: ["animated fadeIn"],
-  animationOut: ["animated fadeOut"]
+  animationIn: ["animate__animated animate__fadeIn"], // `animate.css v4` classes
+  animationOut: ["animate__animated animate__fadeOut"] // `animate.css v4` classes
 };
 ```
 
@@ -173,9 +183,9 @@ Will trigger a `danger` notification.
   
 ```js
 store.addNotification({
-  ...notification,
-  animationIn: ['animated', 'fadeIn'],
-  animationOut: ['animated', 'fadeOut']
+  ...notification, 
+  animationIn: ['animate__animated', 'animate__fadeIn'], // `animate.css v4` classes
+  animationOut: ['animate__animated', 'animate__fadeOut'] // `animate.css v4` classes
 })
 ```
 
