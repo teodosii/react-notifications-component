@@ -11,8 +11,6 @@ A delightful, easy to use and highly configurable component to help you notify y
 
 https://teodosii.github.io/react-notifications-component/
 
-![alt text](https://raw.githubusercontent.com/teodosii/react-notifications-component/master/github-preview.gif "Preview")
-
 ## Features
 
 * Touch support
