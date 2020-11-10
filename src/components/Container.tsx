@@ -5,7 +5,11 @@ import 'src/scss/notification.scss';
 import store from 'src/store';
 import { DEFAULT_CONTAINER_VALUES as DCV } from 'src/utils/constants';
 import { iNotification, iNotificationCustomType } from 'src/types/Notification';
-import { getNotificationsForEachContainer, getNotificationsForMobileView, isNull } from 'src/utils/helpers';
+import {
+  getNotificationsForEachContainer,
+  getNotificationsForMobileView,
+  isNull
+} from 'src/utils/helpers';
 
 interface iContainerProps {
   isMobile?: boolean;
@@ -30,7 +34,7 @@ class Container extends React.Component<iContainerProps, iContainerState> {
       breakpoint: isNull(props.breakpoint) ? DCV.breakpoint : props.breakpoint,
       notifications: [],
       windowWidth: undefined
-    }
+    };
   }
 
   componentDidMount() {
@@ -41,7 +45,7 @@ class Container extends React.Component<iContainerProps, iContainerState> {
       removeNotification: this.remove,
       removeAllNotifications: this.removeAllNotifications,
       defaultNotificationWidth: defaultNotificationWidth || DCV.defaultNotificationWidth,
-      types,
+      types
     });
 
     this.setState({ windowWidth: window.innerWidth });
@@ -80,7 +84,12 @@ class Container extends React.Component<iContainerProps, iContainerState> {
   };
 
   removeAllNotifications = () => {
-    this.setState({ notifications: [] });
+    this.setState({
+      notifications: this.state.notifications.map((notification) => ({
+        ...notification,
+        hasBeenRemoved: true
+      }))
+    });
   };
 
   toggleRemoval = (id: string, callback: () => void) => {

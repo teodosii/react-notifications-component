@@ -1,4 +1,5 @@
 import React from 'react';
+import { store } from 'src';
 import ContainerExample from 'components/examples/ContainerExample';
 import TypeExample from 'components/examples/TypeExample';
 import InsertExample from 'components/examples/InsertExample';
@@ -10,6 +11,9 @@ function ExampleHeading() {
     <div className="row">
       <div className="col-lg-6 offset-lg-3 column col-md-10 offset-md-1 col-sm-12 heading">
         <h2 className="text-center">Examples</h2>
+        <button type="button" className="btn btn-outline-danger" onClick={() => store.removeAllNotifications()}>
+          Remove All Notifications
+        </button>
         <div className="alert alert-warning alert-small">
           <i className="fa fa-info-circle"></i>
           All notifications have been set to be automatically dismissed after{' '}
