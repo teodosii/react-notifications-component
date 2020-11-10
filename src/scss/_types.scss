@@ -1,91 +1,91 @@
 @import "_variables.scss";
 
-.notification-default {
+.notification__item--default {
   background-color: $default;
   border-left: 8px solid $default_dark;
 
-  .timer {
+  .notification__timer {
     background-color: $default_timer;
   }
-  .timer-filler {
+  .notification__timer-filler {
     background-color: $default_timer_filler;
   }
-  .notification-close {
+  .notification__close {
     background-color: $default;
   }
 }
 
-.notification-success {
+.notification__item--success {
   background-color: $success;
   border-left: 8px solid $success_dark;
 
-  .timer {
+  .notification__timer {
     background-color: $success_timer;
   }
-  .timer-filler {
+  .notification__timer-filler {
     background-color: $success_timer_filler;
   }
-  .notification-close {
+  .notification__close {
     background-color: $success;
   }
 }
 
-.notification-danger {
+.notification__item--danger {
   background-color: $danger;
   border-left: 8px solid $danger_dark;
 
-  .timer {
+  .notification__timer {
     background-color: $danger_timer;
   }
-  .timer-filler {
+  .notification__timer-filler {
     background-color: $danger_timer_filler;
   }
-  .notification-close {
+  .notification__close {
     background-color: $danger;
   }
 }
 
-.notification-info {
+.notification__item--info {
   background-color: $info;
   border-left: 8px solid $info_dark;
 
-  .timer {
+  .notification__timer {
     background-color: $info_timer;
   }
-  .timer-filler {
+  .notification__timer-filler {
     background-color: $info_timer_filler;
   }
-  .notification-close {
+  .notification__close {
     background-color: $info;
   }
 }
 
-.notification-warning {
+.notification__item--warning {
   background-color: $warning;
   border-left: 8px solid $warning_dark;
 
-  .timer {
+  .notification__timer {
     background-color: $warning_timer;
   }
-  .timer-filler {
+  .notification__timer-filler {
     background-color: $warning_timer_filler;
   }
-  .notification-close {
+  .notification__close {
     background-color: $warning;
   }
 }
 
-.notification-awesome {
+.notification__item--awesome {
   background-color: $awesome;
   border-left: 8px solid $awesome_dark;
 
-  .timer {
+  .notification__timer {
     background-color: $awesome_timer;
   }
-  .timer-filler {
+  .notification__timer-filler {
     background-color: $awesome_timer_filler;
   }
-  .notification-close {
+  .notification__close {
     background-color: $awesome;
   }
 }

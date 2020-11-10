@@ -25,52 +25,59 @@ export default function ContainerExample() {
             onClick={() => add('top-left')}
           >
             Top Left
-          </button>
-          {' '}
+          </button>{' '}
           <button
             type="button"
             className="btn btn-outline-secondary"
             onClick={() => add('top-right')}
           >
             Top Right
-          </button>
-          {' '}
+          </button>{' '}
           <button
             type="button"
             className="btn btn-outline-secondary"
             onClick={() => add('top-center')}
           >
             Top Center
-          </button>
-          {' '}
+          </button>{' '}
           <button type="button" className="btn btn-outline-secondary" onClick={() => add('center')}>
             Center
-          </button>
-          {' '}
+          </button>{' '}
           <button
             type="button"
             className="btn btn-outline-secondary"
             onClick={() => add('bottom-left')}
           >
             Bottom Left
-          </button>
-          {' '}
+          </button>{' '}
           <button
             type="button"
             className="btn btn-outline-secondary"
             onClick={() => add('bottom-right')}
           >
             Bottom Right
-          </button>
-          {' '}
+          </button>{' '}
           <button
             type="button"
             className="btn btn-outline-secondary"
             onClick={() => add('bottom-center')}
           >
             Bottom Center
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => add('top-full')}
+          >
+            Top Full
+          </button>{' '}
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => add('bottom-full')}
+          >
+            Bottom Full
           </button>
-          {' '}
         </div>
       </div>
     </div>
@@ -81,10 +88,12 @@ function add(container: string): string {
   const type = getType();
   const object: iNotification = {};
 
-  return store.addNotification(Object.assign(object, notification, {
-    title: getTitle(type),
-    message: getMessage(type),
-    container,
-    type
-  }));
+  return store.addNotification(
+    Object.assign(object, notification, {
+      title: getTitle(type),
+      message: getMessage(type),
+      container,
+      type
+    })
+  );
 }

@@ -43,7 +43,7 @@ export default function TypeExample() {
           <button type="button" className="btn btn-outline-secondary" onClick={() => add('danger')}>
             Danger
           </button>{' '}
-          <button type="button" className="btn btn-primary" onClick={() => this.add('awesome')}>
+          <button type="button" className="btn btn-primary" onClick={() => add('awesome')}>
             Custom
           </button>
         </div>

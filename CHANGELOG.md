@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.0.0
+
+### Changes
+
+* TS support
+* Added full-sized containers for top and bottom
+* Changed SASS style to match BEM - *breaking change*
+* Limit center containers to 350px
+* Allow dynamic expansion of containers based on each notification's width
+* Adedd new API call `removeAllNotifications`
+* Removed `prop-types` package, props are now defaulted internally
+
+### Fixes
+
+* #82, #69, #67, #65, #63, #61
+
 ## 2.4.1
 
 ### Changes
