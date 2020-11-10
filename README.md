@@ -1,8 +1,6 @@
 [![npm version](https://badgen.net/npm/v/react-notifications-component)](https://www.npmjs.com/package/react-notifications-component) [![npm](https://img.shields.io/npm/dm/react-notifications-component.svg)](https://www.npmjs.com/package/react-notifications-component) [![Minified & Gzipped size](https://badgen.net/bundlephobia/minzip/react-notifications-component)](https://bundlephobia.com/result?p=react-notifications-component)
 # react-notifications-component
 
-![Logo](https://raw.githubusercontent.com/teodosii/react-notifications-component/master/new-logo.png "Logo")
-
 A delightful, easy to use and highly configurable component to help you notify your users out of the box. No messy setup, just beautiful notifications!
 
 > :fire: :fire: :fire: Interested in an animation library for React? I just launched `react-tweenful`, check it out here https://github.com/teodosii/react-tweenful
@@ -10,6 +8,8 @@ A delightful, easy to use and highly configurable component to help you notify y
 ## Demo
 
 https://teodosii.github.io/react-notifications-component/
+
+![alt text](https://raw.githubusercontent.com/teodosii/react-notifications-component/master/github-preview.gif "Preview")
 
 ## Features
 
