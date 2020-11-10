@@ -56,7 +56,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
       touchEnabled: true
     };
 
-    const isFullWidthNotification = container === NC.TOP_FULL || container == NC.BOTTOM_FULL
+    const isFullWidthNotification = [NC.TOP_FULL, NC.BOTTOM_FULL, NC.TOP_CENTER, NC.BOTTOM_CENTER, NC.CENTER].indexOf(container) !== -1
     if (isMobile || isFullWidthNotification) {
       this.state.parentStyle.width = '100%';
     }

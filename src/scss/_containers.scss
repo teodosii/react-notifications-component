@@ -22,6 +22,12 @@
   left: calc(50% - 162.5px);
 }
 
+.notification-container--center,
+.notification-container--top-center,
+.notification-container--bottom-center {
+  max-width: 325px;
+}
+
 .notification-container--center {
   top: 20px;
   height: 100%;
@@ -32,6 +38,10 @@
 .notification-container--bottom-full {
   width: 100%;
   min-width: 100%;
+}
+
+.notification-container--bottom-full {
+  bottom: 0;
 }
 
 .flex-center {
