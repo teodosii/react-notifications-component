@@ -84,12 +84,12 @@ function addCustomIcon(type: string, iconClassName: string): void {
       width: 275,
       container: getContainer(),
       content: (
-        <div className={`notification-custom-${type}`}>
-          <div className="notification-custom-icon">
+        <div className={`notification__custom--${type}`}>
+          <div className="notification__custom-icon">
             <i className={iconClassName} />
           </div>
-          <div className="notification-custom-content">
-            <p className="notification-message">{message}</p>
+          <div className="notification__custom">
+            <p className="notification__message">{message}</p>
           </div>
         </div>
       )

@@ -10,7 +10,7 @@
       "src/*": ["src/*"]
     },
 
-    "declaration": false,
+    "declaration": true,
     "noImplicitReturns": false,
     "alwaysStrict": true,
     "noImplicitThis": false,
@@ -28,7 +28,9 @@
     "preserveConstEnums": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "target": "es2015"
+    "target": "es2015",
+
+    "outDir": "dist/js"
   },
 
   "include": [

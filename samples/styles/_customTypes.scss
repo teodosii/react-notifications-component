@@ -1,4 +1,4 @@
-.notification-custom-icon {
+.notification__custom-icon {
   flex-basis: 20%;
   position: relative;
   padding: 8px 8px 8px 12px;
@@ -12,58 +12,58 @@
   }
 }
 
-.notification-custom-content {
+.notification__custom {
   flex-basis: 80%;
   padding: 12px 12px 12px 8px;
   display: inline-block;
 }
 
-.notification-custom-success {
+.notification__custom--success {
   width: 100%;
   display: flex;
   background-color: #28a745;
 
-  .notification-custom-icon {
+  .notification__custom-icon {
     border-left: 8px solid darken(#28a745, 15%);
   }
 }
 
-.notification-custom-default {
+.notification__custom--default {
   width: 100%;
   display: flex;
   background-color: #007bff;
 
-  .notification-custom-icon {
+  .notification__custom-icon {
     border-left: 8px solid darken(#007bff, 15%);
   }
 }
 
-.notification-custom-danger {
+.notification__custom--danger {
   width: 100%;
   display: flex;
   background-color: #dc3545;
 
-  .notification-custom-icon {
+  .notification__custom-icon {
     border-left: 8px solid darken(#dc3545, 15%);
   }
 }
 
-.notification-custom-info {
+.notification__custom--info {
   width: 100%;
   display: flex;
   background-color: #17a2b8;
 
-  .notification-custom-icon {
+  .notification__custom-icon {
     border-left: 8px solid darken(#17a2b8, 15%);
   }
 }
 
-.notification-custom-warning {
+.notification__custom--warning {
   width: 100%;
   display: flex;
   background-color: #eab000;
 
-  .notification-custom-icon {
+  .notification__custom-icon {
     border-left: 8px solid darken(#eab000, 15%);
   }
 }

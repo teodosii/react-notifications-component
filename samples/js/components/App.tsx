@@ -10,7 +10,7 @@ export default function App() {
       <ReactNotification
         types={[
           {
-            htmlClasses: ['notification-awesome'],
+            htmlClasses: ['notification__item--awesome'],
             name: 'awesome'
           }
         ]}

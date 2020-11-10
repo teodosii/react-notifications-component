@@ -1,15 +1,21 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { iNotification } from 'src/types/Notification';
-import { REMOVAL } from '../utils/constants';
-import { getHtmlClassesForType, getTransition, hasFullySwiped, shouldNotificationHaveSliding } from '../utils/helpers';
+import { NOTIFICATION_CONTAINER as NC, REMOVAL } from '../utils/constants';
+import {
+  getHtmlClassesForType,
+  getTransition,
+  hasFullySwiped,
+  shouldNotificationHaveSliding
+} from '../utils/helpers';
 import Timer from '../utils/timer';
 
 class iNotificationProps {
   id: string;
   notification: iNotification;
-  count: number;
-  removed: boolean;
+  defaultNotificationWidth: number;
+  notificationsCount: number;
+  isMobile: boolean;
+  hasBeenRemoved: boolean;
   toggleRemoval: (id: string, callback: () => void) => void;
 }
 
@@ -35,35 +41,29 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
   constructor(props: iNotificationProps) {
     super(props);
     this.rootElementRef = React.createRef();
-    this.onClick = this.onClick.bind(this);
-    this.onTouchStart = this.onTouchStart.bind(this);
-    this.onTouchMove = this.onTouchMove.bind(this);
-    this.onTouchEnd = this.onTouchEnd.bind(this);
-    this.onMouseEnter = this.onMouseEnter.bind(this);
-    this.onMouseLeave = this.onMouseLeave.bind(this);
 
-    const { width } = props.notification;
+    const { defaultNotificationWidth, notification, isMobile } = props;
+    const { width, container } = notification;
 
     this.state = {
       parentStyle: {
         height: `0px`,
         overflow: 'hidden',
-        width: width ? `${width}px` : '100%'
+        width: `${width ? width : defaultNotificationWidth}px`
       },
-      htmlClassList: getHtmlClassesForType(props.notification),
+      htmlClassList: getHtmlClassesForType(notification),
       animationPlayState: 'running',
       touchEnabled: true
     };
+
+    const isFullWidthNotification = [NC.TOP_FULL, NC.BOTTOM_FULL, NC.TOP_CENTER, NC.BOTTOM_CENTER, NC.CENTER].indexOf(container) !== -1
+    if (isMobile || isFullWidthNotification) {
+      this.state.parentStyle.width = '100%';
+    }
   }
 
   private readonly rootElementRef: React.RefObject<HTMLDivElement>;
   private timer: Timer;
-
-  static propTypes = {
-    toggleRemoval: PropTypes.func.isRequired,
-    count: PropTypes.number.isRequired,
-    removed: PropTypes.bool
-  };
 
   componentWillUnmount() {
     if (this.timer) {
@@ -72,17 +72,15 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
   }
 
   componentDidMount() {
-    const { notification, count } = this.props;
+    const { notification, notificationsCount } = this.props;
     const {
       dismiss: { duration, onScreen }
     } = notification;
+    const willSlide = shouldNotificationHaveSliding(notification, notificationsCount);
     const { scrollHeight } = this.rootElementRef.current;
-    const willSlide = shouldNotificationHaveSliding(notification, count);
 
     const onTransitionEnd = () => {
-      if (!duration || onScreen) {
-        return;
-      }
+      if (!duration || onScreen) return;
       const callback = () => this.removeNotification(REMOVAL.TIMEOUT);
       this.timer = new Timer(callback, duration);
     };
@@ -108,8 +106,8 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     );
   }
 
-  componentDidUpdate({ removed }) {
-    if (this.props.removed && !removed) {
+  componentDidUpdate({ hasBeenRemoved }: iNotificationProps) {
+    if (this.props.hasBeenRemoved && !hasBeenRemoved) {
       this.removeNotification(REMOVAL.MANUAL);
     }
   }
@@ -121,11 +119,12 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
       onRemoval,
       dismiss: { waitForAnimation }
     } = notification;
-    const htmlClassList = [...notification.animationOut, ...getHtmlClassesForType(notification)];
 
+    const htmlClassList = [...notification.animationOut, ...getHtmlClassesForType(notification)];
     const onTransitionEnd = () => toggleRemoval(id, () => onRemoval(id, removalFlag));
     const parentStyle: iParentStyle = {
       height: `0px`,
+      overflow: 'hidden',
       transition: getTransition(notification.slidingExit, 'height')
     };
 
@@ -134,12 +133,12 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
         htmlClassList,
         onAnimationEnd: () => {
           this.setState({
-                          parentStyle: {
-                            width,
-                            ...parentStyle
-                          },
-                          onTransitionEnd
-                        });
+            parentStyle: {
+              width,
+              ...parentStyle
+            },
+            onTransitionEnd
+          });
         }
       }));
     }
@@ -154,16 +153,16 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     }));
   }
 
-  onClick() {
+  onClick = () => {
     const {
       notification: { dismiss }
     } = this.props;
     if (dismiss.click || dismiss.showIcon) {
       this.removeNotification(REMOVAL.CLICK);
     }
-  }
+  };
 
-  onTouchStart(event: React.TouchEvent<HTMLDivElement>) {
+  onTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     const { pageX } = event.touches[0];
 
     this.setState(({ parentStyle }) => ({
@@ -174,9 +173,9 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
         position: 'relative'
       }
     }));
-  }
+  };
 
-  onTouchMove(event: React.TouchEvent) {
+  onTouchMove = (event: React.TouchEvent) => {
     const { pageX } = event.touches[0];
     const { startX } = this.state;
     const {
@@ -214,6 +213,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
             parentStyle: {
               ...parentStyle,
               height: `0px`,
+              overflow: 'hidden',
               transition: getTransition(slidingExit, 'height')
             },
             onTransitionEnd
@@ -229,9 +229,9 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
         left: `${0 + distance}px`
       }
     }));
-  }
+  };
 
-  onTouchEnd() {
+  onTouchEnd = () => {
     const {
       notification: { touchRevert }
     } = this.props;
@@ -243,23 +243,23 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
         transition: getTransition(touchRevert, 'left')
       }
     }));
-  }
+  };
 
-  onMouseEnter() {
+  onMouseEnter = () => {
     if (this.timer) {
       this.timer.pause();
     } else {
       this.setState({ animationPlayState: 'paused' });
     }
-  }
+  };
 
-  onMouseLeave() {
+  onMouseLeave = () => {
     if (this.timer) {
       this.timer.resume();
     } else {
       this.setState({ animationPlayState: 'running' });
     }
-  }
+  };
 
   renderTimer() {
     const {
@@ -283,8 +283,12 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
 
     const onAnimationEnd = () => this.removeNotification(REMOVAL.TIMEOUT);
     return (
-      <div className="timer">
-        <div className="timer-filler" onAnimationEnd={onAnimationEnd} style={style}></div>
+      <div className="notification__timer">
+        <div
+          className="notification__timer-filler"
+          onAnimationEnd={onAnimationEnd}
+          style={style}
+        ></div>
       </div>
     );
   }
@@ -303,7 +307,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
 
     return (
       <div
-        className={`${[...htmlClassList, 'n-child'].join(' ')}`}
+        className={`${[...htmlClassList].join(' ')}`}
         onMouseEnter={hasMouseEvents ? this.onMouseEnter : null}
         onMouseLeave={hasMouseEvents ? this.onMouseLeave : null}
       >
@@ -325,14 +329,14 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
 
     return (
       <div
-        className={`${[...htmlClassList, 'n-child'].join(' ')}`}
+        className={`${[...htmlClassList].join(' ')}`}
         onMouseEnter={hasMouseEvents ? this.onMouseEnter : null}
         onMouseLeave={hasMouseEvents ? this.onMouseLeave : null}
       >
-        <div className="notification-content">
-          {showIcon && <div className="notification-close" onClick={this.onClick}></div>}
-          {title && <div className="notification-title">{title}</div>}
-          <div className="notification-message">{message}</div>
+        <div className="notification__content">
+          {showIcon && <div className="notification__close" onClick={this.onClick}></div>}
+          {title && <div className="notification__title">{title}</div>}
+          <div className="notification__message">{message}</div>
           {this.renderTimer()}
         </div>
       </div>
@@ -352,7 +356,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
       <div
         ref={this.rootElementRef}
         onClick={click ? this.onClick : null}
-        className="notification-parent"
+        className="notification"
         style={parentStyle}
         onAnimationEnd={onAnimationEnd}
         onTransitionEnd={onTransitionEnd}

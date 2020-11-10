@@ -10,7 +10,7 @@ const isFunction = (object: any) => !!(object && object.constructor && object.ca
 const isArray = (object: any) => !isNull(object) && object.constructor === Array;
 
 function isClassComponent(component: any) {
-  return typeof component === 'function' && component.prototype && !!component.prototype.isReactComponent;
+  return typeof component === 'function' && component.prototype && !!component.prototype.render;
 }
 
 function isFunctionComponent(component: any) {
@@ -36,17 +36,11 @@ export function validateTransition(notification: iNotification, transition: stri
 
 export const validators = [
   function title({ content, title }: iNotification) {
-    if (content) {
-      return;
-    }
-    if (isNull(title)) {
-      return;
-    }
+    if (content) return;
+    if (isNull(title)) return;
 
     const isReactEl = isReactElement(title);
-    if (isReactEl || typeof title === 'string') {
-      return;
-    }
+    if (isReactEl || typeof title === 'string') return;
     if (!isReactEl) {
       throw new Error(ERROR.TITLE_ELEMENT);
     }
@@ -56,9 +50,7 @@ export const validators = [
   },
 
   function message({ content, message }: iNotification) {
-    if (content) {
-      return;
-    }
+    if (content) return;
 
     if (!message) {
       throw new Error(ERROR.MESSAGE_REQUIRED);
@@ -77,9 +69,7 @@ export const validators = [
   },
 
   function type({ content, type }: iNotification, userDefinedTypes: iNotificationCustomType[]) {
-    if (content) {
-      return;
-    }
+    if (content) return;
     if (!type) {
       throw new Error(ERROR.TYPE_REQUIRED);
     }
@@ -109,18 +99,14 @@ export const validators = [
   },
 
   function insert({ insert }: iNotification) {
-    if (isNull(insert)) {
-      return;
-    }
+    if (isNull(insert)) return;
     if (!isString(insert)) {
       throw new Error(ERROR.INSERT_STRING);
     }
   },
 
   function width({ width }: iNotification) {
-    if (isNull(width)) {
-      return;
-    }
+    if (isNull(width)) return;
     if (!isNumber(width)) {
       throw new Error(ERROR.WIDTH_NUMBER);
     }
@@ -130,9 +116,7 @@ export const validators = [
     { type, content }: iNotification,
     userDefinedTypes: iNotificationCustomType[]
   ) {
-    if (content) {
-      return;
-    }
+    if (content) return;
 
     if (
       type === NT.SUCCESS ||
@@ -151,9 +135,7 @@ export const validators = [
   },
 
   function content({ content }: iNotification) {
-    if (!content) {
-      return;
-    }
+    if (!content) return;
     const isClass = isClassComponent(content);
     const isFunction = isFunctionComponent(content);
     const isElem = React.isValidElement(content);
@@ -163,36 +145,28 @@ export const validators = [
   },
 
   function animationIn({ animationIn }: iNotification) {
-    if (isNull(animationIn)) {
-      return;
-    }
+    if (isNull(animationIn)) return;
     if (!isArray(animationIn)) {
       throw new Error(ERROR.ANIMATION_IN);
     }
   },
 
   function animationOut({ animationOut }: iNotification) {
-    if (isNull(animationOut)) {
-      return;
-    }
+    if (isNull(animationOut)) return;
     if (!isArray(animationOut)) {
       throw new Error(ERROR.ANIMATION_OUT);
     }
   },
 
   function onRemoval({ onRemoval }: iNotification) {
-    if (!onRemoval) {
-      return;
-    }
+    if (!onRemoval) return;
     if (!isFunction(onRemoval)) {
       throw new Error(ERROR.REMOVAL_FUNC);
     }
   },
 
   function dismiss({ dismiss }: iNotification) {
-    if (!dismiss) {
-      return;
-    }
+    if (!dismiss) return;
 
     const {
       duration,
