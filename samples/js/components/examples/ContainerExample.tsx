@@ -66,14 +66,14 @@ export default function ContainerExample() {
           </button>{' '}
           <button
             type="button"
-            className="btn btn-outline-secondary"
+            className="btn btn-primary"
             onClick={() => add('top-full')}
           >
             Top Full
-          </button>
+          </button>{' '}
           <button
             type="button"
-            className="btn btn-outline-secondary"
+            className="btn btn-primary"
             onClick={() => add('bottom-full')}
           >
             Bottom Full
