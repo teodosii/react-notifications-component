@@ -1,3 +1,9 @@
+export const DEFAULT_CONTAINER_VALUES = {
+  isMobile: true,
+  breakpoint: 768,
+  defaultNotificationWidth: 325
+};
+
 export const NOTIFICATION_BASE_CLASS = 'notification__item';
 
 export enum NOTIFICATION_CONTAINER {
@@ -7,13 +13,15 @@ export enum NOTIFICATION_CONTAINER {
   TOP_LEFT = 'top-left',
   TOP_RIGHT = 'top-right',
   TOP_CENTER = 'top-center',
-  CENTER = 'center'
-};
+  CENTER = 'center',
+  TOP_FULL = 'top-full',
+  BOTTOM_FULL = 'bottom-full'
+}
 
 export enum INSERTION {
   TOP = 'top',
   BOTTOM = 'bottom'
-};
+}
 
 export enum NOTIFICATION_TYPE {
   SUCCESS = 'success',
@@ -21,14 +29,14 @@ export enum NOTIFICATION_TYPE {
   INFO = 'info',
   DEFAULT = 'default',
   WARNING = 'warning'
-};
+}
 
 export enum REMOVAL {
   TIMEOUT = 'timeout',
   CLICK = 'click',
   TOUCH = 'touch',
   MANUAL = 'manual'
-};
+}
 
 export const ERROR = {
   ANIMATION_IN: 'Validation error. `animationIn` option must be an array',

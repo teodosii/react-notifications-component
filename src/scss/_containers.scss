@@ -4,8 +4,10 @@
 .notification-container--bottom-center,
 .notification-container--bottom-left,
 .notification-container--bottom-right,
-.notification-container--center {
-  width: 325px;
+.notification-container--center,
+.notification-container--top-full,
+.notification-container--bottom-full {
+  min-width: 325px;
   position: absolute;
   pointer-events: all;
 }
@@ -26,8 +28,14 @@
   pointer-events: none;
 }
 
+.notification-container--top-full,
+.notification-container--bottom-full {
+  width: 100%;
+  min-width: 100%;
+}
+
 .flex-center {
-  width: 325px;
+  min-width: 325px;
   display: flex;
   justify-content: center;
   align-items: center;

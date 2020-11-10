@@ -18,7 +18,7 @@ export interface iNotification {
   touchSlidingExit?: iTouchTransition;
   userDefinedTypes?: iNotificationCustomType[];
   width?: number;
-  removed?: boolean
+  hasBeenRemoved?: boolean
 }
 
 export type NotificationTitleMessage = string | React.ReactNode | React.FunctionComponent;

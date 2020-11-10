@@ -1,5 +1,11 @@
 import store from 'src/store';
-import { iDismiss, iNotification, iNotificationCustomType, iTouchTransition, iTransition } from 'src/types/Notification';
+import {
+  iDismiss,
+  iNotification,
+  iNotificationCustomType,
+  iTouchTransition,
+  iTransition
+} from 'src/types/Notification';
 import {
   INSERTION,
   NOTIFICATION_BASE_CLASS,
@@ -8,10 +14,11 @@ import {
   NOTIFICATION_TYPE as NT
 } from 'src/utils/constants';
 
-const isNull = (object: any) => object === null || object === undefined;
+export const isNull = (object: any) => object === null || object === undefined;
 
 export function isBottomContainer(container: string) {
   return (
+    container === NOTIFICATION_CONTAINER.BOTTOM_FULL ||
     container === NOTIFICATION_CONTAINER.BOTTOM_LEFT ||
     container === NOTIFICATION_CONTAINER.BOTTOM_RIGHT ||
     container === NOTIFICATION_CONTAINER.BOTTOM_CENTER
@@ -20,6 +27,7 @@ export function isBottomContainer(container: string) {
 
 export function isTopContainer(container: string) {
   return (
+    container === NOTIFICATION_CONTAINER.TOP_FULL ||
     container === NOTIFICATION_CONTAINER.TOP_LEFT ||
     container === NOTIFICATION_CONTAINER.TOP_RIGHT ||
     container === NOTIFICATION_CONTAINER.TOP_CENTER
@@ -40,8 +48,8 @@ export function shouldNotificationHaveSliding(notification: iNotification, count
   return (
     count > 1 &&
     ((notification.insert === INSERTION.TOP && isTopContainer(notification.container)) ||
-     (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)) ||
-     notification.container === NOTIFICATION_CONTAINER.CENTER)
+      (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)) ||
+      notification.container === NOTIFICATION_CONTAINER.CENTER)
   );
 }
 
@@ -103,10 +111,16 @@ export function getNotificationsForEachContainer(notifications: iNotification[])
   const bottomRight: iNotification[] = [];
   const bottomCenter: iNotification[] = [];
   const center: iNotification[] = [];
+  const topFull: iNotification[] = [];
+  const bottomFull: iNotification[] = [];
 
   notifications.forEach((notification) => {
     const { container } = notification;
-    if (container === NOTIFICATION_CONTAINER.TOP_LEFT) {
+    if (container === NOTIFICATION_CONTAINER.TOP_FULL) {
+      topFull.push(notification);
+    } else if (container === NOTIFICATION_CONTAINER.BOTTOM_FULL) {
+      bottomFull.push(notification);
+    } else if (container === NOTIFICATION_CONTAINER.TOP_LEFT) {
       topLeft.push(notification);
     } else if (container === NOTIFICATION_CONTAINER.TOP_RIGHT) {
       topRight.push(notification);
@@ -124,6 +138,8 @@ export function getNotificationsForEachContainer(notifications: iNotification[])
   });
 
   return {
+    topFull,
+    bottomFull,
     topLeft,
     topRight,
     topCenter,
@@ -138,8 +154,11 @@ export function getTransition({ duration, timingFunction, delay }: iTransition, 
   return `${duration}ms ${property} ${timingFunction} ${delay}ms`;
 }
 
-function defaultTransition(transition: iTransition, { duration, timingFunction, delay }: iTransition) {
-  const transitionOptions = transition || {} as iTransition;
+function defaultTransition(
+  transition: iTransition,
+  { duration, timingFunction, delay }: iTransition
+) {
+  const transitionOptions = transition || ({} as iTransition);
 
   if (isNull(transitionOptions.duration)) {
     transitionOptions.duration = duration;
@@ -181,7 +200,10 @@ function defaultDismiss(dismiss: iDismiss): iDismiss {
   return option;
 }
 
-function defaultUserDefinedTypes(notification: iNotification, definedTypes: iNotificationCustomType[]) {
+function defaultUserDefinedTypes(
+  notification: iNotification,
+  definedTypes: iNotificationCustomType[]
+) {
   const { content, type } = notification;
   if (content) {
     return undefined;
@@ -201,7 +223,11 @@ function defaultUserDefinedTypes(notification: iNotification, definedTypes: iNot
   return definedTypes;
 }
 
-export function parseNotification(options: iNotification, userDefinedTypes: any): iNotification {
+export function parseNotification(
+  options: iNotification,
+  userDefinedTypes: iNotificationCustomType[],
+  defaultNotificationWidth: number
+): iNotification {
   const notification = options;
   const {
     id,
@@ -220,17 +246,14 @@ export function parseNotification(options: iNotification, userDefinedTypes: any)
     onRemoval
   } = notification;
 
-  notification.id = id || store.counter.toString();
-  notification.type = content ? null : type.toLowerCase() as NOTIFICATION_TYPE;
+  notification.id = id || store.getCounter().toString();
+  notification.type = content ? null : (type.toLowerCase() as NOTIFICATION_TYPE);
 
   if (userDefinedTypes && !content) {
     notification.userDefinedTypes = defaultUserDefinedTypes(notification, userDefinedTypes);
   }
 
-  if (!isNull(width)) {
-    notification.width = width;
-  }
-
+  notification.width = isNull(width) ? defaultNotificationWidth : width;
   notification.container = container.toLowerCase() as NOTIFICATION_CONTAINER;
   notification.insert = (insert || 'top').toLowerCase() as INSERTION;
   notification.dismiss = defaultDismiss(dismiss);
@@ -248,9 +271,9 @@ export function parseNotification(options: iNotification, userDefinedTypes: any)
   notification.slidingExit = defaultTransition(slidingExit, t(600, 'linear', 0));
   notification.touchRevert = defaultTransition(touchRevert, t(600, 'linear', 0));
 
-  const touchExit = touchSlidingExit || {} as iTouchTransition;
-  const swipe = touchExit.swipe || {} as iTransition;
-  const fade = touchExit.fade || {} as iTransition;
+  const touchExit = touchSlidingExit || ({} as iTouchTransition);
+  const swipe = touchExit.swipe || ({} as iTransition);
+  const fade = touchExit.fade || ({} as iTransition);
   notification.touchSlidingExit = touchExit;
   notification.touchSlidingExit.swipe = defaultTransition(swipe, t(600, 'linear', 0));
   notification.touchSlidingExit.fade = defaultTransition(fade, t(300, 'linear', 0));

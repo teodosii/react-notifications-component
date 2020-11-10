@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { iNotification } from 'src/types/Notification';
-import { REMOVAL } from '../utils/constants';
+import { NOTIFICATION_CONTAINER as NC, REMOVAL } from '../utils/constants';
 import {
   getHtmlClassesForType,
   getTransition,
@@ -13,8 +12,10 @@ import Timer from '../utils/timer';
 class iNotificationProps {
   id: string;
   notification: iNotification;
-  count: number;
-  removed: boolean;
+  defaultNotificationWidth: number;
+  notificationsCount: number;
+  isMobile: boolean;
+  hasBeenRemoved: boolean;
   toggleRemoval: (id: string, callback: () => void) => void;
 }
 
@@ -41,28 +42,28 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     super(props);
     this.rootElementRef = React.createRef();
 
-    const { width } = props.notification;
+    const { defaultNotificationWidth, notification, isMobile } = props;
+    const { width, container } = notification;
 
     this.state = {
       parentStyle: {
         height: `0px`,
         overflow: 'hidden',
-        width: width ? `${width}px` : '100%'
+        width: `${width ? width : defaultNotificationWidth}px`
       },
-      htmlClassList: getHtmlClassesForType(props.notification),
+      htmlClassList: getHtmlClassesForType(notification),
       animationPlayState: 'running',
       touchEnabled: true
     };
+
+    const isFullWidthNotification = container === NC.TOP_FULL || container == NC.BOTTOM_FULL
+    if (isMobile || isFullWidthNotification) {
+      this.state.parentStyle.width = '100%';
+    }
   }
 
   private readonly rootElementRef: React.RefObject<HTMLDivElement>;
   private timer: Timer;
-
-  static propTypes = {
-    toggleRemoval: PropTypes.func.isRequired,
-    count: PropTypes.number.isRequired,
-    removed: PropTypes.bool
-  };
 
   componentWillUnmount() {
     if (this.timer) {
@@ -71,17 +72,15 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
   }
 
   componentDidMount() {
-    const { notification, count } = this.props;
+    const { notification, notificationsCount } = this.props;
     const {
       dismiss: { duration, onScreen }
     } = notification;
+    const willSlide = shouldNotificationHaveSliding(notification, notificationsCount);
     const { scrollHeight } = this.rootElementRef.current;
-    const willSlide = shouldNotificationHaveSliding(notification, count);
 
     const onTransitionEnd = () => {
-      if (!duration || onScreen) {
-        return;
-      }
+      if (!duration || onScreen) return;
       const callback = () => this.removeNotification(REMOVAL.TIMEOUT);
       this.timer = new Timer(callback, duration);
     };
@@ -107,8 +106,8 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     );
   }
 
-  componentDidUpdate({ removed }) {
-    if (this.props.removed && !removed) {
+  componentDidUpdate({ hasBeenRemoved }: iNotificationProps) {
+    if (this.props.hasBeenRemoved && !hasBeenRemoved) {
       this.removeNotification(REMOVAL.MANUAL);
     }
   }
@@ -125,6 +124,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     const onTransitionEnd = () => toggleRemoval(id, () => onRemoval(id, removalFlag));
     const parentStyle: iParentStyle = {
       height: `0px`,
+      overflow: 'hidden',
       transition: getTransition(notification.slidingExit, 'height')
     };
 
@@ -213,6 +213,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
             parentStyle: {
               ...parentStyle,
               height: `0px`,
+              overflow: 'hidden',
               transition: getTransition(slidingExit, 'height')
             },
             onTransitionEnd

@@ -71,6 +71,13 @@ export default function ContainerExample() {
             Bottom Center
           </button>
           {' '}
+          <button
+            type="button"
+            className="btn btn-outline-secondary"
+            onClick={() => add('top-full')}
+          >
+            Top Full
+          </button>
         </div>
       </div>
     </div>

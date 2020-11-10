@@ -3,59 +3,48 @@ import React from 'react';
 import ReactNotification from 'src/components/Notification';
 import 'src/scss/notification.scss';
 import store from 'src/store';
+import { DEFAULT_CONTAINER_VALUES as DCV } from 'src/utils/constants';
 import { iNotification, iNotificationCustomType } from 'src/types/Notification';
-import { getNotificationsForEachContainer, getNotificationsForMobileView } from 'src/utils/helpers';
+import { getNotificationsForEachContainer, getNotificationsForMobileView, isNull } from 'src/utils/helpers';
 
 interface iContainerProps {
-  isMobile: boolean;
-  breakpoint: number;
-  types: iNotificationCustomType[];
+  isMobile?: boolean;
+  breakpoint?: number;
+  types?: iNotificationCustomType[];
+  defaultNotificationWidth?: number;
 }
 
 interface iContainerState {
   isMobile: boolean;
   breakpoint: number;
   notifications: iNotification[];
-  width: number;
+  windowWidth: number;
 }
-
-const defaultProps = {
-  isMobile: true,
-  breakpoint: 768
-};
-
-const propTypes = {
-  isMobile: PropTypes.bool,
-  breakpoint: PropTypes.number,
-  types: PropTypes.array
-};
 
 class Container extends React.Component<iContainerProps, iContainerState> {
   constructor(props: iContainerProps) {
     super(props);
 
     this.state = {
-      isMobile: props.isMobile,
-      breakpoint: props.breakpoint,
+      isMobile: isNull(props.isMobile) ? DCV.isMobile : props.isMobile,
+      breakpoint: isNull(props.breakpoint) ? DCV.breakpoint : props.breakpoint,
       notifications: [],
-      width: undefined
-    };
+      windowWidth: undefined
+    }
   }
 
-  static propTypes = propTypes;
-  static defaultProps = defaultProps;
-
   componentDidMount() {
-    const { types } = this.props;
+    const { types, defaultNotificationWidth } = this.props;
 
     store.register({
       addNotification: this.add,
       removeNotification: this.remove,
       removeAllNotifications: this.removeAllNotifications,
-      types
+      defaultNotificationWidth: defaultNotificationWidth || DCV.defaultNotificationWidth,
+      types,
     });
 
-    this.setState({ width: window.innerWidth });
+    this.setState({ windowWidth: window.innerWidth });
     window.addEventListener('resize', this.handleResize);
   }
 
@@ -64,8 +53,8 @@ class Container extends React.Component<iContainerProps, iContainerState> {
   }
 
   handleResize = () => {
-    this.setState({ width: window.innerWidth });
-  }
+    this.setState({ windowWidth: window.innerWidth });
+  };
 
   add = (notification: iNotification) => {
     this.setState(({ notifications }) => ({
@@ -76,23 +65,23 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     }));
 
     return notification.id;
-  }
+  };
 
   remove = (id: string) => {
     this.setState(({ notifications }) => ({
       notifications: notifications.map((notification) => {
         if (notification.id === id) {
-          notification.removed = true;
+          notification.hasBeenRemoved = true;
         }
 
         return notification;
       })
     }));
-  }
+  };
 
   removeAllNotifications = () => {
-    this.setState({ notifications: [] })
-  }
+    this.setState({ notifications: [] });
+  };
 
   toggleRemoval = (id: string, callback: () => void) => {
     this.setState(
@@ -101,17 +90,19 @@ class Container extends React.Component<iContainerProps, iContainerState> {
       }),
       callback
     );
-  }
+  };
 
-  renderNotifications(notifications: iNotification[]) {
+  renderNotifications(notifications: iNotification[], isMobile: boolean) {
     return notifications.map((notification) => (
       <ReactNotification
         id={notification.id}
         key={notification.id}
+        isMobile={isMobile}
+        defaultNotificationWidth={this.props.defaultNotificationWidth}
         notification={notification}
         toggleRemoval={this.toggleRemoval}
-        count={notifications.length}
-        removed={notification.removed}
+        notificationsCount={notifications.length}
+        hasBeenRemoved={notification.hasBeenRemoved}
       />
     ));
   }
@@ -120,8 +111,8 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     const { className, id } = props;
     const { notifications } = this.state;
     const mobileNotifications = getNotificationsForMobileView(notifications);
-    const top = this.renderNotifications(mobileNotifications.top);
-    const bottom = this.renderNotifications(mobileNotifications.bottom);
+    const top = this.renderNotifications(mobileNotifications.top, true);
+    const bottom = this.renderNotifications(mobileNotifications.bottom, true);
 
     return (
       <div id={id} key="mobile" className={`notifications-component ${className || ''}`}>
@@ -135,16 +126,20 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     const { className, id } = props;
     const { notifications } = this.state;
     const items = getNotificationsForEachContainer(notifications);
-    const topLeft = this.renderNotifications(items.topLeft);
-    const topRight = this.renderNotifications(items.topRight);
-    const topCenter = this.renderNotifications(items.topCenter);
-    const bottomLeft = this.renderNotifications(items.bottomLeft);
-    const bottomRight = this.renderNotifications(items.bottomRight);
-    const bottomCenter = this.renderNotifications(items.bottomCenter);
-    const center = this.renderNotifications(items.center);
+    const topFull = this.renderNotifications(items.topFull, false);
+    const bottomFull = this.renderNotifications(items.bottomFull, false);
+    const topLeft = this.renderNotifications(items.topLeft, false);
+    const topRight = this.renderNotifications(items.topRight, false);
+    const topCenter = this.renderNotifications(items.topCenter, false);
+    const bottomLeft = this.renderNotifications(items.bottomLeft, false);
+    const bottomRight = this.renderNotifications(items.bottomRight, false);
+    const bottomCenter = this.renderNotifications(items.bottomCenter, false);
+    const center = this.renderNotifications(items.center, false);
 
     return (
       <div id={id} key="screen" className={`notifications-component ${className || ''}`}>
+        <div className="notification-container--top-full">{topFull}</div>
+        <div className="notification-container--bottom-full">{bottomFull}</div>
         <div className="notification-container--top-left">{topLeft}</div>
         <div className="notification-container--top-right">{topRight}</div>
         <div className="notification-container--bottom-left">{bottomLeft}</div>
@@ -160,9 +155,9 @@ class Container extends React.Component<iContainerProps, iContainerState> {
 
   render() {
     const { isMobile } = this.props;
-    const { width, breakpoint } = this.state;
+    const { windowWidth, breakpoint } = this.state;
 
-    if (isMobile && width <= breakpoint) {
+    if (isMobile && windowWidth <= breakpoint) {
       return this.renderMobileNotifications(this.props);
     }
 
