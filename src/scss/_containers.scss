@@ -19,13 +19,13 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  left: calc(50% - 162.5px);
+  left: calc(50% - 175px);
 }
 
 .notification-container--center,
 .notification-container--top-center,
 .notification-container--bottom-center {
-  max-width: 325px;
+  max-width: 350px;
 }
 
 .notification-container--center {
