@@ -26,10 +26,7 @@ https://teodosii.github.io/react-notifications-component/
 ```
 npm install react-notifications-component
 ```
-The step below is only for typescript developers to install typed bindings:
-```
-npm install --save-dev @types/react-notifications-component
-```
+
 ### Development
 
 First build the library
@@ -99,7 +96,7 @@ Voila!
 **Note**: `animate.css` latest version (`v4`) has breaking changes. It introduces `animate__` prefix so that existing classes don't clash. If you still would like to use classes without prefix you can import `animate.css/animate.compat.css`
 ```js
 // preferred way to import (from `v4`). Uses `animate__` prefix.
-import 'animate.min.css';
+import 'animate.css/animate.min.css';
 
 // Alternate way to use classes without prefix like `animated fadeIn`
 import 'animate.css/animate.compat.css'
