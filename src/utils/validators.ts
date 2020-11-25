@@ -68,53 +68,53 @@ export const validators = [
     }
   },
 
-  function type({ content, type }: iNotification, userDefinedTypes: iNotificationCustomType[]) {
+  function type({ content, type: _type }: iNotification, userDefinedTypes: iNotificationCustomType[]) {
     if (content) return;
-    if (!type) {
+    if (!_type) {
       throw new Error(ERROR.TYPE_REQUIRED);
     }
-    if (!isString(type)) {
+    if (!isString(_type)) {
       throw new Error(ERROR.TYPE_STRING);
     }
 
     if (
       !userDefinedTypes &&
-      type !== NT.SUCCESS &&
-      type !== NT.DANGER &&
-      type !== NT.INFO &&
-      type !== NT.DEFAULT &&
-      type !== NT.WARNING
+      _type !== NT.SUCCESS &&
+      _type !== NT.DANGER &&
+      _type !== NT.INFO &&
+      _type !== NT.DEFAULT &&
+      _type !== NT.WARNING
     ) {
       throw new Error(ERROR.TYPE_NOT_EXISTENT);
     }
   },
 
-  function container({ container }: iNotification) {
-    if (isNull(container)) {
+  function container({ container: _container }: iNotification) {
+    if (isNull(_container)) {
       throw new Error(ERROR.CONTAINER_REQUIRED);
     }
-    if (!isString(container)) {
+    if (!isString(_container)) {
       throw new Error(ERROR.CONTAINER_STRING);
     }
   },
 
-  function insert({ insert }: iNotification) {
-    if (isNull(insert)) return;
-    if (!isString(insert)) {
+  function insert({ insert: _insert }: iNotification) {
+    if (isNull(_insert)) return;
+    if (!isString(_insert)) {
       throw new Error(ERROR.INSERT_STRING);
     }
   },
 
-  function width({ width }: iNotification) {
-    if (isNull(width)) return;
-    if (!isNumber(width)) {
+  function width({ width: _width }: iNotification) {
+    if (isNull(_width)) return;
+    if (!isNumber(_width)) {
       throw new Error(ERROR.WIDTH_NUMBER);
     }
   },
 
   function userDefinedTypes(
     { type, content }: iNotification,
-    userDefinedTypes: iNotificationCustomType[]
+    _userDefinedTypes: iNotificationCustomType[]
   ) {
     if (content) return;
 
@@ -124,49 +124,49 @@ export const validators = [
       type === NT.INFO ||
       type === NT.DEFAULT ||
       type === NT.WARNING ||
-      !userDefinedTypes
+      !_userDefinedTypes
     ) {
       return;
     }
 
-    if (!userDefinedTypes.find((p) => p.name === type)) {
+    if (!_userDefinedTypes.find((p) => p.name === type)) {
       throw new Error(ERROR.TYPE_NOT_FOUND);
     }
   },
 
-  function content({ content }: iNotification) {
-    if (!content) return;
-    const isClass = isClassComponent(content);
-    const isFunction = isFunctionComponent(content);
-    const isElem = React.isValidElement(content);
+  function content({ content: _content }: iNotification) {
+    if (!_content) return;
+    const isClass = isClassComponent(_content);
+    const isFunction = isFunctionComponent(_content);
+    const isElem = React.isValidElement(_content);
     if (!isClass && !isFunction && !isElem) {
       throw new Error(ERROR.CONTENT_INVALID);
     }
   },
 
-  function animationIn({ animationIn }: iNotification) {
-    if (isNull(animationIn)) return;
-    if (!isArray(animationIn)) {
+  function animationIn({ animationIn: _animationIn }: iNotification) {
+    if (isNull(_animationIn)) return;
+    if (!isArray(_animationIn)) {
       throw new Error(ERROR.ANIMATION_IN);
     }
   },
 
-  function animationOut({ animationOut }: iNotification) {
-    if (isNull(animationOut)) return;
-    if (!isArray(animationOut)) {
+  function animationOut({ animationOut: _animationOut }: iNotification) {
+    if (isNull(_animationOut)) return;
+    if (!isArray(_animationOut)) {
       throw new Error(ERROR.ANIMATION_OUT);
     }
   },
 
-  function onRemoval({ onRemoval }: iNotification) {
-    if (!onRemoval) return;
-    if (!isFunction(onRemoval)) {
+  function onRemoval({ onRemoval: _onRemoval }: iNotification) {
+    if (!_onRemoval) return;
+    if (!isFunction(_onRemoval)) {
       throw new Error(ERROR.REMOVAL_FUNC);
     }
   },
 
-  function dismiss({ dismiss }: iNotification) {
-    if (!dismiss) return;
+  function dismiss({ dismiss: _dismiss }: iNotification) {
+    if (!_dismiss) return;
 
     const {
       duration,
@@ -176,7 +176,7 @@ export const validators = [
       waitForAnimation: wait,
       click,
       touch
-    } = dismiss;
+    } = _dismiss;
 
     if (isNull(duration)) {
       throw new Error(ERROR.DISMISS_REQUIRED);
