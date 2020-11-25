@@ -35,32 +35,32 @@ export function validateTransition(notification: iNotification, transition: stri
 }
 
 export const validators = [
-  function title({ content, title }: iNotification) {
+  function title({ content, title: _title }: iNotification) {
     if (content) return;
-    if (isNull(title)) return;
+    if (isNull(_title)) return;
 
-    const isReactEl = isReactElement(title);
-    if (isReactEl || typeof title === 'string') return;
+    const isReactEl = isReactElement(_title);
+    if (isReactEl || typeof _title === 'string') return;
     if (!isReactEl) {
       throw new Error(ERROR.TITLE_ELEMENT);
     }
-    if (typeof title !== 'string') {
+    if (typeof _title !== 'string') {
       throw new Error(ERROR.TITLE_STRING);
     }
   },
 
-  function message({ content, message }: iNotification) {
+  function message({ content, message: _message }: iNotification) {
     if (content) return;
 
-    if (!message) {
+    if (!_message) {
       throw new Error(ERROR.MESSAGE_REQUIRED);
     }
 
-    const isReactEl = isReactElement(message);
-    if (isString(message) || isReactEl) {
+    const isReactEl = isReactElement(_message);
+    if (isString(_message) || isReactEl) {
       return;
     }
-    if (!isString(message)) {
+    if (!isString(_message)) {
       throw new Error(ERROR.MESSAGE_STRING);
     }
     if (!isReactEl) {
