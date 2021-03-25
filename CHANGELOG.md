@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.5
+
+### Fixes
+
+* Fix TS not exporting all interfaces
+* Bump React to `17.0.1`
+
 ## 3.0.0
 
 ### Changes
