@@ -120,7 +120,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
           ...parentStyle,
           height: `${scrollHeight + (container.endsWith('full') ? 0 : 15)}px`
         }
-      }))
+      }));
     }
   }
 
