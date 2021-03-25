@@ -1,5 +1,5 @@
 import React from 'react';
-import { iNotification, iNotificationCustomType } from 'src/types/Notification';
+import { iNotification, iNotificationCustomType } from 'src/components/Notification';
 import { ERROR, NOTIFICATION_TYPE as NT } from 'src/utils/constants';
 
 const isNull = (object: any) => object === null || object === undefined;

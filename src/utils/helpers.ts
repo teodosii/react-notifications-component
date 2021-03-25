@@ -5,7 +5,7 @@ import {
   iNotificationCustomType,
   iTouchTransition,
   iTransition
-} from 'src/types/Notification';
+} from 'src/components/Notification';
 import {
   INSERTION,
   NOTIFICATION_BASE_CLASS,
@@ -271,7 +271,7 @@ export function parseNotification(
   notification.slidingExit = defaultTransition(slidingExit, t(600, 'linear', 0));
   notification.touchRevert = defaultTransition(touchRevert, t(600, 'linear', 0));
 
-  const touchExit = touchSlidingExit || ({} as iTouchTransition);
+  const touchExit = touchSlidingExit || ({} as { fade: iTransition, swipe: iTransition });
   const swipe = touchExit.swipe || ({} as iTransition);
   const fade = touchExit.fade || ({} as iTransition);
   notification.touchSlidingExit = touchExit;

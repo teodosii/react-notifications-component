@@ -1,6 +1,5 @@
 import React from 'react';
-import { iNotification } from 'src/types/Notification';
-import { NOTIFICATION_CONTAINER as NC, REMOVAL } from '../utils/constants';
+import { NOTIFICATION_CONTAINER as NC, REMOVAL, INSERTION, NOTIFICATION_CONTAINER, NOTIFICATION_TYPE } from '../utils/constants';
 import {
   getHtmlClassesForType,
   getTransition,
@@ -8,6 +7,64 @@ import {
   shouldNotificationHaveSliding
 } from '../utils/helpers';
 import Timer from '../utils/timer';
+
+export type { iNotification, iTransition, iTouchTransition, iDismiss, iNotificationCustomType }
+
+interface iNotification {
+  id?: string;
+  onRemoval?: Function;
+  title?: NotificationTitleMessage;
+  message?: NotificationTitleMessage;
+  content?: NotificationContent;
+  type?: NOTIFICATION_TYPE;
+  container?: NOTIFICATION_CONTAINER;
+  insert?: INSERTION;
+  dismiss?: iDismiss;
+  animationIn?: string[];
+  animationOut?: string[];
+  slidingEnter?: iTransition;
+  slidingExit?: iTransition;
+  touchRevert?: iTransition;
+  touchSlidingExit?: {
+    fade: iTransition;
+    swipe: iTransition;
+  };
+  userDefinedTypes?: iNotificationCustomType[];
+  width?: number;
+  hasBeenRemoved?: boolean
+}
+
+export type NotificationTitleMessage = string | React.ReactNode | React.FunctionComponent;
+export type NotificationContent =
+  | React.ComponentClass<any, any>
+  | React.FunctionComponent<any>
+  | React.ReactElement;
+
+interface iTransition {
+  duration: number;
+  timingFunction: string;
+  delay: number;
+}
+
+interface iTouchTransition {
+  swipe: iTransition;
+  fade: iTransition;
+}
+
+interface iDismiss {
+  duration: number;
+  onScreen: boolean;
+  pauseOnHover: boolean;
+  waitForAnimation: boolean;
+  click: boolean;
+  touch: boolean;
+  showIcon: boolean;
+}
+
+interface iNotificationCustomType {
+  htmlClasses: string[];
+  name: string;
+}
 
 class iNotificationProps {
   id: string;

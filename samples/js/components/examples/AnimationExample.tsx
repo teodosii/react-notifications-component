@@ -2,7 +2,7 @@ import React from 'react';
 import notification from 'samples/js/helpers/notification';
 import { getContainer, getMessage, getType } from 'samples/js/helpers/randomize';
 import { store } from 'src';
-import { iNotification } from 'src/types/Notification';
+import { iNotification } from 'src/components/Notification';
 
 function AnimationInExample() {
   return (

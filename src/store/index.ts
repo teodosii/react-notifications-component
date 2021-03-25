@@ -1,4 +1,4 @@
-import { iNotification, iNotificationCustomType } from 'src/types/Notification';
+import { iNotification, iNotificationCustomType } from 'src/components/Notification';
 import { parseNotification } from 'src/utils/helpers';
 import { validateTransition, validators } from 'src/utils/validators';
 

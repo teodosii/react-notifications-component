@@ -4,7 +4,7 @@ import ReactNotification from 'src/components/Notification';
 import 'src/scss/notification.scss';
 import store from 'src/store';
 import { DEFAULT_CONTAINER_VALUES as DCV } from 'src/utils/constants';
-import { iNotification, iNotificationCustomType } from 'src/types/Notification';
+import type { iNotification, iNotificationCustomType } from 'src/components/Notification';
 import {
   getNotificationsForEachContainer,
   getNotificationsForMobileView,

@@ -4,7 +4,7 @@ import notification from 'samples/js/helpers/notification';
 import reactImage from 'samples/images/react.png';
 import { getContainer } from 'samples/js/helpers/randomize';
 import { store } from 'src';
-import { iNotification } from 'src/types/Notification';
+import { iNotification } from 'src/components/Notification';
 
 export default function CustomContentExample() {
   const [cachedImage] = useState(new Image());
