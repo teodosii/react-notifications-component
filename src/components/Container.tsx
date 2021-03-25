@@ -62,17 +62,23 @@ class Container extends React.Component<iContainerProps, iContainerState> {
 
   add = (notification: iNotification) => {
     this.setState(({ notifications }) => {
-      const nextNotifications = { ...notifications };
+      const nextNotifications = [...notifications];
       const i = nextNotifications.findIndex(({ id }) => id === notification.id);
-      
+
       if (i > -1) {
         nextNotifications[i] = notification;
-        return nextNotifications;
+
+        return {
+          notifications: nextNotifications
+        }
       }
-      
-      return notification.insert === 'top'
-        ? [notification, ...nextNotifications]
-        : [...nextNotifications, notification]
+
+      return {
+        notifications:
+          notification.insert === 'top'
+            ? [notification, ...nextNotifications]
+            : [...nextNotifications, notification]
+      }
     });
 
     return notification.id;
