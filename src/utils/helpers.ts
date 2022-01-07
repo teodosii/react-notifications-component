@@ -154,6 +154,12 @@ export function getTransition({ duration, timingFunction, delay }: iTransition, 
   return `${duration}ms ${property} ${timingFunction} ${delay}ms`;
 }
 
+export function getUid (a?: string): string {
+  return a
+    ? (0 | Math.random() * 16).toString(16)
+    : ('' + 1e11 + 1e11).replace(/1|0/g, getUid)
+}
+
 function defaultTransition(
   transition: iTransition,
   { duration, timingFunction, delay }: iTransition
@@ -246,7 +252,7 @@ export function parseNotification(
     onRemoval
   } = notification;
 
-  notification.id = id || store.getCounter().toString();
+  notification.id = id || getUid();
   notification.type = content ? null : (type.toLowerCase() as NOTIFICATION_TYPE);
 
   if (userDefinedTypes && !content) {

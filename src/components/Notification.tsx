@@ -163,9 +163,21 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     );
   }
 
-  componentDidUpdate({ hasBeenRemoved }: iNotificationProps) {
-    if (this.props.hasBeenRemoved && !hasBeenRemoved) {
+  componentDidUpdate(prevProps: iNotificationProps) {
+    if (this.props.hasBeenRemoved && !prevProps.hasBeenRemoved) {
       this.removeNotification(REMOVAL.MANUAL);
+    }
+
+    if (prevProps !== this.props) {
+      const { container } = this.props.notification
+      const { scrollHeight } = this.rootElementRef.current.children[0];
+
+      this.setState(({ parentStyle }) => ({
+        parentStyle: {
+          ...parentStyle,
+          height: `${scrollHeight + (container.endsWith('full') ? 0 : 15)}px`
+        }
+      }));
     }
   }
 
