@@ -1,9 +1,13 @@
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+
+@import '~animate.css/animate.min.css';
 @import '~bootstrap/scss/bootstrap.scss';
 @import './litera/variables.scss';
 @import './litera/theme.scss';
-@import '~animate.css/animate.min.css';
-@import '~font-awesome/css/font-awesome.min.css';
 @import '_customTypes.scss';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
 
 html,
 body {
@@ -14,9 +18,9 @@ body {
 html,
 body,
 .notification,
-.notification__title,
-.notification__message,
-.notification__item {
+.rnc__notification-title,
+.rnc__notification-message,
+.rnc__notification-item {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
   sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important;
 }

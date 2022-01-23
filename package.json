@@ -1,9 +1,12 @@
 {
   "name": "react-notifications-component",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/index.js",
+  "paths": {
+    "samples": ["samples/*", "*"]
+  },
   "scripts": {
     "build": "npm run build:library:dev && npm run build:library:prod",
     "build:library:dev": "webpack --config webpack.dev.js",
@@ -36,13 +39,15 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.16.8",
-    "@babel/core": "^7.16.10",
+    "@babel/core": "^7.16.12",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/runtime": "^7.16.7",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "animate.css": "^4.1.1",
     "awesome-typescript-loader": "^5.2.1",
@@ -65,6 +70,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.28.0",
+    "eslint-webpack-plugin": "^3.1.1",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^6.2.0",
     "font-awesome": "^4.7.0",

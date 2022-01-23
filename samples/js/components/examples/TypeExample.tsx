@@ -1,8 +1,8 @@
-import React from 'react';
-import { store } from 'src';
-import notification from 'samples/js/helpers/notification';
-import { getContainer, getMessage, getTitle } from 'samples/js/helpers/randomize';
-import { iNotification } from 'src/components/Notification';
+import React from 'react'
+import { store } from 'src'
+import notification from 'samples/js/helpers/notification'
+import { getContainer, getMessage, getTitle } from 'samples/js/helpers/randomize'
+import { iNotification } from 'src/components/Notification'
 
 export default function TypeExample() {
   return (
@@ -49,7 +49,7 @@ export default function TypeExample() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function add(type: string) {
@@ -61,5 +61,5 @@ function add(type: string) {
       message: getMessage(type),
       container: getContainer()
     })
-  );
+  )
 }

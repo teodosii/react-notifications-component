@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactNotification from 'src';
-import Header from 'samples/js/components/Header';
-import Content from 'samples/js/components/Content';
-import GithubCorner from 'react-github-corner';
+import React from 'react'
+import ReactNotification from 'src'
+import Header from './Header'
+import Content from './Content'
+import GithubCorner from 'react-github-corner'
 
 export default function App() {
   return (
@@ -10,7 +10,7 @@ export default function App() {
       <ReactNotification
         types={[
           {
-            htmlClasses: ['notification__item--awesome'],
+            htmlClasses: ['rnc__notification-item--awesome'],
             name: 'awesome'
           }
         ]}
@@ -24,5 +24,5 @@ export default function App() {
         href="https://github.com/teodosii/react-notifications-component"
       />
     </React.Fragment>
-  );
+  )
 }

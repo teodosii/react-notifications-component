@@ -6,7 +6,7 @@
   100% { width: 0%; }
 }
 
-.notifications-component {
+.rnc__base {
   position: fixed;
   z-index: 9000;
   pointer-events: none;
@@ -14,7 +14,7 @@
   height: 100%;
 }
 
-.notification__item {
+.rnc__notification-item {
   display: flex;
   position: relative;
   border-radius: 3px;
@@ -23,30 +23,30 @@
   cursor: pointer;
 }
 
-.notification-container--top-full .notification__item,
-.notification-container--bottom-full .notification__item {
+.rnc__notification-container--top-full .rnc__notification-item,
+.rnc__notification-container--bottom-full .rnc__notification-item {
   margin-bottom: 0;
   border-radius: 0;
 }
 
-.notification__timer {
+.rnc__notification-timer {
   width: 100%;
   height: 3px;
   margin-top: 10px;
   border-radius: 5px;
 }
-.notification__timer-filler {
+.rnc__notification-timer-filler {
   height: 3px;
   border-radius: 5px;
 }
-.notification__title {
+.rnc__notification-title {
   color: #fff;
   font-weight: 700;
   font-size: 14px;
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.notification__message {
+.rnc__notification-message {
   color: #fff;
   max-width: calc(100% - 15px);
   font-size: 14px;
@@ -55,12 +55,12 @@
   margin-bottom: 0;
   margin-top: 0;
 }
-.notification__content {
+.rnc__notification-content {
   padding: 8px 15px;
   display: inline-block;
   width: 100%;
 }
-.notification__close {
+.rnc__notification-close-mark {
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -80,26 +80,26 @@
   }
 }
 
-.notification-container--mobile-top .notification__item,
-.notification-container--mobile-bottom .notification__item,
-.notification-container--mobile-top .notification,
-.notification-container--mobile-bottom .notification {
+.rnc__notification-container--mobile-top .rnc__notification-item,
+.rnc__notification-container--mobile-bottom .rnc__notification-item,
+.rnc__notification-container--mobile-top .notification,
+.rnc__notification-container--mobile-bottom .notification {
   max-width: 100%;
   width: 100%;
 }
 
-.notification-container--top-right .notification,
-.notification-container--bottom-right .notification {
+.rnc__notification-container--top-right .notification,
+.rnc__notification-container--bottom-right .notification {
   margin-left: auto;
 }
 
-.notification-container--top-left .notification,
-.notification-container--bottom-left .notification {
+.rnc__notification-container--top-left .notification,
+.rnc__notification-container--bottom-left .notification {
   margin-right: auto;
 }
 
-.notification-container--mobile-top .notification,
-.notification-container--mobile-bottom .notification {
+.rnc__notification-container--mobile-top .notification,
+.rnc__notification-container--mobile-bottom .notification {
   margin-left: auto;
   margin-right: auto;
 }

@@ -2,9 +2,9 @@ export const DEFAULT_CONTAINER_VALUES = {
   isMobile: true,
   breakpoint: 768,
   defaultNotificationWidth: 325
-};
+}
 
-export const NOTIFICATION_BASE_CLASS = 'notification__item';
+export const NOTIFICATION_BASE_CLASS = 'rnc__notification-item'
 
 export enum NOTIFICATION_CONTAINER {
   BOTTOM_LEFT = 'bottom-left',
@@ -84,4 +84,4 @@ export const ERROR = {
 
   TYPE_NOT_FOUND: 'Validation error. Custom type not found',
   REMOVAL_FUNC: 'Validation error. `onRemoval` must be a function'
-};
+}

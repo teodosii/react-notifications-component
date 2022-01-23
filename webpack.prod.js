@@ -5,6 +5,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 
+const ESLintWebpackPlugin = require('eslint-webpack-plugin');
+
 module.exports = {
   mode: 'production',
   entry: './src/index.ts',
@@ -52,11 +54,6 @@ module.exports = {
         include: /src/
       },
       {
-        test: /\.(js|jsx)$/,
-        use: ['eslint-loader'],
-        include: /src/
-      },
-      {
         test: /\.(css|scss)$/,
         use: [
           { loader: MiniCssExtractPlugin.loader },
@@ -69,6 +66,14 @@ module.exports = {
   },
 
   plugins: [
+    new ESLintWebpackPlugin({
+      extensions: ['ts', 'tsx'],
+      files: ['src'],
+      fix: true,
+      eslintPath: 'eslint',
+      emitError: true,
+      emitWarning: true
+    }),
     new MiniCssExtractPlugin({
       filename: 'theme.css'
     }),

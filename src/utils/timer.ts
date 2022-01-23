@@ -1,28 +1,28 @@
 export default class Timer {
-  constructor(callback: Function, delay: number) {
-    this.callback = callback;
-    this.remaining = delay;
+  constructor(callback: () => void, delay: number) {
+    this.callback = callback
+    this.remaining = delay
 
-    this.resume();
+    this.resume()
   }
 
-  private timerId: number;
-  private start: number;
-  private remaining: number;
-  private callback: Function;
+  private timerId: NodeJS.Timeout
+  private start: number
+  private remaining: number
+  private callback: () => void
 
   public pause() {
-    clearTimeout(this.timerId);
-    this.remaining -= Date.now() - this.start;
+    clearTimeout(this.timerId)
+    this.remaining -= Date.now() - this.start
   }
 
   resume() {
-    this.start = Date.now();
-    clearTimeout(this.timerId);
-    this.timerId = setTimeout(this.callback, this.remaining);
+    this.start = Date.now()
+    clearTimeout(this.timerId)
+    this.timerId = setTimeout(this.callback, this.remaining)
   }
 
   clear() {
-    clearTimeout(this.timerId);
+    clearTimeout(this.timerId)
   }
 }

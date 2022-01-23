@@ -1,20 +1,20 @@
-.notification-container--top-center,
-.notification-container--top-left,
-.notification-container--top-right,
-.notification-container--bottom-center,
-.notification-container--bottom-left,
-.notification-container--bottom-right,
-.notification-container--center,
-.notification-container--top-full,
-.notification-container--bottom-full {
+.rnc__notification-container--top-center,
+.rnc__notification-container--top-left,
+.rnc__notification-container--top-right,
+.rnc__notification-container--bottom-center,
+.rnc__notification-container--bottom-left,
+.rnc__notification-container--bottom-right,
+.rnc__notification-container--center,
+.rnc__notification-container--top-full,
+.rnc__notification-container--bottom-full {
   min-width: 325px;
   position: absolute;
   pointer-events: all;
 }
 
-.notification-container--center,
-.notification-container--top-center,
-.notification-container--bottom-center {
+.rnc__notification-container--center,
+.rnc__notification-container--top-center,
+.rnc__notification-container--bottom-center {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,29 +22,29 @@
   left: calc(50% - 175px);
 }
 
-.notification-container--center,
-.notification-container--top-center,
-.notification-container--bottom-center {
+.rnc__notification-container--center,
+.rnc__notification-container--top-center,
+.rnc__notification-container--bottom-center {
   max-width: 350px;
 }
 
-.notification-container--center {
+.rnc__notification-container--center {
   top: 20px;
   height: 100%;
   pointer-events: none;
 }
 
-.notification-container--top-full,
-.notification-container--bottom-full {
+.rnc__notification-container--top-full,
+.rnc__notification-container--bottom-full {
   width: 100%;
   min-width: 100%;
 }
 
-.notification-container--bottom-full {
+.rnc__notification-container--bottom-full {
   bottom: 0;
 }
 
-.flex-center {
+.rnc__util--flex-center {
   min-width: 325px;
   display: flex;
   justify-content: center;
@@ -53,46 +53,46 @@
   pointer-events: all;
 }
 
-.notification-container--top-center {
+.rnc__notification-container--top-center {
   top: 20px;
 }
-.notification-container--bottom-center {
+.rnc__notification-container--bottom-center {
   bottom: 20px;
 }
 
-.notification-container--top-left {
+.rnc__notification-container--top-left {
   left: 20px;
   top: 20px;
 }
 
-.notification-container--top-right {
+.rnc__notification-container--top-right {
   right: 20px;
   top: 20px;
 }
 
-.notification-container--bottom-left {
+.rnc__notification-container--bottom-left {
   left: 20px;
   bottom: 20px;
 }
 
-.notification-container--bottom-right {
+.rnc__notification-container--bottom-right {
   bottom: 20px;
   right: 20px;
 }
 
-.notification-container--mobile-top,
-.notification-container--mobile-bottom {
+.rnc__notification-container--mobile-top,
+.rnc__notification-container--mobile-bottom {
   pointer-events: all;
   position: absolute;
 }
 
-.notification-container--mobile-top {
+.rnc__notification-container--mobile-top {
   right: 20px;
   left: 20px;
   top: 20px;
 }
 
-.notification-container--mobile-bottom {
+.rnc__notification-container--mobile-bottom {
   right: 20px;
   left: 20px;
   bottom: 20px;
