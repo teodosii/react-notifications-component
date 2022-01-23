@@ -1,6 +1,6 @@
 {
   "name": "react-notifications-component",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/index.js",
@@ -97,6 +97,6 @@
     "webpack-dev-server": "^4.7.3"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^17.0.1"
   }
 }

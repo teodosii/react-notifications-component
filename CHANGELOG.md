@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.2.0
+
+### Fixes
+
+* Fixed TS declarations #124
+* Namespaced CSS modules under rnc_* #123
+* Custom width for center containers #108
+
+### Breaking Changes
+
+* Namespaced CSS modules
+
 ## 3.0.5
 
 ### Fixes
