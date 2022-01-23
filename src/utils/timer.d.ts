@@ -1,5 +1,5 @@
 export default class Timer {
-    constructor(callback: Function, delay: number);
+    constructor(callback: () => void, delay: number);
     private timerId;
     private start;
     private remaining;

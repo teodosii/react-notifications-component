@@ -3,7 +3,7 @@ export declare const DEFAULT_CONTAINER_VALUES: {
     breakpoint: number;
     defaultNotificationWidth: number;
 };
-export declare const NOTIFICATION_BASE_CLASS = "notification__item";
+export declare const NOTIFICATION_BASE_CLASS = "rnc__notification-item";
 export declare enum NOTIFICATION_CONTAINER {
     BOTTOM_LEFT = "bottom-left",
     BOTTOM_RIGHT = "bottom-right",

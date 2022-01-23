@@ -1,4 +1,4 @@
-import { iNotification, iNotificationCustomType } from 'src/types/Notification';
+import { iNotification, iNotificationCustomType } from 'src/components/Notification';
 interface iStore {
     addNotification(notification: iNotification): string;
     removeNotification(id: string): void;
