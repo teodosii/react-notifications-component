@@ -5,8 +5,8 @@ export default {
   container: 'top-right',
   insert: 'top',
 
-  animationIn: ['animated', 'fadeIn'],
-  animationOut: ['animated', 'faster', 'fadeOut'],
+  animationIn: ['animate__animated', 'animate__fadeIn'],
+  animationOut: ['animate__animated', 'animate__faster', 'animated__fadeOut'],
 
   slidingEnter: {
     duration: 300,
@@ -41,11 +41,11 @@ export default {
 
   dismiss: {
     duration: 0,
-    onScreen: false,
+    onScreen: true,
     pauseOnHover: true,
     waitForAnimation: false,
     showIcon: true,
     click: true,
     touch: true
   }
-};
+}

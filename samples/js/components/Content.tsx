@@ -1,10 +1,10 @@
-import React from 'react';
-import { store } from 'src';
-import ContainerExample from 'components/examples/ContainerExample';
-import TypeExample from 'components/examples/TypeExample';
-import InsertExample from 'components/examples/InsertExample';
-import AnimationWrapper from 'components/examples/AnimationExample';
-import CustomContentExample from 'components/examples/CustomContentExample';
+import React from 'react'
+import { store } from 'src'
+import ContainerExample from 'components/examples/ContainerExample'
+import TypeExample from 'components/examples/TypeExample'
+import InsertExample from 'components/examples/InsertExample'
+import AnimationWrapper from 'components/examples/AnimationExample'
+import CustomContentExample from 'components/examples/CustomContentExample'
 
 function ExampleHeading() {
   return (
@@ -23,7 +23,7 @@ function ExampleHeading() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function Examples() {
@@ -36,7 +36,7 @@ function Examples() {
       <InsertExample />
       <AnimationWrapper />
     </React.Fragment>
-  );
+  )
 }
 
 function Content() {
@@ -46,7 +46,7 @@ function Content() {
         <Examples />
       </div>
     </div>
-  );
+  )
 }
 
-export default Content;
+export default Content

@@ -1,6 +1,6 @@
-import React from 'react';
-import 'react-github-button/assets/style.css';
-import GitHubButton from 'react-github-button';
+import React from 'react'
+import 'react-github-button/assets/style.css'
+import GitHubButton from 'react-github-button'
 
 export default function Header() {
   return (
@@ -20,5 +20,5 @@ export default function Header() {
         </div>
       </div>
     </div>
-  );
+  )
 }

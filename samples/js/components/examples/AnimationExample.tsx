@@ -1,8 +1,8 @@
-import React from 'react';
-import notification from 'samples/js/helpers/notification';
-import { getContainer, getMessage, getType } from 'samples/js/helpers/randomize';
-import { store } from 'src';
-import { iNotification } from 'src/components/Notification';
+import React from 'react'
+import notification from 'samples/js/helpers/notification'
+import { getContainer, getMessage, getType } from 'samples/js/helpers/randomize'
+import { store } from 'src'
+import { iNotification } from 'src/components/Notification'
 
 function AnimationInExample() {
   return (
@@ -17,7 +17,7 @@ function AnimationInExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(true, ['animated bounceIn'])}
+            onClick={() => add(true, ['animate__animated animate__bounceIn'])}
           >
             Bounce In
           </button>
@@ -25,7 +25,7 @@ function AnimationInExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(true, ['animated fadeIn'])}
+            onClick={() => add(true, ['animate_animated animate__fadeIn'])}
           >
             Fade In
           </button>
@@ -33,7 +33,7 @@ function AnimationInExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(true, ['animated flipInX'])}
+            onClick={() => add(true, ['animate__animated animated__flipInX'])}
           >
             Flip In X
           </button>
@@ -41,7 +41,7 @@ function AnimationInExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(true, ['animated flipInY'])}
+            onClick={() => add(true, ['animate__animated animate__flipInY'])}
           >
             Flip In Y
           </button>
@@ -49,7 +49,7 @@ function AnimationInExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(true, ['animated zoomIn'])}
+            onClick={() => add(true, ['animate__animated animate__zoomIn'])}
           >
             Zoom In
           </button>
@@ -57,7 +57,7 @@ function AnimationInExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(true, ['animated flash'])}
+            onClick={() => add(true, ['animate__animated animate__flash'])}
           >
             Flash
           </button>
@@ -65,14 +65,14 @@ function AnimationInExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(true, ['animated jackInTheBox'])}
+            onClick={() => add(true, ['animate__animated animate__jackInTheBox'])}
           >
             Jack In The Box
           </button>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function AnimationOutExample() {
@@ -88,7 +88,7 @@ function AnimationOutExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(false, ['animated bounceOut'])}
+            onClick={() => add(false, ['animate__animated animate__bounceOut'])}
           >
             Bounce Out
           </button>
@@ -96,7 +96,7 @@ function AnimationOutExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(false, ['animated fadeOut'])}
+            onClick={() => add(false, ['animate__animated animate__fadeOut'])}
           >
             Fade Out
           </button>
@@ -104,7 +104,7 @@ function AnimationOutExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(false, ['animated flipOutX'])}
+            onClick={() => add(false, ['animate__animated animate__flipOutX'])}
           >
             Flip Out X
           </button>
@@ -112,7 +112,7 @@ function AnimationOutExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(false, ['animated flipOutY'])}
+            onClick={() => add(false, ['animate__animated animate__flipOutY'])}
           >
             Flip Out Y
           </button>
@@ -120,7 +120,7 @@ function AnimationOutExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(false, ['animated zoomOut'])}
+            onClick={() => add(false, ['animate__animated animate__zoomOut'])}
           >
             Zoom Out
           </button>
@@ -128,12 +128,12 @@ function AnimationOutExample() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function add(isEntranceAnimation: boolean, htmlClasses: string[]) {
-  const type = getType();
-  const object: iNotification = {};
+  const type = getType()
+  const object: iNotification = {}
 
   if (isEntranceAnimation) {
     return store.addNotification(
@@ -143,7 +143,7 @@ function add(isEntranceAnimation: boolean, htmlClasses: string[]) {
         message: getMessage(type),
         type
       })
-    );
+    )
   }
 
   return store.addNotification(
@@ -154,7 +154,7 @@ function add(isEntranceAnimation: boolean, htmlClasses: string[]) {
       message: getMessage(type),
       type
     })
-  );
+  )
 }
 
 export default function AnimationWrapper() {
@@ -163,5 +163,5 @@ export default function AnimationWrapper() {
       <AnimationInExample/>
       <AnimationOutExample/>
     </div>
-  );
+  )
 }

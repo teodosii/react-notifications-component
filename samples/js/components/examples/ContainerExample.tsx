@@ -1,8 +1,8 @@
-import React from 'react';
-import notification from 'samples/js/helpers/notification';
-import { getMessage, getTitle, getType } from 'samples/js/helpers/randomize';
-import { store } from 'src';
-import { iNotification } from 'src/components/Notification';
+import React from 'react'
+import notification from 'samples/js/helpers/notification'
+import { getMessage, getTitle, getType } from 'samples/js/helpers/randomize'
+import { store } from 'src'
+import { iNotification } from 'src/components/Notification'
 
 export default function ContainerExample() {
   return (
@@ -81,12 +81,12 @@ export default function ContainerExample() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function add(container: string): string {
-  const type = getType();
-  const object: iNotification = {};
+  const type = getType()
+  const object: iNotification = {}
 
   return store.addNotification(
     Object.assign(object, notification, {
@@ -95,5 +95,5 @@ function add(container: string): string {
       container,
       type
     })
-  );
+  )
 }

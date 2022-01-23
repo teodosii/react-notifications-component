@@ -1,4 +1,4 @@
-export const install = `npm install react-notifications-component`;
+export const install = `npm install react-notifications-component`
 
 export const usage = `import React from "react";
 import ReactNotification from "react-notifications-component";
@@ -17,8 +17,8 @@ class App extends React.Component {
       type: "success",
       insert: "top",
       container: "top-right",
-      animationIn: ["animated", "fadeIn"],
-      animationOut: ["animated", "fadeOut"],
+      animationIn: ["animate_animated", "animate__fadeIn"],
+      animationOut: ["animate_animated", "animate__fadeOut"],
       dismiss: { duration: 2000 }
     });
   }
@@ -33,4 +33,4 @@ class App extends React.Component {
       </div>
     );
   }
-}`;
+}`

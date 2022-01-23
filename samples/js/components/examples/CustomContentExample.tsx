@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import notification from 'samples/js/helpers/notification';
-// @ts-ignore
-import reactImage from 'samples/images/react.png';
-import { getContainer } from 'samples/js/helpers/randomize';
-import { store } from 'src';
-import { iNotification } from 'src/components/Notification';
+import React, { useEffect, useState } from 'react'
+import notification from 'samples/js/helpers/notification'
+import reactImage from 'samples/images/react.png'
+import { getContainer } from 'samples/js/helpers/randomize'
+import { store } from 'src'
+import { iNotification } from 'src/components/Notification'
 
 export default function CustomContentExample() {
-  const [cachedImage] = useState(new Image());
+  const [cachedImage] = useState(new Image())
 
   useEffect(() => {
     cachedImage.src = reactImage
-  });
+  })
 
   return (
     <div className="row">
@@ -48,7 +47,7 @@ export default function CustomContentExample() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 function add(cachedImage: HTMLImageElement): void {
@@ -64,17 +63,17 @@ function add(cachedImage: HTMLImageElement): void {
         </div>
       )
     })
-  );
+  )
 }
 
 function addCustomIcon(type: string, iconClassName: string): void {
-  let message: string;
+  let message: string
   if (type === 'success') {
-    message = 'Your agenda has been successfully synced';
+    message = 'Your agenda has been successfully synced'
   } else if (type === 'warning') {
-    message = 'Warning! All your data will be lost if you proceed';
+    message = 'Warning! All your data will be lost if you proceed'
   } else if (type === 'danger') {
-    message = 'Error! You have no update rights';
+    message = 'Error! You have no update rights'
   }
 
   const object: iNotification = {}
@@ -89,10 +88,10 @@ function addCustomIcon(type: string, iconClassName: string): void {
             <i className={iconClassName} />
           </div>
           <div className="notification__custom">
-            <p className="notification__message">{message}</p>
+            <p className="rnc__notification-message">{message}</p>
           </div>
         </div>
       )
     })
-  );
+  )
 }
