@@ -42,7 +42,9 @@ module.exports = {
     "quotes": "off",
     "linebreak-style": "off",
     "comma-dangle": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "react/prop-types": "off",
+    "semi": ["error", "never"],
     "react/jsx-uses-vars": "error",
     "no-console": ["error", {
       allow: ["warn", "error", "trace", "log"]

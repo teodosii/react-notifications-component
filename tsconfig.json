@@ -10,42 +10,33 @@
       "src/*": ["src/*"]
     },
 
+    "allowJs": true,
     "declaration": true,
-    "noImplicitReturns": false,
-    "alwaysStrict": true,
-    "noImplicitThis": false,
-    "noImplicitAny": false,
-    "strictNullChecks": false,
-    "sourceMap": true,
-    "maxNodeModuleJsDepth": 0,
-    "module": "es6",
     "esModuleInterop": true,
-
+    "module": "commonjs",
     "jsx": "react",
     "moduleResolution": "node",
-    "allowJs": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "target": "es2015",
-
-    "outDir": "dist/js"
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es2019"
   },
 
+  "files": ["src/index.ts"],
+
   "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx",
-    "./samples/**/*.ts",
-    "./samples/**/*.tsx",
+    "./src/*.ts",
+    "./src/*.tsx",
     "global.d.ts",
     "global_modules.d.ts"
   ],
   "exclude": [
-    "./src/**/*.js",
+    "./src/*.js",
+    "./samples",
     "./node_modules",
     "./build",
-    "./samples",
     "./dist",
     "*.js"
   ]

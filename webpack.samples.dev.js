@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -17,7 +18,7 @@ module.exports = {
 
   devServer: {
     open: true,
-    contentBase: path.join(__dirname, 'dist'),
+    static: path.join(__dirname, 'dist'),
     compress: true
   },
 
@@ -47,11 +48,6 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(js|jsx)$/,
-        use: ['eslint-loader'],
-        include: /samples/
-      },
-      {
         test: /\.(css|scss)$/,
         use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'sass-loader' }]
       },
@@ -60,13 +56,21 @@ module.exports = {
         use: ['file-loader']
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: ['file-loader']
+        test: /\.(svg|eot|woff|woff2|ttf)$/,
+        type: 'asset/inline'
       }
     ]
   },
 
   plugins: [
+    new ESLintWebpackPlugin({
+      extensions: ['ts', 'tsx'],
+      files: ['samples'],
+      fix: true,
+      eslintPath: 'eslint',
+      emitError: true,
+      emitWarning: true
+    }),
     new CleanWebpackPlugin({
       watch: true,
       beforeEmit: true
@@ -77,7 +81,10 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
-    }),
-    new webpack.NamedModulesPlugin()
-  ]
+    })
+  ],
+
+  optimization: {
+    moduleIds: 'named'
+  }
 };

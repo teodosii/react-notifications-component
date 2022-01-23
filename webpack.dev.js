@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ESLintWebpackPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -15,6 +16,14 @@ module.exports = {
   },
 
   plugins: [
+    new ESLintWebpackPlugin({
+      extensions: ['ts', 'tsx'],
+      files: ['src'],
+      fix: true,
+      eslintPath: 'eslint',
+      emitError: true,
+      emitWarning: true
+    }),
     new CleanWebpackPlugin({}),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
@@ -40,11 +49,6 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         use: ['babel-loader'],
-        include: /src/
-      },
-      {
-        test: /\.(js|jsx)$/,
-        use: ['eslint-loader'],
         include: /src/
       },
       {
