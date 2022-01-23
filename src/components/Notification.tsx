@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  NOTIFICATION_CONTAINER as NC,
   REMOVAL,
   INSERTION,
   NOTIFICATION_CONTAINER,
