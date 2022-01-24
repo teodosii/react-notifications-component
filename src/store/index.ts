@@ -1,20 +1,6 @@
-import { iNotification, iNotificationCustomType } from 'src/components/Notification'
+import { iNotification, iNotificationCustomType, iNotificationStoreParams, iStore } from 'src'
 import { parseNotification } from 'src/utils/helpers'
 import { validateTransition, validators } from 'src/utils/validators'
-
-interface iStore {
-  addNotification(notification: iNotification): string;
-  removeNotification(id: string): void;
-  register(param: iRegisterParams): void;
-}
-
-interface iRegisterParams {
-  addNotification: (notification: iNotification) => string;
-  removeNotification: (id: string) => void;
-  removeAllNotifications: () => void;
-  types: iNotificationCustomType[];
-  defaultNotificationWidth: number;
-}
 
 class Store implements iStore {
   constructor() {
@@ -53,7 +39,7 @@ class Store implements iStore {
 
   public getCounter = () => this.counter
 
-  public register(parameters: iRegisterParams) {
+  public register(parameters: iNotificationStoreParams) {
     const {
       addNotification,
       removeNotification,

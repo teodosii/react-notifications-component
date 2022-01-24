@@ -6,19 +6,16 @@
       "samples/*": ["samples/*"],
       "components/*": ["samples/js/components/*"],
       "utils/*": ["src/utils/*"],
-
-      // library
-      "src": ["src"],
-      "samples": ["samples"]
     },
 
     "allowJs": false,
     "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
     "esModuleInterop": true,
     "module": "commonjs",
     "jsx": "react",
     "moduleResolution": "node",
-    "outDir": "dist",
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -26,19 +23,8 @@
     "target": "es2019"
   },
 
-  "plugins": [
-    // Transform paths in output .js files
-    { "transform": "typescript-transform-paths" },
-
-    // Transform paths in output .d.ts files (Include this line if you output declarations files)
-    { "transform": "typescript-transform-paths", "afterDeclarations": true }
-  ],
-
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "samples/**/*.ts",
-    "samples/**/*.tsx",
+    "src",
     "./global.d.ts"
   ],
 

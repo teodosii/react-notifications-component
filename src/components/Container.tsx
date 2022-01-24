@@ -1,28 +1,14 @@
 import React from 'react'
+import { iContainerProps, iContainerState, iNotification } from 'src'
 import ReactNotification from 'src/components/Notification'
 import 'src/scss/notification.scss'
 import store from 'src/store'
 import { DEFAULT_CONTAINER_VALUES as DCV } from 'src/utils/constants'
-import type { iNotification, iNotificationCustomType } from 'src/components/Notification'
 import {
   getNotificationsForEachContainer,
   getNotificationsForMobileView,
   isNullOrUndefined
 } from 'src/utils/helpers'
-
-interface iContainerProps {
-  isMobile?: boolean
-  breakpoint?: number
-  types?: iNotificationCustomType[]
-  defaultNotificationWidth?: number
-}
-
-interface iContainerState {
-  isMobile: boolean
-  breakpoint: number
-  notifications: iNotification[]
-  windowWidth: number
-}
 
 class Container extends React.Component<iContainerProps, iContainerState> {
   constructor(props: iContainerProps) {

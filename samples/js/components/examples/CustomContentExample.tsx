@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import notification from 'samples/js/helpers/notification'
 import reactImage from 'samples/images/react.png'
 import { getContainer } from 'samples/js/helpers/randomize'
-import { store } from 'src'
-import { iNotification } from 'src/components/Notification'
+import { Store } from 'src'
+import { iNotification } from 'src/types'
 
 export default function CustomContentExample() {
   const [cachedImage] = useState(new Image())
@@ -53,7 +53,7 @@ export default function CustomContentExample() {
 function add(cachedImage: HTMLImageElement): void {
   const object: iNotification = {}
 
-  store.addNotification(
+  Store.addNotification(
     Object.assign(object, notification, {
       width: 325,
       container: getContainer(),
@@ -78,7 +78,7 @@ function addCustomIcon(type: string, iconClassName: string): void {
 
   const object: iNotification = {}
 
-  store.addNotification(
+  Store.addNotification(
     Object.assign(object, notification, {
       width: 275,
       container: getContainer(),

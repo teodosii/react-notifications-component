@@ -1,9 +1,10 @@
 {
   "name": "react-notifications-component",
-  "version": "3.2.2",
+  "version": "3.2.4",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "npm run build:library:dev && npm run build:library:prod",
     "build:library:dev": "webpack --config webpack.dev.js",
@@ -75,6 +76,7 @@
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.5.2",
     "node-sass": "^7.0.1",
+    "npm-dts-webpack-plugin": "^1.3.10",
     "object-assign": "^4.1.1",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "prettier": "^2.5.1",

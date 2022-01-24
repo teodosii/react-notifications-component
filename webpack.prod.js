@@ -28,7 +28,6 @@ module.exports = {
         patterns: [
           { from: 'src/scss', to: 'scss' },
           { from: 'build/index.js', to: 'index.js' },
-          { from: './tsconfig.json', to: 'tsconfig.json' }
         ]
       })
     ]
@@ -41,7 +40,9 @@ module.exports = {
       samples: path.resolve(__dirname, 'samples'),
       tests: path.resolve(__dirname, 'tests')
     },
-    plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })]
+    plugins: [
+      new TsconfigPathsPlugin({ configFile: './tsconfig.json' })
+    ]
   },
 
   module: {

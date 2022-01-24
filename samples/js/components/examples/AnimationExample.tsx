@@ -1,8 +1,8 @@
 import React from 'react'
 import notification from 'samples/js/helpers/notification'
 import { getContainer, getMessage, getType } from 'samples/js/helpers/randomize'
-import { store } from 'src'
-import { iNotification } from 'src/components/Notification'
+import { Store } from 'src'
+import { iNotification } from 'src/types'
 
 function AnimationInExample() {
   return (
@@ -136,7 +136,7 @@ function add(isEntranceAnimation: boolean, htmlClasses: string[]) {
   const object: iNotification = {}
 
   if (isEntranceAnimation) {
-    return store.addNotification(
+    return Store.addNotification(
       Object.assign(object, notification, {
         animationIn: htmlClasses,
         container: getContainer(),
@@ -146,7 +146,7 @@ function add(isEntranceAnimation: boolean, htmlClasses: string[]) {
     )
   }
 
-  return store.addNotification(
+  return Store.addNotification(
     Object.assign(object, notification, {
       slidingExit: { delay: 300 },
       animationOut: htmlClasses,

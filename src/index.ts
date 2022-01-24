@@ -1,6 +1,47 @@
-import container from 'src/components/Container'
-import store from 'src/store'
+import Container from 'src/components/Container'
+import Store from 'src/store'
+export default Container
 
-export { store }
+import {
+  iContainerProps,
+  iContainerState,
+  iNotification,
+  NotificationTitleMessage,
+  NotificationContent,
+  iTransition,
+  iTouchTransition,
+  iNotificationDismiss,
+  iNotificationCustomType,
+  iNotificationProps,
+  iNotificationState,
+  iNotificationParentStyle,
+  iStore,
+  iNotificationStoreParams,
+  NOTIFICATION_CONTAINER,
+  NOTIFICATION_TYPE,
+  NOTIFICATION_INSERTION,
+  NOTIFICATION_REMOVAL_SOURCE
+} from './types'
 
-export default container
+export { Store as store } // otherwise it's breaking change
+
+export {
+  iContainerProps,
+  iContainerState,
+  iNotification,
+  NotificationTitleMessage,
+  NotificationContent,
+  iTransition,
+  iTouchTransition,
+  iNotificationDismiss,
+  iNotificationCustomType,
+  iNotificationProps,
+  iNotificationState,
+  iNotificationParentStyle,
+  iStore,
+  iNotificationStoreParams,
+  NOTIFICATION_CONTAINER,
+  NOTIFICATION_TYPE,
+  NOTIFICATION_INSERTION,
+  NOTIFICATION_REMOVAL_SOURCE
+}

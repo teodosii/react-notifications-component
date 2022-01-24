@@ -1,16 +1,5 @@
-import {
-  iDismiss,
-  iNotification,
-  iNotificationCustomType,
-  iTransition
-} from 'src/components/Notification'
-import {
-  INSERTION,
-  NOTIFICATION_BASE_CLASS,
-  NOTIFICATION_CONTAINER,
-  NOTIFICATION_TYPE,
-  NOTIFICATION_TYPE as NT
-} from 'src/utils/constants'
+import { iNotificationDismiss, iNotification, iNotificationCustomType, iTransition, NOTIFICATION_CONTAINER, NOTIFICATION_INSERTION, NOTIFICATION_TYPE } from "src/types"
+import { NOTIFICATION_BASE_CLASS } from "src/utils/constants"
 
 export const isNullOrUndefined = (object: any) => object === null || object === undefined
 
@@ -45,23 +34,23 @@ export function shouldNotificationHaveSliding(notification: iNotification, count
 
   return (
     count > 1 &&
-    ((notification.insert === INSERTION.TOP && isTopContainer(notification.container)) ||
-      (notification.insert === INSERTION.BOTTOM && isBottomContainer(notification.container)) ||
+    ((notification.insert === NOTIFICATION_INSERTION.TOP && isTopContainer(notification.container)) ||
+      (notification.insert === NOTIFICATION_INSERTION.BOTTOM && isBottomContainer(notification.container)) ||
       notification.container === NOTIFICATION_CONTAINER.CENTER)
   )
 }
 
 export function htmlClassesForExistingType(type: NOTIFICATION_TYPE) {
   switch (type) {
-    case NT.DEFAULT:
+    case NOTIFICATION_TYPE.DEFAULT:
       return [NOTIFICATION_BASE_CLASS, 'rnc__notification-item--default']
-    case NT.SUCCESS:
+    case NOTIFICATION_TYPE.SUCCESS:
       return [NOTIFICATION_BASE_CLASS, 'rnc__notification-item--success']
-    case NT.DANGER:
+    case NOTIFICATION_TYPE.DANGER:
       return [NOTIFICATION_BASE_CLASS, 'rnc__notification-item--danger']
-    case NT.WARNING:
+    case NOTIFICATION_TYPE.WARNING:
       return [NOTIFICATION_BASE_CLASS, 'rnc__notification-item--warning']
-    case NT.INFO:
+    case NOTIFICATION_TYPE.INFO:
       return [NOTIFICATION_BASE_CLASS, 'rnc__notification-item--info']
     default:
       return [NOTIFICATION_BASE_CLASS]
@@ -177,9 +166,9 @@ function defaultTransition(
   return transitionOptions
 }
 
-function defaultDismiss(dismiss: iDismiss): iDismiss {
+function defaultDismiss(dismiss: iNotificationDismiss): iNotificationDismiss {
   const option = dismiss
-  const defaults: iDismiss = {
+  const defaults: iNotificationDismiss = {
     duration: 0,
     click: true,
     touch: true,
@@ -212,11 +201,11 @@ function defaultUserDefinedTypes(
   }
 
   if (
-    type === NT.SUCCESS ||
-    type === NT.DANGER ||
-    type === NT.INFO ||
-    type === NT.DEFAULT ||
-    type === NT.WARNING ||
+    type === NOTIFICATION_TYPE.SUCCESS ||
+    type === NOTIFICATION_TYPE.DANGER ||
+    type === NOTIFICATION_TYPE.INFO ||
+    type === NOTIFICATION_TYPE.DEFAULT ||
+    type === NOTIFICATION_TYPE.WARNING ||
     !definedTypes
   ) {
     return undefined
@@ -257,7 +246,7 @@ export function parseNotification(
 
   notification.width = isNullOrUndefined(width) ? defaultNotificationWidth : width
   notification.container = container.toLowerCase() as NOTIFICATION_CONTAINER
-  notification.insert = (insert || 'top').toLowerCase() as INSERTION
+  notification.insert = (insert || 'top').toLowerCase() as NOTIFICATION_INSERTION
   notification.dismiss = defaultDismiss(dismiss)
   notification.animationIn = animationIn || []
   notification.animationOut = animationOut || []

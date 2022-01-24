@@ -1,6 +1,6 @@
 import React from 'react'
-import { iNotification, iNotificationCustomType } from 'src/components/Notification'
-import { ERROR, NOTIFICATION_TYPE as NT } from 'src/utils/constants'
+import { iNotification, iNotificationCustomType, NOTIFICATION_TYPE } from 'src/types'
+import { ERROR } from 'src/utils/constants'
 
 const isNullOrUndefined = (object: any) => object === null || object === undefined
 const isString = (object: any) => typeof object === 'string'
@@ -79,11 +79,11 @@ export const validators = [
 
     if (
       !userDefinedTypes &&
-      _type !== NT.SUCCESS &&
-      _type !== NT.DANGER &&
-      _type !== NT.INFO &&
-      _type !== NT.DEFAULT &&
-      _type !== NT.WARNING
+      _type !== NOTIFICATION_TYPE.SUCCESS &&
+      _type !== NOTIFICATION_TYPE.DANGER &&
+      _type !== NOTIFICATION_TYPE.INFO &&
+      _type !== NOTIFICATION_TYPE.DEFAULT &&
+      _type !== NOTIFICATION_TYPE.WARNING
     ) {
       throw new Error(ERROR.TYPE_NOT_EXISTENT)
     }
@@ -119,11 +119,11 @@ export const validators = [
     if (content) return
 
     if (
-      type === NT.SUCCESS ||
-      type === NT.DANGER ||
-      type === NT.INFO ||
-      type === NT.DEFAULT ||
-      type === NT.WARNING ||
+      type === NOTIFICATION_TYPE.SUCCESS ||
+      type === NOTIFICATION_TYPE.DANGER ||
+      type === NOTIFICATION_TYPE.INFO ||
+      type === NOTIFICATION_TYPE.DEFAULT ||
+      type === NOTIFICATION_TYPE.WARNING ||
       !_userDefinedTypes
     ) {
       return

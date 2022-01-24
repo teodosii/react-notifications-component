@@ -1,5 +1,5 @@
 import React from 'react'
-import { REMOVAL, INSERTION, NOTIFICATION_CONTAINER, NOTIFICATION_TYPE } from 'src/utils/constants'
+import { iNotificationProps, iNotificationState, iNotificationParentStyle, NOTIFICATION_REMOVAL_SOURCE } from 'src'
 import {
   getHtmlClassesForType,
   getTransition,
@@ -7,92 +7,6 @@ import {
   shouldNotificationHaveSliding
 } from 'src/utils/helpers'
 import Timer from 'src/utils/timer'
-
-export type { iNotification, iTransition, iTouchTransition, iDismiss, iNotificationCustomType }
-
-interface iNotification {
-  id?: string
-  onRemoval?: (id: string, removalFlag: string) => void
-  title?: NotificationTitleMessage
-  message?: NotificationTitleMessage
-  content?: NotificationContent
-  type?: NOTIFICATION_TYPE
-  container?: NOTIFICATION_CONTAINER
-  insert?: INSERTION
-  dismiss?: iDismiss
-  animationIn?: string[]
-  animationOut?: string[]
-  slidingEnter?: iTransition
-  slidingExit?: iTransition
-  touchRevert?: iTransition
-  touchSlidingExit?: {
-    fade: iTransition
-    swipe: iTransition
-  }
-  userDefinedTypes?: iNotificationCustomType[]
-  width?: number
-  hasBeenRemoved?: boolean
-}
-
-export type NotificationTitleMessage = string | React.ReactNode | React.FunctionComponent
-export type NotificationContent =
-  | React.ComponentClass<any, any>
-  | React.FunctionComponent<any>
-  | React.ReactElement
-
-interface iTransition {
-  duration: number
-  timingFunction: string
-  delay: number
-}
-
-interface iTouchTransition {
-  swipe: iTransition
-  fade: iTransition
-}
-
-interface iDismiss {
-  duration: number
-  onScreen: boolean
-  pauseOnHover: boolean
-  waitForAnimation: boolean
-  click: boolean
-  touch: boolean
-  showIcon: boolean
-}
-
-interface iNotificationCustomType {
-  htmlClasses: string[]
-  name: string
-}
-
-class iNotificationProps {
-  id: string
-  notification: iNotification
-  defaultNotificationWidth: number
-  notificationsCount: number
-  isMobile: boolean
-  hasBeenRemoved: boolean
-  toggleRemoval: (id: string, callback: () => void) => void
-}
-
-interface iNotificationState {
-  parentStyle?: iParentStyle
-  htmlClassList?: string[]
-  animationPlayState?: string
-  touchEnabled?: boolean
-  onTransitionEnd?: (event: React.TransitionEvent<HTMLDivElement>) => void
-  onAnimationEnd?: (event: React.AnimationEvent<HTMLDivElement>) => void
-  startX?: number
-  currentX?: number
-}
-
-interface iParentStyle {
-  height?: string
-  overflow?: string
-  width?: string
-  transition?: string
-}
 
 class Notification extends React.Component<iNotificationProps, iNotificationState> {
   constructor(props: iNotificationProps) {
@@ -137,7 +51,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
 
     const onTransitionEnd = () => {
       if (!duration || onScreen) return
-      const callback = () => this.removeNotification(REMOVAL.TIMEOUT)
+      const callback = () => this.removeNotification(NOTIFICATION_REMOVAL_SOURCE.TIMEOUT)
       this.timer = new Timer(callback, duration)
     }
 
@@ -164,7 +78,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
 
   componentDidUpdate(prevProps: iNotificationProps) {
     if (this.props.hasBeenRemoved && !prevProps.hasBeenRemoved) {
-      this.removeNotification(REMOVAL.MANUAL)
+      this.removeNotification(NOTIFICATION_REMOVAL_SOURCE.MANUAL)
     }
 
     if (prevProps !== this.props) {
@@ -190,7 +104,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
 
     const htmlClassList = [...notification.animationOut, ...getHtmlClassesForType(notification)]
     const onTransitionEnd = () => toggleRemoval(id, () => onRemoval(id, removalFlag))
-    const parentStyle: iParentStyle = {
+    const parentStyle: iNotificationParentStyle = {
       height: `0px`,
       overflow: 'hidden',
       transition: getTransition(notification.slidingExit, 'height')
@@ -226,7 +140,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
       notification: { dismiss }
     } = this.props
     if (dismiss.click || dismiss.showIcon) {
-      this.removeNotification(REMOVAL.CLICK)
+      this.removeNotification(NOTIFICATION_REMOVAL_SOURCE.CLICK)
     }
   }
 
@@ -265,7 +179,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
       const t1 = getTransition(swipe, 'left')
       const t2 = getTransition(fade, 'opacity')
       const onTransitionEnd = () => {
-        toggleRemoval(id, () => onRemoval(id, REMOVAL.TOUCH))
+        toggleRemoval(id, () => onRemoval(id, NOTIFICATION_REMOVAL_SOURCE.TOUCH))
       }
 
       return this.setState(({ parentStyle }) => ({
@@ -349,7 +263,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
       animationPlayState
     }
 
-    const onAnimationEnd = () => this.removeNotification(REMOVAL.TIMEOUT)
+    const onAnimationEnd = () => this.removeNotification(NOTIFICATION_REMOVAL_SOURCE.TIMEOUT)
     return (
       <div className="rnc__notification-timer">
         <div

@@ -1,8 +1,8 @@
 import React from 'react'
 import notification from 'samples/js/helpers/notification'
 import { getMessage, getTitle, getType } from 'samples/js/helpers/randomize'
-import { store } from 'src'
-import { iNotification } from 'src/components/Notification'
+import { Store } from 'src'
+import { iNotification } from 'src/types'
 
 export default function ContainerExample() {
   return (
@@ -88,7 +88,7 @@ function add(container: string): string {
   const type = getType()
   const object: iNotification = {}
 
-  return store.addNotification(
+  return Store.addNotification(
     Object.assign(object, notification, {
       title: getTitle(type),
       message: getMessage(type),

@@ -6,38 +6,6 @@ export const DEFAULT_CONTAINER_VALUES = {
 
 export const NOTIFICATION_BASE_CLASS = 'rnc__notification-item'
 
-export enum NOTIFICATION_CONTAINER {
-  BOTTOM_LEFT = 'bottom-left',
-  BOTTOM_RIGHT = 'bottom-right',
-  BOTTOM_CENTER = 'bottom-center',
-  TOP_LEFT = 'top-left',
-  TOP_RIGHT = 'top-right',
-  TOP_CENTER = 'top-center',
-  CENTER = 'center',
-  TOP_FULL = 'top-full',
-  BOTTOM_FULL = 'bottom-full'
-}
-
-export enum INSERTION {
-  TOP = 'top',
-  BOTTOM = 'bottom'
-}
-
-export enum NOTIFICATION_TYPE {
-  SUCCESS = 'success',
-  DANGER = 'danger',
-  INFO = 'info',
-  DEFAULT = 'default',
-  WARNING = 'warning'
-}
-
-export enum REMOVAL {
-  TIMEOUT = 'timeout',
-  CLICK = 'click',
-  TOUCH = 'touch',
-  MANUAL = 'manual'
-}
-
 export const ERROR = {
   ANIMATION_IN: 'Validation error. `animationIn` option must be an array',
   ANIMATION_OUT: 'Validation error. `animationOut` option must be an array',
