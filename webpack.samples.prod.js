@@ -1,11 +1,11 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const webpack = require('webpack');
-const path = require('path');
-const ESLintWebpackPlugin = require('eslint-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const webpack = require('webpack')
+const path = require('path')
+const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
   mode: 'production',
@@ -33,7 +33,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: "awesome-typescript-loader",
+        loader: 'awesome-typescript-loader',
         exclude: /node_modules/
       },
       {
@@ -61,10 +61,7 @@ module.exports = {
   },
 
   optimization: {
-    minimizer: [
-      new TerserPlugin(),
-      new OptimizeCSSAssetsPlugin({})
-    ],
+    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})],
     splitChunks: {
       cacheGroups: {
         commons: {
@@ -101,4 +98,4 @@ module.exports = {
       filename: '[name].css'
     })
   ]
-};
+}

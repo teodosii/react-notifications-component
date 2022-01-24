@@ -1,7 +1,7 @@
-const path = require('path');
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ESLintWebpackPlugin = require('eslint-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -43,7 +43,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: "awesome-typescript-loader",
+        loader: 'awesome-typescript-loader',
         include: /src/
       },
       {
@@ -73,4 +73,4 @@ module.exports = {
       root: 'ReactDOM'
     }
   }
-};
+}

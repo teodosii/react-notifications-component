@@ -1,8 +1,8 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const webpack = require('webpack');
-const ESLintWebpackPlugin = require('eslint-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const webpack = require('webpack')
+const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -39,7 +39,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: "awesome-typescript-loader",
+        loader: 'awesome-typescript-loader',
         exclude: /node_modules/
       },
       {
@@ -87,4 +87,4 @@ module.exports = {
   optimization: {
     moduleIds: 'named'
   }
-};
+}

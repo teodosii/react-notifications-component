@@ -1,11 +1,12 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const webpack = require('webpack');
-const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const webpack = require('webpack')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const path = require('path')
 
-const ESLintWebpackPlugin = require('eslint-webpack-plugin');
+const ESLintWebpackPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
   mode: 'production',
@@ -26,8 +27,9 @@ module.exports = {
       new CopyPlugin({
         patterns: [
           { from: 'src/scss', to: 'scss' },
-          { from: 'build/index.js', to: 'index.js' }
-        ],
+          { from: 'build/index.js', to: 'index.js' },
+          { from: './tsconfig.json', to: 'tsconfig.json' }
+        ]
       })
     ]
   },
@@ -38,14 +40,15 @@ module.exports = {
       src: path.resolve(__dirname, 'src'),
       samples: path.resolve(__dirname, 'samples'),
       tests: path.resolve(__dirname, 'tests')
-    }
+    },
+    plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })]
   },
 
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: "awesome-typescript-loader",
+        loader: 'awesome-typescript-loader',
         include: /src/
       },
       {
@@ -96,4 +99,4 @@ module.exports = {
       root: 'ReactDOM'
     }
   }
-};
+}

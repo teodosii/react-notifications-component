@@ -1,5 +1,5 @@
-import container from './components/Container'
-import store from './store'
+import container from 'src/components/Container'
+import store from 'src/store'
 
 export { store }
 

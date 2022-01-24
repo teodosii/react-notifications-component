@@ -1,16 +1,18 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       // samples project
       "samples/*": ["samples/*"],
       "components/*": ["samples/js/components/*"],
+      "utils/*": ["src/utils/*"],
 
       // library
-      "src/*": ["src/*"]
+      "src": ["src"],
+      "samples": ["samples"]
     },
 
-    "allowJs": true,
+    "allowJs": false,
     "declaration": true,
     "esModuleInterop": true,
     "module": "commonjs",
@@ -24,17 +26,24 @@
     "target": "es2019"
   },
 
-  "files": ["src/index.ts"],
+  "plugins": [
+    // Transform paths in output .js files
+    { "transform": "typescript-transform-paths" },
+
+    // Transform paths in output .d.ts files (Include this line if you output declarations files)
+    { "transform": "typescript-transform-paths", "afterDeclarations": true }
+  ],
 
   "include": [
-    "./src/*.ts",
-    "./src/*.tsx",
-    "global.d.ts",
-    "global_modules.d.ts"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "samples/**/*.ts",
+    "samples/**/*.tsx",
+    "./global.d.ts"
   ],
+
   "exclude": [
     "./src/*.js",
-    "./samples",
     "./node_modules",
     "./build",
     "./dist",

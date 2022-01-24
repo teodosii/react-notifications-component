@@ -43,6 +43,7 @@ module.exports = {
     "linebreak-style": "off",
     "comma-dangle": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-var-requires": "off",
     "react/prop-types": "off",
     "semi": ["error", "never"],
     "react/jsx-uses-vars": "error",

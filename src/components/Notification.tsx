@@ -1,17 +1,12 @@
 import React from 'react'
-import {
-  REMOVAL,
-  INSERTION,
-  NOTIFICATION_CONTAINER,
-  NOTIFICATION_TYPE
-} from '../utils/constants'
+import { REMOVAL, INSERTION, NOTIFICATION_CONTAINER, NOTIFICATION_TYPE } from 'src/utils/constants'
 import {
   getHtmlClassesForType,
   getTransition,
   hasFullySwiped,
   shouldNotificationHaveSliding
-} from '../utils/helpers'
-import Timer from '../utils/timer'
+} from 'src/utils/helpers'
+import Timer from 'src/utils/timer'
 
 export type { iNotification, iTransition, iTouchTransition, iDismiss, iNotificationCustomType }
 
