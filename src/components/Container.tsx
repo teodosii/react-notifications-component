@@ -1,5 +1,5 @@
 import React from 'react'
-import { iContainerProps, iContainerState, iNotification } from 'src'
+import { iContainerProps, iContainerState, iNotification } from 'src/types'
 import ReactNotification from 'src/components/Notification'
 import 'src/scss/notification.scss'
 import store from 'src/store'
@@ -9,6 +9,8 @@ import {
   getNotificationsForMobileView,
   isNullOrUndefined
 } from 'src/utils/helpers'
+
+export { Container }
 
 class Container extends React.Component<iContainerProps, iContainerState> {
   constructor(props: iContainerProps) {
@@ -171,5 +173,3 @@ class Container extends React.Component<iContainerProps, iContainerState> {
     return this.renderScreenNotifications(this.props)
   }
 }
-
-export default Container

@@ -1,5 +1,5 @@
 import React from 'react'
-import { iNotificationProps, iNotificationState, iNotificationParentStyle, NOTIFICATION_REMOVAL_SOURCE } from 'src'
+import { iNotificationProps, iNotificationState, iNotificationParentStyle, NOTIFICATION_REMOVAL_SOURCE } from 'src/types'
 import {
   getHtmlClassesForType,
   getTransition,

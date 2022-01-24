@@ -1,5 +1,5 @@
 import React from 'react'
-import { Store } from 'src'
+import Store from 'src/store'
 import ContainerExample from 'components/examples/ContainerExample'
 import TypeExample from 'components/examples/TypeExample'
 import InsertExample from 'components/examples/InsertExample'

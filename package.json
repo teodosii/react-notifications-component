@@ -1,6 +1,6 @@
 {
   "name": "react-notifications-component",
-  "version": "3.2.4",
+  "version": "3.2.5",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/index.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npm run build:library:dev && npm run build:library:prod",
     "build:library:dev": "webpack --config webpack.dev.js",
-    "build:library:prod": "webpack --config webpack.prod.js",
+    "build:library:prod": "webpack --config webpack.prod.js && tsc-alias",
     "build:samples:dev": "webpack --config webpack.samples.dev.js",
     "build:samples:prod": "webpack --config webpack.samples.prod.js",
     "watch:library": "webpack -w --config webpack.dev.js",
@@ -89,6 +89,7 @@
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.0",
+    "tsc-alias": "^1.5.0",
     "tsconfig-paths": "^3.12.0",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "typescript": "^4.5.5",

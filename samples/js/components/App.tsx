@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactNotification from 'src'
+import { Container } from 'src/components/Container'
 import Header from './Header'
 import Content from './Content'
 import GithubCorner from 'react-github-corner'
@@ -7,7 +7,7 @@ import GithubCorner from 'react-github-corner'
 export default function App() {
   return (
     <React.Fragment>
-      <ReactNotification
+      <Container
         types={[
           {
             htmlClasses: ['rnc__notification-item--awesome'],

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Store } from 'src'
+import Store from 'src/store'
 import notification from 'samples/js/helpers/notification'
 import { getType, getMessage, getTitle } from 'samples/js/helpers/randomize'
 import { iNotification } from 'src/types'

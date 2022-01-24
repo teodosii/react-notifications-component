@@ -1,4 +1,4 @@
-import Container from 'src/components/Container'
+import { Container } from 'src/components/Container'
 import Store from 'src/store'
 export default Container
 
@@ -24,6 +24,7 @@ import {
 } from './types'
 
 export { Store as store } // otherwise it's breaking change
+export { Container as ReactNotifications }
 
 export {
   iContainerProps,

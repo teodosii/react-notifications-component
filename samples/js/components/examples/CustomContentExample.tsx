@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import notification from 'samples/js/helpers/notification'
 import reactImage from 'samples/images/react.png'
 import { getContainer } from 'samples/js/helpers/randomize'
-import { Store } from 'src'
+import Store from 'src/store'
 import { iNotification } from 'src/types'
 
 export default function CustomContentExample() {

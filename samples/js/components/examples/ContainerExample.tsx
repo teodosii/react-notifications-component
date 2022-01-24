@@ -1,7 +1,7 @@
 import React from 'react'
 import notification from 'samples/js/helpers/notification'
 import { getMessage, getTitle, getType } from 'samples/js/helpers/randomize'
-import { Store } from 'src'
+import Store from 'src/store'
 import { iNotification } from 'src/types'
 
 export default function ContainerExample() {
