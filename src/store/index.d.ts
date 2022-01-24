@@ -1,16 +1,4 @@
-import { iNotification, iNotificationCustomType } from 'src/components/Notification';
-interface iStore {
-    addNotification(notification: iNotification): string;
-    removeNotification(id: string): void;
-    register(param: iRegisterParams): void;
-}
-interface iRegisterParams {
-    addNotification: (notification: iNotification) => string;
-    removeNotification: (id: string) => void;
-    removeAllNotifications: () => void;
-    types: iNotificationCustomType[];
-    defaultNotificationWidth: number;
-}
+import { iNotification, iNotificationStoreParams, iStore } from 'src/types';
 declare class Store implements iStore {
     constructor();
     removeNotification: (id: string) => void;
@@ -22,7 +10,8 @@ declare class Store implements iStore {
     private incrementCounter;
     addNotification(notification: iNotification): string;
     getCounter: () => number;
-    register(parameters: iRegisterParams): void;
+    register(parameters: iNotificationStoreParams): void;
 }
 declare const _default: Store;
 export default _default;
+//# sourceMappingURL=index.d.ts.map

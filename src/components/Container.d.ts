@@ -1,18 +1,6 @@
 import React from 'react';
+import { iContainerProps, iContainerState, iNotification } from 'src/types';
 import 'src/scss/notification.scss';
-import type { iNotification, iNotificationCustomType } from 'src/components/Notification';
-interface iContainerProps {
-    isMobile?: boolean;
-    breakpoint?: number;
-    types?: iNotificationCustomType[];
-    defaultNotificationWidth?: number;
-}
-interface iContainerState {
-    isMobile: boolean;
-    breakpoint: number;
-    notifications: iNotification[];
-    windowWidth: number;
-}
 declare class Container extends React.Component<iContainerProps, iContainerState> {
     constructor(props: iContainerProps);
     componentDidMount(): void;
@@ -28,3 +16,4 @@ declare class Container extends React.Component<iContainerProps, iContainerState
     render(): JSX.Element;
 }
 export default Container;
+//# sourceMappingURL=Container.d.ts.map

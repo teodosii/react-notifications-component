@@ -1,5 +1,4 @@
-import { iNotification, iNotificationCustomType, iTransition } from 'src/components/Notification';
-import { NOTIFICATION_TYPE } from 'src/utils/constants';
+import { iNotification, iNotificationCustomType, iTransition, NOTIFICATION_TYPE } from "src/types";
 export declare const isNullOrUndefined: (object: any) => boolean;
 export declare function isBottomContainer(container: string): boolean;
 export declare function isTopContainer(container: string): boolean;
@@ -25,3 +24,4 @@ export declare function getNotificationsForEachContainer(notifications: iNotific
 export declare function getTransition({ duration, timingFunction, delay }: iTransition, property: string): string;
 export declare function getUid(a?: string): string;
 export declare function parseNotification(options: iNotification, userDefinedTypes: iNotificationCustomType[], defaultNotificationWidth: number): iNotification;
+//# sourceMappingURL=helpers.d.ts.map
