@@ -44,7 +44,7 @@ npm run start
 
 Import <code>react-notifications-component</code>
 ```js
-import ReactNotification from 'react-notifications-component'
+import { ReactNotifications } from 'react-notifications-component'
 ```
 Import the <code>CSS</code> theme
 ```js
@@ -68,7 +68,7 @@ const App = () => {
 
 Import <code>store</code> where needed - will be used to access `addNotification` and `removeNotification` API methods
 ```js
-import { store } from 'react-notifications-component';
+import { Store } from 'react-notifications-component';
 ```
 
 Then call `addNotification` and watch the magic happens
