@@ -66,7 +66,7 @@ const App = () => {
 };
 ```
 
-Import <code>store</code> where needed - will be used to access `addNotification` and `removeNotification` API methods
+Import <code>Store</code> where needed - will be used to access `addNotification` and `removeNotification` API methods
 ```js
 import { Store } from 'react-notifications-component';
 ```
@@ -74,7 +74,7 @@ import { Store } from 'react-notifications-component';
 Then call `addNotification` and watch the magic happens
 
 ```jsx
-store.addNotification({
+Store.addNotification({
   title: "Wonderful!",
   message: "teodosii@react-notifications-component",
   type: "success",
@@ -108,11 +108,11 @@ For more info on how to use `animate.css`, please refer to [animate.css docs](ht
 
 ## API
 
-`store.addNotification(options)`
+`Store.addNotification(options)`
 
 Render a new notification. Method returns a unique id for the rendered notification. Supplied options are internally validated and an exception will be thrown if validation fails.
 
-`store.removeNotification(id)`
+`Store.removeNotification(id)`
 
 Manually remove a notification by id.
 
@@ -148,7 +148,7 @@ You have in total 6 containers for desktop and 2 for mobile, if component is set
 * `bottom-center`
 
 ```js
-store.addNotification({
+Store.addNotification({
   ...notification,
   container: 'top-right'
 })
@@ -168,7 +168,7 @@ List of types:
 
 
 ```js
-store.addNotification({
+Store.addNotification({
   ...notification,
   type: 'danger'
 })
@@ -179,7 +179,7 @@ Will trigger a `danger` notification.
 #### Animating
   
 ```js
-store.addNotification({
+Store.addNotification({
   ...notification, 
   animationIn: ['animate__animated animate__fadeIn'], // `animate.css v4` classes
   animationOut: ['animate__animated animate__fadeOut'] // `animate.css v4` classes
@@ -193,7 +193,7 @@ store.addNotification({
 #### Dismiss notification automatically after timeout expires
 
 ```js
-store.addNotification({
+Store.addNotification({
   ...notification,
   dismiss: {
     duration: 2000
@@ -204,7 +204,7 @@ store.addNotification({
 #### Dismiss notification automatically with the time left shown on UI
 
 ```js
-store.addNotification({
+Store.addNotification({
   ...notification,
   dismiss: {
     duration: 2000,
@@ -218,7 +218,7 @@ store.addNotification({
 Easily subscribe to `onRemoval` by supplying callback as option to the notification object. Callback will get called after the removal animation finishes.
 
 ```js
-store.addNotification({
+Store.addNotification({
   ...notification,
   onRemoval: (id, removedBy) => {
     ...
@@ -229,7 +229,7 @@ store.addNotification({
 #### Pause notification's timeout by hovering
 
 ```js
-store.addNotification({
+Store.addNotification({
   ...notification,
   dismiss: {
     duration: 2000,
@@ -241,7 +241,7 @@ store.addNotification({
 #### Change transition
 
 ```js
-store.addNotification({
+Store.addNotification({
   ...notification,
   slidingExit: {
     duration: 800,
@@ -254,7 +254,7 @@ store.addNotification({
 `slidingEnter`, `touchRevert` and `touchSlidingExit` can all be configured in the same way, with the mention that `touchSlidingExit` has 2 transitions nested.
 
 ```js
-store.addNotification({
+Store.addNotification({
   ...notification,
   touchSlidingExit: {
     swipe: {
@@ -472,7 +472,7 @@ store.addNotification({
   
 ## Migration from v1
 
-* Ref usage has been deprecated. Import `store` from library and use it for adding and removing notifications
+* Ref usage has been deprecated. Import `Store` from library and use it for adding and removing notifications
 * `touchSlidingBack` has been renamed to `touchRevert`
 * Default values for transitions have been slightly changed
 * `dismissIcon` has been removed. Use `showIcon` instead. If you relly on customized close icon, then stick to custom content.
