@@ -3,7 +3,7 @@
 
 A delightful, easy to use and highly configurable component to help you notify your users out of the box. No messy setup, just beautiful notifications!
 
-> :exclamation: :exclamation: :exclamation: As of version 3.3.0 `react-notifications-component` no longer uses default export. Rely on this import instead
+> :exclamation: :exclamation: :exclamation: As of version 3.3.2 (latest) `react-notifications-component` no longer uses default export. Rely on this import instead
 > ```jsx
 > import { ReactNotifications, Store } from 'react-notifications-component'
 > ```
