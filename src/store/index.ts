@@ -1,4 +1,4 @@
-import { iNotification, iNotificationCustomType, iNotificationStoreParams, iStore } from 'src/types'
+import { iNotification, iNotificationCustomType, iNotificationStoreParams, iStore } from 'src/typings'
 import { parseNotification } from 'src/utils/helpers'
 import { validateTransition, validators } from 'src/utils/validators'
 

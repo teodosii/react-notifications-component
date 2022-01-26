@@ -1,5 +1,5 @@
 import React from 'react'
-import { iNotificationProps, iNotificationState, iNotificationParentStyle, NOTIFICATION_REMOVAL_SOURCE } from 'src/types'
+import { iNotificationProps, iNotificationState, iNotificationParentStyle } from 'src/typings'
 import {
   getHtmlClassesForType,
   getTransition,
@@ -7,6 +7,9 @@ import {
   shouldNotificationHaveSliding
 } from 'src/utils/helpers'
 import Timer from 'src/utils/timer'
+import { NOTIFICATION_REMOVAL_SOURCE } from 'src/utils/enums'
+
+export { Notification }
 
 class Notification extends React.Component<iNotificationProps, iNotificationState> {
   constructor(props: iNotificationProps) {
@@ -351,5 +354,3 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     )
   }
 }
-
-export default Notification

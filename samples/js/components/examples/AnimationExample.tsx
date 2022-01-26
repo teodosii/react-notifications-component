@@ -2,7 +2,7 @@ import React from 'react'
 import notification from 'samples/js/helpers/notification'
 import { getContainer, getMessage, getType } from 'samples/js/helpers/randomize'
 import Store from 'src/store'
-import { iNotification } from 'src/types'
+import { iNotification } from 'src/typings'
 
 function AnimationInExample() {
   return (
@@ -133,7 +133,7 @@ function AnimationOutExample() {
 
 function add(isEntranceAnimation: boolean, htmlClasses: string[]) {
   const type = getType()
-  const object: iNotification = {}
+  const object: Partial<iNotification> = {}
 
   if (isEntranceAnimation) {
     return Store.addNotification(

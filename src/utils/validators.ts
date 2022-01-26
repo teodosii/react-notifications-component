@@ -1,6 +1,7 @@
 import React from 'react'
-import { iNotification, iNotificationCustomType, NOTIFICATION_TYPE } from 'src/types'
+import { iNotification, iNotificationCustomType } from 'src/typings'
 import { ERROR } from 'src/utils/constants'
+import { NOTIFICATION_TYPE } from 'src/utils/enums'
 
 const isNullOrUndefined = (object: any) => object === null || object === undefined
 const isString = (object: any) => typeof object === 'string'

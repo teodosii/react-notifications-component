@@ -1,6 +1,4 @@
 export {
-  iContainerProps,
-  iContainerState,
   iNotification,
   NotificationTitleMessage,
   NotificationContent,
@@ -16,54 +14,25 @@ export {
   NOTIFICATION_CONTAINER,
   NOTIFICATION_INSERTION,
   NOTIFICATION_TYPE,
-  NOTIFICATION_REMOVAL_SOURCE
+  NOTIFICATION_REMOVAL_SOURCE,
 }
 
-enum NOTIFICATION_CONTAINER {
-  BOTTOM_LEFT = 'bottom-left',
-  BOTTOM_RIGHT = 'bottom-right',
-  BOTTOM_CENTER = 'bottom-center',
-  TOP_LEFT = 'top-left',
-  TOP_RIGHT = 'top-right',
-  TOP_CENTER = 'top-center',
-  CENTER = 'center',
-  TOP_FULL = 'top-full',
-  BOTTOM_FULL = 'bottom-full'
-}
+type NOTIFICATION_CONTAINER =
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'bottom-center'
+  | 'top-left'
+  | 'top-right'
+  | 'top-center'
+  | 'center'
+  | 'top-full'
+  | 'bottom-full'
 
-enum NOTIFICATION_INSERTION {
-  TOP = 'top',
-  BOTTOM = 'bottom'
-}
+type NOTIFICATION_INSERTION = 'top' | 'bottom'
 
-enum NOTIFICATION_TYPE {
-  SUCCESS = 'success',
-  DANGER = 'danger',
-  INFO = 'info',
-  DEFAULT = 'default',
-  WARNING = 'warning'
-}
+type NOTIFICATION_TYPE = 'success' | 'danger' | 'info' | 'default' | 'warning'
 
-enum NOTIFICATION_REMOVAL_SOURCE {
-  TIMEOUT = 'timeout',
-  CLICK = 'click',
-  TOUCH = 'touch',
-  MANUAL = 'manual'
-}
-
-interface iContainerProps {
-  isMobile?: boolean
-  breakpoint?: number
-  types?: iNotificationCustomType[]
-  defaultNotificationWidth?: number
-}
-
-interface iContainerState {
-  isMobile: boolean
-  breakpoint: number
-  notifications: iNotification[]
-  windowWidth: number
-}
+type NOTIFICATION_REMOVAL_SOURCE = 'timeout' | 'click' | 'touch' | 'manual'
 
 interface iNotification {
   id?: string
@@ -71,8 +40,8 @@ interface iNotification {
   title?: NotificationTitleMessage
   message?: NotificationTitleMessage
   content?: NotificationContent
-  type?: NOTIFICATION_TYPE
-  container?: NOTIFICATION_CONTAINER
+  type: NOTIFICATION_TYPE
+  container: NOTIFICATION_CONTAINER
   insert?: NOTIFICATION_INSERTION
   dismiss?: iNotificationDismiss
   animationIn?: string[]
@@ -108,12 +77,12 @@ interface iTouchTransition {
 
 interface iNotificationDismiss {
   duration: number
-  onScreen: boolean
-  pauseOnHover: boolean
-  waitForAnimation: boolean
-  click: boolean
-  touch: boolean
-  showIcon: boolean
+  onScreen?: boolean
+  pauseOnHover?: boolean
+  waitForAnimation?: boolean
+  click?: boolean
+  touch?: boolean
+  showIcon?: boolean
 }
 
 interface iNotificationCustomType {

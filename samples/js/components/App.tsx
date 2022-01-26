@@ -3,6 +3,7 @@ import { Container } from 'src/components/Container'
 import Header from './Header'
 import Content from './Content'
 import GithubCorner from 'react-github-corner'
+import 'src/scss/notification.scss'
 
 export default function App() {
   return (

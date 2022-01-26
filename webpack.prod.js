@@ -15,9 +15,9 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/react-notifications.prod.js',
-    library: 'ReactNotifications',
-    libraryTarget: 'commonjs2'
+    filename: 'index.js', 
+    libraryTarget: 'umd', 
+    library: 'react-notifications-component', 
   },
 
   optimization: {
@@ -27,7 +27,7 @@ module.exports = {
       new CopyPlugin({
         patterns: [
           { from: 'src/scss', to: 'scss' },
-          { from: 'build/index.js', to: 'index.js' },
+          { from: 'src/typings.ts', to: 'src/typings.d.ts' },
         ]
       })
     ]

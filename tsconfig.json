@@ -10,22 +10,16 @@
       // samples project
       "samples/*": ["samples/*"],
       "components/*": ["samples/js/components/*"],
-      "utils/*": ["src/utils/*"],
+      "utils/*": ["src/utils/*"]
     },
 
-    "allowJs": false,
-    "declaration": true,
-    "declarationMap": true,
     "outDir": "./dist",
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "jsx": "react",
+    "target": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
+    "jsx": "react",
+    "declaration": true,
     "skipLibCheck": true,
-    "sourceMap": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "target": "es2019"
+    "esModuleInterop": true,
   },
 
   "include": [

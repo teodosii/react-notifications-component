@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.3.0 
+ 
+### Changes 
+ 
+* Removed default export - You now need to import ReactNotifications (and Store) instead of the default import 
+* All typescript declarations are now included in the dist folder 
+ 
+
 ## 3.2.0
 
 ### Fixes

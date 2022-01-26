@@ -2,7 +2,7 @@ import React from 'react'
 import Store from 'src/store'
 import notification from 'samples/js/helpers/notification'
 import { getType, getMessage, getTitle } from 'samples/js/helpers/randomize'
-import { iNotification } from 'src/types'
+import { iNotification } from 'src/typings'
 
 export default function InsertExample() {
   return (
@@ -29,7 +29,7 @@ export default function InsertExample() {
 
 function add(insert: string) {
   const type = getType()
-  const object: iNotification = {}
+  const object: Partial<iNotification> = {}
   return Store.addNotification(
     Object.assign(object, notification, {
       type,
