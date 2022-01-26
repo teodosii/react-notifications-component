@@ -1,4 +1,4 @@
-import { iNotification, iNotificationStoreParams, iStore } from 'src/types';
+import { iNotification, iNotificationStoreParams, iStore } from 'src/typings';
 declare class Store implements iStore {
     constructor();
     removeNotification: (id: string) => void;
@@ -14,4 +14,3 @@ declare class Store implements iStore {
 }
 declare const _default: Store;
 export default _default;
-//# sourceMappingURL=index.d.ts.map

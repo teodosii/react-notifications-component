@@ -8,4 +8,3 @@ export default class Timer {
     resume(): void;
     clear(): void;
 }
-//# sourceMappingURL=timer.d.ts.map

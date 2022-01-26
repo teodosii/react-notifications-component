@@ -1,10 +1,11 @@
-import { iNotification, iNotificationCustomType, iTransition, NOTIFICATION_TYPE } from "src/types";
+import { iNotification, iNotificationCustomType, iTransition } from 'src/typings';
+import { NOTIFICATION_TYPE } from "src/utils/enums";
 export declare const isNullOrUndefined: (object: any) => boolean;
 export declare function isBottomContainer(container: string): boolean;
 export declare function isTopContainer(container: string): boolean;
 export declare function hasFullySwiped(diffX: number, width: number): boolean;
 export declare function shouldNotificationHaveSliding(notification: iNotification, count: number): boolean;
-export declare function htmlClassesForExistingType(type: NOTIFICATION_TYPE): string[];
+export declare function htmlClassesForExistingType(type: NOTIFICATION_TYPE | string): string[];
 export declare function getHtmlClassesForType(notification: iNotification): string[];
 export declare function getNotificationsForMobileView(notifications: iNotification[]): {
     top: iNotification[];
@@ -24,4 +25,3 @@ export declare function getNotificationsForEachContainer(notifications: iNotific
 export declare function getTransition({ duration, timingFunction, delay }: iTransition, property: string): string;
 export declare function getUid(a?: string): string;
 export declare function parseNotification(options: iNotification, userDefinedTypes: iNotificationCustomType[], defaultNotificationWidth: number): iNotification;
-//# sourceMappingURL=helpers.d.ts.map

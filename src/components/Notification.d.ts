@@ -1,5 +1,6 @@
 import React from 'react';
-import { iNotificationProps, iNotificationState } from 'src/types';
+import { iNotificationProps, iNotificationState } from 'src/typings';
+export { Notification };
 declare class Notification extends React.Component<iNotificationProps, iNotificationState> {
     constructor(props: iNotificationProps);
     private readonly rootElementRef;
@@ -19,5 +20,3 @@ declare class Notification extends React.Component<iNotificationProps, iNotifica
     renderNotification(): JSX.Element;
     render(): JSX.Element;
 }
-export default Notification;
-//# sourceMappingURL=Notification.d.ts.map

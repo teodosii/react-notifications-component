@@ -35,4 +35,3 @@ export declare const ERROR: {
     TYPE_NOT_FOUND: string;
     REMOVAL_FUNC: string;
 };
-//# sourceMappingURL=constants.d.ts.map
