@@ -9,7 +9,10 @@ import {
   isNullOrUndefined
 } from 'src/utils/helpers'
 
+import "src/scss/notification.scss"
+
 export { Container, iContainerProps, iContainerState }
+
 
 interface iContainerProps {
   isMobile?: boolean
