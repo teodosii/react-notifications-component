@@ -3,7 +3,10 @@
 
 A delightful, easy to use and highly configurable component to help you notify your users out of the box. No messy setup, just beautiful notifications!
 
-> :fire: :fire: :fire: Interested in an animation library for React? I just launched `react-tweenful`, check it out here https://github.com/teodosii/react-tweenful
+> :exclamation: :exclamation: :exclamation: As of version 3.3.0 `react-notifications-component` no longer uses default export. Rely on this import instead
+> ```jsx
+> import { ReactNotifications, Store } from 'react-notifications-component'
+> ```
 
 ## Demo
 
