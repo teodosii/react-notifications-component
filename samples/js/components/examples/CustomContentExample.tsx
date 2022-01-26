@@ -3,7 +3,7 @@ import notification from 'samples/js/helpers/notification'
 import reactImage from 'samples/images/react.png'
 import { getContainer } from 'samples/js/helpers/randomize'
 import Store from 'src/store'
-import { iNotification } from 'src/types'
+import { iNotification } from 'src/typings'
 
 export default function CustomContentExample() {
   const [cachedImage] = useState(new Image())
@@ -51,7 +51,7 @@ export default function CustomContentExample() {
 }
 
 function add(cachedImage: HTMLImageElement): void {
-  const object: iNotification = {}
+  const object: Partial<iNotification> = {}
 
   Store.addNotification(
     Object.assign(object, notification, {
@@ -76,7 +76,7 @@ function addCustomIcon(type: string, iconClassName: string): void {
     message = 'Error! You have no update rights'
   }
 
-  const object: iNotification = {}
+  const object: Partial<iNotification> = {}
 
   Store.addNotification(
     Object.assign(object, notification, {

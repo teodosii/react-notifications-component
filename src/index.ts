@@ -1,10 +1,12 @@
-import { Container } from 'src/components/Container'
-import Store from 'src/store'
-export default Container
-
 import {
   iContainerProps,
   iContainerState,
+  Container
+} from 'src/components/Container'
+
+import Store from 'src/store'
+
+import {
   iNotification,
   NotificationTitleMessage,
   NotificationContent,
@@ -21,12 +23,11 @@ import {
   NOTIFICATION_TYPE,
   NOTIFICATION_INSERTION,
   NOTIFICATION_REMOVAL_SOURCE
-} from './types'
-
-export { Store as store } // otherwise it's breaking change
-export { Container as ReactNotifications }
+} from 'src/typings'
 
 export {
+  Container as ReactNotifications,
+  Store,
   iContainerProps,
   iContainerState,
   iNotification,

@@ -10,9 +10,9 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'js/react-notifications.dev.js',
-    library: 'ReactNotifications',
-    libraryTarget: 'commonjs2'
+    filename: 'index.js', 
+    libraryTarget: 'umd', 
+    library: 'react-notifications-component', 
   },
 
   plugins: [

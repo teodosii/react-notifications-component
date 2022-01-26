@@ -1,5 +1,6 @@
-import { iNotificationDismiss, iNotification, iNotificationCustomType, iTransition, NOTIFICATION_CONTAINER, NOTIFICATION_INSERTION, NOTIFICATION_TYPE } from "src/types"
+import { iNotificationDismiss, iNotification, iNotificationCustomType, iTransition } from 'src/typings'
 import { NOTIFICATION_BASE_CLASS } from "src/utils/constants"
+import { NOTIFICATION_CONTAINER, NOTIFICATION_INSERTION, NOTIFICATION_TYPE } from "src/utils/enums"
 
 export const isNullOrUndefined = (object: any) => object === null || object === undefined
 
@@ -40,7 +41,7 @@ export function shouldNotificationHaveSliding(notification: iNotification, count
   )
 }
 
-export function htmlClassesForExistingType(type: NOTIFICATION_TYPE) {
+export function htmlClassesForExistingType(type: NOTIFICATION_TYPE | string) {
   switch (type) {
     case NOTIFICATION_TYPE.DEFAULT:
       return [NOTIFICATION_BASE_CLASS, 'rnc__notification-item--default']

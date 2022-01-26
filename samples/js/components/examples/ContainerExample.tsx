@@ -2,7 +2,7 @@ import React from 'react'
 import notification from 'samples/js/helpers/notification'
 import { getMessage, getTitle, getType } from 'samples/js/helpers/randomize'
 import Store from 'src/store'
-import { iNotification } from 'src/types'
+import { iNotification } from 'src/typings'
 
 export default function ContainerExample() {
   return (
@@ -86,7 +86,7 @@ export default function ContainerExample() {
 
 function add(container: string): string {
   const type = getType()
-  const object: iNotification = {}
+  const object: Partial<iNotification> = {}
 
   return Store.addNotification(
     Object.assign(object, notification, {
