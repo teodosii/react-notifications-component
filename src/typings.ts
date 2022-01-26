@@ -40,7 +40,7 @@ interface iNotification {
   title?: NotificationTitleMessage
   message?: NotificationTitleMessage
   content?: NotificationContent
-  type: NOTIFICATION_TYPE
+  type?: NOTIFICATION_TYPE
   container: NOTIFICATION_CONTAINER
   insert?: NOTIFICATION_INSERTION
   dismiss?: iNotificationDismiss
