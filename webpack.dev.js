@@ -43,13 +43,13 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: 'awesome-typescript-loader',
-        include: /src/
+        exclude: /node_modules/,
+        use: ["babel-loader", "ts-loader"],
       },
       {
         test: /\.(js|jsx)$/,
-        use: ['babel-loader'],
-        include: /src/
+        exclude: /node_modules/,
+        use: ["babel-loader"],
       },
       {
         test: /\.(css|scss)$/,

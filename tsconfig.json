@@ -14,12 +14,16 @@
     },
 
     "outDir": "./dist",
-    "target": "esnext",
+    "target": "ES2015",
+    "module": "ES2015",
     "moduleResolution": "node",
     "jsx": "react",
     "declaration": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "alwaysStrict": true
   },
 
   "include": [
