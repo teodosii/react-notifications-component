@@ -18,6 +18,7 @@ module.exports = {
     filename: 'index.js',  
     libraryTarget: 'umd',  
     library: 'react-notifications-component',  
+    globalObject: 'this'
   }, 
  
   optimization: { 

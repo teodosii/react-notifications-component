@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.4.0
+
+### Fixes
+
+* Fixed webpack `self` export
+* Fixed Store removal functions not triggering DOM removal #140
+
+### Changes
+
+* Pass `notificationConfig` as parameter when using custom component
+
 ## 3.3.0 
  
 ### Changes 

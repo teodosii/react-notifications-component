@@ -55,7 +55,7 @@ function add(cachedImage: HTMLImageElement): void {
 
   Store.addNotification(
     Object.assign(object, notification, {
-      width: 325,
+      width: 325,  
       container: getContainer(),
       content: () => (
         <div className="custom-image-content">
@@ -82,16 +82,21 @@ function addCustomIcon(type: string, iconClassName: string): void {
     Object.assign(object, notification, {
       width: 275,
       container: getContainer(),
-      content: (
-        <div className={`notification__custom--${type}`}>
-          <div className="notification__custom-icon">
-            <i className={iconClassName} />
-          </div>
-          <div className="notification__custom">
-            <p className="rnc__notification-message">{message}</p>
-          </div>
-        </div>
-      )
+      content: CustomContentRenderer
     })
   )
+
+  function CustomContentRenderer() {
+    return (
+      <div className={`notification__custom--${type}`}>
+        <div className="notification__custom-icon">
+          <i className={iconClassName} />
+        </div>
+        <div className="notification__custom">
+          <p className="rnc__notification-message">{message}</p>
+        </div>
+      </div>
+    )
+  }
+  
 }

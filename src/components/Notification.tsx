@@ -84,7 +84,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
       this.removeNotification(NOTIFICATION_REMOVAL_SOURCE.MANUAL)
     }
 
-    if (prevProps !== this.props) {
+    if (prevProps !== this.props && !this.props.hasBeenRemoved) {
       const { container } = this.props.notification
       const { scrollHeight } = this.rootElementRef.current.children[0]
 
@@ -296,7 +296,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
         onMouseEnter={hasMouseEvents ? this.onMouseEnter : null}
         onMouseLeave={hasMouseEvents ? this.onMouseLeave : null}
       >
-        {React.isValidElement(CustomContent) ? CustomContent : <CustomContent {...{ id }} />}
+        {React.isValidElement(CustomContent) ? CustomContent : <CustomContent {...{ id, notificationConfig: {...this.props.notification} }} />}
       </div>
     )
   }
@@ -341,7 +341,6 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
       <div
         ref={this.rootElementRef}
         onClick={click ? this.onClick : null}
-        className={'notification'}
         style={parentStyle}
         onAnimationEnd={onAnimationEnd}
         onTransitionEnd={onTransitionEnd}
