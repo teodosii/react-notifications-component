@@ -1,5 +1,6 @@
 import React from 'react';
 import { iNotificationCustomType, iNotification } from 'src/typings';
+import "src/scss/notification.scss";
 export { Container, iContainerProps, iContainerState };
 interface iContainerProps {
     isMobile?: boolean;
