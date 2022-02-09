@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.4.1
+
+### Changes
+
+* Set `rnc__notification` class on the rendered notification
+
 ## 3.4.0
 
 ### Fixes

@@ -342,6 +342,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
         ref={this.rootElementRef}
         onClick={click ? this.onClick : null}
         style={parentStyle}
+        className="rnc__notification"
         onAnimationEnd={onAnimationEnd}
         onTransitionEnd={onTransitionEnd}
         onTouchStart={touchEnabled ? this.onTouchStart : null}
