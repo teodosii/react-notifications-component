@@ -62,7 +62,7 @@ Render <code>react-notifications-component</code> at the top of your application
 const App = () => {
   return (
     <div className="app-container">
-      <ReactNotification />
+      <ReactNotifications />
       <Application />
     </div>
   )
