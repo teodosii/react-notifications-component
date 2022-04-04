@@ -19,6 +19,7 @@ interface iContainerProps {
   breakpoint?: number
   types?: iNotificationCustomType[]
   defaultNotificationWidth?: number
+  className?: string
 }
 
 interface iContainerState {
