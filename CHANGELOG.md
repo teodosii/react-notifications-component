@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.0
+
+### Changes
+- Use React 18.0.1
+
 ## 3.4.1
 
 ### Changes
