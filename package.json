@@ -1,6 +1,6 @@
 {
   "name": "react-notifications-component",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "homepage": "http://teodosii.github.io/react-notifications-component",
   "description": "React component for creating notifications on the fly",
   "main": "dist/index.js",

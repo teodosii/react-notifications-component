@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.0.1
+
+### Changes
+- Merged PR #156 on preventing `onTransitionEnd` to run multiple times
+- Fixed `full-bottom` / `full-top` not being set width to 100%
+- Fixed `animated__` classes for a few examples on GH pages
+
 ## 4.0.0
 
 ### Changes
