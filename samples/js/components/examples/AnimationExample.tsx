@@ -25,7 +25,7 @@ function AnimationInExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(true, ['animate_animated animate__fadeIn'])}
+            onClick={() => add(true, ['animate__animated animate__fadeIn'])}
           >
             Fade In
           </button>
@@ -33,7 +33,7 @@ function AnimationInExample() {
           <button
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => add(true, ['animate__animated animated__flipInX'])}
+            onClick={() => add(true, ['animate__animated animate__flipInX'])}
           >
             Flip In X
           </button>

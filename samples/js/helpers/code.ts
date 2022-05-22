@@ -17,8 +17,8 @@ class App extends React.Component {
       type: "success",
       insert: "top",
       container: "top-right",
-      animationIn: ["animate_animated", "animate__fadeIn"],
-      animationOut: ["animate_animated", "animate__fadeOut"],
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
       dismiss: { duration: 2000 }
     });
   }
