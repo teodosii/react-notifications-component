@@ -53,7 +53,7 @@ class Notification extends React.Component<iNotificationProps, iNotificationStat
     const { scrollHeight } = this.rootElementRef.current
 
     const onTransitionEnd = () => {
-      if (!duration || onScreen) return
+      if (!duration || onScreen || this.timer) return
       const callback = () => this.removeNotification(NOTIFICATION_REMOVAL_SOURCE.TIMEOUT)
       this.timer = new Timer(callback, duration)
     }
