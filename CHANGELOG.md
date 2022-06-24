@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.0.2
+
+### Bugfixes
+- Push narrower notifications within left/right container to either left or right to remove gap
+
 ## 4.0.1
 
 ### Changes

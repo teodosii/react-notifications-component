@@ -98,3 +98,13 @@
   bottom: 20px;
   margin-bottom: -15px;
 }
+
+.rnc__notification-container--top-right > .rnc__notification,
+.rnc__notification-container--bottom-right > .rnc__notification {
+  margin-left: auto; // push elemenets narrower than the container
+}
+
+.rnc__notification-container--top-left > .rnc__notification,
+.rnc__notification-container--bottom-left > .rnc__notification {
+  margin-right: auto; // push elemenets narrower than the container
+}
